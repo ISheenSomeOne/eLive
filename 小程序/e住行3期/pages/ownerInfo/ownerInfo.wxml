@@ -1,0 +1,28 @@
+<!--pages/ownerInfo/ownerInfo.wxml-->
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="addBox" style="margin-top: {{height}}px">
+  <view class="add">
+    <image class="addIcon" src="../image/idcard.svg"></image>
+    <view class="addCont">上传身份证添加</view>
+  </view>
+  <view class="line"></view>
+  <view class="add">
+    <image class="addIcon" src="../image/jia.svg"></image>
+    <view class="addCont">手动添加</view>
+  </view>
+</view>
+<radio-group class="radio-group" bindchange="radioChange">
+  <view class="userBox" wx:for="{{userInfo}}" wx:key="index">
+    <radio class="userRadio" value="{{item.value}}" checked="{{item.checked}}" />
+    <view class="userInfo">
+      <view class="userName">{{item.userName}}</view>
+      <view class="idCard">身份证 {{item.idCard}}</view>
+    </view>
+    <image class="editIcon" src="../image/edit.svg" bindtap="addOwner"></image>
+  </view>
+</radio-group>
+
+ <view class="confirm" bindtap="confirm">确认</view>

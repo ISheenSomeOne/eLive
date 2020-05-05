@@ -1,0 +1,106 @@
+ <!--pages/myHotel/myHotel.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="topNav" style='margin-top: {{height}}px'>
+  <block wx:for="{{topNav}}" wx:key="index">
+    <view class=" topNavItem {{nowIndex == index ? 'active' : ''}}" data-index="{{index}}" bindtap="change">{{item.name}}</view>
+  </block>
+</view>
+
+<view wx:if="{{switch}}">
+  <view class='list' wx:if="{{compile}}">
+    <block wx:for='{{userHotel}}' wx:key='userHotel' wx:for-index='item_id' wx:for-item="item">
+      <view class="list_item" bindtap="hotelDetail" id='{{item_id}}'>
+        <view class='imgBox'>
+          <image class="img" src="{{item.logo}}" lazy-load="true" mode="scaleToFill" />
+        </view>
+        <view class='info'>
+          <view class="titleBox">
+            <view class='title'>{{item.name}} </view>
+            <view class="star"> {{item.rate}}分</view>
+            <view class="star"> {{item.star}}星级</view>
+          </view>
+          <view class='num' wx:if="{{(item.hotelDistance != null) && item.hotelDistance < 1000}}">距您直线{{item.hotelDistance}}m</view>
+          <view class='num' wx:elif="{{(item.hotelDistance != null) && item.hotelDistance>=1000}}">距您直线{{((item.hotelDistance)/1000)}}km</view>
+          <view class='num' wx:else></view>
+        </view>
+        <view class='price'>￥{{item.hotelMinPrice}}
+          <view class="qi">起</view>
+        </view>
+        <view class="collect" wx:if="{{nowIndex == 0}}">收藏于{{}}2019-9-19</view>
+        <view class="collect" wx:elif="{{nowIndex == 1}}">最近入住于{{}}2019-9-19</view>
+        <view class="collect" wx:else></view>
+        <!-- </navigator> -->
+        <view class='clear'></view>
+      </view>
+    </block>
+  </view>
+  <view wx:else>
+    <view class="list_else">
+      <block wx:for='{{userHotel}}' wx:key='userHotel' wx:for-index='item_id' wx:for-item="item">
+        <view class="list_item_else" bindtap="hotelDetail_else" id='{{item_id}}'>
+          <view >
+            <image class="pitch" wx:if="{{item.pitch}}" src="../image/pitch.svg"   bindtap="pitchs" id='{{item_id}}'></image>
+            <image  class="pitch"  wx:else  src="../image/unchecked.svg"  bindtap="pitchs" id='{{item_id}}'></image>
+          </view>
+          <view class='imgBox'>
+            <image class="img" src="{{item.logo}}" lazy-load="true" mode="scaleToFill" />
+          </view>
+
+          <view class='info_else'>
+            <view class="titleBox">
+              <view class='title'>{{item.name}} </view>
+              <view class="star"> {{item.rate}}分</view>
+              <view class="star"> {{item.star}}星级</view>
+            </view>
+            <view class='num' wx:if="{{(item.hotelDistance != null) && item.hotelDistance < 1000}}">距您直线{{item.hotelDistance}}m</view>
+            <view class='num' wx:elif="{{(item.hotelDistance != null) && item.hotelDistance>=1000}}">距您直线{{((item.hotelDistance)/1000)}}km</view>
+            <view class='num' wx:else></view>
+          </view>
+          <view class='price'>￥{{item.hotelMinPrice}}
+            <view class="qi">起</view>
+          </view>
+          <view class="collect" wx:if="{{nowIndex == 0}}">收藏于{{}}2019-9-19</view>
+          <view class="collect" wx:elif="{{nowIndex == 1}}">最近入住于{{}}2019-9-19</view>
+          <view class="collect" wx:else></view>
+          <!-- </navigator> -->
+          <view class='clear'></view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="noCollect">
+    <view wx:if="{{nowIndex == 0}}">没有更多收藏了</view>
+    <view wx:elif="{{nowIndex == 1}}">没有更多酒店了</view>
+    <view wx:else></view>
+  </view>
+</view>
+
+
+
+<view wx:else>
+  <view>
+    <image class="bottomImg" src="../image/noPicture.svg "></image>
+  </view>
+  <view class="bottomText">
+    <text>暂时没有相关内容</text>
+  </view>
+  <view class="bottomButt">
+    <text>去搜索酒店 </text>
+  </view>
+</view>
+
+<view class="bottom" wx:if="{{bottoms}}">
+  <view class="text1" bindtap="deletes">
+    <view class="text2">
+      <text>删除</text>
+    </view>
+  </view>
+  <view class="text1" bindtap="cancel">
+    <view class="text2">
+      <text>取消</text>
+    </view>
+  </view>
+</view>

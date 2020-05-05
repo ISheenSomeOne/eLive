@@ -1,0 +1,41 @@
+<!--pages/inviteOwner/inviteOwner.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px'>
+  <view class="bg"></view>
+  <!-- 背景 -->
+  <view class="avatarBox" style="top: {{height}}px">
+    <!-- 头像框 -->
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+  <view class="payInfo">
+    <!-- 支付信息 -->
+    <view class="hotelProxy">{{userInfo.nickName}}正在发起</view>
+    <view class="inviteConst">入住酒店邀请</view>
+    <!-- <view class="timeConst">订单已关闭</view> -->
+  </view>
+  <view class="hotelInfoBox">
+  <!-- 酒店信息 -->
+    <view class="hotelInfo">
+      <view class="hotelName">{{inviteInfo.hotelName}}</view>
+      <view class="roomInfo">{{inviteInfo.roomType}}</view>
+      <view class="orderTime">{{inviteInfo.checkinDate}} 至 {{inviteInfo.checkoutDate}} 共{{inviteInfo.dateCount}}晚</view>
+    </view>
+  </view>
+  <view class="contactBox">
+  <!-- 联系人信息 -->
+    <view class="contact">
+      <view class="userConst">联系人</view>
+      <view class="user">{{user}}</view>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view class="user">{{phone}}</view>
+    </view>
+  </view>
+  <!-- <view class="share">
+  发送给微信好友
+  </view> -->
+  <button open-type="share" class="share">发送给微信好友</button>
+</view>

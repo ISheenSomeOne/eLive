@@ -1,0 +1,25 @@
+<!--pages/addOwner/addOwner.wxml-->
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="uploadIdInfo" style="margin-top: {{height + 20}}px">
+  <image class="uploadIcon" src="../image/idcard.svg"></image>
+  <view class="upload">推荐上传身份证添加信息</view>
+</view>
+
+<view class="userInfoBox">
+  <view class="userInfo">
+    <view class="user">姓名</view>
+    <input class="userIpt" placeholder-class="ipt" value='{{name}}' type="text" name='name' bindinput="name" placeholder="与身份证姓名一致"></input>
+  </view>
+  <view class="userInfo">
+    <view class="user">手机</view>
+    <input class="userIpt" placeholder-class="ipt" value='{{phone}}' maxlength="11" type="number" name='phone' bindinput="phone" placeholder="请保证是本人手机"></input>
+  </view>
+  <view class="userInfo">
+    <view class="user">身份证</view>
+    <input class="userIpt" placeholder-class="ipt" value='{{idCard}}' maxlength="18" type="idcard" name='idCard' bindinput="idCard" placeholder="请保持与身份证证件一致"></input>
+  </view>
+</view>
+<view class="confirm" bindtap="confirm">保存</view>

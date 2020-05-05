@@ -1,0 +1,27 @@
+<!--pages/pointsRecord/pointsRecord.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding:10rpx;'>
+  <view class="topBox">
+    <view class="allBox displayRow">
+      <view class="allItem allGet">
+        <text>总获取</text>{{pointsRecord.jiFenHistory}}</view>
+      <view class="allItem allUse">
+        <text>总使用</text>{{pointsRecord.jiFenUseAmount}}</view>
+    </view>
+    <view class="nowPoints">
+      <text>可用</text>{{pointsRecord.jiFenNow}}</view>
+  </view>
+  <view class="recordBox">
+    <view class="recordItem displayRow" wx:for="{{pointsRecord.consumptionList}}" wx:key="index">
+      <view class="recordLeft displayCol">
+        <view class="goodsName">{{item.consumptionName}}</view>
+        <view class="recordDate">{{item.createTime}}</view>
+      </view>
+      <view wx:if="{{item.addIntegral}}" class="recordRight">+{{item.addIntegral}}</view>
+      <view wx:else class="recordRight">-{{item.consumptionIntegral}}</view>
+    </view>
+    <view class="noJifen" wx:if="{{pointsRecord.consumptionList.length == 0}}">您还没有积分哦</view>
+  </view>
+</view>

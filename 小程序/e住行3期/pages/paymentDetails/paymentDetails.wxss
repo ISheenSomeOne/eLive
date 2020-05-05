@@ -1,0 +1,179 @@
+/* pages/paymentDetails/paymentDetails.wxss */
+page {
+  color: #333;
+  font-size: 30rpx;
+}
+
+.detailInfoItem {
+  margin: 0 auto;
+  width: 650rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  display: flex;
+  justify-content: space-between;
+}
+
+.yellow{
+  color: #f06c00;
+}
+
+.detailInfo {
+  margin: 5rpx auto;
+  width: 650rpx;
+  margin-bottom: 15rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 26rpx;
+  color: #777;
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+}
+.big{
+  height: 150rpx;
+  font-size: 40rpx;
+  line-height: 150rpx;
+}
+
+.toPay{
+  position: fixed;
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 650rpx;
+  left: 50rpx;
+  bottom: 50rpx;
+  background-color: #f06c00;
+  color: #fff;
+  text-align: center;
+  font-size: 36rpx;
+  letter-spacing: 2rpx;
+  font-weight: bold;
+  border-radius: 10rpx;
+}
+
+
+.modalBg{
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 3rpx
+}
+.modalBox{
+  width: 670rpx;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 300rpx auto 0 auto;
+  padding-bottom: 20rpx;
+}
+.modalTitle{
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 600rpx;
+  margin: 0 auto;
+}
+.modalHotelName{
+  float: left;
+}
+.tipBox{
+  float: left;
+  margin-left: 40rpx;
+}
+.tipIcon2{
+  float: left;
+  margin-top: 30rpx;
+  height: 20rpx;
+  width: 20rpx;
+
+}
+.tip2{
+  float: left;
+  font-size: 20rpx;
+  color: #029789;
+}
+.done{
+  float: right;
+  text-align: center;
+  width: 70rpx;
+  font-size: 24rpx;
+  color: rgb(7, 193, 96);
+}
+.listBox{
+  width: 100%;
+  max-height: 340rpx;
+  overflow: auto;
+}
+.listBox2{
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+.roomInfoBox{
+  position: relative;
+  width: 600rpx;
+  line-height: 100rpx;
+  margin: 0 auto;
+}
+.modalRoomInfo{
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 26rpx;
+  border-top: 2rpx solid rgb(243, 243, 243);
+}
+.closePay{
+  float: right;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 20rpx;
+}
+.pay{
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 35rpx;
+  background-color: #f06c00;
+  margin-top: 50rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 5rpx;
+}
+.payWayIcon{
+  float: left;
+  height: 40rpx;
+  width: 40rpx;
+  margin-top: 30rpx;
+}
+.info{
+  float: left;
+  margin-left: 30rpx;
+}
+.userRadio{
+  position: absolute;
+  height: 100rpx;
+  top: 0;
+  right: 0;
+}
+.payWayConst{
+  float: right;
+  margin-right: 10rpx;
+}
+.reChoose{
+  float: right;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 37rpx;
+}
+.payPrice{
+  float: right;
+  font-size: 35rpx;
+  color: #f06c00;
+}
+.recharge{
+  float: right;
+  color: rgb(9,187,7)
+}

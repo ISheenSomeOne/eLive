@@ -1,0 +1,587 @@
+/* pages/hotelDetail/hotelDetail.wxss */
+
+/* 模态框样式 */
+
+.modalBg {
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalBox {
+  position: absolute;
+  width: 670rpx;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10rpx;
+  bottom: 240rpx;
+  left: 50%;
+  margin-left: -335rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(100, 100, 100);
+}
+
+.couponModalBox {
+  float: left;
+  height: 250rpx;
+  width: 200rpx;
+  background: linear-gradient(to top, rgba(214, 20, 85, 0.836), rgb(239, 96, 144));
+  border-bottom-left-radius: 10rpx;
+  border-top-left-radius: 10rpx;
+  color: #fff;
+  font-size: 25rpx;
+  text-align: center;
+}
+
+.couponPrice {
+  padding-top: 70rpx;
+  font-size: 35rpx;
+}
+
+.couponPrice text {
+  font-size: 55rpx;
+}
+
+.couponConst0 {
+  margin-top: 30rpx;
+}
+
+.couponInfo {
+  position: relative;
+  float: left;
+  width: 450rpx;
+  height: 250rpx;
+  margin-left: 20rpx;
+}
+
+.useStatusIcon {
+  float: left;
+  margin: 8rpx 0 0 7rpx;
+  height: 25rpx;
+  width: 25rpx;
+}
+
+.couponName0 {
+  font-weight: 600;
+  margin-top: 10rpx;
+}
+
+.couponCont {
+  margin-top: 30rpx;
+  font-size: 25rpx;
+  color: #777;
+}
+
+.deadline {
+  margin-top: 10rpx;
+  font-size: 23rpx;
+  color: #d32f2f;
+}
+
+.couponNav {
+  position: absolute;
+  width: 100%;
+  bottom: 20rpx;
+}
+
+.useStatus {
+  float: left;
+  font-size: 25rpx;
+  color: #55c5f8;
+}
+
+.navBtn {
+  float: right;
+  margin-right: 20rpx;
+  text-align: center;
+  height: 45rpx;
+  line-height: 45rpx;
+  width: 120rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: rgb(233, 30, 99);
+  border-radius: 10rpx;
+}
+
+.statusCont {
+  position: absolute;
+  width: 650rpx;
+  height: 90rpx;
+  line-height: 30rpx;
+  z-index: 150;
+  background-color: #fff;
+  color: #999;
+  font-size: 21rpx;
+  border-radius: 10rpx;
+  bottom: 120rpx;
+  padding: 10rpx;
+  left: 50%;
+  margin-left: -335rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(100, 100, 100);
+  overflow: auto;
+}
+
+page {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.hotelDetail {
+  width: 100%;
+  background-color: #fff;
+}
+
+.hotelSwiperBox {
+  width: 100%;
+  position: relative;
+}
+
+.hotelSwiper {
+  width: 100%;
+  height: 350rpx;
+}
+
+.swiperImg {
+  width: 100%;
+}
+
+.xihuanIcon {
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.hotelInfoBox {
+  margin-top: 20rpx;
+  width: 100%;
+  background-color: #fff;
+}
+
+.hotelInfo {
+  width: 720rpx;
+  margin: 0 auto;
+  padding: 5rpx 0 0 0;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 15rpx;
+}
+
+.hotelTop {
+  position: relative;
+  width: 670rpx;
+  height: 80rpx;
+  margin: 0 auto;
+  padding: 15rpx 0;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+
+.hotelNameBox {
+}
+
+.hotelName {
+  float: left;
+  font-size: 32rpx;
+  max-width: 400rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hotelType {
+  display: inline-block;
+  margin-left: 10rpx;
+  font-size: 22rpx;
+  color: #888;
+}
+
+.hotelStatusBox {
+  font-size: 20rpx;
+  margin-top: 10rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+}
+
+.hotelTime {
+  float: left;
+}
+
+.hotelStatus {
+  float: left;
+}
+
+.StatusIcon {
+  float: left;
+  margin: 5rpx 0 0 20rpx;
+  height: 20rpx;
+  width: 20rpx;
+}
+
+.status {
+  float: left;
+  margin-left: 5rpx;
+  font-size: 18rpx;
+}
+
+.detailBox {
+  position: absolute;
+  height: 50rpx;
+  line-height: 50rpx;
+  right: 0;
+  top: 50%;
+  margin-top: -25rpx;
+}
+
+.detailIcon {
+  float: right;
+  margin-top: 14rpx;
+  height: 24rpx;
+  width: 24rpx;
+}
+
+.detailConst {
+  float: right;
+  font-size: 23rpx;
+  color: #f06c00;
+}
+
+.rate {
+  float: left;
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 100rpx;
+  font-size: 34rpx;
+  margin-top: 5rpx;
+  background: linear-gradient(to top, rgb(240, 109, 0), rgb(250, 139, 0));
+  border-radius: 10rpx;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.rateDetail {
+  float: left;
+  margin: 10rpx 0 0 10rpx;
+  height: 50rpx;
+  line-height: 30rpx;
+}
+
+.unique {
+  font-size: 20rpx;
+  color: #f06c00;
+}
+
+.rateStatus {
+  font-size: 18rpx;
+}
+
+.rateStatus text {
+  color: #029789;
+}
+
+.hotelBottom {
+  position: relative;
+  width: 670rpx;
+  height: 80rpx;
+  line-height: 40rpx;
+  margin: 0 auto;
+  padding: 15rpx 0;
+}
+
+.hotelAddress {
+  font-size: 24rpx;
+  max-width: 500rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hotelTel {
+  line-height: 80rpx;
+  font-size: 34rpx;
+  max-width: 500rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.address {
+  font-size: 20rpx;
+  max-width: 500rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.couponBox {
+  width: 720rpx;
+  margin: 20rpx auto 0 auto;
+  border-radius: 5rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.couponWidth {
+  max-width: 500rpx;
+  height: 70rpx;
+  overflow: hidden;
+}
+
+.coupon {
+  position: relative;
+  width: 670rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  margin: 0 auto;
+}
+
+.couponConst {
+  float: left;
+  font-size: 24rpx;
+  color: #777;
+}
+
+.couponName {
+  float: left;
+  font-size: 20rpx;
+  margin: 20rpx 0 0 20rpx;
+  padding: 0 10rpx;
+  color: rgb(237, 79, 126);
+  border: 2rpx solid rgb(237, 79, 126);
+  border-radius: 50rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+}
+
+.getCoupon {
+  position: absolute;
+  height: 50rpx;
+  line-height: 50rpx;
+  right: 0;
+  top: 50%;
+  margin-top: -25rpx;
+}
+
+.getCouponIcon {
+  float: right;
+  margin-top: 14rpx;
+  height: 24rpx;
+  width: 24rpx;
+}
+
+.getCouponConst {
+  float: right;
+  font-size: 23rpx;
+  color: #f06c00;
+}
+
+.dateChoose {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 640rpx;
+  margin: 20rpx auto 0 auto;
+}
+
+.checkInBox {
+  height: 80rpx;
+  width: 180rpx;
+  border-radius: 3rpx;
+  text-align: center;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  padding-top: 10rpx;
+}
+
+.checkInTitle {
+  font-size: 20rpx;
+}
+
+.checkInDate {
+  margin-top: 5rpx;
+  color: #f57800;
+}
+
+.dateNum {
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 3rpx;
+  text-align: center;
+}
+
+.line {
+  width: 90rpx;
+  border-bottom: 2rpx solid rgb(221, 221, 221);
+}
+
+.roomList {
+  width: 100%;
+  margin-top: 10rpx;
+  padding: 1rpx 0 30rpx 0;
+}
+
+.room {
+  position: relative;
+  width: 700rpx;
+  margin: 20rpx auto 0 auto;
+  height: 150rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 15rpx;
+}
+
+.roomImg {
+  float: left;
+  display: block;
+  height: 150rpx;
+  width: 220rpx;
+  border-top-left-radius: 15rpx;
+  border-bottom-left-radius: 15rpx;
+}
+
+.roomInfoBox {
+  float: left;
+  margin-left: 20rpx;
+}
+
+.roomName {
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-top: 12rpx;
+  max-width: 300rpx;
+  height: 35rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roomDetailBox {
+  margin-top: 15rpx;
+  font-size: 20rpx;
+  color: #777;
+  max-width: 300rpx;
+  height: 30rpx;
+  overflow: hidden;
+}
+
+.roomDetail {
+  float: left;
+  margin-right: 15rpx;
+}
+
+.roomUniqueBox {
+  margin-top: 15rpx;
+  font-size: 18rpx;
+  height: 30rpx;
+  width: 180rpx;
+  overflow: hidden;
+}
+
+.roomUnique {
+  float: left;
+  height: 25rpx;
+  line-height: 25rpx;
+  margin-right: 15rpx;
+  border-radius: 5rpx;
+  border: 2rpx solid rgb(211, 47, 47);
+  color: rgb(211, 47, 47);
+  padding: 0 8rpx;
+}
+
+.car {
+  position: absolute;
+  bottom: 15rpx;
+  right: 130rpx;
+  font-size: 18rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  background-color: #f06c00;
+  color: #fff;
+  border-radius: 30rpx;
+  padding: 5rpx 15rpx;
+  letter-spacing: 1rpx;
+}
+
+.buy {
+  position: absolute;
+  bottom: 15rpx;
+  right: 10rpx;
+  font-size: 18rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  background-color: #f06c00;
+  color: #fff;
+  border-radius: 30rpx;
+  padding: 5rpx 15rpx;
+  letter-spacing: 1rpx;
+}
+.price{
+  position: absolute;
+  bottom: 60rpx;
+  right: 20rpx;
+  font-size: 24rpx;
+  color: #f06c00;
+}
+.price text{
+  font-size: 18rpx;
+  color: #888;
+  text-decoration: line-through;
+}
+.downContent{
+  font-size: 22rpx;
+  color: #777;
+  text-align: center;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.couponBoxb {
+  margin-top: 5rpx;
+  padding: 10rpx;
+  height: 60rpx;
+  background-color: rgb(251, 229, 214);
+  font-size: 22rpx;
+  color: #333;
+}
+
+.couponb {
+  display: inline-block;
+  padding: 8rpx;
+  background: linear-gradient(to right, rgb(226, 69, 38), rgb(201, 38, 37));
+}
+
+.couponType {
+  float: left;
+  margin-right: 10rpx;
+  color: #fff;
+  height: 44rpx;
+  line-height: 44rpx;
+}
+
+.couponContent {
+  float: left;
+  background-color: rgb(251, 229, 214);
+  height: 44rpx;
+  line-height: 44rpx;
+  padding: 0 10rpx;
+}
+
+.couponTip {
+  float: right;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #e24526;
+  letter-spacing: 2rpx;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.more{
+  display: inline-block;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 16rpx;
+}

@@ -1,0 +1,59 @@
+<!--pages/transferRights/transferRights.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px'>
+  <view class="bg"></view>
+  <!-- 背景 -->
+  <view class="avatarBox" style="top: {{height}}px">
+    <!-- 头像框 -->
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+  <view class="payInfo">
+    <!-- 支付信息 -->
+    <view class="hotelProxy">{{userInfo.nickName}}正在发起</view>
+    <view class="inviteConst">房间权限转移</view>
+    <!-- <view class="timeConst">订单已关闭</view> -->
+  </view>
+  <view class="hotelInfoBox">
+    <!-- 酒店信息 -->
+    <view class="hotelInfo">
+      <view class="hotelName">{{permissionInfo.hotelName}}</view>
+      <view class="roomInfo">{{permissionInfo.roomType}} {{permissionInfo.roomAddress}}</view>
+      <view class="orderTime">{{permissionInfo.checkinDate}} 至 {{permissionInfo.checkoutDate}} 共{{permissionInfo.dateCount}}晚</view>
+    </view>
+  </view>
+  <view class="contactBox">
+    <!-- 联系人信息 -->
+    <view class="contact">
+      <view class="userConst">联系人</view>
+      <view class="user">{{user}}</view>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view class="user">{{phone}}</view>
+    </view>
+  </view>
+  <view wx:if="{{permissionInfo.roomPermissionStatus == '待同意'}}" class="verifyBox">
+    <view class="contact">
+      <view class="userConst">中文姓名</view>
+      <view class="inviteeInfo">{{permissionInfo.nameOfInvitee}}</view>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view class="inviteeInfo">{{permissionInfo.mobilePhoneNumberOfTheInvitee}}</view>
+    </view>
+    <view class="contact">
+      <view class="userConst">身份证号</view>
+      <view class="inviteeInfo">{{permissionInfo.inviteeIdCard}}</view>
+    </view>
+  </view>
+  <view wx:if="{{permissionInfo.roomPermissionStatus == '待同意'}}" class="share1">
+    <view class="cancel" bindtap="cancel">取消</view>
+    <view class="agree" bindtap="agree">同意授权</view>
+  </view>
+  <view wx:else class="share1">
+    <view class="cancel" bindtap="upLoad" style="background-color:#07c160">刷新页面</view>
+    <button open-type="share" class="active">发送给微信好友</button>
+  </view>
+</view>

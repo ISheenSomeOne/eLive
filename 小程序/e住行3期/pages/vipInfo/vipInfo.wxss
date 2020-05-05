@@ -1,0 +1,75 @@
+/* pages/vipInfo/vipInfo.wxss */
+
+page {
+  position: relative;
+  font-size: 30rpx;
+  color: #333;
+  background-color: rgb(243, 243, 243);
+}
+
+.vipItem {
+  width: 690rpx;
+  margin: 20rpx auto 0 auto;
+  padding: 20rpx 10rpx;
+  border-radius: 15rpx;
+  background-color: #fff;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.title {
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 200rpx;
+  text-align: center;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 36rpx;
+  border-radius: 10rpx;
+  color: #fff;
+}
+
+.zuanshi{
+  background-image: -webkit-linear-gradient(left, rgb(115, 201, 255), rgb(30, 133, 202));
+}
+.baijin{
+  background-image: -webkit-linear-gradient(left, rgb(185, 185, 185), rgb(103, 114, 122));
+}
+.huangjin{
+  background-image: -webkit-linear-gradient(left,  rgb(216, 176, 83), rgb(211, 133, 31));
+}
+.elseColor{
+  background-image: -webkit-linear-gradient(left,  rgb(92, 199, 92), rgb(59, 141, 48));
+}
+
+.cont {
+  width: 690rpx;
+  padding-top: 1rpx;
+}
+
+.privilegeItem {
+  float: left;
+  font-size: 26rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  padding: 0 20rpx;
+  margin: 18rpx 0 0 18rpx;
+  /* background-color: rgb(41, 146, 245); */
+  /* background-image: -webkit-linear-gradient(left, #87CEFA, #00BFFF); */
+  border-radius: 10rpx;
+  color: #fff;
+  /* box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190); */
+  border: 1rpx solid #ebebeb;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clearfix:after {
+  /*伪元素是行内元素 正常浏览器清除浮动方法*/
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}

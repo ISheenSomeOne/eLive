@@ -1,0 +1,66 @@
+<!--pages/mine/mine.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<image class="loginBG" src="../image/act4.jpg" mode="aspectFill" style="top: {{height}}px"></image>
+<!-- 背景图片 -->
+<view class="avatarBox" wx:if='{{loginData}}' style="margin-top: {{height}}px">
+  <image class="avatar" src="{{userInfo.avatarUrl}}" bindtap="myInfo"></image>
+  <view class="nickname">{{userInfo.nickName}}</view>
+</view>
+<view class="orderBox">
+  <!-- 酒店订单 -->
+  <view class="order" bindtap="lookOrder">
+    <image class="orderIcon" src="../image/order.svg"></image>
+    <view class="orderConst">酒店订单</view>
+    <view class="orderSee">查看</view>
+  </view>
+</view>
+<view class="menuBox">
+  <view class="menuColumn">
+    <view class="menuItem" bindtap="look">
+      <image class="menuIcon" src="../image/hotel.svg"></image>
+      <view class="menuInfo">
+         <view class="menuName" >我的酒店</view>   <!-- bindtap="noContent" -->
+        <view class="menuStatus">收藏和住过的酒店</view>
+      </view>
+    </view>
+    <view class="menuItem" bindtap="look">
+      <image class="menuIcon" src="../image/info.svg"></image>
+      <view class="menuInfo">
+        <view class="menuName" >常用信息</view>
+        <view class="menuStatus">旅客 地址 发票</view>
+      </view>
+    </view>
+    <view class="menuItem" bindtap="help">
+      <image class="menuIcon" src="../image/help.svg"></image>
+      <view class="menuInfo">
+        <view class="menuName" >帮助</view>
+        <view class="menuStatus">常见问题 客服</view>
+      </view>
+    </view>
+  </view>
+  <view class="menuColumn">
+    <view class="menuItemR" bindtap="lookEvaluation">
+      <image class="menuIcon" src="../image/rate.svg"></image>
+      <view class="menuInfo">
+        <view class="menuName" >我的评价</view>
+        <view class="menuStatus">立即评价可得积分</view>
+      </view>
+    </view>
+    <view class="menuItemR" bindtap="vip">
+      <image class="menuIcon" src="../image/vip.svg"></image>
+      <view class="menuInfo">
+        <view class="menuName" >会员中心</view>
+        <view class="menuStatus">会员特权 优惠活动</view>
+      </view>
+    </view>
+    <view class="menuItemR" bindtap="mySetting">
+      <image class="menuIcon" src="../image/set.svg"></image>
+      <view class="menuInfo">
+        <view class="menuName" >设置</view>
+        <view class="menuStatus">系统设置 关于</view>
+      </view>
+    </view>
+  </view>
+</view>

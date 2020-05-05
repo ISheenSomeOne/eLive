@@ -1,0 +1,6 @@
+/* common/star/star.wxss */
+.topStar{
+  float: left;
+  height: 30rpx;
+  width: 30rpx;
+}

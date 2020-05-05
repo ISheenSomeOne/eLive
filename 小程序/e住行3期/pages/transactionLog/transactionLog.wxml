@@ -1,0 +1,50 @@
+<!--pages/transactionList/transactionLog.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding:1rpx'>
+	<view class="orderBox">
+		<view class="chooseType">
+			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+				<view class="chooseTypePicker">
+					支付方式：{{array[index]}}
+				</view>
+			</picker>
+		</view>
+		<block wx:for="{{userOrder}}" wx:key="index" wx:for-item="item">
+			<view class="orderItemBox">
+				<view data-id="{{index}}" bindtap="goto">
+					<view class="itemTop">
+						<view class="hotelName">{{item.hotelName}}</view>
+						<view class="hotelType">{{item.hotelType}}</view>
+					</view>
+					<view class="itemBottom">
+						<view class="infoBox" style="width:60%">
+							<view class="infoItem">
+								<view>{{item.roomTypeName}} {{item.roomDay}}晚 {{item.roomCount}}间</view>
+								<view class="remarks">充1000送200</view>
+							</view>
+							<view class="infoItem" style="font-size:26rpx">2020年04月23日 15:16</view>
+						</view>
+						<view class="infoBox" style="width:40%">
+							<view class="infoItem" style="text-align:right">
+								<view class="price">-{{item.orderPrice}}</view>
+								<view class="way">微信</view>
+							</view>
+							<view class="infoItem" style="text-align:right">
+								<view class="yue">+{{item.orderPrice}}</view>
+								<view class="way">余额</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view wx:if="{{haveMore}}" class="downContent">上拉加载更多</view>
+	<view wx:else class="downContent">我也是有底线的啊 T∧T</view>
+</view>
+<!-- <view style='margin-top: {{height}}px;padding:1rpx'>
+	<view class="none">
+		暂无记录
+	</view>
+</view> -->

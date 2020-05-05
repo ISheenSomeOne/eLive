@@ -1,0 +1,46 @@
+/* pages/riliTwo/riliTwo.wxss */
+
+
+.date-day{
+    display: flex;
+    padding:5px;
+    text-align:center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.date-day.bgitem{
+  background-color: #d8ecf9;
+}
+.date-day.active{
+    background: #f06c00;
+    color:#FFF;
+    
+}
+.date-day.unavailable{
+    color:#aaa;
+}
+
+.date-week{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin:5px;
+}
+.week{
+    color:rgb(222, 105, 9);
+}
+.row{
+  display: flex;
+  flex-direction: row;
+}
+ .item-days{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  font-size: 35rpx;
+} 
+.bgwhite{
+  background-color: #fff;
+}

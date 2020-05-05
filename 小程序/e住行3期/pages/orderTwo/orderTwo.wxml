@@ -1,0 +1,166 @@
+<!--pages/orderTwo/orderTwo.wxml-->
+
+<view wx:if="{{payWay}}" class="modalBg">
+  <!-- 弹出模态框  选择支付方式 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">请选择支付方式</view>
+      <!-- <view class="done" bindtap="closeChoose">完成</view> -->
+    </view>
+    <view class="listBox">
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class="roomInfoBox">
+          <view class="modalRoomInfo" bindtap="chooseYue">
+            <image class="payWayIcon" src="../image/yue.svg"></image>
+            <view class="info">余额支付<text>(￥{{balances}})</text></view>
+            <view class="recharge" bindtap="recharge">充值</view>
+          </view>
+          <view class="modalRoomInfo" bindtap="chooseWx">
+            <image class="payWayIcon" src="../image/wechatPay.svg"></image>
+            <view class="info">微信支付</view>
+          </view>
+          <view class="modalRoomInfo" bindtap="toProxyPay">
+            <image class="payWayIcon" src="../image/proxyPay.svg"></image>
+            <view class="info">微信好友代付</view>
+          </view>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{paying}}" class="modalBg">
+  <!-- 弹出模态框  支付 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">在线支付</view>
+      <image class="closePay" src="../image/cha.svg" bindtap="closePay"></image>
+    </view>
+    <view class="listBox2">
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class="roomInfoBox">
+          <view class="modalRoomInfo" bindtap="pays">
+            <view class="info" >付款方式</view>
+            <image class="reChoose" src="../image/tiaozhuan.png"></image>
+            <view wx:if="{{paymentMethod == 1}}" class="payWayConst">余额<text>(￥{{balances}})</text></view>
+            <view wx:elif="{{paymentMethod == 2}}" class="payWayConst">微信</view>
+          </view>
+          <view class="modalRoomInfo">
+            <view class="info">需付款</view>
+            <view class="payPrice">￥{{totalPrice}}</view>
+          </view>
+          <view wx:if="{{paymentMethod == 1}}" class="pay" bindtap="yuePay">支付</view>
+          <view wx:elif="{{paymentMethod == 2}}" class="pay" bindtap="wxpays">支付</view>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+</view>
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="orderTwo" style='margin-top: {{height}}px'>
+  <view class="bg"></view>
+  <!-- 背景 -->
+
+  <view class="orderHotel">
+    <!-- 订单房间信息 -->
+    <view class="roomName">{{name}}</view>
+    <view class="time">{{startTime}} 至 {{endTime}} 共{{dateCount}}晚</view>
+    <view class="roomInfo">无早餐 </view>
+    <view class="tip">
+      <image class="tipIcon" src="../image/tip.png"></image>
+      <view class="tipInfo">{{startTime}} 18:00 前可免费取消修改订单</view>
+    </view>
+  </view>
+  <view class="addressBox">
+    <!-- 酒店地址信息 -->
+    <view class="address" bindtap="goMap">
+      <view class="hotelAddress">{{street}} {{address}}</view>
+      <view class="addressInfo"></view>  <!-- - 距您直线{{hotelDistance}}米 -->
+      <image class="addressIcon" src="../image/daohang.png"></image>
+    </view>
+  </view>
+  <view class="userInfoBox">
+    <!-- 下单人信息 -->
+    <view class="userInfo">
+      <view class="userConst">下单人信息</view>
+      <view class="contact">联系人： {{showContacts}}</view>
+      <view class="phone">手机号： {{showTel}}</view>
+      <image class="see" bindtap="closeSee" wx:if="{{see}}" src="../image/icon-eye-open.png"></image>
+      <image class="see" bindtap="openSee" wx:else src="../image/icon-eye-close.png"></image>
+    </view>
+  </view>
+  <view class="quanBox">
+    <!-- 优惠券 -->
+    <view class="quan">
+      <image class="quanIcon" src="../image/quan.png"></image>
+      <view class="const">优惠券抵扣</view>
+      <!-- <image class="goIcon" src="../image/tiaozhuan.png"></image> -->
+      <view class="quanInfo">已优惠￥{{jian}}</view>
+    </view>
+  </view>
+  <view class="orderInfoBox">
+    <!-- 订单详情盒子 -->
+    <view class="orderInfo">
+      <!-- 订单详情 -->
+      <!-- <view class="invoice"> -->
+      <!-- 发票和备注 -->
+      <!-- <label class="invoiceConst">发票</label>
+        <input class="ipt" type='text' placeholder-class="iptF" disabled="true" placeholder='如需发票，请填写开票信息' />
+      </view> -->
+      <view class="remarks">
+        <label class="invoiceConst">备注</label>
+        <text class="ipt">{{info}}</text>
+        <!-- <input class="ipt" type='number' placeholder-class="iptP" placeholder='需要告知酒店的特殊要求' /> -->
+      </view>
+      <view class="priceMX">
+        价格明细
+        <!-- 价格明细 -->
+      </view>
+      <view class="originalPriceBox">
+        <!-- 原价 -->
+        <view class="originalConst">房间原价</view>
+        <view class="originalPrice">￥{{price}}</view>
+      </view>
+      <view class="timePriceBox" wx:for="{{timePrice}}" wx:key="index">
+        <!-- 时间明细 -->
+        <view class="timeDetail">{{item.time}}</view>
+        <view class="other" wx:for="{{item.other}}" wx:key="index" wx:for-item="other">{{other.breakfast}}</view>
+        <view class="timePrice">{{item.timePrice}}</view>
+      </view>
+      <view class="depositBox">
+        <!-- 押金 -->
+        <view class="depositConst">押金</view>
+        <view class="deposit">￥{{deposit}}</view>
+      </view>
+      <view class="saleBox">
+        <!-- 优惠 -->
+        <view class="saleConst">优惠</view>
+        <view class="salePrice">-￥{{jian}}</view>
+      </view>
+      <!-- <view class="saleDetailBox"> -->
+        <!-- 优惠明细 -->
+        <!-- <view class="saleDetail">优惠券立减10元</view>
+        <view class="saleDetailPrice">-￥0</view>
+      </view> -->
+    </view>
+  </view>
+  <view class="priceInfo">
+    <!-- 支付信息 -->
+    <view class="priceBox">
+      <view class="price">
+        在线支付
+        <text>￥{{totalPrice}}</text>
+      </view>
+      <view class="confirm" bindtap="submits">
+        订单提交
+      </view>
+      <!-- <view class="detailBox">
+        <view class="detail">明细</view>
+        <image class="detailIcon" src="../image/xiajiantou1.png"></image>
+      </view> -->
+    </view>
+  </view>
+</view>

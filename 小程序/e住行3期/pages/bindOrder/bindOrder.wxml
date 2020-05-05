@@ -1,0 +1,34 @@
+<!--pages/bindOrder/bindOrder.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style="margin-top: {{height}}px;padding-top:1rpx">
+
+	<view class="orderHotel">
+		<!-- 订单房间信息 -->
+		<view>
+			<view class="roomName">{{orderInfo.hotelName}}</view>
+			<view class="time">{{orderRoomInTime}} 至 {{orderRoomOutTime}} 共{{orderInfo.roomDay}}晚</view>
+			<view class="roomInfo">{{orderInfo.roomTypeName}} {{orderInfo.roomNum}} 间</view>
+		</view>
+		<image class="img" src="{{orderInfo.roomTypeImgs}}" binderror="errImg" bindload="loadImg" data-err-img="testImg" lazy-load="true" mode="scaleToFill" />
+
+	</view>
+	<view class="infoBox">
+		<view class="infoItem">
+			<view class="infoConst">姓名</view>
+			<input class="info" placeholder-class='ipt' confirm-type='next' name='name' maxlength='14' bindinput='getName' placeholder='请填写姓名' type='text'></input>
+		</view>
+		<view class="infoItem">
+			<view class="infoConst">手机号码</view>
+			<input class="info" placeholder-class='ipt' confirm-type='done' name='tel' maxlength='11' bindinput='getTel' placeholder='请填写手机号' type='number'></input>
+		</view>
+
+		<!-- <view class="infoItem">
+      <view class="infoConst">验证码</view>
+      <input class="info"></input>
+      <button></button>
+    </view> -->
+	</view>
+	<view class='confirm' bindtap='confirm'>确认</view>
+</view>

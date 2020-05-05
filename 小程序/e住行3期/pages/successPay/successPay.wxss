@@ -1,0 +1,50 @@
+/* pages/successPay/successPay.wxss */
+
+page {
+  background-color: rgb(243, 243, 243);
+  color: #333;
+  font-size: 30rpx;
+}
+.tip{
+  text-align: center;
+  width: 550rpx;
+  margin: 50rpx auto 0 auto;
+  color: #029789;
+}
+.iconBox{
+  position: relative;
+  width: 100%;
+  padding: 100rpx 0;
+  background-color: #fff;
+}
+.icon{
+  display: block;
+  margin: 0 auto;
+  height: 200rpx;
+  width: 200rpx;
+}
+.success{
+  margin-top: 30rpx;
+  width: 100%;
+  text-align: center;
+  font-size: 50rpx;
+  font-weight: bold;
+  letter-spacing: 3rpx;
+}
+.seeEval{
+  margin-top: 100rpx;
+  text-align: center;
+  font-weight: bold;
+  color: #29b6f6;
+  font-size: 36rpx;
+}
+.toHome{
+  margin: 40rpx auto;
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 150rpx;
+  text-align: center;
+  font-weight: bold;
+  color: #29b6f6;
+  font-size: 36rpx;
+}

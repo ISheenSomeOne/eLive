@@ -1,0 +1,65 @@
+<!--pages/evaluation/evaluation.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="topBox" style="margin-top: {{height}}px">
+  <view class="allRate" wx:if="{{haveEval}}">{{hotelStar}} 分
+  </view>
+  <view wx:else class="allRate" style="color:#f06c00">
+    暂无评论
+  </view>
+  <view class="rateBox">
+    <view class="rateItem" wx:for="{{hotelRate}}" wx:key="index">
+      <view class="starConst">{{item.name}}</view>
+      <view class="topStarBox">
+        <star rateStar="{{item.star}}"></star>
+      </view>
+    </view>
+
+  </view>
+</view>
+<view class="rateType">
+  <view class="rateBtn active">全部</view>
+  <!-- <view class="rateBtn" bindtap="good">好评</view>
+  <view class="rateBtn" bindtap="medium">中评</view>
+  <view class="rateBtn" bindtap="negative">差评</view> -->
+</view>
+<view class="userRateBox" wx:for="{{userRateList}}" wx:key="index">
+  <view class="userRateTop">
+    <image class="userAvatar" src="{{item.memberAvatar}}"></image>
+    <view class="userRateTitle">
+      <view class="userName">{{item.memberUsername}}</view>
+      <view class="useRateDate">{{item.checkInDate}}入住，{{item.createTime}}发表</view>
+    </view>
+    <view class="roomType">{{item.roomTypeName}}</view>
+  </view>
+  <view class="userStarBox">
+    <view class="userRateConst">打分</view>
+    <view class="userRateStarBox">
+      <star rateStar="{{item.roomScore}}"></star>
+    </view>
+  </view>
+  <view class="userRateCont">
+    {{item.comment}}
+  </view>
+  <view class="userRatePic">
+    <image class="userRatePicItem" wx:for="{{item.imgs}}" wx:for-item="picItem" src="{{api + '/zxkj/img/' + picItem}}" wx:key="index" mode="aspectFill"></image>
+  </view>
+  <!-- <view class="goodBox">
+    <view wx:if="{{item.hasGood}}" class="good" bindtap="zan" data-index="{{index}}" data-rateid="{{item.rateId}}">
+      <image class="gooIcon" src="../image/zan1.svg"></image>
+      <text>{{item.zanCount}}</text>
+    </view>
+    <view wx:else class="good" bindtap="zan" data-index="{{index}}" data-rateid="{{item.rateId}}">
+      <image class="gooIcon" src="../image/zan.svg"></image>
+      有用
+    </view>
+  </view> -->
+  <!-- <view class="hotelRateBox">
+    <view class="hotelTitle">
+      <view class="hotelName">{{item.hotelName}}</view>
+      <image class="hotelIcon" src="../image/guanfang.svg"></image>
+    </view>
+    <view class="hotelRate">{{item.hotelRate}}</view>
+  </view> -->
+</view>

@@ -1,0 +1,160 @@
+/* pages/lookPermission/lookPermission.wxss */
+
+page {
+  position: relative;
+  font-size: 30rpx;
+  color: #333;
+  background-color: rgb(243, 243, 243);
+}
+
+.roomInfoBox {
+  margin-top: 20rpx;
+  width: 100%;
+  padding: 20rpx 20rpx;
+  background-color: #fff;
+  text-align: center;
+}
+.roomInfoBox text{
+  color: #029789;
+  font-weight: bold;
+}
+
+.roomInfoItem {
+  width: 700rpx;
+  margin: 0 auto;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.roomInfoConst {
+  height: 100%;
+  width: 170rpx;
+  float: left;
+  font-size: 28rpx;
+  color: #777;
+  letter-spacing: 2rpx;
+}
+
+.roomInfo {
+  float: left;
+  text-align: left;
+  width: 350rpx;
+  height: 100%;
+  letter-spacing: 1rpx;
+  color: #333;
+}
+
+.rightBtn {
+  float: right;
+  color: #29b6f6;
+  border: #29b6f6 2rpx solid;
+  border-radius: 10rpx;
+  padding: 0 15rpx;
+  font-size: 26rpx;
+  letter-spacing: 1rpx;
+  font-weight: bold;
+}
+
+.borderBt {
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  padding-bottom: 20rpx;
+}
+
+.ownerInfoBox {
+  width: 690rpx;
+  max-height: 450rpx;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+.ownerItem {
+  font-size: 26rpx;
+  letter-spacing: 1rpx;
+  float: left;
+  height: 80rpx;
+  margin: 10rpx 15rpx;
+  line-height: 80rpx;
+  background-color: #ddd;
+  width: 160rpx;
+  padding: 0 20rpx;
+  border-radius: 15rpx;
+  text-align: center;
+  transition: all 0.5s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-line-clamp: 1;
+}
+
+.inviteBox {
+  width: 100%;
+  height: 70rpx;
+  margin: 50rpx 0 30rpx 0;
+}
+
+.inviteBtn {
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 600rpx;
+  margin: 0 auto;
+  border: #f06c00 2rpx solid;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  color: #f06c00;
+  text-align: left;
+}
+
+.inviteBtnBox{
+  width: 600rpx;
+  height: 70rpx;
+  margin: 0 auto
+}
+
+.inviteIcon {
+  float: left;
+  height: 40rpx;
+  width: 40rpx;
+  margin: 15rpx 20rpx 15rpx 170rpx;
+}
+
+.inviteConst {
+  float: left;
+  letter-spacing: 1rpx;
+  width: 220rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.readyOwnerInfo{
+  padding: 20rpx 0;
+  min-height: 60rpx;
+  max-height: 120rpx;
+  overflow: auto;
+  width: 700rpx;
+  margin: 10rpx auto;
+}
+.readyOwnerBox{
+  float: left;
+  height: 60rpx;
+  margin: 20rpx 0 0 20rpx;
+  line-height: 60rpx;
+  padding: 0 30rpx;
+  border-radius: 150rpx;
+  background-color: #f06c00;
+  color: #fff;
+  font-size: 26rpx;
+  transition: all 0.5s;
+}
+.readyOwner{
+  float: left;
+}
+.delIcon{
+  float: left;
+  margin: 10rpx 0 0 15rpx;
+  height: 40rpx;
+  width: 40rpx;
+}
+.active{
+  color: #fff;
+  background-color: #f06c00;
+  transition: all 0.5s;
+}

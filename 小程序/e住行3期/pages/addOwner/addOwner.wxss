@@ -1,0 +1,83 @@
+/* pages/addOwner/addOwner.wxss */
+page{
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+}
+.uploadIdInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 500rpx;
+  margin:  0 auto;
+  background-color: #fff;
+  border-radius: 10rpx;
+  border: rgba(240, 108, 0, 0.5) solid 4rpx;
+  /* box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190); */
+}
+.uploadIcon{
+  height: 50rpx;
+  width: 50rpx;
+  margin: 5rpx 10rpx 0 0;
+}
+.upload{
+  font-size: 26rpx;
+  color: #f06c00;
+}
+.userInfoBox{
+  width: 680rpx;
+  margin: 50rpx auto 0 auto;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+.userInfo{
+  height: 130rpx;
+  line-height: 130rpx;
+  width: 630rpx;
+  margin: 0 auto;
+  border-bottom: 3rpx solid #eee;
+}
+.user{
+  float: left;
+  height: 130rpx;
+  width: 130rpx;
+}
+.userIpt{
+  float: left;
+  height: 50rpx;
+  line-height: 50rpx;
+  width: 400rpx;
+  margin-top: 40rpx;
+}
+.ipt{
+  color: #ccc;
+}
+
+/*按钮*/
+.loginBtnView { 
+ width: 100%; 
+ height: auto; 
+ background-color: rgb(240, 109, 0); 
+ margin-top: 0px; 
+ margin-bottom: 0px; 
+ padding-bottom: 0px; 
+} 
+  
+.loginBtn { 
+ width: 80%; 
+ margin-top: 35px; 
+}
+
+.confirm{
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 32rpx;
+  width: 700rpx;
+  margin: 50rpx auto 0 auto;
+  text-align: center;
+  letter-spacing: 4rpx;
+  background-color: rgb(240, 109, 0);
+  color: #fff;
+}

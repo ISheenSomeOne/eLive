@@ -1,0 +1,97 @@
+/* pages/bindOrder/bindOrder.wxss */
+page {
+  background-color: rgb(243, 243, 243);
+  color: #333;
+  font-size: 30rpx;
+}
+.infoBox{
+  margin: 30rpx auto;
+  width: 640rpx;
+  height: 270rpx;
+  padding: 30rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.infoItem{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.infoConst{
+  font-weight: bold;
+  letter-spacing: 2rpx;
+  font-size: 32rpx;
+  width: 140rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.info{
+  text-align: center;
+  font-size: 34rpx;
+  border-bottom: #ddd solid 2rpx;
+  border-radius: 10rpx;
+  width: 480rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  letter-spacing: 2rpx;
+  font-weight: bold;
+}
+.ipt{
+  text-align: center;
+  color: #999;
+  font-weight: 500;
+}
+.confirm{
+  width: 660rpx;
+  font-size: 34rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #fff;
+  background-color: #f06c00;
+  border-radius: 10rpx;
+  margin: 100rpx auto 0 auto;
+  /* pointer-events: none;  禁用view */
+}
+
+
+.orderHotel {
+  display: flex;
+  justify-content: space-between;
+  width: 660rpx;
+  margin: 30rpx auto;
+  padding: 20rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.roomName {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.time {
+  margin-top: 25rpx;
+  font-size: 26rpx;
+  color: #6e6e6e;
+}
+
+.roomInfo {
+  margin-top: 15rpx;
+  font-size: 26rpx;
+  color: #6e6e6e;
+}
+
+.img{
+  height: 170rpx;
+  width: 240rpx;
+  border-radius: 10rpx;
+}
+/* .active{
+  background-color: #f06c00;
+  pointer-events: auto;
+} */

@@ -1,0 +1,885 @@
+/* pages/continue/continue.wxss */
+
+.topText {
+  margin-top: 100rpx;
+  width: 100%;
+  height: 60rpx;
+  background-color: rgba(128, 128, 128, 0.158);
+}
+
+.textLeft {
+  margin-left: 30rpx;
+  font-size: 25rpx;
+}
+
+/*分割线样式*/
+
+.divLine {
+  background: rgb(230, 233, 223);
+  width: 100%;
+  height: 3rpx;
+  margin-left: 0;
+}
+
+/*分割线样式*/
+
+.divLine1 {
+  background: rgba(128, 128, 128, 0.158);
+  width: 100%;
+  height: 10rpx;
+  margin-left: 0;
+  margin-top: 30rpx;
+}
+
+/*分割线样式*/
+
+.divLine2 {
+  background: rgb(230, 233, 223);
+  width: 100%;
+  height: 3rpx;
+  margin-left: 0;
+}
+
+.chooseRoom {
+  margin-top: 30rpx;
+  font-size: 30rpx;
+  margin-left: 30rpx;
+}
+
+.recharge{
+  float: right;
+  color: rgb(9,187,7)
+}
+
+.chooseRoomText {
+  margin-bottom: 18rpx;
+}
+
+/* .roomText{
+  font-size:36rpx;
+letter-spacing: 1rpx;
+float: left;
+margin-top: 10rpx;
+height: 80rpx;
+line-height: 80rpx;
+background-color: #ddd;
+width: 130rpx;
+padding: 0 20rpx;
+border-radius: 15rpx;
+text-align: center;
+transition: all 0.5s;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+-webkit-line-clamp: 1;
+
+} */
+
+.roomText {
+  font-size: 33rpx;
+  margin-top: 60rpx;
+}
+
+.roomLeft {
+  border: 3rpx solid rgb(255, 145, 0);
+  border-radius: 15rpx;
+  color: rgb(255, 145, 0);
+  width: 90rpx;
+  height: 30rpx;
+  padding: 10rpx 10rpx;
+  /*  
+  overflow: hidden; 
+   text-overflow: ellipsis;
+  white-space: nowrap;
+   */
+}
+
+.active {
+  color: #fff;
+  background-color: #f06c00;
+  transition: all 0.5s;
+}
+
+.dateChoose {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 640rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.checkInBox {
+  height: 80rpx;
+  width: 180rpx;
+  border-radius: 3rpx;
+  text-align: center;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  padding-top: 10rpx;
+}
+
+.checkInTitle {
+  font-size: 20rpx;
+}
+
+.checkInDate {
+  margin-top: 5rpx;
+  font-size: 30rpx;
+  color: #f57800;
+}
+
+.dateNum {
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 3rpx;
+  text-align: center;
+}
+
+.line {
+  width: 90rpx;
+  border-bottom: 2rpx solid red;
+}
+
+.nameclass {
+  font-size: 30rpx;
+  border: 2rpx solid #f06c00;
+  border-radius: 20rpx;
+  padding-left: 18rpx;
+  margin-left: 20rpx;
+  padding: 10rpx 10rpx;
+  background-color: #f57800;
+  color: white;
+}
+
+.buttoms {
+  z-index: 1;
+  width: 100%;
+  height: 100rpx;
+  border-top: 2rpx solid rgb(243, 243, 243);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  line-height: 100rpx;
+  background-color: white;
+}
+
+.buttomImg {
+  margin-top: 8rpx;
+  display: block;
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 5rpx;
+}
+
+.buttomLeft {
+  height: 100rpx;
+  font-size: 30rpx;
+  float: left;
+  margin-left: 30rpx;
+  color: #f06c00;
+}
+
+.buttomLeftPrice {
+  height: 100rpx;
+  font-size: 32rpx;
+  float: left;
+  margin-left: 20rpx;
+  color: #f06c00;
+}
+
+.buttomLeftTip{
+  height: 100rpx;
+  font-size: 32rpx;
+  float: left;
+  margin-left: 20rpx;
+  color: #f76260;
+}
+
+.notClick{
+  pointer-events: none;
+}
+
+.buttomC {
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 26rpx;
+  float: right;
+  margin-top: 35rpx;
+  margin-right: 20rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.buttomRight {
+  float: right;
+  background-color: #f06c00;
+  margin: 15rpx 30rpx 0 0;
+  text-align: center;
+  height: 70rpx;
+  width: 160rpx;
+  border-radius: 100rpx;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  color: #fff;
+  letter-spacing: 0rpx;
+}
+
+.alls {
+  margin-top: 0rpx;
+  z-index: -1;
+}
+
+.pays {
+  width: 90%;
+  height: 40%;
+  top: 500rpx;
+  left: 30rpx;
+  background: rgb(255, 250, 250);
+  margin-left: 15rpx;
+  z-index: 11;
+  overflow: hidden;
+  position: fixed;
+}
+
+.one {
+  padding-bottom: 20rpx;
+}
+
+.one_right {
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 65%;
+  margin-top: 30rpx;
+}
+
+.one_left {
+  font-size: 36rpx;
+}
+
+.two {
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.two_left {
+  font-size: 33rpx;
+  padding-left: 30rpx;
+}
+
+.two_c {
+  font-size: 33rpx;
+  padding-left: 380rpx;
+}
+
+.two_right {
+  width: 40rpx;
+  height: 33rpx;
+  padding-left: 20rpx;
+}
+
+.three {
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.three_left {
+  font-size: 33rpx;
+  padding-left: 30rpx;
+}
+
+.three_right {
+  padding-left: 60%;
+  color: #f06c00;
+}
+
+.button_pay {
+  border: 3rpx solid #f06c00;
+  background-color: #f06c00;
+  margin: 100rpx 40rpx 0 40rpx;
+}
+
+.button_text {
+  font-size: 34rpx;
+  color: white;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+  text-align: center; /* 字体水平居中*/
+  letter-spacing: 3rpx;
+}
+
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+  color: #333;
+}
+
+.modalBg {
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalBox {
+  width: 670rpx;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 300rpx auto 0 auto;
+  padding-bottom: 20rpx;
+}
+
+.modalTitle {
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 600rpx;
+  margin: 0 auto;
+}
+
+.modalHotelName {
+  float: left;
+}
+
+.tipBox {
+  float: left;
+  margin-left: 40rpx;
+}
+
+.tipIcon2 {
+  float: left;
+  margin-top: 30rpx;
+  height: 20rpx;
+  width: 20rpx;
+}
+
+.tip2 {
+  float: left;
+  font-size: 20rpx;
+  color: #029789;
+}
+
+.done {
+  float: right;
+  text-align: center;
+  width: 70rpx;
+  font-size: 24rpx;
+  color: rgb(7, 193, 96);
+}
+
+.listBox {
+  width: 100%;
+  max-height: 340rpx;
+  overflow: auto;
+}
+
+.listBox2 {
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+
+.roomInfoBox {
+  position: relative;
+  width: 600rpx;
+  line-height: 100rpx;
+  margin: 0 auto;
+}
+
+.modalRoomInfo {
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 26rpx;
+  border-top: 2rpx solid rgb(243, 243, 243);
+}
+
+.closePay {
+  float: right;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 20rpx;
+}
+
+.pay {
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 35rpx;
+  background-color: #f06c00;
+  margin-top: 50rpx;
+  text-align: center;
+  color: #fff;
+}
+
+.payWayIcon {
+  float: left;
+  height: 40rpx;
+  width: 40rpx;
+  margin-top: 30rpx;
+}
+
+.info {
+  float: left;
+  margin-left: 30rpx;
+}
+
+.userRadio {
+  position: absolute;
+  height: 100rpx;
+  top: 0;
+  right: 0;
+}
+
+.payWayConst {
+  float: right;
+  margin-right: 10rpx;
+}
+
+.reChoose {
+  float: right;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 37rpx;
+}
+
+.payPrice {
+  float: right;
+  font-size: 35rpx;
+  color: #f06c00;
+}
+
+.orderTwo {
+  position: relative;
+}
+
+/* .bg {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  background-color: #f06c00;
+  height: 250rpx;
+  width: 100%;
+} */
+
+.goBack {
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.goBackIcon {
+  float: left;
+  margin: 20rpx 10rpx;
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.goBackName {
+  color: #fff;
+  font-weight: 500;
+  font-size: 34rpx;
+}
+
+.orderHotel {
+  width: 660rpx;
+  margin: 0 auto;
+  padding: 20rpx 20rpx 0 20rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.roomName {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.time {
+  margin-top: 25rpx;
+  font-size: 22rpx;
+  color: #6e6e6e;
+}
+
+.roomInfo {
+  margin-top: 10rpx;
+  padding-bottom: 15rpx;
+  font-size: 22rpx;
+  color: #6e6e6e;
+  border-bottom: 2rpx solid rgba(240, 108, 0, 0.15);
+}
+
+.tip {
+  height: 70rpx;
+  line-height: 70rpx;
+}
+
+.tipIcon {
+  float: left;
+  margin-top: 20rpx;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.tipInfo {
+  float: left;
+  margin-left: 5rpx;
+  font-size: 20rpx;
+  color: #029789;
+}
+
+.addressBox {
+  width: 100%;
+  margin-top: 20rpx;
+  height: 90rpx;
+  background-color: #fff;
+  color: #6e6e6e;
+}
+
+.address {
+  position: relative;
+  width: 700rpx;
+  height: 90rpx;
+  margin: 0 auto;
+  line-height: 45rpx;
+}
+
+.hotelAddress {
+  font-size: 26rpx;
+  width: 500rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.addressInfo {
+  font-size: 20rpx;
+  width: 500rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.addressIcon {
+  position: absolute;
+  top: 25rpx;
+  right: 40rpx;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.userInfoBox {
+  width: 100%;
+  height: 150rpx;
+  background-color: #fff;
+  margin-top: 20rpx;
+  color: #6e6e6e;
+}
+
+.userInfo {
+  width: 700rpx;
+  height: 150rpx;
+  line-height: 70rpx;
+  margin: 0 auto;
+}
+
+.userConst {
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  color: #333;
+}
+
+.contact {
+  float: left;
+  color: #888;
+  font-size: 26rpx;
+  width: 300rpx;
+}
+
+.phone {
+  float: left;
+  color: #888;
+  font-size: 26rpx;
+}
+
+.see {
+  float: right;
+  margin: 10rpx 10rpx 0 0;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.quanBox {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-top: 10rpx;
+  background-color: #fff;
+}
+
+.quan {
+  width: 700rpx;
+  margin: 0 auto;
+}
+
+.quanIcon {
+  float: left;
+  margin-top: 20rpx;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.const {
+  float: left;
+  margin-left: 10rpx;
+  font-size: 24rpx;
+  color: #6e6e6e;
+  letter-spacing: 1rpx;
+}
+
+.goIcon {
+  float: right;
+  margin-top: 25rpx;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.quanInfo {
+  float: right;
+  margin-right: 10rpx;
+  font-size: 20rpx;
+  color: rgb(197, 197, 197);
+}
+
+.orderInfoBox {
+  width: 100%;
+  margin-top: 10rpx;
+  padding-bottom: 110rpx;
+  background-color: #fff;
+}
+
+.orderInfo {
+  width: 700rpx;
+  margin: 0 auto;
+}
+
+.invoice {
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+
+.invoiceConst {
+  float: left;
+  font-size: 26rpx;
+  color: #6e6e6e;
+}
+
+.ipt {
+  float: left;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 500rpx;
+  font-size: 28rpx;
+  margin-left: 30rpx;
+  color: rgb(95, 95, 95);
+}
+
+.iptF {
+  line-height: 80rpx;
+  color: #333;
+}
+
+.iptP {
+  line-height: 80rpx;
+  color: rgb(197, 197, 197);
+}
+
+.remarks {
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.priceMX {
+  margin-top: 10rpx;
+  color: #333;
+}
+
+.originalPriceBox {
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 24rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  color: #333;
+}
+
+.originalConst {
+  float: left;
+  width: 300rpx;
+  height: 50rpx;
+}
+
+.originalPrice {
+  height: 50rpx;
+  float: right;
+}
+
+.timePriceBox {
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 20rpx;
+  color: #888;
+}
+
+.timeDetail {
+  float: left;
+}
+
+.other {
+  float: left;
+  margin-left: 10rpx;
+}
+
+.timePrice {
+  float: right;
+}
+
+.depositBox {
+  height: 40rpx;
+  line-height: 40rpx;
+  padding-top: 10rpx;
+  border-top: 2rpx solid rgb(243, 243, 243);
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  font-size: 24rpx;
+}
+
+.depositConst {
+  float: left;
+}
+
+.deposit {
+  float: right;
+}
+
+.saleBox {
+  height: 60rpx;
+  line-height: 60rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  font-size: 24rpx;
+}
+
+.saleConst {
+  float: left;
+}
+
+.salePrice {
+  float: right;
+  color: #f06c00;
+}
+
+.saleDetailBox {
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 20rpx;
+  color: #888;
+}
+
+.saleDetail {
+  float: left;
+}
+
+.saleDetailPrice {
+  float: right;
+}
+
+.priceInfo {
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #fff;
+  border-top: 2rpx solid rgb(243, 243, 243);
+}
+
+.priceBox {
+  width: 700rpx;
+  margin: 0 auto;
+}
+
+.price {
+  float: left;
+  color: #f06c00;
+  font-size: 26rpx;
+}
+
+.price text {
+  font-size: 30rpx;
+}
+
+.detailBox {
+  float: right;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+
+.detail {
+  float: left;
+  font-size: 20rpx;
+  color: #6e6e6e;
+}
+
+.detailIcon {
+  float: left;
+  height: 20rpx;
+  width: 20rpx;
+  margin: 40rpx 0 0 10rpx;
+}
+
+.confirm {
+  float: right;
+  margin: 20rpx 0 0 30rpx;
+  text-align: center;
+  height: 60rpx;
+  width: 150rpx;
+  border-radius: 100rpx;
+  line-height: 60rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: #f06c00;
+  letter-spacing: 0rpx;
+}
+
+.detailInfoBox{
+  width: 600rpx;
+  margin: 0 auto;
+}
+
+.detailInfoItem{
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+.detailLeft{
+  float: left;
+}
+.detailRight{
+  float: right;
+}
+.detailInfo{
+  width: 100%;
+  margin-bottom: 10rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+.yellow{
+  color: #f06c00;
+}

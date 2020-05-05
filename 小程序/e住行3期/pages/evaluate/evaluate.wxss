@@ -1,0 +1,84 @@
+/* pages/evaluate/evaluate.wxss */
+
+page {
+  background-color: rgb(255, 255, 255);
+  color: #333;
+  font-size: 30rpx;
+}
+
+.dateAndRoom{
+  width: 700rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin: 0 auto;
+  font-size: 24rpx;
+}
+.evalStarBox{
+  width: 500rpx;
+  margin: 0 auto;
+}
+.evalStarItem{
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+.evalConst{
+  float: left;
+  width: 90rpx;
+}
+.tipConst{
+  width: 700rpx;
+  margin: 20rpx auto;
+  font-size: 22rpx;
+  color: #777;
+}
+.ipt{
+  width: 660rpx;
+  height: 200rpx;
+  margin: 0 auto;
+  background-color: #eee;
+  padding: 20rpx;
+}
+.iptPla{
+  font-size: 24rpx;
+  color: #999;
+}
+.submit{
+  position: fixed;
+  bottom: 40rpx;
+  left: 40rpx;
+  width: 670rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 5rpx;
+  background-color: #f06c00;
+  color: #fff;
+  font-size: 32rpx;
+  letter-spacing: 2rpx;
+  text-align: center;
+}
+.imgBox{
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-around; */
+  width: 690rpx;
+  margin: 20rpx auto 50rpx auto
+}
+.addImgBox{
+  /* display: flex;
+  flex-direction: column; */
+  float: left;
+  width: 170rpx;
+  height: 210rpx;
+}
+.addImg{
+  margin: 10rpx;
+  width: 150rpx;
+  height: 150rpx;
+}
+.delete{
+  text-align: center;
+  width: 170rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}

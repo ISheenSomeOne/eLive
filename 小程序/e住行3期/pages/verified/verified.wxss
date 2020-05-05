@@ -1,0 +1,93 @@
+/* pages/verified/verified.wxss */
+page {
+  background-color: rgb(243, 243, 243);
+  color: #333;
+  font-size: 30rpx;
+}
+
+.infoBox {
+  width: 650rpx;
+  padding: 50rpx;
+  background-color: #fff;
+  height: 300rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.infoItem {
+  margin: 0 auto;
+  width: 650rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+}
+
+.infoConst {
+  float: left;
+  font-weight: bold;
+  font-size: 32rpx;
+  letter-spacing: 2rpx;
+  width: 150rpx;
+}
+
+.info {
+  float: left;
+  width: 400rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  letter-spacing: 1rpx;
+  margin: 15rpx 0 0 10rpx;
+  font-weight: bold;
+  font-size: 32rpx;
+}
+
+.ipt {
+  color: #999;
+  font-weight: 500;
+}
+
+.confirm {
+  width: 650rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #fff;
+  background-color: #f06c00;
+  border-radius: 10rpx;
+  margin: 100rpx auto 0 auto;
+  /* pointer-events: none;  禁用view */
+}
+
+.edit{
+  width: 650rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #fff;
+  background-color: #f06c00;
+  border-radius: 10rpx;
+  margin: 100rpx auto 0 auto;
+  letter-spacing: 2rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.confirm {
+  width: 650rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #fff;
+  background-color: #09bb07;
+  border-radius: 10rpx;
+  margin: 50rpx auto 0 auto;
+  letter-spacing: 2rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+/* .active{
+  background-color: #f06c00;
+  pointer-events: auto;
+} */

@@ -1,0 +1,92 @@
+<!--pages/addPerson/addPerson.wxml-->
+<view wx:if="{{chooseRoom}}" class="modalBg">
+  <!-- 弹出模态框 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">{{hotelName}}</view>
+      <view class="tipBox">
+        <image class="tipIcon2" src="../image/tip.png"></image>
+        <view class="tip2">请选择要添加入住人的房间</view>
+      </view>
+      <view class="done" bindtap="closeChoose" >完成</view>
+    </view>
+    <view class="listBox">
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class="roomInfoBox" wx:for="{{roomInfo}}" wx:key="index">
+          <view class="modalRoomInfo">
+            <view class="info">{{item.roomName}}</view>
+            <view class="info">{{item.roomFloor}}</view>
+            <view class="info">{{item.roomNum}}</view>
+          </view>
+          <view class="modalRoomInfo">
+            <view class="info">{{item.roomDate}}</view>
+            <view class="info">{{item.roomTime}}</view>
+            <view class="info">{{item.roomOther}}</view>
+          </view>
+          <radio class="userRadio" value="{{item.value}}" checked="{{item.checked}}" />
+        </view>
+      </radio-group>
+    </view>
+  </view>
+
+</view>
+<view class="addPerson">
+  <!-- 添加入住人 -->
+  <view class="bg"></view>
+  <!-- 背景 -->
+  <view class="goBack">
+    <!-- 返回 -->
+    <image src="/pages/image/fanhui.png" class="goBackIcon"></image>
+    <view class="goBackName">{{hotelName}}</view>
+  </view>
+  <view class="orderInfo">
+    <!-- 订单信息 -->
+    <view class="hotelInfo">
+      <!-- 酒店信息 -->
+      <view class="hotelName">{{hotelName}}</view>
+      <view class="hotelAddress">{{address}}</view>
+      <image src="/pages/image/tiaozhuan.png" class="go"></image>
+    </view>
+    <view class="roomInfo" bindtap='adds'>
+      <!-- 房间信息 -->
+      <view class="hotelName">{{roomName}} </view>
+      <view class="orderDetailInfo">{{orderInfo}} {{startTime}} - {{endTime}} 共{{dateCount}}晚 无早餐</view>
+      <image src="/pages/image/tiaozhuan.png" class="go"></image>
+    </view>
+  </view>
+  <view class="tip">
+    <!-- 提示 -->
+    <image src="/pages/image/tip.png" class="tipIcon"></image>
+    <view class="tipInfo">请您填写入住人信息,为确保入住顺利请认真填写</view>
+  </view>
+  <view>
+    <!-- 入住人信息 -->
+    <view class="ownerInfoBox">
+      <view class="ownerInfo">
+        <view class="itemBox1">
+          <view class="ownerTitle">入住人信息：</view>
+          <image class='ownerTitleIcon' src='../image/jiaren.png' bindtap="ownerInfo" ></image>
+        </view>
+        <view class="itemBox2">
+          <label class="inputTitle">姓名</label>
+          <input class="ipt1" type='text' placeholder-class="iptP" name='userName' bindinput="userName" placeholder='请填写姓名 必填' ></input>
+        </view>
+        <view class="itemBox3">
+          <label class="inputTitle">身份证</label>
+          <input class="ipt2" type='idcard' placeholder-class="iptP" name='card' bindinput="card"  placeholder='请填写身份证 必填' ></input>
+        </view>
+      </view>
+    </view>
+
+    <view class="ownerList">
+      <view wx:for="{{ownerList}}" wx:key="{{index}}" class="ownerItem">
+        <image src="../image/list-.png" class="del"></image>
+        <view class="user">{{item.user}}</view>
+        <view class="idCard">身份证：{{item.idCard}}</view>
+        <image src="../image/icon-eye-close.png" class="see"></image>
+      </view>
+    </view>
+
+    <view class="confirm" bindtap="confirm">确认</view>
+  </view>
+</view>

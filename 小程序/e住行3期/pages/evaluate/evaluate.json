@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "giveStar": "/common/giveStar/giveStar",
+    "navbar": "/common/navbar/navbar"
+    }
+}

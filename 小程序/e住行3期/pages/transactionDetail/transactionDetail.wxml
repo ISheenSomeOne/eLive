@@ -1,0 +1,23 @@
+<!--pages/transactionDetail/transactionDetail.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding:1rpx'>
+	<view class="transactionName">汇都酒店</view>
+	<view class="transactionContent">特价大床房</view>
+	<view class="price">-150.00</view>
+	<view class="bottomContent">
+		<view class="contentItem">
+			<view class="itemLeft">支付方式</view>
+			<view class="itemRight">余额</view>
+		</view>
+		<view class="contentItem">
+			<view class="itemLeft">交易时间</view>
+			<view class="itemRight">2020-02-02 15:16:12</view>
+		</view>
+		<view class="contentItem">
+			<view class="itemLeft">交易单号</view>
+			<view class="itemRight">zx20191116192351002011697589</view>
+		</view>
+	</view>
+</view>
+<view class="zhuxing">住行科技</view>

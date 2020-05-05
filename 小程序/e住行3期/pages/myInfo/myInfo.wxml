@@ -1,0 +1,49 @@
+<!--pages/myInfo/myInfo.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style="margin-top: {{height}}px;padding-top:1rpx;">
+  <view class='infoBox'>
+    <view class='infoItem' style='height:120rpx;line-height:120rpx;'>
+      <view class='infoConst'>头像</view>
+      <image class='avntar' src='{{userInfo.avatarUrl}}'></image>
+    </view>
+    <view class='infoItem'>
+      <view class='infoConst'>昵称</view>
+      <!-- <image class='infoIcon' src='../image/tiaozhuan.png'></image> -->
+      <view class='info'>{{userInfo.nickName}}</view>
+    </view>
+    <view class='infoItem'>
+      <view class='infoConst'>手机</view>
+      <!-- <image class='infoIcon' src='../image/tiaozhuan.png'></image> -->
+      <view class='info'>{{phone}}</view>
+    </view>
+    <view class='infoItem'>
+      <view class='infoConst'>邮箱</view>
+      <!-- <image class='infoIcon' src='../image/tiaozhuan.png'></image> -->
+      <view class='info'>未绑定</view>
+    </view>
+  </view>
+  <view class='infoBox'>
+    <view class='infoItem' bindtap="verified">
+      <view class='infoConst'>实名认证</view>
+      <image class='infoIcon' src='../image/tiaozhuan.png'></image>
+      <view class='info'></view>
+    </view>
+  </view>
+  <!-- <view class='infoBox'>
+    <view class='infoItem'>
+      <view class='infoConst'>修改登录密码</view>
+      <image class='infoIcon' src='../image/tiaozhuan.png'></image>
+      <view class='info'></view>
+    </view>
+  </view>
+  <view class='infoBox'>
+    <view class='infoItem'>
+      <view class='infoConst'>注销账号</view>
+      <image class='infoIcon' src='../image/tiaozhuan.png'></image>
+      <view class='info'></view>
+    </view>
+  </view>
+  <view class='logout'>退出账户</view> -->
+</view>

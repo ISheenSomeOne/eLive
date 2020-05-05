@@ -1,0 +1,27 @@
+<!--pages/aboutUs/aboutUs.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view>
+  <image class="images" src="../image/zxkj.ico"></image>
+</view>
+
+<view class="current">
+  <text>当前版本1.0.0</text>
+</view>
+
+<view class="text">
+  <text>
+    e住行是通过数字化与网络化、信息化服务技术，实现集自助订房、一键开锁、自助续房、自助退房、旅游咨询、在线呼叫客房服务等功能于一体的智能化无前台酒店服务系统。同时，后台开发独特的会员运营系统、支付系统、智能门锁系统、人证身份比对系统、会议及团队辅助系统、退房系统等综合网络服务体系。运用现代服务理念，致力于打造智能化、人性化、品牌化、潮流化的无前台智慧酒店。{{}}
+ </text>
+</view>
+
+<view class="users">
+  <image class="imgs" src="../image/hengxian.svg"></image>
+  <view class="user">
+  <text class="blue" bindtap="useAgreement">用户协议 </text>
+  <text>及</text>
+  <text class="blue" bindtap="intimat"> 隐私声明</text>
+  </view>
+  <image class="imgs1" src="../image/hengxian.svg"></image>
+</view>

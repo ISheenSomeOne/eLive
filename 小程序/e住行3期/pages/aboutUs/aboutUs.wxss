@@ -1,0 +1,52 @@
+/* pages/aboutUs/aboutUs.wxss */
+page{
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+}
+.images{
+  margin-top: 200rpx;
+  margin-left: 250rpx;
+  width: 230rpx;
+  height: 230rpx;
+  border: 1rpx solid;
+  border-radius:25px;
+}
+.current{
+  margin-left: 250rpx;
+  font-size: 33rpx;
+  letter-spacing: 3rpx;
+}
+.text{
+  font-size: 36rpx;
+  letter-spacing: 5rpx;
+  margin-left: 50rpx;
+  margin-right: 50rpx;
+  line-height: 60rpx;
+}
+.user{
+  margin-left: 200rpx;
+  margin-top: 20rpx;
+}
+.imgs{
+  width: 80rpx;
+  height: 60rpx;
+  position: absolute;
+  top: 1337rpx;
+  left: 105rpx;
+}
+.imgs1{
+  width: 80rpx;
+  height: 60rpx;
+   position: absolute;
+   top: 1337rpx;
+  left: 585rpx;
+}
+.blue{
+  font-size: 36rpx;
+  letter-spacing: 5rpx; 
+  color:#47a4f0;
+}
+.users{
+  margin-top: 100rpx;
+  margin-bottom: 50rpx;
+}

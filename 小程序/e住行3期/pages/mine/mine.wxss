@@ -1,0 +1,129 @@
+/* pages/mine/mine.wxss */
+
+page {
+  background-color: rgb(243, 243, 243);
+  color: #333;
+  font-size: 30rpx;
+  position: relative;
+}
+.avatar{
+  margin-top: 100rpx;
+  height: 150rpx;
+  width: 150rpx;
+  border-radius: 50%;
+}
+.nickname{
+  width: auto;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.loginBG{
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 400rpx;
+  filter: blur(8rpx);
+}
+.avatarBox{
+  width: 100%;
+  height: 400rpx;
+  text-align: center;
+}
+.loginBox{
+  width: 100%;
+  height: 400rpx;
+  text-align: center;
+  font-size: 50rpx;
+  padding: 1rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+.login{
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 400rpx;
+  letter-spacing: 2rpx;
+  color: #fff;
+  border-radius: 10rpx;
+  background-color: #f06c00b7;
+}
+.orderBox{
+  width: 100%;
+  margin-top: 20rpx;
+  height: 130rpx;
+  background-color: #fff;
+}
+.order{
+  width: 680rpx;
+  height: 130rpx;
+  line-height: 130rpx;
+  margin: 0 auto;
+  font-size: 40rpx;
+}
+.orderIcon{
+  float: left;
+  height: 80rpx;
+  width: 80rpx;
+  margin-top: 25rpx;
+}
+.orderConst{
+  float: left;
+  margin-left: 20rpx;
+  font-size: 35rpx;
+  letter-spacing: 2rpx;
+}
+.orderSee{
+  float: right;
+  color: #f06c00;
+  font-size: 32rpx;
+}
+.menuBox{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20rpx;
+  background-color: #fff;
+}
+.menuColumn{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 340rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  
+}
+.menuItem{
+  width: 100%;
+  height: 130rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  border-right: 2rpx solid rgb(243, 243, 243);
+}
+.menuItemR{
+  width: 100%;
+  height: 130rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+.menuIcon{
+  float: left;
+  margin-left: 20rpx;
+  height: 70rpx;
+  width: 70rpx;
+  margin-top: 30rpx;
+}
+.menuInfo{
+  float: left;
+  height: 80rpx;
+  width: 210rpx;
+  margin: 25rpx 0 0 20rpx;
+}
+.menuName{
+  font-size: 33rpx;
+}
+.menuStatus{
+  margin-top: 5rpx;
+  font-size: 24rpx;
+  color: rgb(190, 190, 190);
+}

@@ -1,0 +1,26 @@
+<!--pages/exchange/exchange.wxml-->
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+<view class="background">
+  <view>
+    <image src="../image/hotelImg/hotel1.jpg"></image>
+  </view>
+
+  <view class="textTop">
+    <text>{{roomTypeName}}</text>
+  </view>
+
+  <view class="divLine1"></view>
+
+  <view class="textCen">
+    <text>如您需要申请换房,请拨打酒店客服电话,与客房进行联系。</text>
+  </view>
+
+</view>
+
+<view class="textBottom">
+  <view class="buttons">
+    <text>联系客服</text>
+  </view>
+</view>

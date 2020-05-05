@@ -1,0 +1,13 @@
+/* common/giveStar/giveStar.wxss */
+.starBox{
+  float: left;
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 400rpx;
+}
+.star{
+  float: left;
+  margin: 10rpx 0 0 30rpx;
+  height: 50rpx;
+  width: 50rpx;
+}

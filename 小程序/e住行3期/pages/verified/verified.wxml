@@ -1,0 +1,30 @@
+<!--pages/verified/verified.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style="margin-top: {{height}}px">
+  <view class="infoBox">
+    <view class="infoItem">
+      <view class="infoConst">姓名</view>
+      <view wx:if="{{hasBeenCompleted}}" class="info">{{nameShow}}</view>
+      <input wx:else class="info" placeholder-class='ipt' confirm-type='next' name='name' maxlength='15' bindinput='getName' placeholder='{{name == "" ? "请填写姓名" : name}}' type='text'></input>
+    </view>
+    <view class="infoItem">
+      <view class="infoConst">身份证</view>
+      <view wx:if="{{hasBeenCompleted}}" class="info">{{idCardShow}}</view>
+      <input wx:else class="info" placeholder-class='ipt' confirm-type='next' name='idCard' maxlength='6' bindinput='getId' placeholder='{{idCard == "" ? "请填写身份证号后6位" : idCard}}' type='idcard'></input>
+    </view>
+    <view class="infoItem">
+      <view class="infoConst">手机号码</view>
+      <view wx:if="{{hasBeenCompleted}}" class="info">{{telShow}}</view>
+      <input wx:else class="info" placeholder-class='ipt' confirm-type='done' name='tel' maxlength='11' bindinput='getTel' placeholder='{{tel == "" ? "请填写手机号" : tel}}' type='number'></input>
+    </view>
+    <!-- <view class="infoItem">
+      <view class="infoConst">验证码</view>
+      <input class="info"></input>
+      <button></button>
+    </view> -->
+  </view>
+  <view class='edit' bindtap="toInput">编辑</view>
+  <view class='confirm' bindtap='confirm'>确认</view>
+</view>

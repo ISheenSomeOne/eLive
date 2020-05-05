@@ -1,0 +1,138 @@
+.clear {
+  clear: both;
+  overflow: hidden;
+}
+
+navigator {
+  display: inline;
+}
+
+.list {
+  margin: 10rpx auto;
+  width: 720rpx;
+  /* border-top: 2rpx solid rgb(221, 221, 221); */
+}
+
+.imgBox {
+  float: left;
+  height: 170rpx;
+  width: 250rpx;
+}
+
+.img {
+  height: 170rpx;
+  width: 250rpx;
+  border-top-left-radius: 15rpx;
+  border-bottom-left-radius: 15rpx;
+}
+
+.list_item {
+  position: relative;
+  margin-top: 20rpx;
+  height: 170rpx;
+  border-radius: 15rpx;
+  box-shadow: 0rpx 2rpx 8rpx rgb(190, 190, 190);
+}
+
+.info {
+  float: left;
+  margin: 10rpx 15rpx;
+  font-size: 28rpx;
+  width: 300rpx;
+}
+
+.title {
+  float: left;
+  width: 180rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.star {
+  float: left;
+  margin-top: 7rpx;
+  font-size: 20rpx;
+  color: rgb(128, 128, 128);
+}
+
+.num {
+  margin-top: 45rpx;
+  font-size: 18rpx;
+}
+
+.price {
+  position: absolute;
+  color: rgb(240, 109, 0);
+  bottom: 20rpx;
+  right: 20rpx;
+  letter-spacing: -1rpx
+}
+
+.qi {
+  display: inline;
+  font-size: 15rpx;
+}
+
+.downContent {
+  font-size: 22rpx;
+  color: #777;
+  text-align: center;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  font-size: 20rpx;
+  color: #777;
+}
+
+.couponBox {
+  margin-top: 5rpx;
+  padding: 10rpx;
+  height: 60rpx;
+  background-color: rgb(251, 229, 214);
+  font-size: 22rpx;
+  color: #333;
+}
+
+.coupon {
+  display: inline-block;
+  padding: 8rpx;
+  background: linear-gradient(to right, rgb(226, 69, 38), rgb(201, 38, 37));
+}
+
+.couponType {
+  float: left;
+  margin-right: 10rpx;
+  color: #fff;
+  height: 44rpx;
+  line-height: 44rpx;
+}
+
+.couponContent {
+  float: left;
+  background-color: rgb(251, 229, 214);
+  height: 44rpx;
+  line-height: 44rpx;
+  padding: 0 10rpx;
+}
+
+.couponTip {
+  float: right;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #e24526;
+  letter-spacing: 2rpx;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.more{
+  display: inline-block;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 16rpx;
+}

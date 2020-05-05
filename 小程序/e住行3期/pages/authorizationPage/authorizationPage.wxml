@@ -1,0 +1,57 @@
+<!--pages/authorizationPage/authorizationPage.wxml-->
+<!-- <view class='name'>e住行</view>
+<button class="btn" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">一键微信授权</button>
+<!-- <button >
+  <view class="btn">  一键微信授权</view>  
+</button> -->
+<!-- <view class="agree">登录即同意
+  <text class='file'>《用户服务协议》</text>和<text class='file'>《隐私政策》</text>
+</view> -->
+
+<!-- <view wx:if="{{isHide}}"> -->
+<!-- <view wx:if="{{canIUse}}"> -->
+<!-- <view class='header'> -->
+<!-- <image src='../../../we7/resource/images/login.png'></image> -->
+<!-- </view> -->
+<!-- <view class='content'> -->
+<!-- <text>请依次允许获得你的公开信息</text> -->
+<!-- </view> -->
+<!-- <view class=""> -->
+<!-- <button class="show" type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">{{AuthorizedLogin}}</button> -->
+<!-- <button class="{{flag?'hide':'show'}}" type="primary" lang="zh_CN" open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">{{UserPhone}}</button> -->
+<!-- </view> -->
+<!-- </view> -->
+<!-- <view wx:else>请升级微信版本</view> -->
+<!-- </view> class="{{flag?'hide':'show'}}"  -->
+
+<!-- <view wx:if="{{config.tipsshow1}}">
+  <view class='header'>
+  </view>
+  <view class='content'>
+    <text>请允许获得你的公开信息</text>
+  </view>
+  <view class="">
+    <button class="show" type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">{{AuthorizedLogin}}</button>
+  </view>
+</view> -->
+<!--pages/authorizationPage/authorizationPage.wxml-->
+<view class="box" wx:if="{{config.tipsshow1}}">
+  <view class='name'>e住行</view>
+  <!-- <view class="btn">一键微信授权</view> -->
+  <view class="btnBox">
+    <button class="btn2" bindtap="back">返回</button>
+    <button class="btn1" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">{{AuthorizedLogin}}</button>
+  </view>
+  <view class="agree">登录即同意
+    <text class='file'>《用户服务协议》</text>和
+    <text class='file'>《隐私政策》</text>
+  </view>
+</view>
+
+<!-- <view wx:if="{{config.tipsshow2}}">
+  <view class='header'>
+  </view>
+  <view class="">
+    <button type="primary" lang="zh_CN" open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">{{UserPhone}}</button>
+  </view>
+</view> -->

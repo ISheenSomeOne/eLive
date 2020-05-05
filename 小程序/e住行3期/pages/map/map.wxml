@@ -1,0 +1,11 @@
+<!--pages/map/map.wxml-->
+<!--pages/map/map.wxml-->
+<map class="map" id="map" longitude="113.324520" latitude="23.099994" scale="16" enable-rotate="true" enable-traffic="true" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="regionchange"
+  show-location="true">
+  <cover-view class="hotelInfo">
+    <cover-view class="hotelName">{{name}}</cover-view>
+    <cover-view class="hotelAddress">{{address}}</cover-view>
+    <cover-image class="navigationIcon" src="../image/daohang.svg" bindtap="goMap"></cover-image>
+  </cover-view>
+  <!-- <web-view class="navigation" src="{{androidBaiduUrl}}">dfsdf</web-view> -->
+</map>

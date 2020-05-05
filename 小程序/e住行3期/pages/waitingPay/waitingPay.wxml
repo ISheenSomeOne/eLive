@@ -1,0 +1,180 @@
+<!--pages/waitingPay/waitingPay.wxml-->
+
+<view wx:if="{{payWay}}" class="modalBg">
+  <!-- 弹出模态框  选择支付方式 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">请选择支付方式</view>
+      <view class="done" bindtap="closeChoose">完成</view>
+    </view>
+    <view class="listBox">
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class="roomInfoBox">
+          <view class="modalRoomInfo" bindtap="chooseYue">
+            <image class="payWayIcon" src="../image/yue.svg"></image>
+            <view class="info">余额支付<text>(￥{{orderInfo.balances}})</text></view>
+            <view class="recharge" bindtap="recharge">充值</view>
+          </view>
+          <view class="modalRoomInfo" bindtap="chooseWx">
+            <image class="payWayIcon" src="../image/wechatPay.svg"></image>
+            <view class="info">微信支付</view>
+          </view>
+          <view class="modalRoomInfo" bindtap="toProxyPay">
+            <image class="payWayIcon" src="../image/proxyPay.svg"></image>
+            <view class="info">微信好友代付</view>
+          </view>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{paying}}" class="modalBg">
+  <!-- 弹出模态框  支付 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">在线支付</view>
+      <image class="closePay" src="../image/cha.svg" bindtap="closePay"></image>
+    </view>
+    <view class="listBox2">
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class="roomInfoBox">
+          <view class="modalRoomInfo" bindtap="pays">
+            <view class="info" >付款方式</view>
+            <image class="reChoose" src="../image/tiaozhuan.png"></image>
+            <view wx:if="{{paymentMethod == 1}}" class="payWayConst">余额<text>(￥{{orderInfo.balances}})</text></view>
+            <view wx:elif="{{paymentMethod == 2}}" class="payWayConst">微信</view>
+          </view>
+          <view class="modalRoomInfo">
+            <view class="info">需付款</view>
+            <view class="payPrice">￥{{orderInfo.totalPrice}}</view>
+          </view>
+          <view wx:if="{{paymentMethod == 1}}" class="pay" bindtap="yuePay">支付</view>
+          <view wx:elif="{{paymentMethod == 2}}" class="pay" bindtap="wxpays">支付</view>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{showDetail}}" class="modalBg">
+  <!-- 弹出模态框  查看明细 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">查看明细</view>
+      <view class="done" bindtap="closeDetail">完成</view>
+    </view>
+    <view class="detailInfoBox">
+      <view class="detailInfoItem">
+        <view class="detailLeft">房间原价</view>
+        <view class="detailRight yellow">{{orderInfo.totalPrice}}￥</view>
+      </view>
+      <view class="detailInfo" wx:for="{{liveTime}}" wx:key="index">
+        <view class="detailLeft">{{item}} {{orderInfo.roomBreakFast}}</view>
+        <view class="detailRight">{{orderInfo.billingDetails[0].roomNum}}×{{orderInfo.billingDetails[0].roomTypePrice}}</view>
+        <!-- <view class="detailRight">{{orderInfo.billingDetails[0].roomNum}}×{{(orderInfo.totalPrice-orderInfo.billingDetails[0].hotelDeposit)/orderInfo.billingDetails[0].roomNum}}</view> -->
+      </view>
+      <view class="detailInfoItem" style="border-top:2rpx solid rgb(243, 243, 243);">
+        <view class="detailLeft">押金</view>
+        <view class="detailRight">￥{{orderInfo.billingDetails[0].hotelDeposit}}</view>
+      </view>
+      <view class="detailInfoItem">
+        <view class="detailLeft">优惠</view>
+        <view class="detailRight">-￥{{orderInfo.billingDetails[0].discountAmount}}</view>
+      </view>
+      <!-- <view class="detailInfo">
+        <view class="detailLeft">优惠券立减10元</view>
+        <view class="detailRight">-￥210</view>
+      </view> -->
+    </view>
+  </view>
+</view>
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="timeOut" wx:if="{{isTimeOut}}" style='margin-top: {{height}}px'>支付超时</view>
+<view class="staying" wx:else style='margin-top: {{height}}px'>待支付</view>
+<view class="stayingConst" wx:if="{{isTimeOut}}">订单已取消，请重新预订</view>
+<view class="stayingConst" wx:else>请在{{timeOut}}前确认，超时订单将自动取消</view>
+<view class="remainingTime" wx:if="{{!isTimeOut}}">
+  <view class="remainingTimeItem">{{remainingTimeMinu}}</view> :
+  <view class="remainingTimeItem">{{remainingTimeSec}}</view>
+</view>
+<view class="more" wx:if="{{isTimeOut}}" bindtap="reBooking">重新预订</view>
+<view class="more" wx:else bindtap="payNow">立即支付</view>
+<view class="bill">
+  <!-- 账单信息 -->
+  <view class="billTop">
+    <view class="payWay">在线支付</view>
+    <view class="price" wx:if="{{isTimeOut}}">订单未提交</view>
+    <view class="price" wx:else>￥{{orderInfo.totalPrice}}</view>
+    <view class="billDetail" bindtap="openDetail">明细</view>
+  </view>
+  <view wx:if="{{!isTimeOut}}" class="billBottom">
+    <image class="billIcon" src="../image/tip.png"></image>
+    <view class="tip">订单已确认，
+      <text class="finalTime">{{orderInfo.hotelCancelTime}}</text> 前可免费取消，逾期不可取消/变更，如未入住，酒店将扣除当天全额房费；房间整晚保留，请及时入住。</view>
+    <view class="cancel" bindtap="cancels">取消预订</view>
+  </view>
+</view>
+<view class="infoBox">
+  <!-- 酒店信息 -->
+  <view class="hotel">
+    <view class="hotelLeft">
+      <view class="hotelName">{{orderInfo.hotelName}}</view>
+      <view class="hotelAddress">{{orderInfo.hotelAddress}}</view>
+    </view>
+    <image class="hotelIcon" src="../image/tiaozhuan.png"></image>
+  </view>
+  <view class="hotel" bindtap="toContact">
+    <view class="hotelLeft">
+      <view class="hotelName">联系电话</view>
+      <view class="hotelAddress">{{orderInfo.hotelTel}}</view>
+    </view>
+    <image class="hotelIcon" src="../image/tiaozhuan.png"></image>
+  </view>
+  <view class="orderRoom">
+    <view class="roomName">
+      <text>{{orderInfo.roomTypeName}}</text>
+      <text>{{orderInfo.roomNum}}间</text>
+    </view>
+    <view class="roomName">
+      <text>{{orderRoomInTime}} 至  {{orderRoomOutTime}}</text>
+      <text>共{{orderInfo.roomDay}}晚</text>
+      <text>{{orderInfo.roomBreakFast}}</text>
+    </view>
+  </view>
+</view>
+<view class="infoBox">
+  <!-- 订单信息 -->
+  <view class="orderInfo">
+    <view class="orderInfoConst">订单信息</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">下单人</view>
+    <view class="orderCont">{{orderInfo.name}}</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">手机号</view>
+    <view class="orderCont">{{orderInfo.tel}}</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">订单号</view>
+    <view class="orderCont">{{orderInfo.outTradeNo}}</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">下单时间 </view>
+    <view class="orderCont">{{orderInfo.orderCreateTime}}</view>
+  </view>
+</view>
+<view class="infoBox">
+  <view class="other">
+    <view class="orderTitle">发票</view>
+    <view class="orderCont">如需发票，请填写开票信息</view>
+  </view>
+  <view class="other2">
+    <view class="orderTitle">备注</view>
+    <view wx:if="{{orderInfo.orderInfo != null}}" class="orderCont">{{orderInfo.orderInfo}}</view>
+  </view>
+</view>

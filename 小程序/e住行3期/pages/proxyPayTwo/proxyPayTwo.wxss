@@ -1,0 +1,260 @@
+/* pages/proxyPayTwo/proxyPayTwo.wxss */
+
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+  color: #333;
+}
+.modalBg {
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalBox {
+  width: 670rpx;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 300rpx auto 0 auto;
+  padding-bottom: 20rpx;
+}
+
+.modalTitle {
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 600rpx;
+  margin: 0 auto;
+}
+
+.modalHotelName {
+  float: left;
+  font-weight: bold;
+}
+
+.tipBox {
+  float: left;
+  margin-left: 40rpx;
+}
+
+.tipIcon2 {
+  float: left;
+  margin-top: 30rpx;
+  height: 20rpx;
+  width: 20rpx;
+}
+
+.tip2 {
+  float: left;
+  font-size: 20rpx;
+  color: #029789;
+}
+
+.done {
+  float: right;
+  text-align: center;
+  width: 70rpx;
+  font-size: 24rpx;
+  color: rgb(7, 193, 96);
+}
+
+.listBox {
+  width: 100%;
+  max-height: 340rpx;
+  overflow: auto;
+}
+
+.listBox2 {
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+
+.roomInfoBox {
+  position: relative;
+  width: 600rpx;
+  line-height: 100rpx;
+  margin: 0 auto;
+}
+.payPrice{
+  float: right;
+  font-size: 35rpx;
+  color: #f06c00;
+}
+
+.info{
+  float: left;
+  margin-left: 30rpx;
+}
+.modalRoomInfo {
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 26rpx;
+  border-top: 2rpx solid rgb(243, 243, 243);
+}
+
+.closePay {
+  float: right;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 20rpx;
+}
+
+.pay {
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 35rpx;
+  background-color: #f06c00;
+  margin-top: 50rpx;
+  text-align: center;
+  color: #fff;
+}
+
+.bg {
+  z-index: -1;
+  background-color: #f06c00;
+  height: 100rpx;
+  width: 100%;
+}
+
+.payWayConst{
+  float: right;
+  margin-right: 10rpx;
+}
+
+.payInfo {
+  position: relative;
+  text-align: center;
+  padding: 120rpx 0 70rpx 0;
+  z-index: -1;
+  width: 100%;
+  background-color: #fff;
+}
+
+.avatarBox {
+  position: absolute;
+  height: 170rpx;
+  width: 170rpx;
+  left: 50%;
+  margin-left: -85rpx;
+  background-color: #fff;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 50%;
+}
+
+.avatar {
+  height: 150rpx;
+  width: 150rpx;
+  display: block;
+  margin: 10rpx;
+  border-radius: 50%;
+}
+
+.hotelProxy {
+  font-size: 32rpx;
+  letter-spacing: 1rpx;
+}
+
+.price {
+  margin-top: 30rpx;
+  font-size: 60rpx;
+  font-weight: 600;
+}
+
+.timeConst {
+  margin-top: 30rpx;
+}
+
+.remainingTime {
+  color: #f06c00;
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.remainingTimeItem {
+  border: 2rpx solid #f06c00;
+  font-size: 40rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 0 20rpx;
+  margin: 15rpx 20rpx;
+}
+
+.time {
+  display: inline;
+  color: #f06c00;
+}
+
+.hotelInfoBox {
+  width: 100%;
+  margin-top: 30rpx;
+  background-color: #fff;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+
+.hotelInfo {
+  width: 650rpx;
+  margin: 0 auto;
+  padding: 40rpx 0;
+}
+
+.hotelName {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.roomInfo {
+  margin-top: 15rpx;
+}
+
+.orderTime {
+  margin-top: 20rpx;
+}
+
+.contactBox {
+  width: 100%;
+  padding: 20rpx 0;
+  margin-bottom: 160rpx;
+  background-color: #fff;
+}
+
+.contact {
+  width: 650rpx;
+  height: 35rpx;
+  margin: 20rpx auto;
+}
+
+.userConst {
+  float: left;
+  color: #888;
+}
+
+.user {
+  float: left;
+  color: #333;
+  margin-left: 40rpx;
+}
+
+.share {
+  position: fixed;
+  width: 680rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  bottom: 30rpx;
+  left: 50%;
+  margin-left: -340rpx;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 34rpx;
+  background-color: #f06c00;
+  letter-spacing: 1rpx;
+  border-radius: 10rpx;
+}
