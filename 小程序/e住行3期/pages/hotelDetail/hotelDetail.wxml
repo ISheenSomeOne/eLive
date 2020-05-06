@@ -1,6 +1,4 @@
 <!--pages/hotelDetail/hotelDetail.wxml-->
-<mp-halfScreenDialog bindbuttontap="buttontap" show="{{show}}" maskClosable="{{false}}" title="测试标题B" subTitle="测试标题B的副标题" desc="辅助描述内容，可根据实际需要安排" tips="辅助提示内容，可根据实际需要安排" buttons="{{buttons}}"></mp-halfScreenDialog>
-<button class="weui-btn" type="primary" bindtap="open">Open</button>
 <view wx:if="{{newPeople}}" class="modalBg">
 	<!-- 弹出模态框  新人登录优惠券 -->
 	<view class="modalBox">
@@ -57,6 +55,44 @@
 	<view class="statusCont" wx:if="{{seeStatus}}">
 		适用于{{hotelName}}酒店，实际以带有优惠券标签的房型为标准
 	</view>
+</view>
+<view class="page" data-weui-theme="{{theme}}">
+    <view class="page__hd">
+        <view class="page__title">ActionSheet</view>
+        <view class="page__desc">弹出式菜单</view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-btn-area">
+            <a class="weui-btn weui-btn_default" bindtap="openIOS">iOS ActionSheet</a>
+            <a class="weui-btn weui-btn_default" bindtap="openAndroid">Android ActionSheet</a>
+        </view>
+    </view>
+    <view wx:if="{{showIOSDialog}}" class="fadeIn" bindtap="close">
+        <view class="weui-mask"></view>
+        <view class="weui-actionsheet weui-actionsheet_toggle">
+            <view class="weui-actionsheet__title">
+                <view class="weui-actionsheet__title-text">这是一个标题，可以为一行或者两行。</view>
+            </view>
+            <view class="weui-actionsheet__menu">
+                <view class="weui-actionsheet__cell">示例菜单</view>
+                <view class="weui-actionsheet__cell">示例菜单</view>
+                <view class="weui-actionsheet__cell weui-actionsheet__cell_warn">负向菜单</view>
+            </view>
+            <view class="weui-actionsheet__action">
+                <view class="weui-actionsheet__cell">取消</view>
+            </view>
+        </view>
+    </view>
+    <view wx:if="{{showAndroidDialog}}" class="weui-skin_android fadeIn" bindtap="close">
+        <view class="weui-mask"></view>
+        <view class="weui-actionsheet">
+            <view class="weui-actionsheet__menu">
+                <view class="weui-actionsheet__cell">示例菜单</view>
+                <view class="weui-actionsheet__cell">示例菜单</view>
+                <view class="weui-actionsheet__cell">示例菜单</view>
+            </view>
+        </view>
+    </view>
 </view>
 
 <!-- 顶部菜单 -->

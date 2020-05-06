@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showIOSDialog: false,
+    showAndroidDialog: false,
     // 组件所需的参数
     nvabarData: {
       showCapsule: 1, //是否显示左上角图标   1表示显示    0表示不显示
@@ -45,14 +47,31 @@ Page({
     pageNumber: 1, //页数
     haveMore: true, //可以加载更多
     loadLunbo: true, //是否加载轮播
-    totalCommentCount: '',//评论的总数量
+    totalCommentCount: '', //评论的总数量
     commentCount: '', //酒店的消费人数
-    wxHotelDetails:'',
-    divide:'',//好评率
+    wxHotelDetails: '',
+    divide: '', //好评率
     tel: ''
   },
+  close: function() {
+    this.setData({
+        showIOSDialog: false,
+        showAndroidDialog: false
+    });
+},
+openIOS: function () {
+    this.setData({
+        showIOSDialog: true
+    });
+},
+openAndroid: function () {
+    this.setData({
+        showAndroidDialog: true
+    });
+},
+  
   //房型列表请求
-  requestRoomList: function() {
+  requestRoomList: function () {
     let that = this
     wx.showLoading({
       title: '加载中',
@@ -73,14 +92,14 @@ Page({
       method: 'GET',
       dataType: 'json',
 
-      success: function(res) {
+      success: function (res) {
         console.log("roomList的结果---", res.data)
 
         if (res.data.code == 200) { //返回正常
           let roomList = res.data.data.roomList
           let showRoomList = that.data.roomList
           roomList.forEach((item) => {
-            if (item.imgs){
+            if (item.imgs) {
               item.imgs = app.globalData.imgApi + item.imgs;
             }
             showRoomList.push(item)
@@ -88,17 +107,17 @@ Page({
           //加载轮播
           console.log(that.data.roomList[0].imgs)
           if (that.data.loadLunbo && that.data.roomList[0].imgs != null) {
-            let hotelImgList= []
+            let hotelImgList = []
             for (let i = 0; i < 5; i++) {
               if (that.data.roomList[i]) {
-                if (that.data.roomList[i].imgs){
+                if (that.data.roomList[i].imgs) {
                   hotelImgList.push(that.data.roomList[i].imgs)
                 }
               }
             }
             that.setData({
               hotelImgList: hotelImgList,
-              loadLunbo:false
+              loadLunbo: false
             })
           }
           if (roomList.length < 20) {
@@ -171,23 +190,23 @@ Page({
         }
         wx.hideLoading()
       },
-      fail: function(res) {
+      fail: function (res) {
         wx.hideLoading()
       },
-      complete: function(res) {
+      complete: function (res) {
         wx.hideLoading()
       },
     })
   },
   //领取优惠券查看详情
-  seeStatus: function() {
+  seeStatus: function () {
     this.setData({
       seeStatus: !this.data.seeStatus
     })
   },
 
   //点击领取
-  getCoupon: util.throttle(function() {
+  getCoupon: util.throttle(function () {
     wx.request({
       url: app.globalData.rootApi + '/zxkj/coupon/wxCheckOutAvailableCoupons',
       data: {
@@ -197,13 +216,13 @@ Page({
       header: {
         'content-type': 'application/json'
       },
-      success: function(res) {
+      success: function (res) {
         console.log('领取优惠券的方法的返回结果', res.data)
         this.setData({
           newPeople: false
         })
       },
-      fail: function(res) {
+      fail: function (res) {
 
       }
     })
@@ -212,7 +231,7 @@ Page({
   }, 3000),
 
   //点击下次领取,关闭弹窗
-  next: function() {
+  next: function () {
     this.setData({
       newPeople: false
     })
@@ -222,7 +241,7 @@ Page({
    * 获取时间选择组件传来的值,
    * 发送时间改变后的请求
    */
-  getComponentDate: util.throttle(function(e) {
+  getComponentDate: util.throttle(function (e) {
     let that = this;
     console.log(2222222222222)
     //将组件传来的值赋给当前页面
@@ -239,7 +258,7 @@ Page({
   }, 3000),
 
   //跳转至地图
-  goMap: util.throttle(function() {
+  goMap: util.throttle(function () {
     let that = this;
     wx.openLocation({
       latitude: app.globalData1.latitude, //纬度
@@ -252,7 +271,7 @@ Page({
   }, 3000),
 
   //拨打电话
-  toContact: util.throttle(function() {
+  toContact: util.throttle(function () {
     let that = this;
     wx.makePhoneCall({
       phoneNumber: that.data.tel
@@ -262,7 +281,7 @@ Page({
   /**
    * 点击点评按钮
    */
-  toEval: util.throttle(function() {
+  toEval: util.throttle(function () {
     wx.navigateTo({
       url: '/pages/evaluation/evaluation?hotelId=' + app.globalData1.hotelId,
     })
@@ -271,7 +290,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     let that = this;
     let title = 'nvabarData.title'
     that.setData({
@@ -294,25 +313,27 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function(e) {
+  onShow: function (e) {
     let that = this;
     wx.request({
-      url: app.globalData.rootApi +'/zxkj/hotel/wxHotelDetailInfo',
+      url: app.globalData.rootApi + '/zxkj/hotel/wxHotelDetailInfo',
       data: {
         // hotelId: app.globalData1.hotelId,
         hotelId: 100036,
       },
-      header: { 'content-type': 'application/x-www-form-urlencoded'},
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
       method: 'POST',
       dataType: 'json',
-      success: function(res) {
+      success: function (res) {
         let wxHotelDetails = res.data.data.wxHotelDetails;
         wxHotelDetails.forEach((item) => {
           item.renovationTime = item.renovationTime.substring(0, 4); //要截取时间的字符串
@@ -326,8 +347,8 @@ Page({
         })
 
       },
-      fail: function(res) {},
-      complete: function(res) {},
+      fail: function (res) {},
+      complete: function (res) {},
     })
 
   },
@@ -335,7 +356,7 @@ Page({
   /**
    * 立即预定按钮
    */
-  orders: util.throttle(function(e) {
+  orders: util.throttle(function (e) {
     var that = this;
     console.log('app.globalData1.endTime---' + app.globalData1.endTime)
     if (app.globalData1.endTime == '请选择') {
@@ -379,28 +400,28 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     console.log(111)
     let that = this
     if (that.data.haveMore == true) {
@@ -411,7 +432,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })
