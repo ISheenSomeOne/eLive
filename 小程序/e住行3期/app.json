@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/hotelDetail/hotelDetail",
     "pages/start/start",
+    "pages/orders/orders",
+    "pages/hotelDetail/hotelDetail",
     "pages/hotelList/hotelList",
     "pages/transactionDetail/transactionDetail",
     "pages/transactionLog/transactionLog",
@@ -30,7 +31,6 @@
     "pages/staying/staying",
     "pages/myEvaluation/myEvaluation",
     "pages/myOrder/myOrder",
-    "pages/orders/orders",
     "pages/evaluation/evaluation",
     "pages/checkOut/checkOut",
     "pages/evaluate/evaluate",
@@ -59,8 +59,7 @@
     "selectedColor": "#f06c00",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/start/start",
         "text": "订房",
         "iconPath": "/pages/image/home.png",

@@ -585,3 +585,28 @@ page {
   width: 30rpx;
   margin-top: 16rpx;
 }
+
+.couponItem{
+  width: 670rpx;
+  height: 250rpx;
+  z-index: 9999;
+  margin: 20rpx auto 0 auto;
+  background: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.couponStatusCont{
+  width: 650rpx;
+  height: 90rpx;
+  margin: 10rpx auto 0 auto;
+  line-height: 30rpx;
+  z-index: 5100;
+  background-color: #fff;
+  color: #999;
+  font-size: 21rpx;
+  border-radius: 10rpx;
+  padding: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  overflow: auto;
+}

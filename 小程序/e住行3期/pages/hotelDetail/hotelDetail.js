@@ -7,8 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showIOSDialog: false,
-    showAndroidDialog: false,
     // 组件所需的参数
     nvabarData: {
       showCapsule: 1, //是否显示左上角图标   1表示显示    0表示不显示
@@ -51,22 +49,18 @@ Page({
     commentCount: '', //酒店的消费人数
     wxHotelDetails: '',
     divide: '', //好评率
-    tel: ''
+    tel: '',
+    showDialog: false,
   },
   close: function() {
     this.setData({
-        showIOSDialog: false,
+        showDialog: false,
         showAndroidDialog: false
     });
 },
-openIOS: function () {
+openCouponList: function () {
     this.setData({
-        showIOSDialog: true
-    });
-},
-openAndroid: function () {
-    this.setData({
-        showAndroidDialog: true
+        showDialog: true
     });
 },
   
@@ -325,8 +319,8 @@ openAndroid: function () {
     wx.request({
       url: app.globalData.rootApi + '/zxkj/hotel/wxHotelDetailInfo',
       data: {
-        // hotelId: app.globalData1.hotelId,
-        hotelId: 100036,
+        hotelId: app.globalData1.hotelId,
+        // hotelId: 100036,
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'

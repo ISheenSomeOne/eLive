@@ -30,13 +30,25 @@ Page({
     endTime: '',
     pageNumber: 1,
     haveMore: true,
-    list: ''
+    list: '',
+    showDialog: false,
+  },
+  close: function () {
+    this.setData({
+      showDialog: false,
+      showAndroidDialog: false
+    });
+  },
+  openCouponList: function () {
+    this.setData({
+      showDialog: true
+    });
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     console.log('options', options);
     var list = JSON.parse(options.obj)
     var that = this;
@@ -49,7 +61,7 @@ Page({
     //请求酒店列表
     that.requestHotelList()
   },
-  requestHotelList: function() {
+  requestHotelList: function () {
     let that = this
     wx.showLoading({
       title: '加载中',
@@ -71,7 +83,7 @@ Page({
       },
       method: 'GET',
       dataType: 'json',
-      success: function(res) {
+      success: function (res) {
         if (res.data.code == 200) {
           console.log('返回结果:', res.data.data)
           let hotelList = res.data.data.hotelList
@@ -153,7 +165,7 @@ Page({
           })
         }
       },
-      fail: function(res) {
+      fail: function (res) {
         wx.hideLoading()
         wx.showToast({
           title: '服务器网络错误',
@@ -161,7 +173,7 @@ Page({
           duration: 2000
         })
       },
-      complete: function(res) {
+      complete: function (res) {
         wx.hideLoading()
       },
     })
@@ -170,7 +182,7 @@ Page({
   /**
    * 点击酒店,跳转至酒店房间页面
    */
-  hotelDetail: util.throttle(function(e) {
+  hotelDetail: util.throttle(function (e) {
     var that = this;
     var i = e.currentTarget.id;
     console.log('dssssssssssssss', e.currentTarget.id)
@@ -225,7 +237,7 @@ Page({
           }
         })
       }
-      
+
     }
   }, 1000),
 
@@ -268,42 +280,42 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     let that = this
     if (that.data.haveMore == true) {
       that.requestHotelList()
@@ -313,7 +325,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 
