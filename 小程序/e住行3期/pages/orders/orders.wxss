@@ -1,0 +1,471 @@
+/* pages/orders/orders.wxss */
+/* pages/orders/orders.wxss */
+
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+}
+
+.orders {
+  position: relative;
+}
+
+.bg {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  background-color: #f06c00;
+  height: 150rpx;
+  width: 100%;
+}
+
+.goBack {
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.goBackIcon {
+  float: left;
+  margin: 20rpx 10rpx;
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.goBackName {
+  color: #fff;
+  font-weight: 500;
+  font-size: 34rpx;
+}
+
+.orderHotel {
+  width: 660rpx;
+  margin: 0 auto;
+  padding: 20rpx 20rpx 0 20rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.roomName {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.time {
+  margin-top: 25rpx;
+  font-size: 22rpx;
+  color: #6e6e6e;
+}
+
+.roomInfo {
+  margin-top: 10rpx;
+  padding-bottom: 15rpx;
+  font-size: 22rpx;
+  color: #6e6e6e;
+  border-bottom: 2rpx solid rgba(240, 108, 0, 0.15);
+}
+
+.tip {
+  height: 70rpx;
+  line-height: 70rpx;
+}
+
+.tipIcon {
+  float: left;
+  margin-top: 20rpx;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.tipInfo {
+  float: left;
+  margin-left: 5rpx;
+  font-size: 20rpx;
+  color: #029789;
+}
+
+.roomNumTitle {
+  position: relative;
+  margin-top: 30rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 100%;
+  background-color: #fff;
+}
+
+.roomNumBox {
+  width: 700rpx;
+  height: 150rpx;
+  padding-top: 20rpx;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+.roomNum {
+  float: left;
+  font-size: 25rpx;
+  color: #6e6e6e;
+}
+
+.chooseNum {
+  float: left;
+  margin-top: 5rpx;
+  width: 400rpx;
+}
+
+.num {
+  float: left;
+  margin-left: 30rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  color: #6e6e6e;
+}
+
+.roomNumIcon {
+  float: right;
+  padding: 35rpx 55rpx;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.roomNumList {
+  width: 700rpx;
+  margin: 20rpx auto;
+}
+
+.numItem {
+  float: left;
+  width: 120rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  margin: 10rpx 10rpx;
+  background-color: #fff;
+  text-align: center;
+  font-size: 28rpx;
+  color: #555;
+  border-radius: 10rpx;
+}
+.active{
+  color: #f06c00;
+}
+
+.chooseNum {
+  margin-left: 90rpx;
+}
+
+.userInfoBox {
+  width: 100%;
+  background-color: #fff;
+  margin-top: 30rpx;
+}
+
+.username {
+  width: 700rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0 auto;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+
+.phone {
+  width: 700rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0 auto;
+}
+
+.info {
+  float: left;
+  width: 90rpx;
+  font-size: 26rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #6e6e6e;
+}
+
+.ipt {
+  float: left;
+  width: 500rpx;
+  font-size: 28rpx;
+  color: rgb(95, 95, 95);
+  height: 80rpx;
+  line-height: 80rpx;
+  padding-left: 30rpx;
+}
+
+.iptP {
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #999;
+}
+
+.iptF {
+  line-height: 80rpx;
+  color: rgb(95, 95, 95);
+}
+
+.infoIcon {
+  float: right;
+  height: 40rpx;
+  width: 40rpx;
+  margin-top: 20rpx;
+}
+
+.quanBox {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-top: 10rpx;
+  background-color: #fff;
+}
+
+.quan {
+  width: 700rpx;
+  margin: 0 auto;
+}
+
+.quanIcon {
+  float: left;
+  margin-top: 20rpx;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.const {
+  float: left;
+  margin-left: 10rpx;
+  font-size: 24rpx;
+  color: #6e6e6e;
+  letter-spacing: 1rpx;
+}
+
+.goIcon {
+  float: right;
+  margin-top: 25rpx;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.quanInfo {
+  float: right;
+  margin-right: 10rpx;
+  font-size: 20rpx;
+  color: rgb(197, 197, 197);
+}
+
+.priceInfo {
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #fff;
+}
+
+.priceBox {
+  width: 700rpx;
+  margin: 0 auto;
+}
+
+.price {
+  float: left;
+  color: #f06c00;
+  font-size: 26rpx;
+}
+
+.price text {
+  
+  font-size: 30rpx;
+}
+
+.detailBox {
+  float: right;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+
+.detail {
+  float: left;
+  font-size: 20rpx;
+  color: #6e6e6e;
+}
+
+.detailIcon {
+  float: left;
+  height: 20rpx;
+  width: 20rpx;
+  margin: 40rpx 0 0 10rpx;
+}
+
+.confirm {
+  float: right;
+  margin: 20rpx 0 0 30rpx;
+  text-align: center;
+  height: 60rpx;
+  width: 150rpx;
+  border-radius: 100rpx;
+  line-height: 60rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: #f06c00;
+  letter-spacing: 5rpx;
+}
+
+.modalBg {
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.chooseCouponBox{
+  width: 670rpx;
+  padding: 1rpx 20rpx 20rpx 20rpx;
+  margin: 200rpx auto 0 auto;
+  background-color: rgb(243, 243, 243);
+  border-radius: 10rpx;
+}
+
+.done{
+  float: right;
+  margin: 10rpx 0;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  width: 80rpx;
+  color: #fff;
+  background-color: rgb(7, 193, 97);
+}
+.mgtop{
+  width: 100%;
+  height: 750rpx;
+  margin-top: 50rpx;
+  overflow: auto;
+}
+
+.modalBox {
+  height: 200rpx;
+  margin: 20rpx auto 0 auto;
+  width: 670rpx;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.couponBox {
+  float: left;
+  height: 200rpx;
+  width: 200rpx;
+  background: linear-gradient(to top, rgba(214, 20, 85, 0.836), rgb(239, 96, 144));
+  border-bottom-left-radius: 10rpx;
+  border-top-left-radius: 10rpx;
+  color: #fff;
+  font-size: 25rpx;
+  text-align: center;
+}
+
+.couponPrice {
+  padding-top: 30rpx;
+  font-size: 35rpx;
+}
+
+.couponPrice text {
+  font-size: 55rpx;
+}
+
+.couponConst {
+  margin-top: 10rpx;
+}
+
+.couponInfo {
+  position: relative;
+  float: left;
+  width: 450rpx;
+  height: 200rpx;
+  margin-left: 20rpx;
+}
+
+.useStatusIcon {
+  float: left;
+  margin: 8rpx 0 0 7rpx;
+  height: 25rpx;
+  width: 25rpx;
+}
+
+.couponName {
+  font-weight: 600;
+  margin-top: 10rpx;
+}
+
+.couponCont {
+  margin-top: 10rpx;
+  font-size: 25rpx;
+  color: #777;
+}
+
+.deadline {
+  margin-top: 7rpx;
+  font-size: 23rpx;
+  color: #d32f2f;
+}
+
+.couponNav {
+  position: absolute;
+  width: 100%;
+  bottom: 20rpx;
+}
+
+.useStatus {
+  float: left;
+  font-size: 25rpx;
+  color: #55c5f8;
+}
+
+.navBtn {
+  float: right;
+  margin-right: 20rpx;
+  text-align: center;
+  height: 45rpx;
+  line-height: 45rpx;
+  width: 120rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: rgb(233, 30, 99);
+  border-radius: 10rpx;
+}
+
+.statusCont {
+  position: absolute;
+  width: 650rpx;
+  height: 90rpx;
+  line-height: 30rpx;
+  z-index: 100;
+  background-color: #fff;
+  color: #999;
+  font-size: 21rpx;
+  border-radius: 10rpx;
+  bottom: 20rpx;
+  padding: 10rpx;
+  left: 50%;
+  margin-left: -335rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  overflow: auto;
+}
+
+.couponRadio{
+  float: right;
+  margin-right: 20rpx;
+  line-height: 200rpx;
+}
+.tip{
+  width: 650rpx;
+  margin: 0 auto;
+  text-align: left;
+  color: rgb(0, 150, 136);
+  font-size: 20rpx;
+}

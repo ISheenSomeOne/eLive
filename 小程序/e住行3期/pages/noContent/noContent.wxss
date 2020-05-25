@@ -1,0 +1,31 @@
+/* pages/noContent/noContent.wxss */
+page{
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+  position: relative;
+}
+.imgBox{
+  position: absolute;
+  height: 140rpx;
+  width: 170rpx;
+  top: 150rpx;
+  left: 50%;
+  margin-left: -120rpx;
+  padding: 20rpx 35rpx;
+  border: 5rpx solid rgb(236, 236, 236);
+
+}
+.img{
+  height: 140rpx;
+  width: 170rpx;
+  margin: 0 auto;
+}
+.noContent{
+  position: absolute;
+  text-align: center;
+  width: 300rpx;
+  top: 360rpx;
+  left: 50%;
+  margin-left: -150rpx;
+  color: #888;
+}

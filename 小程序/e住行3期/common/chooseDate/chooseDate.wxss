@@ -1,0 +1,305 @@
+/* common/chooseDate/chooseDate.wxss */
+/* pages/chooseDate/chooseDate.wxss */
+page {
+  height: 100%;
+  position: relative;
+}
+
+/****************日历样式**********************/
+
+.page1 {
+  height: 98%;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 100%;
+  background-color: #fff;
+}
+
+.scroll {
+  height: 90%;
+  position: relative;
+}
+
+.scroll1 {
+  height: calc(100% - 160rpx);
+  padding-top: 160rpx;
+}
+
+.top {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dianxian {
+  width: 100%;
+}
+
+.xianRi {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 2rpx #eee solid;
+}
+
+.zhiDing1 {
+  position: absolute;
+  width: 100%;
+  height: 80rpx;
+  border-top: 2rpx #eee solid;
+  border-bottom: 2rpx #eee solid;
+}
+
+.zhiMian {
+  width: 92%;
+  margin: 0 auto;
+  height: 80rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quZI {
+  font-size: 28rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  width: 80rpx;
+  text-align: center;
+  background-color: #dc3545;
+  border-radius: 10rpx;
+  color: #fff;
+}
+
+.quZI1 {
+  font-size: 28rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  width: 80rpx;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(7, 193, 96);
+  border-radius: 10rpx;
+}
+
+.zhiDing {
+  position: absolute;
+  width: 100%;
+  height: 80rpx;
+  top: 80rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.zhiDing .list:first-child, .zhiDing .list:last-child {
+  color: #f06c00;
+}
+
+.xianRi:first-child {
+  margin-top: 30rpx;
+}
+
+.xianriLI_1 {
+  width: 100%;
+  padding: 30rpx 0 10rpx 4%;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.xianriLI {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.zhiDing .list, .xianRi .xianriLI .list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100%/7);
+  height: 80rpx;
+  margin: 0;
+  font-size: 26rpx;
+}
+
+.xianRi .xianriLI .list {
+  position: relative;
+  z-index: 100;
+}
+
+.day {
+  border: #f06c00 2rpx solid;
+  color: #f06c00;
+}
+
+.xaunDay {
+  background-color: #f06c00;
+  color: #fff;
+  border: none;
+}
+
+.quShang {
+  color: #eee;
+  opacity: 0;
+}
+
+.quXia {
+  color: #eee;
+  opacity: 0;
+}
+
+.xuanZ {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.zuoyou {
+  width: 120rpx;
+  text-align: center;
+}
+
+.hui {
+  color: #eee;
+}
+
+.xianDayaRi {
+  position: relative;
+  z-index: 100;
+  height: 80rpx;
+  width: 80rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.xuanbgDate {
+  background-color: #f06c00;
+  color: #fff;
+}
+
+.bgDate {
+  background-color: #f06c00;
+  color: #fff;
+}
+
+.qiangXuan {
+  background-color: #f06c00;
+  position: absolute;
+  color: #fff;
+  z-index: 10;
+  right: 0;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.houXuan {
+  background-color: #f06c00;
+  color: #fff;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.ruzhu {
+  font-size: 22rpx;
+  color: #fff;
+}
+
+.likai {
+  font-size: 20rpx;
+  color: #fff;
+}
+
+.ziDaXIao {
+  font-size: 22rpx;
+}
+
+/********************************************/
+
+.xianShi {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.starTime, .endTime {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+}
+
+.quJian {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+}
+.dateChoose {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 640rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.checkInBox {
+  height: 80rpx;
+  width: 220rpx;
+  border-radius: 3rpx;
+  text-align: center;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  padding-top: 10rpx;
+}
+
+.checkInTitle {
+  font-size: 20rpx;
+}
+
+.checkInDate {
+  margin-top: 5rpx;
+  color: #f57800;
+}
+
+.dateNum {
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 3rpx;
+  text-align: center;
+}
+.dateNum text{
+  color: #f57800;
+  font-size: 24rpx;
+}
+.line {
+  width: 90rpx;
+  border-bottom: 2rpx solid rgb(221, 221, 221);
+}

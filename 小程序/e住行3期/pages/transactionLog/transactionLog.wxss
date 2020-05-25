@@ -1,0 +1,213 @@
+/* pages/transactionList/transactionLog.wxss */
+
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+  color: #333;
+  position: relative;
+}
+
+.topNav {
+  z-index: 100;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  top: 0;
+  background-color: #fff;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.topNavItem {
+  height: 80rpx;
+  width: 150rpx;
+  letter-spacing: 1rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.active {
+  color: #ef6c00;
+  border-bottom: 4rpx solid #ef6c00;
+}
+
+.orderItemBox {
+  width: 670rpx;
+  margin: 30rpx auto 0 auto;
+  padding: 15rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.itemTop {
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-bottom: #eee 1rpx solid;
+}
+
+.hotelName {
+  float: left;
+  height: 50rpx;
+  max-width: 400rpx;
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hotelType {
+  float: left;
+  margin-left: 10rpx;
+  font-size: 20rpx;
+  color: #777;
+}
+
+.staying {
+  float: right;
+  color: #ef6c00;
+  font-size: 22rpx;
+}
+
+.done {
+  float: right;
+  color: #009688;
+  font-size: 22rpx;
+}
+
+.refunding {
+  float: right;
+  color: rgb(233, 30, 99);
+  font-size: 22rpx;
+}
+
+.cancel {
+  float: right;
+  color: #999;
+  font-size: 22rpx;
+}
+
+.roomType {
+  float: left;
+  font-size: 26rpx;
+
+}
+
+.time {
+  float: left;
+  margin-left: 10rpx;
+  font-size: 22rpx;
+}
+
+.date {
+  height: 40rpx;
+  line-height: 40rpx;
+  width: 100%;
+  text-align: left;
+  font-size: 24rpx;
+}
+
+.btnItem {
+  float: right;
+  margin: 20rpx 0 0 10rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  padding: 0 20rpx;
+  border-radius: 10rpx;
+  font-size: 22rpx;
+  color: #888;
+  border: #aaa 1rpx solid;
+  background-color: #fff;
+}
+
+.btnItem::after {
+  border: 0;
+}
+
+.btnItemRed {
+  color: #d32f2f;
+  border: #d32f2f 1rpx solid;
+}
+
+.btnItemGreen {
+  color: #00b26a;
+  border: #00b26a 1rpx solid;
+}
+
+.orderBox {
+  margin: 30rpx 0 30rpx 0;
+}
+
+.downContent {
+  font-size: 22rpx;
+  color: #777;
+  text-align: center;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.chooseType {
+  display: inline-block;
+  height: 50rpx;
+  line-height: 50rpx;
+  margin-left: 40rpx;
+  background-color: #fff;
+  border: 1rpx #ddd solid;
+  border-radius: 10rpx;
+  padding: 10rpx 15rpx;
+}
+
+.itemBottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50%;
+  height: 180rpx;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.price {
+  color: rgb(60,191,95);
+  margin-right: 5rpx；
+}
+
+.yue{
+  color: #ef6c00;
+  margin-right: 5rpx；
+}
+
+.way{
+  margin-top: 3rpx;
+  font-size: 20rpx;
+  margin-right: 5rpx;
+  color: #777;
+}
+
+.remarks{
+  font-size: 20rpx;
+  margin-top: 10rpx;
+  color: #777;
+}
+
+.none{
+  margin-top: 50%;
+  text-align: center;
+  color: #777;
+  font-size: 36rpx;
+  letter-spacing: 2rpx;
+}

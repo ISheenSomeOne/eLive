@@ -1,0 +1,68 @@
+<!--pages/transferRightsGet/transferRightsGet.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px'>
+  <view class="bg"></view>
+  <!-- 背景 -->
+  <view class="avatarBox" style="top: {{height}}px">
+    <!-- 头像框 -->
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+  <view class="payInfo">
+    <!-- 支付信息 -->
+    <view class="hotelProxy">{{userInfo.nickName}}正在发起</view>
+    <view class="inviteConst">房间权限转移</view>
+    <view wx:if="{{(permissionInfo.roomPermissionStatus == '待同意' || inviteOK) && permissionInfo.roomPermissionStatus != '已取消'}}" class="waiting">待同意授权</view>
+    <view wx:if="{{permissionInfo.roomPermissionStatus == '已同意'}}" class="agree">已同意授权</view>
+    <view wx:if="{{permissionInfo.roomPermissionStatus == '已取消'}}" class="danger">已取消授权</view>
+    <!-- <view class="timeConst">订单已关闭</view> -->
+  </view>
+  <view class="hotelInfoBox">
+    <!-- 酒店信息 -->
+    <view class="hotelInfo">
+      <view class="hotelName">{{permissionInfo.hotelName}}</view>
+      <view class="roomInfo">{{permissionInfo.roomType}} {{permissionInfo.roomAddress}}</view>
+      <view class="orderTime">{{permissionInfo.checkinDate}} 至 {{permissionInfo.checkoutDate}} 共{{permissionInfo.dateCount}}晚</view>
+    </view>
+  </view>
+  <view class="contactBox">
+    <!-- 联系人信息 -->
+    <view class="contact">
+      <view class="userConst">联系人</view>
+      <view class="user">{{user}}</view>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view class="user">{{phone}}</view>
+    </view>
+  </view>
+  <view wx:if="{{permissionInfo.roomPermissionStatus != '已取消'}}" class="verifyBox">
+    <view wx:if="{{!(permissionInfo.roomPermissionStatus == '已同意')}}" class="tip">*请填写本人真实信息，以免为您的房间权限使用带来不便</view>
+    <view class="contact">
+      <view class="userConst">中文姓名</view>
+      <view wx:if="{{permissionInfo.roomPermissionStatus == '已同意' || permissionInfo.roomPermissionStatus == '待同意' || inviteOK || inputOk}}" class="inviteeInfo">{{showName}}</view>
+      <input wx:else class="user" placeholder-class='ipt' confirm-type='next' maxlength='15' bindinput='getName' placeholder='请输入姓名' type='text'></input>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view wx:if="{{permissionInfo.roomPermissionStatus == '已同意' || permissionInfo.roomPermissionStatus == '待同意' || inviteOK || inputOk}}" class="inviteeInfo">{{showNewPhone}}</view>
+      <input wx:else class="user" placeholder-class='ipt' confirm-type='next' maxlength='11' bindinput='getPhone' placeholder='请输入手机号' type='number'></input>
+    </view>
+    <view class="contact">
+      <view class="userConst">身份证号</view>
+      <view wx:if="{{permissionInfo.roomPermissionStatus == '已同意' || permissionInfo.roomPermissionStatus == '待同意' || inviteOK || inputOk}}" class="inviteeInfo">{{showIdCard}}</view>
+      <input wx:else class="user" placeholder-class='ipt' confirm-type='next' maxlength='6' bindinput='getId' placeholder='请输入身份证号后6位' type='idcard'></input>
+    </view>
+  </view>
+  <view wx:if="{{permissionInfo.roomPermissionStatus == '待同意' || inviteOK}}" class="share active" bindtap="waitAgree">
+    <!-- 分享 -->
+    等待好友同意
+  </view>
+  <view wx:elif="{{permissionInfo.roomPermissionStatus == '已同意'}}">
+  </view>
+  <view wx:else class="share {{can ? 'active' : ''}}" bindtap="confirm">
+    <!-- 分享 -->
+    确认提交
+  </view>
+</view>

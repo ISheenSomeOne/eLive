@@ -1,0 +1,157 @@
+/* pages/pointsRecord/pointsRecord.wxss */
+
+page {
+  position: relative;
+  font-size: 30rpx;
+  color: #333;
+  background-color: rgb(243, 243, 243);
+}
+
+.topBox {
+  height: 300rpx;
+  width: 700rpx;
+  margin: 10rpx auto;
+  background-color: #fff;
+  padding-top: 1rpx;
+  border-radius: 15rpx;
+  /* box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190); */
+}
+
+.displayCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.displayRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.allBox {
+  height: 110rpx;
+  line-height: 110rpx;
+  width: 660rpx;
+  margin: 20rpx auto;
+  justify-content: space-between;
+}
+
+.allItem {
+  height: 110rpx;
+  width: 320rpx;
+  text-align: center;
+  border-radius: 5rpx;
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: bold;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.allItem text{
+  margin-right: 10rpx;
+}
+
+.allGet {
+  background-image: -webkit-linear-gradient(left, rgb(241, 145, 250), rgb(177, 67, 228));
+}
+
+.allGet text {
+  font-size: 22rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: rgb(177, 67, 228);
+  padding: 0 10rpx;
+  border-radius: 5rpx;
+  letter-spacing: 1rpx;
+  font-weight: normal;
+}
+
+.allUse {
+  background-image: -webkit-linear-gradient(left, rgb(250, 145, 145), rgb(228, 67, 67));
+}
+
+.allUse text {
+  font-size: 22rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: rgb(228, 67, 67);
+  padding: 0 10rpx;
+  border-radius: 5rpx;
+  letter-spacing: 1rpx;
+  font-weight: normal;
+}
+
+.nowPoints {
+  height: 140rpx;
+  line-height: 140rpx;
+  text-align: center;
+  width: 660rpx;
+  background-image: -webkit-linear-gradient(left, rgb(78, 213, 247), rgb(67, 169, 228));
+  border-radius: 5rpx;
+  margin: 0 auto;
+  color: #fff;
+  font-weight: bold;
+  font-size: 40rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+.nowPoints text{
+  font-size: 26rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: rgb(67, 169, 228);
+  padding: 0 10rpx;
+  border-radius: 5rpx;
+  letter-spacing: 1rpx;
+  margin-right: 10rpx;
+}
+
+.recordBox{
+  width: 700rpx;
+  margin: 30rpx auto 0 auto;
+  background-color: #fff;
+  border-radius: 15rpx;
+  padding-top: 1rpx;
+  padding-bottom: 20rpx;
+  margin-bottom: 30rpx;
+}
+.recordItem{
+  width: 640rpx;
+  height: 100rpx;
+  text-align: center;
+  margin:  0 auto;
+  justify-content: space-between;
+  padding: 20rpx 10rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.recordLeft{
+  height: 100rpx;
+  width: 200rpx;
+  justify-content: space-between;
+}
+
+.goodsName{
+  height: 40rpx;
+  width: 200rpx;
+  line-height: 40rpx;
+}
+
+.recordDate{
+  height: 40rpx;
+  width: 200rpx;
+  line-height: 40rpx;
+}
+
+.recordRight{
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 150rpx;
+  text-align: right;
+  margin-right: 20rpx;
+  font-size: 32rpx;
+}
+.noJifen{
+  height: 100rpx;
+  width: 400rpx;
+  line-height: 120rpx;
+  margin: auto;
+  text-align: center;
+}

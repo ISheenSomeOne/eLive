@@ -1,0 +1,45 @@
+<!--pages/proxyPay/proxyPay.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+<view style='margin-top: {{height}}px'>
+  <view class="bg"></view>
+  <!-- 背景 -->
+  <view class="avatarBox" style='top: {{height}}px'>
+    <!-- 头像框 -->
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+  <view class="payInfo">
+    <!-- 支付信息 -->
+    <view class="hotelProxy">{{userInfo.nickName}}发起代付邀请</view>
+    <view class="price">￥{{orderInfo.totalPrice}}</view>
+    <view class="timeConst" wx:if="{{!isTimeOut}}">剩余支付时间
+      <view class="time">
+        {{remainingTimeMinu}} : {{remainingTimeSec}}
+      </view>
+    </view>
+    <view wx:else class="timeConst">订单已关闭</view>
+  </view>
+  <view class="hotelInfoBox">
+    <!-- 酒店信息 -->
+    <view class="hotelInfo">
+      <view class="hotelName">{{orderInfo.hotelName}}</view>
+      <view class="roomInfo">{{orderInfo.roomTypeName}} {{orderInfo.roomNum}}间</view>
+      <view class="orderTime">
+        <text>{{orderRoomInTime}} 至 {{orderRoomOutTime}} </text>
+        <text>共{{orderInfo.roomDay}}晚 </text>
+        <text>{{orderInfo.roomBreakFast}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="contactBox">
+    <!-- 联系人信息 -->
+    <view class="contact">
+      <view class="userConst">联系人</view>
+      <view class="user">{{user}}</view>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view class="user">{{phone}}</view>
+    </view>
+  </view>
+  <button class="share cant" disabled="{{isTimeOut}}" open-type="share">发送给微信好友</button>
+</view>

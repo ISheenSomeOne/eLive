@@ -1,0 +1,145 @@
+<!--pages/checkIn/checkin.wxml-->
+<view wx:if="{{orderContinues}}" class="modalBg">
+  <!-- 续房 弹出模态框 -->
+  <view class="chooseCouponBox">
+    <view class="done" bindtap="openContinue">完成</view>
+    <view class="chooseConst">请选择续房订单</view>
+    <view class="mgtop">
+      <block wx:for='{{orderListContinue}}' wx:key='orderLists' wx:for-index='item_id' wx:for-item="item">
+        <view class="roomItem" bindtap="checkInContinue" id='{{item_id}}'>
+          <view class="roomNum">{{item.hotelName}} {{item.inTime}} 至 {{item.outTime}}
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{chooseRoom}}" class="modalBg">
+  <!-- 房间开锁 弹出模态框 -->
+  <view class="chooseCouponBox">
+    <view class="done" bindtap="openDone">完成</view>
+    <view class="chooseConst">请选择开锁房间</view>
+    <view class="mgtop">
+      <block wx:for='{{orderLists}}' wx:key='orderLists' wx:for-index='item_id' wx:for-item="item">
+        <view class="roomItem" bindtap="openRoom" id='{{item_id}}'>
+          <view class="roomNum">{{item.hotelName}} {{item.roomDoor}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<!-- 退房模态框 -->
+<view wx:if="{{checkOut}}" class="modalBg">
+  <!-- 弹出模态框 -->
+  <view class="chooseCouponBox">
+    <view class="done" bindtap="checkOutDone">完成</view>
+    <view class="chooseConst">请选择退房房间</view>
+    <view class="mgtop">
+      <block wx:for='{{checkOutLists}}' wx:key='checkOutLists' wx:for-index='item_id' wx:for-item="item">
+        <view class="roomItem" bindtap="checkOuts" id='{{item_id}}'>
+          <view class="roomNum"> {{item.roomDoor}}</view>
+        </view>
+      </block>
+      <!-- <view class="roomItem" wx:if="{{checkOutLists.length>0}}" bindtap="checkOutAll"> -->
+      <!-- <view class="roomNum">全部退房</view> -->
+      <!-- </view> -->
+    </view>
+  </view>
+</view>
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+<view style='margin-top: {{height}}px;padding-top:1rpx;'>
+  <view class="hotelInfoBox">
+    <!-- 酒店信息 -->
+    <!-- 酒店图片 -->
+
+    <view class="infoBox">
+      <view wx:if='{{orderLists.length > 0}}' class="hotelInfo">
+        <block wx:for='{{orderLists}}' wx:key='index'>
+          <view class="hotelItem" data-index="{{index}}" bindtap="lookOrder">
+            <image class="hotelImage fl" mode="scaleToFill" src="{{item.logo}}"></image>
+            <view class="fl rightBox">
+              <view class="fl">
+                <view class="hotelName">
+                  {{item.hotelName}}
+                </view>
+                <view class="roomInfoBox">
+                  <!-- 房间信息 -->
+                  <view class="roomInfo"></view>
+                  <view class="roomInfo"> {{item.roomDoor}} 室</view>
+                </view>
+                <view class="timeInfoBox">
+                  <!-- 时间信息 -->
+                  <view class="time">{{item.inTime}} 至 {{item.outTime}} 共 {{item.days}} 晚</view>
+                  <!-- <view class="owner">房间尚未安排入住人</view>  -->
+                  <!-- 此功能后面再来完善,需要检索是否入住 -->
+                </view>
+              </view>
+              <!-- 酒店名字和详情入口 -->
+              <view class="detailBox">
+                <image class="detailIcon" src="../image/tiaozhuan.png"></image>
+                <view class="detailConst">查看详情</view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view wx:else>
+        <view style="width:100%;margin: 100rpx 0;text-align:center;font-size:40rpx">暂无在住房间</view>
+      </view>
+    </view>
+  </view>
+  <view class="roomServiceBox">
+    <!-- 客房服务 -->
+    <view class="roomService">
+      <view class="servieConst">客房服务</view>
+      <view class="allServie">
+        <image class="allServiceIcon" src="../image/tiaozhuan.png"></image>
+        <view class="allServiceConst" bindtap="look">查看全部服务</view>
+      </view>
+    </view>
+    <view class="servicList">
+      <view class="serviceBox" bindtap="look">
+        <image class="serviceImg" src="../image/dasao.svg"></image>
+        <view class="serviceName">清扫客房</view>
+      </view>
+      <view class="serviceBox" bindtap="look">
+        <image class="serviceImg" src="../image/xiyifu.svg"></image>
+        <view class="serviceName">洗衣</view>
+      </view>
+      <view class="serviceBox" bindtap="look">
+        <image class="serviceImg" src="../image/xiaofei.svg"></image>
+        <view class="serviceName">店内消费</view>
+      </view>
+      <view class="serviceBox" bindtap="look">
+        <image class="serviceImg" src="../image/naozhong.svg"></image>
+        <view class="serviceName">叫早</view>
+      </view>
+    </view>
+  </view>
+  <view class="roomServiceBox">
+    <!-- 客房服务 -->
+    <view class="roomService">
+      <!-- 房间操作 -->
+      <view class="servieConst">房间操作</view>
+    </view>
+    <view class="servicList">
+      <view class="serviceBox" bindtap="continues">
+        <image class="serviceImg2" src="../image/xufang.svg"></image>
+        <view class="serviceName">续房</view>
+      </view>
+      <view class="serviceBox" bindtap="exchange">
+        <image class="serviceImg2" src="../image/huanfang.svg"></image>
+        <view class="serviceName">换房</view>
+      </view>
+      <view class="serviceBox" bindtap="checkOutBtn">
+        <image class="serviceImg2" src="../image/tuifang.svg"></image>
+        <view class="serviceName">退房</view>
+      </view>
+    </view>
+  </view>
+  <view class="open" bindtap="opens">房间开锁</view>
+</view>

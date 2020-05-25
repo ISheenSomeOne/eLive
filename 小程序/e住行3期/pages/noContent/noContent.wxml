@@ -1,0 +1,5 @@
+<!--pages/noContent/noContent.wxml-->
+<view class="imgBox">
+  <image class="img" src="../image/tupian.png"></image>
+</view>
+<view class="noContent">暂时没有相关内容</view>

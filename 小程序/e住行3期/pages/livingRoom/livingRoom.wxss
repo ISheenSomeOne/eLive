@@ -1,0 +1,465 @@
+/* pages/livingRoom/livingRoom.wxss */
+
+page {
+  position: relative;
+  font-size: 30rpx;
+  color: #333;
+  background-color: rgb(243, 243, 243);
+}
+
+.staying {
+  width: 100%;
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 54rpx;
+  color: #f06c00;
+}
+
+.stayingConst {
+  width: 100%;
+  text-align: center;
+  margin-top: 10rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 22rpx;
+  color: #999;
+  letter-spacing: 1rpx;
+}
+
+.more {
+  width: 700rpx;
+  text-align: center;
+  margin: 40rpx auto 0 auto;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 35rpx;
+  color: #fff;
+  background-color: #f06c00;
+  letter-spacing: 1rpx;
+}
+
+.bill {
+  width: 100%;
+  margin: 40rpx 0 20rpx 0;
+  background-color: #fff;
+}
+
+.billTop {
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+
+.payWay {
+  float: left;
+  margin-left: 25rpx;
+  font-size: 28rpx;
+}
+
+.price {
+  float: left;
+  margin-left: 20rpx;
+  color: #f06c00;
+}
+
+.billDetail {
+  float: right;
+  margin-right: 25rpx;
+  color: #29b6f6;
+}
+
+.billBottom {
+  width: 100%;
+  height: 120rpx;
+}
+
+.billIcon {
+  float: left;
+  margin: 45rpx 0 0 25rpx;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.tip {
+  float: left;
+  font-size: 19rpx;
+  height: 90rpx;
+  width: 470rpx;
+  line-height: 30rpx;
+  text-align: left;
+  margin: 15rpx 0 0 20rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  color: #999;
+}
+
+.finalTime {
+  color: #029789;
+}
+
+.cancel {
+  float: right;
+  margin: 30rpx 25rpx 0 0;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  width: 140rpx;
+  border: 2rpx solid #999;
+  color: #777;
+  font-size: 22rpx;
+}
+
+.infoBox {
+  width: 700rpx;
+  margin: 0 auto 20rpx auto;
+  border-radius: 15rpx;
+  background-color: #fff;
+}
+
+.hotel {
+  width: 100%;
+  height: 110rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+
+.hotelLeft {
+  float: left;
+  margin: 15rpx 0 0 20rpx;
+  height: 70rpx;
+  width: 600rpx;
+}
+
+.hotelName {
+  line-height: 50rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-line-clamp: 1;
+}
+
+.hotelAddress {
+  line-height: 24rpx;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-line-clamp: 1;
+  color: #999;
+}
+
+.hotelIcon {
+  float: right;
+  margin: 40rpx 20rpx 0 0;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.orderRoom {
+  width: 100%;
+  height: 90rpx;
+  overflow: hidden;
+}
+
+.roomName {
+  margin: 10rpx 0 0 20rpx;
+  font-size: 22rpx;
+}
+
+.roomName text {
+  margin-right: 20rpx;
+}
+
+.roomInfo1 {
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 100%;
+}
+
+.roomInfoConst {
+  float: left;
+  margin-left: 20rpx;
+  font-size: 26rpx;
+}
+
+.invite {
+  float: right;
+}
+
+.inviteConst {
+  float: right;
+  margin-right: 20rpx;
+  font-size: 24rpx;
+  color: #f06c00;
+}
+
+.inviteIcon {
+  float: right;
+  margin: 25rpx 10rpx 0 0;
+  height: 30rpx;
+  width: 30rpx;
+}
+
+.roomInfo2 {
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 100%;
+  border-top: 2rpx solid rgb(243, 243, 243);
+}
+
+.roomNumConst {
+  float: left;
+  text-align: left;
+  width: 100rpx;
+  margin: 0 30rpx 0 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.roomNum {
+  float: left;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 380rpx;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-line-clamp: 1;
+}
+
+.roomPurview {
+  float: right;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 140rpx;
+}
+
+.purviewIcon {
+  float: right;
+  margin: 30rpx 20rpx 0 5rpx;
+  height: 20rpx;
+  width: 20rpx;
+}
+
+.purviewContst {
+  float: right;
+  font-size: 21rpx;
+  color: #29b6f6;
+}
+
+.orderInfo {
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  width: 100%;
+}
+
+.orderInfoConst {
+  float: left;
+  margin-left: 20rpx;
+  font-size: 26rpx;
+}
+
+.orderInfoBox {
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.orderTitle {
+  float: left;
+  text-align: left;
+  margin-left: 20rpx;
+  height: 50rpx;
+  width: 120rpx;
+  font-size: 22rpx;
+  color: #999;
+  letter-spacing: 1rpx;
+}
+
+.orderCont {
+  float: left;
+  height: 50rpx;
+  width: 500rpx;
+  font-size: 22rpx;
+}
+
+.other {
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+
+.other2 {
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+.payWayBox{
+  width: 100%;
+  height: 60rpx;
+}
+.payWayConst{
+  float: left;
+  margin: 20rpx 0 0 20rpx;
+  font-size: 28rpx;
+}
+.payWayPrice{
+  float: right;
+  margin: 20rpx 20rpx 0 0;
+  font-size: 26rpx;
+  color: #f06c00;
+}
+.originPriceBox{
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+.originConst{
+  float: left;
+  margin-left: 20rpx;
+  font-size: 24rpx;
+}
+.originPrice{
+  float: right;
+  margin-right: 20rpx;
+  font-size: 22rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+.unitPriceBox{
+  height: 35rpx;
+  width: 100%;
+  line-height: 35rpx;
+  font-size: 20rpx;
+  color: #999;
+}
+.checkInDate{
+  float: left;
+  margin-left: 20rpx;
+}
+.breakfast{
+  float: left;
+  margin-left: 20rpx;
+}
+.unitPrice{
+  float: right;
+  margin-right: 20rpx;
+}
+.depositBox{
+  border-top: 2rpx solid rgb(243, 243, 243);
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 22rpx;
+}
+.depositConst{
+  float: left;
+  margin-left: 20rpx;
+}
+.deposit{
+  float: right;
+  margin-right: 20rpx;
+}
+.offerBox{
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 22rpx;
+}
+.offerConst{
+  float: left;
+  margin-left: 20rpx;
+}
+.offer{
+  float: right;
+  margin-right: 20rpx;
+  color: #f06c00;
+}
+.offerInfoBox{
+  width: 100%;
+  padding-bottom: 20rpx;
+  color: #999;
+  height: 35rpx;
+  line-height: 35rpx;
+  font-size: 20rpx;
+}
+.offerInfoConst{
+  float: left;
+  margin-left: 20rpx;
+}
+.offerInfo{
+  float: right;
+  margin-right: 20rpx;
+}
+
+.detailInfoBox{
+  width: 600rpx;
+  margin: 0 auto;
+}
+
+.detailInfoItem{
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+.detailLeft{
+  float: left;
+}
+.detailRight{
+  float: right;
+}
+.detailInfo{
+  width: 100%;
+  margin-bottom: 10rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+.yellow{
+  color: #f06c00;
+}
+.modalBg {
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalBox {
+  width: 670rpx;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 300rpx auto 0 auto;
+  padding-bottom: 20rpx;
+}
+
+.modalTitle {
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 600rpx;
+  margin: 0 auto;
+}
+
+.modalHotelName {
+  float: left;
+  font-weight: bold;
+}
+.done {
+  float: right;
+  text-align: center;
+  width: 70rpx;
+  font-size: 24rpx;
+  color: rgb(7, 193, 96);
+}

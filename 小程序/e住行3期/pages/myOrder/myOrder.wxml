@@ -1,0 +1,44 @@
+<!--pages/myOrder/myOrder.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="topNav" style='margin-top: {{height}}px'>
+  <block wx:for="{{topNav}}" wx:key="index">
+    <view class=" topNavItem {{nowIndex == index ? 'active' : ''}}" data-index="{{index}}" bindtap="change">{{item.name}}</view>
+  </block>
+</view>
+
+<view style='margin-top: {{height}}px;padding:1rpx'>
+  <view class="orderBox">
+    <block wx:for="{{userOrder}}" wx:key="index" wx:for-item="item">
+      <view class="orderItemBox">
+        <view data-id="{{index}}" bindtap="goto">
+          <view class="itemTop">
+            <view class="hotelName">{{item.hotelName}}</view>
+            <view class="hotelType">{{item.hotelType}}</view>
+            <view class="staying" wx:if="{{item.identification == '待入住'}}">待入住</view>
+            <view class="staying" wx:if="{{item.identification == '入住中'}}">入住中</view>
+            <view class="staying" wx:if="{{item.identification == '待支付'}}">{{item.identification}}</view>
+            <view class="done" wx:if="{{item.identification == '已完成'}}">订单完成</view>
+            <view class="refunding" wx:if="{{item.identification == '待退款'}}">{{item.identification}}</view>
+            <view class="cancel" wx:if="{{item.identification == '预定取消'}}">{{item.identification}}</view>
+          </view>
+          <view class="roomTypeBox">
+            <view class="roomType">{{item.roomTypeName}}</view>
+            <view class="time">{{item.roomDay}}晚</view>
+            <view class="time">{{item.roomCount}}间</view>
+            <view class="price">￥{{item.orderPrice}}</view>
+          </view>
+          <view class="date">{{item.inTime}} 至 {{item.outTime}}</view>
+        </view>
+        <view class="btnBox" wx:if="{{item.identification != '待支付' && item.identification != '入住中' && item.identification != '待退款'}}">
+          <button class="btnItem btnItemGreen" wx:if="{{item.identification == '订单完成'}}">再次预订</button>
+          <button class="btnItem" wx:if="{{item.identification == '订单完成'}}">我的评价</button>
+          <button class="btnItem btnItemGreen" bindtap="toStart" wx:if="{{item.identification == '预定取消'}}">重新预定</button>
+          <button class="btnItem btnItemRed" wx:if="{{(item.identification == '待入住') && (item.oneself == true)}}" data-id='{{index}}' bindtap="cancel">取消订单</button>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view wx:if="{{haveMore}}" class="downContent">上拉加载更多</view>
+  <view wx:else class="downContent">我也是有底线的啊 T∧T</view>
+</view>

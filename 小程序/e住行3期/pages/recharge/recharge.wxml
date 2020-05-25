@@ -1,0 +1,53 @@
+<!--pages/recharge/recharge.wxml-->
+<!-- 顶部菜单 -->
+
+<view wx:if="{{paying}}" class="modalBg">
+  <!-- 弹出模态框  支付 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">在线支付</view>
+      <image class="closePay" src="../image/cha.svg" bindtap="closePay"></image>
+    </view>
+    <view class="listBox2">
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class="roomInfoBox">
+          <view class="modalRoomInfo" bindtap="pays">
+            <view class="info" >付款方式</view>
+            <image class="reChoose" src="../image/tiaozhuan.png"></image>
+            <view class="payWayConst">微信</view>
+          </view>
+          <view class="modalRoomInfo">
+            <view class="info">需付款</view>
+            <view class="payPrice">￥{{price}}</view>
+          </view>
+          <view class="pay" bindtap="wxpay">支付</view>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+</view>
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding:10rpx;'>
+  <!-- <view class="iptAmount">
+    <input class="itp" type="number" placeholder-class="iptP" placeholder="输入充值金额"></input>
+  </view> -->
+  <view class="priceBox clearfix">
+    <block wx:for="{{rechargeInfo}}" wx:key="index">
+      <button class="priceItem" data-index="{{item.id}}" bindtap="recharge" hover-class="priceItemHover">
+        <text class="rechargeMoney">￥{{item.rechargePrice}}</text>
+        <view class="sendBox">
+          <image class="sendIcon" src="../image/send.svg"></image>
+          <view class="sendMoney">{{item.freeGold}}<text>元</text></view>
+        </view>
+        <view class="sendBox">
+          <image class="sendIcon" src="../image/send.svg"></image>
+          <view class="sendMoney">{{item.presenterIntegral}}<text>分</text></view>
+        </view>
+        <image class="tehui" src="../image/tehui.svg"></image>
+      </button>
+    </block>
+  </view>
+  <!-- <button type="primary">充值</button> -->
+  <view class="tip">温馨提示：会员充值，只充不退</view>
+</view>

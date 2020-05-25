@@ -1,0 +1,64 @@
+<!--pages/lookPermission/lookPermission.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='padding-top:1rpx;margin-top: {{height}}px'>
+	<view class="roomInfoBox">
+		<!-- <view class="roomInfoItem">
+      <view class="roomInfoConst">房间</view>
+      <input disabled="true" class="roomInfo" value="{{roomAddress}}"></input>
+    </view>
+    <view class="roomInfoItem">
+      <view class="roomInfoConst">房间密码</view>
+      <input disabled="true" class="roomInfo" value="{{password}}"></input>
+    </view> -->
+		<text>请在入住前到酒店前台人证比对</text>
+	</view>
+	<view class="roomInfoBox">
+		<view class="roomInfoItem">
+			<view class="roomInfoConst">当前权限人</view>
+			<view class="roomInfo">{{ownerList[0].name}}</view>
+			<view wx:if="{{readOnly == 'canWrite'}}" class="rightBtn" bindtap="transferRights">转移权限</view>
+		</view>
+	</view>
+	<view class="roomInfoBox">
+		<view class="roomInfoItem borderBt">
+			<view class="roomInfoConst">入住人</view>
+			<block wx:if="{{readOnly == 'canWrite'}}">
+				<view class="rightBtn" bindtap="doneBtn" wx:if="{{chooseOwner}}">完成</view>
+				<!-- <view class="rightBtn" bindtap="addBtn" wx:elif="{{!chooseOwner && selectedOwner.length == 0}}">添加</view> 看具体返回值，需要修改 -->
+				<view class="rightBtn" bindtap="addBtn" wx:else>添加/修改</view>
+			</block>
+		</view>
+		<view class="readyOwnerInfo">
+			<view class="readyOwnerBox" wx:for="{{nowOwnerList}}" wx:key="index" wx:if="{{item}}">
+				<view class="readyOwner">{{item.name}}</view>
+				<block wx:if="{{readOnly == 'canWrite'}}">
+					<image wx:if="{{chooseOwner}}" class="delIcon" data-index="{{index}}" bindtap="del" src="../image/quxiao.svg"></image>
+				</block>
+			</view>
+		</view>
+		<block wx:if="{{chooseOwner}}">
+			<view class="ownerInfoBox">
+				<block wx:if="{{readOnly == 'canWrite'}}">
+					<block wx:for="{{ownerList}}" wx:key="index">
+						<view class="ownerItem {{nowOwnerList[index] ? 'active' : ''}}" data-index="{{index}}" bindtap="selectOwner">{{item.name}}</view>
+					</block>
+				</block>
+			</view>
+			<view class="inviteBox">
+				<!-- <view class="inviteBtn">
+          <view class="inviteBtnBox">
+            <image class="inviteIcon" src="../image/jiaren.png"></image>
+            <view class="inviteConst">从常用入住人添加</view>
+          </view>
+        </view> -->
+				<view wx:if="{{readOnly == 'canWrite'}}" class="inviteBtn" bindtap="inviteOwner">
+					<image class="inviteIcon" src="../image/jiaren.png"></image>
+					<view class="inviteConst">邀请好友入住</view>
+				</view>
+				<!-- <button open-type="share" type="primary">邀请好友入住</button> -->
+			</view>
+		</block>
+	</view>
+</view>

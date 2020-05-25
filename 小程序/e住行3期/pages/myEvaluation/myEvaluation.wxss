@@ -1,0 +1,151 @@
+/* pages/myEvaluation/myEvaluation.wxss */
+
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+  position: relative;
+}
+
+.topNav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.topEval {
+  float: left;
+  color: #999999;
+  width: 50%;
+  text-align: center;
+}
+
+.active {
+  color: #ef6c00;
+  border-bottom: 4rpx solid #ef6c00;
+}
+
+.evalBox {
+  width: 670rpx;
+  margin: 30rpx auto 0 auto;
+  padding: 15rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.top {
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.hotelName {
+  float: left;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.evalNum {
+  color: #ef6c00;
+  float: right;
+  font-size: 26rpx;
+}
+
+.main {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  line-height: 40rpx;
+  letter-spacing: 1rpx;
+  color: #777;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.showMain {
+  margin-top: 10rpx;
+  letter-spacing: 1rpx;
+  font-size: 22rpx;
+  line-height: 40rpx;
+  color: #777;
+}
+
+.bottom {
+  margin-top: 20rpx;
+  height: 40rpx;
+  width: 100%;
+  text-align: right;
+  font-size: 26rpx;
+}
+
+.evalDate {
+  float: left;
+  color: #777;
+  font-size: 24rpx;
+}
+
+.seeAll {
+  float: right;
+  font-size: 26rpx;
+  color: #29b6f6;
+}
+.noEvalTop{
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-bottom: 1rpx solid #eee;
+}
+.noEvalhotelName{
+  float: left;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.noEvalConst{
+  float: right;
+  color: #029789;
+  font-size: 22rpx;
+}
+.noEvalRow1{
+  height: 80rpx;
+  width: 100%;
+  line-height: 80rpx;
+}
+.roomName{
+  float: left;
+  font-size: 24rpx;
+
+}
+.timeNum{
+  float: left;
+  font-size: 24rpx;
+}
+.price{
+  float: right;
+  margin-right: 10rpx;
+  font-size: 34rpx;
+  color: #ef6c00;
+}
+.noEvalRow2{
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 24rpx;
+}
+.toEvalBox{
+  width: 100%;
+  height: 50rpx;
+}
+.toEval{
+  float: right;
+  padding: 7rpx 20rpx;
+  color: #ef6c00;
+  border: 1rpx solid #ef6c00;
+  border-radius: 5rpx;
+  font-size: 24rpx;
+  letter-spacing: 2rpx;
+}

@@ -1,0 +1,19 @@
+<!--pages/checkOut/checkOut.wxml-->
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+<image class="roomImg" mode="widthFix" src="../image/hotelImg/hotel5.jpg"></image>
+<view class="title">{{roomTypeName}}</view>
+<view class="infoBox">
+  <view class="dateBox">
+    <view class="dateConst">入住时间：</view>
+    <view class="date">{{inTime}}</view>
+  </view>
+  <view class="dateBox">
+    <view class="dateConst">离店时间：</view>
+    <view class="date">{{outTime}}</view>
+  </view>
+  <view class="tip">总共入住{{roomDay}}晚，消费明细请在后续订单页查看。</view>
+  <view class="tip">若您未手动退房，系统将于{{autoOutTime}}后自动退房。</view>
+</view>
+<view class="btn" bindtap="checkOut">点击退房</view>

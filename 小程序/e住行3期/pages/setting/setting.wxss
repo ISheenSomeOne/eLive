@@ -1,0 +1,73 @@
+/* pages/setting/setting.wxss */
+page {
+  background-color: rgb(243, 243, 243);
+  color: #333;
+  font-size: 30rpx;
+}
+.sets{
+  margin-top: 180rpx;
+  margin-left: 35rpx;
+}
+.background{
+  background-color: white;
+}
+.sets1{
+  margin-top: 20rpx;
+  font-size: 36rpx;
+  letter-spacing: 3rpx;
+  padding-top: 15rpx;
+  padding-bottom: 15rpx;
+  margin-left: 35rpx;
+
+}
+.about{
+  margin-top: 20rpx;
+  font-size: 36rpx;
+  letter-spacing: 3rpx;
+  padding-top: 15rpx;
+  padding-bottom: 15rpx;
+  margin-left: 35rpx;
+}
+.imgs{
+  width: 40rpx;
+  height: 40rpx;
+  position: relative;
+  top: 5rpx;
+  left: 82%
+}
+/*分割线样式*/
+.divLine{
+ background: rgb(230, 233, 223);
+ width: 95%;
+ height: 3rpx;
+ margin-left: 35rpx;
+}
+
+.switch{
+  position: absolute;
+  top: 250rpx;    
+  left: 630rpx;
+}
+.switch1{
+  position: absolute;
+  top: 340rpx;    
+  left: 630rpx;
+}
+
+/*swtich整体大小及背景色*/
+.wx-switch-input{
+    width:82rpx !important;
+    height:45rpx !important;
+    background: rgb(14, 147, 224) !important;
+    border: rgb(14, 147, 224)  !important; /* 2018-07-18 重置开关边框颜色 */
+}
+/*白色样式（false的样式）*/
+.wx-switch-input::before{
+    width:80rpx !important;
+    height: 45rpx !important;
+}
+/*绿色样式（true的样式）*/
+.wx-switch-input::after{
+    width: 40rpx !important;
+    height: 45rpx !important;
+}

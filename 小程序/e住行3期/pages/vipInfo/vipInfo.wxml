@@ -1,0 +1,64 @@
+<!--pages/vipInfo/vipInfo.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding:10rpx;'>
+  <block wx:for="{{vipInfo}}" wx:key="index">
+    <view wx:if="{{item.type=='钻石会员'}}" class="vipItem zuanshi">
+      <view class="title">{{item.type}}</view>
+      <view class="cont clearfix">
+        <view wx:if="{{item.floorLevel != null}}" class="privilegeItem">
+          需获取 {{item.floorLevel}} 分
+        </view>
+        <view wx:if="{{item.discount != null && item.discount != 100}}" class="privilegeItem">
+          房价 {{item.discount/10}} 折
+        </view>
+        <view wx:if="{{item.jiFenBeiShu != null && item.jiFenBeiShu != 100}}" class="privilegeItem">
+          积分 {{item.jiFenBeiShu/100}} 倍
+        </view>
+      </view>
+    </view>
+    <view wx:elif="{{item.type=='白金会员'}}" class="vipItem baijin">
+      <view class="title">{{item.type}}</view>
+      <view class="cont clearfix">
+        <view wx:if="{{item.floorLevel != null}}" class="privilegeItem">
+          需获取 {{item.floorLevel}} 分
+        </view>
+        <view wx:if="{{item.discount != null && item.discount != 100}}" class="privilegeItem">
+          房价 {{item.discount/10}} 折
+        </view>
+        <view wx:if="{{item.jiFenBeiShu != null && item.jiFenBeiShu != 100}}" class="privilegeItem">
+          积分 {{item.jiFenBeiShu/100}} 倍
+        </view>
+      </view>
+    </view>
+    <view wx:elif="{{item.type=='黄金会员'}}" class="vipItem huangjin">
+      <view class="title">{{item.type}}</view>
+      <view class="cont clearfix">
+        <view wx:if="{{item.floorLevel != null}}" class="privilegeItem">
+          需获取 {{item.floorLevel}} 分
+        </view>
+        <view wx:if="{{item.discount != null && item.discount != 100}}" class="privilegeItem">
+          房价 {{item.discount/10}} 折
+        </view>
+        <view wx:if="{{item.jiFenBeiShu != null && item.jiFenBeiShu != 100}}" class="privilegeItem">
+          积分 {{item.jiFenBeiShu/100}} 倍
+        </view>
+      </view>
+    </view>
+    <view wx:else class="vipItem elseColor">
+      <view class="title">{{item.type}}</view>
+      <view class="cont clearfix">
+        <view wx:if="{{item.floorLevel != null}}" class="privilegeItem">
+          需获取 {{item.floorLevel}} 分
+        </view>
+        <view wx:if="{{item.discount != null && item.discount != 100}}" class="privilegeItem">
+          房价 {{item.discount/10}} 折
+        </view>
+        <view wx:if="{{item.jiFenBeiShu != null}}" class="privilegeItem">
+          积分 {{item.jiFenBeiShu/100}} 倍
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

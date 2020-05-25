@@ -1,0 +1,51 @@
+<!--pages/livingRoom/livingRoom.wxml-->
+<!-- 顶部菜单 -->
+
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="staying" style='margin-top: {{height}}px'>入住中</view>
+<view class="stayingConst">该订单客人已入住</view>
+<view class="bill">
+  <!-- 账单信息 -->
+  <view class="billTop">
+    <view class="payWay">已支付</view>
+    <view class="price">￥{{roomInfo.totalPrice}}</view>
+  </view>
+</view>
+<view class="infoBox">
+  <!-- 酒店信息 -->
+  <view class="hotel">
+    <view class="hotelLeft">
+      <view class="hotelName">{{roomInfo.hotelName}}</view>
+      <view class="hotelAddress">{{roomInfo.hotelAddress}}</view>
+    </view>
+    <image class="hotelIcon" src="../image/tiaozhuan.png"></image>
+  </view>
+  <view class="hotel" bindtap="toContact">
+    <view class="hotelLeft">
+      <view class="hotelName">联系电话</view>
+      <view class="hotelAddress">{{roomInfo.tel}}</view>
+    </view>
+    <image class="hotelIcon" src="../image/tiaozhuan.png"></image>
+  </view>
+  <view class="orderRoom">
+    <view class="roomName">
+      <text>{{roomInfo.roomType}} </text>
+      <text>共{{roomInfo.roomDay}}晚 </text>
+      <text>{{roomInfo.breakfast}}</text>
+    </view>
+    <view class="roomName">
+      <text>{{checkinDate}} 至 {{checkoutDate}} </text>
+    </view>
+  </view>
+</view>
+<view class="infoBox">
+  <view class="other">
+    <view class="orderTitle">房间位置</view>
+    <view class="orderCont">{{roomInfo.roomDoor}}</view>
+  </view>
+  <view class="other2" wx:for="{{ruZhuRen}}" wx:key="index">
+    <view class="orderTitle">入住人{{index+1}}</view>
+    <view class="orderCont">{{item}}</view>
+  </view>
+</view>

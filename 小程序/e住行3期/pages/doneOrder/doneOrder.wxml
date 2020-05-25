@@ -1,0 +1,132 @@
+<!--pages/doneOrder/doneOrder.wxml-->
+<!-- 标题 -->
+<view wx:if="{{showDetail}}" class="modalBg">
+  <!-- 弹出模态框  查看明细 -->
+  <view class="modalBox">
+    <view class="modalTitle">
+      <view class="modalHotelName">查看明细</view>
+      <view class="done" bindtap="closeDetail">完成</view>
+    </view>
+    <view class="detailInfoBox">
+      <view class="detailInfoItem">
+        <view class="detailLeft">房间原价</view>
+        <view class="detailRight yellow">{{orderInfo.totalPrice}}￥</view>
+      </view>
+      <view class="detailInfo" wx:for="{{liveTime}}" wx:key="index">
+        <view class="detailLeft">{{item}} {{orderInfo.roomBreakFast}}</view>
+        <view class="detailRight">{{orderInfo.billingDetails[0].roomNum}}×{{orderInfo.billingDetails[0].roomTypePrice}}</view>
+        <!-- <view class="detailRight">{{orderInfo.billingDetails[0].roomNum}}×{{(orderInfo.totalPrice-orderInfo.billingDetails[0].hotelDeposit)/orderInfo.billingDetails[0].roomNum}}</view> -->
+      </view>
+      <view class="detailInfoItem" style="border-top:2rpx solid rgb(243, 243, 243);">
+        <view class="detailLeft">押金</view>
+        <view class="detailRight">￥{{orderInfo.billingDetails[0].hotelDeposit}}</view>
+      </view>
+      <view class="detailInfoItem">
+        <view class="detailLeft">优惠</view>
+        <view class="detailRight">-￥{{orderInfo.billingDetails[0].discountAmount}}</view>
+      </view>
+      <!-- <view class="detailInfo">
+        <view class="detailLeft">优惠券立减10元</view>
+        <view class="detailRight">-￥210</view>
+      </view> -->
+    </view>
+  </view>
+</view>
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="staying" style='margin-top: {{height}}px'>已完成</view>
+<view class="stayingConst">您的订单已消费，期待您再次预订</view>
+<view class="more" bindtap="hotelDetails">再次预订</view>
+<view class="bill">
+  <!-- 账单信息 -->
+  <view class="billTop">
+    <view class="payWay">在线支付</view>
+    <view class="price">￥{{orderInfo.totalPrice}}</view>
+    <view class="billDetail" bindtap="showDetail">明细</view>
+  </view>
+</view>
+<view class="infoBox">
+  <!-- 酒店信息 -->
+  <view class="hotel">
+    <view class="hotelLeft">
+      <view class="hotelName">{{orderInfo.hotelName}}</view>
+      <view class="hotelAddress">{{orderInfo.hotelAddress}}</view>
+    </view>
+    <image class="hotelIcon" src="../image/tiaozhuan.png"></image>
+  </view>
+  <view class="hotel" bindtap="toContact">
+    <view class="hotelLeft">
+      <view class="hotelName">联系电话</view>
+      <view class="hotelAddress">{{orderInfo.hotelTel}}</view>
+    </view>
+    <image class="hotelIcon" src="../image/tiaozhuan.png"></image>
+  </view>
+  <view class="orderRoom">
+    <view class="roomName">
+      <text>{{orderInfo.roomTypeName}}</text>
+      <text>{{orderInfo.roomNum}}间</text>
+    </view>
+    <view class="roomName">
+      <text>{{orderRoomInTime}}日 至 {{orderRoomOutTime}}日</text>
+      <text>共{{orderInfo.roomDay}}晚</text>
+      <text>{{orderInfo.roomBreakFast}}</text>
+    </view>
+  </view>
+</view>
+<view class="infoBox">
+  <!-- 房间信息 -->
+  <view class="roomInfo1">
+    <view class="roomInfoConst">房间信息</view>
+    <!-- <view class="invite">
+      <view class="inviteConst">邀请入住</view>
+      <image class="inviteIcon" src="../image/jiaren.png"></image>
+    </view> -->
+  </view>
+  <view class="roomInfoBox">
+    <view class="roomInfo2" wx:for="{{roomList}}" wx:key="index">
+      <view class="roomNumConst">房间 {{index+1}}</view>
+      <view class="roomNum">{{item.roomAddress}}</view>
+      <view wx:if="{{oneself && (item.roomAddress == '请到酒店认证比对')}}" class="roomPurview" data-index="{{index}}" bindtap="addOwner">
+        <image class="purviewIcon" src="../image/tiaozhuan.png"></image>
+        <view class="purviewContst">添加入住人</view>
+      </view>
+      <view wx:elif="{{oneself}}" class="roomPurview" data-index="{{index}}" bindtap="checkOwner">
+        <image class="purviewIcon" src="../image/tiaozhuan.png"></image>
+        <view class="purviewContst">查看入住人</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="infoBox">
+  <!-- 订单信息 -->
+  <view class="orderInfo">
+    <view class="orderInfoConst">订单信息</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">下单人</view>
+    <view class="orderCont">{{orderInfo.name}}</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">手机号</view>
+    <view class="orderCont">{{orderInfo.tel}}</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">订单号</view>
+    <view class="orderCont">{{orderInfo.outTradeNo}}</view>
+  </view>
+  <view class="orderInfoBox">
+    <view class="orderTitle">下单时间 </view>
+    <view class="orderCont">{{orderInfo.orderCreateTime}}</view>
+  </view>
+</view>
+<view class="infoBox">
+  <view class="other">
+    <view class="orderTitle">发票</view>
+    <view class="orderCont">如需发票，请填写开票信息</view>
+  </view>
+  <view class="other2">
+    <view class="orderTitle">备注</view>
+    <view class="orderCont">{{orderInfo.info}}</view>
+  </view>
+</view>

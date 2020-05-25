@@ -1,0 +1,65 @@
+/* pages/transactionDetail/transactionDetail.wxss */
+
+page {
+  background-color: #fff;
+  font-size: 30rpx;
+  color: #333;
+  position: relative;
+  text-align: center;
+}
+
+.transactionName{
+  margin: 20% auto 0 auto;
+  font-size: 42rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+  width: 550rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transactionContent{
+  margin-top: 10rpx;
+  font-size: 22rpx;
+}
+
+.price{
+  margin-top: 50rpx;
+  font-weight: bold;
+  font-size: 54rpx;
+}
+
+.bottomContent{
+  height: 160rpx;
+  width: 600rpx;
+  margin: 200rpx auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contentItem{
+  display: flex;
+  justify-content: start;
+}
+
+.itemLeft{
+  font-size: 26rpx;
+  color: #777;
+  width: 150rpx;
+}
+
+.itemRight{
+  font-size: 26rpx;
+}
+
+.zhuxing{
+  position: fixed;
+  bottom: 50rpx;
+  color: #aaa;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+}

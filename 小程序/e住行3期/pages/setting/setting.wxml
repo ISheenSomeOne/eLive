@@ -1,0 +1,51 @@
+<!--pages/setting/setting.wxml-->
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+
+<view class="sets">
+  <view>
+    <text>系统设置</text>
+  </view>
+</view>
+
+<view class="background">
+  <view class="sets1">
+    <view>
+      <text>接受新消息通知</text>
+    </view>
+
+    <view class="switch">
+      <switch checked />
+    </view>
+  </view>
+
+  <view class="divLine"></view>
+
+  <view class="sets1">
+    <view>
+      <text>wifi环境自动下载最新版本</text>
+    </view>
+
+    <view class="switch1">
+      <switch checked />
+    </view>
+  </view>
+
+  <view class="divLine"></view>
+
+  <view class="sets1">
+    <view>
+      <text>{{}}清除缓存(0MB)</text>
+    </view>
+
+  </view>
+</view>
+
+<view class="background">
+  <view bindtap="aboutUs" class="about">
+    <text>关于</text>
+    <image class="imgs" src="../image/tiaozhuan.png"></image>
+  </view>
+</view>

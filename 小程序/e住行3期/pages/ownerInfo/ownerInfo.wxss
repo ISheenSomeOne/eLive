@@ -1,0 +1,101 @@
+/* pages/ownerInfo/ownerInfo.wxss */
+
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+}
+.addBox{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: rgb(255, 255, 255);
+  color: #f06c00;
+}
+.add{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 80rpx;
+  width: 300rpx;
+}
+.addIcon{
+  height: 40rpx;
+  width: 40rpx;
+  margin-top: 20rpx;
+  font-size: 22rpx;
+}
+.addCont{
+  margin-left: 10rpx;
+  font-size: 24rpx;
+}
+.line{
+  height: 50rpx;
+  margin-top: 15rpx;
+  width: 4rpx;
+  background-color: #ccc;
+}
+.radio-group{
+  position: relative;
+}
+.userBox{
+  width: 700rpx;
+  height: 130rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 20rpx auto 0 auto;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+.userRadio{
+  float: left;
+  line-height: 130rpx;
+  margin-left: 30rpx;
+}
+.userInfo{
+  float: left;
+  width: 400rpx;
+  margin: 20rpx 0 0 20rpx;
+  height: 90rpx;
+  line-height: 45rpx;
+}
+.userName{
+  font-size: 24rpx;
+}
+.idCard{
+  font-size: 20rpx;
+  color: #999;
+}
+.editIcon{
+  float: right;
+  margin: 40rpx 30rpx 0 0;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+/*按钮*/
+.loginBtnView { 
+ width: 100%; 
+ height: auto; 
+ /* background-color: rgb(240, 109, 0); */
+ margin-top: 0px; 
+ margin-bottom: 0px; 
+ padding-bottom: 0px; 
+} 
+  
+.loginBtn { 
+ width: 80%; 
+ margin-top: 35px; 
+}
+.confirm{
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 32rpx;
+  width: 700rpx;
+  margin: 50rpx auto 0 auto;
+  text-align: center;
+  letter-spacing: 4rpx;
+  background-color: rgb(240, 109, 0);
+  color: #fff;
+}

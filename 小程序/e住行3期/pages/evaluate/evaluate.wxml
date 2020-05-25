@@ -1,0 +1,23 @@
+<!--pages/evaluate/evaluate.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<!-- <view class="dateAndRoom" style="margin-top: {{height}}px">2019-01-17入住，2019-01-18离店 | 榻榻米大床房</view> -->
+<view class="evalStarBox" style="margin-top: {{height}}px">
+  <view class="evalStarItem" wx:for="{{evalCont}}" wx:key="index">
+    <view class="evalConst">{{item}}</view>
+    <giveStar data-index='{{index}}' bind:getstar='getStar'></giveStar>
+  </view>
+</view>
+<view class="tipConst">请您对入住酒店进行评价，以帮助酒店改进服务，更可获得积分奖励。</view>
+<textarea class="ipt" placeholder-class="iptPla" maxlength="100" bindinput="bindTextAreaBlur" placeholder="请在这里写下您的宝贵意见" />
+<view class="imgBox">
+  <block wx:for="{{images}}" wx:key="index">
+    <view class="addImgBox">
+      <image class="addImg" src="{{item}}" mode="aspectFill" data-index="{{index}}" bindtap="handleImagePreview"></image>
+      <view class="delete" data-index="{{index}}" bindtap="deleteImg">删除</view>
+    </view>
+  </block>
+  <image wx:if="{{canAdd}}" class="addImg" bindtap="addImg" src="../image/add.svg"></image>
+</view>
+<view class="submit" bindtap="confirm">提交</view>

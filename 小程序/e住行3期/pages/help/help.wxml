@@ -1,0 +1,57 @@
+<!--pages/help/help.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar> 
+<!-- 什么是无人酒店 -->
+<view class="all" hidden="{{flag}}">
+  <view class="quest">
+    <text class="question">{{question}}?</text>
+    <image class="closeImg" bindtap="close" src="../image/cha.svg"></image>
+  </view>
+  <view class="divLine1"></view>
+
+  <view class="centers">
+    <text>{{answer}} </text>
+  </view>
+
+  <view class="submit">
+    <view class="buttomL">
+      <text>是否对您有用 : </text>
+    </view>
+
+    <view class="buttomCenter {{yong ? 'actives' : ''}}" bindtap="youyong">
+      <image class="cImg" src="../image/zan.svg"></image>
+      <text>有用</text>
+    </view>
+
+    <view class="butttomR {{wuyong ? 'actives' : ''}}" bindtap="wuyong">
+      <image class="rImg" src="../image/noZan.svg"></image>
+      <text>无用</text>
+    </view>
+  </view>
+
+</view>
+
+<!-- ****************************************************** -->
+
+<view class="sets">
+  <view>
+    <text>常见问题</text>
+  </view>
+</view>
+
+<view class="background">
+  <block wx:for='{{questionList}}' wx:key='{{questionList}}' wx:for-index='item_id' wx:for-item="item">
+    <view class="sets1" bindtap="unmanned" id='{{item_id}}'>
+      <view bindtap="show">
+        <text>{{item.question}}</text>
+      </view>
+    </view>
+    <view class="divLine"></view>
+  </block>         
+</view>
+
+<view class="text1">
+  <view class="text2">
+    <text class="text" bindtap="service">联系客服</text>
+  </view>
+</view>

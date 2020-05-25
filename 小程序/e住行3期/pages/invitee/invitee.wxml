@@ -1,0 +1,65 @@
+<!--pages/invitee/invitee.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px'>
+  <view class="bg"></view>
+  <!-- 背景 -->
+  <view class="avatarBox" style="top: {{height}}px">
+    <!-- 头像框 -->
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+  <view class="payInfo">
+    <!-- 支付信息 -->
+    <view class="hotelProxy">{{userInfo.nickName}}正在发起</view>
+    <view class="inviteConst">入住酒店邀请</view>
+    <!-- <view class="timeConst">订单已关闭</view> -->
+  </view>
+  <view class="hotelInfoBox">
+    <!-- 酒店信息 -->
+    <view class="hotelInfo">
+      <view class="hotelName">{{inviteInfo.hotelName}}</view>
+      <view class="roomInfo">{{inviteInfo.roomType}}</view>
+      <view class="orderTime">{{inviteInfo.checkinDate}} 至 {{inviteInfo.checkoutDate}} 共{{inviteInfo.dateCount}}晚</view>
+    </view>
+  </view>
+  <view class="contactBox">
+    <!-- 联系人信息 -->
+    <view class="contact">
+      <view class="userConst">联系人</view>
+      <view class="user">{{user}}</view>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view class="user">{{phone}}</view>
+    </view>
+  </view>
+  <view class="verifyBox">
+    <view class="contact">
+      <view class="userConst">中文姓名</view>
+      <view wx:if="{{inviteOK || inputOk}}" class="inviteeInfo">{{name}}</view>
+      <input wx:else class="user" placeholder-class='ipt' confirm-type='next' maxlength='15' bindinput='getName' placeholder='{{name == "" ? "请填写姓名" : name}}' type='text'></input>
+    </view>
+    <view class="contact">
+      <view class="userConst">手机号</view>
+      <view wx:if="{{inviteOK || inputOk}}" class="inviteeInfo">{{newPhone}}</view>
+      <input wx:else class="user" placeholder-class='ipt' confirm-type='next' maxlength='11' bindinput='getPhone' placeholder='{{newPhone == "" ? "请填写手机号" : newPhone}}' type='number'></input>
+    </view>
+    <view class="contact">
+      <view class="userConst">身份证号</view>
+      <view wx:if="{{inviteOK || inputOk}}" class="inviteeInfo">{{idCard}}</view>
+      <input wx:else class="user" placeholder-class='ipt' confirm-type='next' maxlength='6' bindinput='getId' placeholder='{{idCard == "" ? "请填写身份证后6位" : idCard}}' type='idcard'></input>
+    </view>
+  </view>
+  <view class="tipConst">* 请填写本人真实信息，以免为您的房间权限使用带来不便。 </view>
+  <!-- <view wx:if="{{inviteOK}}" class="share active" bindtap="share">
+    告知好友
+  </view> -->
+  <button open-type="share" wx:if="{{inviteOK}}" class="share active">告知好友</button>
+  <view wx:elif="{{invalid}}">
+  </view>
+  <view wx:else class="share {{can ? 'active' : ''}}" bindtap="confirm">
+    <!-- 分享 -->
+    确认提交
+  </view>
+</view>

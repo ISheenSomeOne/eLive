@@ -1,0 +1,8 @@
+<!--common/giveStar/giveStar.wxml-->
+
+<block wx:for="{{star}}" wx:key="index">
+  <image class="star" data-index="{{index}}" bindtap="lessStar" src="../../pages/image/star.svg"></image>
+</block>
+<block wx:for="{{5-star}}" wx:key="index">
+  <image class="star" data-index="{{index}}" bindtap="addStar" src="../../pages/image/star0.svg"></image>
+</block>

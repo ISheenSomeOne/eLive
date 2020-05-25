@@ -1,0 +1,10 @@
+<!--pages/successEval/successEval.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="iconBox" style="margin-top: {{height}}px">
+  <image class="icon" src="../image/success.svg"></image>
+  <view class="success">评价成功</view>
+</view>
+<view class="seeEval" bindtap="toMyEval">查看我的评价</view>
+<view class="toHome" bindtap="toHome">返回首页</view>

@@ -1,0 +1,262 @@
+.clear {
+  clear: both;
+  overflow: hidden;
+}
+
+navigator {
+  display: inline;
+}
+
+.list {
+  margin: 10rpx auto;
+  width: 720rpx;
+  /* border-top: 2rpx solid rgb(221, 221, 221); */
+}
+
+.imgBox {
+  float: left;
+  height: 170rpx;
+  width: 250rpx;
+}
+
+.img {
+  height: 170rpx;
+  width: 250rpx;
+  border-top-left-radius: 15rpx;
+  border-bottom-left-radius: 15rpx;
+}
+
+.list_item {
+  position: relative;
+  margin-top: 20rpx;
+  height: 170rpx;
+  border-radius: 15rpx;
+  box-shadow: 0rpx 2rpx 8rpx rgb(190, 190, 190);
+}
+
+.info {
+  float: left;
+  margin: 10rpx 15rpx;
+  font-size: 28rpx;
+  width: 300rpx;
+}
+
+.title {
+  float: left;
+  width: 180rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.star {
+  float: left;
+  margin-top: 7rpx;
+  font-size: 20rpx;
+  color: rgb(128, 128, 128);
+}
+
+.num {
+  margin-top: 45rpx;
+  font-size: 18rpx;
+}
+
+.price {
+  position: absolute;
+  color: rgb(240, 109, 0);
+  bottom: 20rpx;
+  right: 20rpx;
+  letter-spacing: -1rpx
+}
+
+.qi {
+  display: inline;
+  font-size: 15rpx;
+}
+
+.downContent {
+  font-size: 22rpx;
+  color: #777;
+  text-align: center;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  font-size: 20rpx;
+  color: #777;
+}
+
+.couponBox {
+  margin-top: 5rpx;
+  padding: 10rpx;
+  height: 60rpx;
+  background-color: rgb(251, 229, 214);
+  font-size: 22rpx;
+  color: #333;
+}
+
+.coupon {
+  display: inline-block;
+  padding: 8rpx;
+  background: linear-gradient(to right, rgb(226, 69, 38), rgb(201, 38, 37));
+}
+
+.couponType {
+  float: left;
+  margin-right: 10rpx;
+  color: #fff;
+  height: 44rpx;
+  line-height: 44rpx;
+}
+
+.couponContent {
+  float: left;
+  background-color: rgb(251, 229, 214);
+  height: 44rpx;
+  line-height: 44rpx;
+  padding: 0 10rpx;
+}
+
+.couponTip {
+  float: right;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #e24526;
+  letter-spacing: 2rpx;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.more{
+  display: inline-block;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 16rpx;
+}
+
+.couponItem{
+  width: 670rpx;
+  height: 250rpx;
+  z-index: 9999;
+  margin: 20rpx auto 0 auto;
+  background: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.couponStatusCont{
+  width: 650rpx;
+  height: 90rpx;
+  margin: 10rpx auto 0 auto;
+  line-height: 30rpx;
+  z-index: 5100;
+  background-color: #fff;
+  color: #999;
+  font-size: 21rpx;
+  border-radius: 10rpx;
+  padding: 10rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  overflow: auto;
+}
+.couponModalBox {
+  float: left;
+  height: 250rpx;
+  width: 200rpx;
+  background: linear-gradient(to top, rgba(214, 20, 85, 0.836), rgb(239, 96, 144));
+  border-bottom-left-radius: 10rpx;
+  border-top-left-radius: 10rpx;
+  color: #fff;
+  font-size: 25rpx;
+  text-align: center;
+}
+
+.couponPrice {
+  padding-top: 70rpx;
+  font-size: 35rpx;
+}
+
+.couponPrice text {
+  font-size: 55rpx;
+}
+
+.couponConst0 {
+  margin-top: 30rpx;
+}
+
+.couponInfo {
+  position: relative;
+  float: left;
+  width: 450rpx;
+  height: 250rpx;
+  margin-left: 20rpx;
+}
+
+.useStatusIcon {
+  float: left;
+  margin: 8rpx 0 0 7rpx;
+  height: 25rpx;
+  width: 25rpx;
+}
+
+.couponName0 {
+  font-weight: 600;
+  margin-top: 10rpx;
+}
+
+.couponCont {
+  margin-top: 30rpx;
+  font-size: 25rpx;
+  color: #777;
+}
+
+.deadline {
+  margin-top: 10rpx;
+  font-size: 23rpx;
+  color: #d32f2f;
+}
+
+.couponNav {
+  position: absolute;
+  width: 100%;
+  bottom: 20rpx;
+}
+
+.useStatus {
+  float: left;
+  font-size: 25rpx;
+  color: #55c5f8;
+}
+
+.navBtn {
+  float: right;
+  margin-right: 20rpx;
+  text-align: center;
+  height: 45rpx;
+  line-height: 45rpx;
+  width: 120rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: rgb(233, 30, 99);
+  border-radius: 10rpx;
+}
+
+.statusCont {
+  position: absolute;
+  width: 650rpx;
+  height: 90rpx;
+  line-height: 30rpx;
+  z-index: 150;
+  background-color: #fff;
+  color: #999;
+  font-size: 21rpx;
+  border-radius: 10rpx;
+  bottom: 120rpx;
+  padding: 10rpx;
+  left: 50%;
+  margin-left: -335rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(100, 100, 100);
+  overflow: auto;
+}

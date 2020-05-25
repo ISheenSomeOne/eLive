@@ -1,0 +1,65 @@
+/* pages/checkOut/checkOut.wxss */
+page {
+  font-size: 30rpx;
+  color: #333;
+  background-color: rgb(243, 243, 243);
+}
+.roomImg{
+  width: 100%;
+  height: 280rpx;
+}
+.title{
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: left;
+  padding-left: 30rpx;
+  color: #f06c00;
+  border-bottom: 2rpx #eee solid;
+  font-weight: bold;
+  letter-spacing: 1rpx;
+  background-color: #fff;
+}
+.infoBox{
+  width: 100%;
+  padding: 30rpx;
+  background-color: #fff;
+  font-size: 26rpx;
+}
+.dateBox{
+  height: 50rpx;
+  line-height: 50rpx;
+  width: 100%;
+  letter-spacing: 1rpx;
+}
+.dateConst{
+  letter-spacing: 1rpx;
+  float: left;
+font-weight: bold;
+
+}
+.date{
+float: left;
+color: #777;
+}
+.tip{
+  width: 100%;
+  height: 35rpx;
+  line-height: 35rpx;
+  text-align: left;
+color: #555;
+  font-size: 20rpx;
+  letter-spacing: 1rpx;
+}
+.btn{
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 600rpx;
+  border-radius: 50rpx;
+  color: #fff;
+  background: linear-gradient(to right, rgb(240, 109, 0), rgb(250, 139, 0));
+  margin: 100rpx auto;
+  text-align: center;
+  letter-spacing: 2rpx;
+
+}

@@ -1,0 +1,170 @@
+<!--pages/continue/continue.wxml-->
+
+<!--支付模态框 -->
+
+<view wx:if="{{payWay}}" class="modalBg">
+	<!-- 弹出模态框  选择支付方式 -->
+	<view class="modalBox">
+		<view class="modalTitle">
+			<view class="modalHotelName">请选择支付方式</view>
+			<!-- <view class="done" bindtap="closeChoose">完成</view> -->
+		</view>
+		<view class="listBox">
+			<radio-group class="radio-group" bindchange="radioChange">
+				<view class="roomInfoBox">
+					<view class="modalRoomInfo" bindtap="chooseYue">
+						<image class="payWayIcon" src="../image/yue.svg"></image>
+						<view class="info">余额支付<text>(￥{{balances}})</text></view>
+						<view class="recharge" bindtap="recharge">充值</view>
+					</view>
+					<view class="modalRoomInfo" bindtap="chooseWx">
+						<image class="payWayIcon" src="../image/wechatPay.svg"></image>
+						<view class="info">微信支付</view>
+					</view>
+				</view>
+			</radio-group>
+		</view>
+	</view>
+</view>
+
+<view wx:if="{{paying}}" class="modalBg">
+	<!-- 弹出模态框  支付 -->
+	<view class="modalBox">
+		<view class="modalTitle">
+			<view class="modalHotelName">在线支付</view>
+			<image class="closePay" src="../image/cha.svg" bindtap="closePay"></image>
+		</view>
+		<view class="listBox2">
+			<radio-group class="radio-group" bindchange="radioChange">
+				<view class="roomInfoBox">
+					<view class="modalRoomInfo" bindtap="pays">
+						<view class="info">付款方式</view>
+						<image class="reChoose" src="../image/tiaozhuan.png"></image>
+						<view wx:if="{{paymentMethod == 1}}" class="payWayConst">余额<text>(￥{{balances}})</text></view>
+						<view wx:elif="{{paymentMethod == 2}}" class="payWayConst">微信</view>
+					</view>
+					<view class="modalRoomInfo">
+						<view class="info">需付款</view>
+						<view class="payPrice">￥{{totalPrice}}</view>
+					</view>
+					<view wx:if="{{paymentMethod == 1}}" class="pay" bindtap="yuePay">支付</view>
+					<view wx:elif="{{paymentMethod == 2}}" class="pay" bindtap="wxpays">支付</view>
+				</view>
+			</radio-group>
+		</view>
+	</view>
+</view>
+
+<view wx:if="{{showDetail}}" class="modalBg">
+	<!-- 弹出模态框  查看明细 -->
+	<view class="modalBox">
+		<view class="modalTitle">
+			<view class="modalHotelName">查看明细</view>
+			<view class="done" bindtap="closeDetail">完成</view>
+		</view>
+		<view class="detailInfoBox">
+			<view class="detailInfoItem">
+				<view class="detailLeft">续房总价</view>
+				<view class="detailRight yellow">￥{{totalPrice}}</view>
+			</view>
+			<view class="detailInfo" wx:for="{{dateCount}}" wx:key="index">
+				<view class="detailLeft">第 {{index+1}} 天</view>
+				<view class="detailRight">￥{{unitPrice}} × {{roomList.length}}间</view>
+				<!-- <view class="detailRight">{{orderInfo.billingDetails[0].roomNum}}×{{(orderInfo.totalPrice-orderInfo.billingDetails[0].hotelDeposit)/orderInfo.billingDetails[0].roomNum}}</view> -->
+			</view>
+			<!-- <view class="detailInfoItem" style="border-top:2rpx solid rgb(243, 243, 243);">
+        <view class="detailLeft">押金</view>
+        <view class="detailRight">￥{{deposit*roomNum}}</view>
+      </view> -->
+			<view class="detailInfoItem">
+				<view class="detailLeft">优惠</view>
+				<view class="detailRight">-￥0</view>
+			</view>
+			<!-- <view class="detailInfo">
+        <view class="detailLeft">优惠券立减10元</view>
+        <view class="detailRight">-￥210</view>
+      </view> -->
+		</view>
+	</view>
+</view>
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>;
+
+<view class="alls">
+	<view class="topText">
+		<text class="textLeft">您正在进行续房</text>
+	</view>
+	<view class="divLine2"></view>
+
+	<view class="dateChoose">
+		<view class="checkInBox">
+			<view class="checkInTitle">当前离店日期</view>
+			<view>
+				<view class="checkInDate">
+					<!-- {{xuanZheData[0].xuanShiJian}}-{{xuanZheData[0].xuanDayShi}} -->
+					{{checkInDate}}
+				</view>
+			</view>
+		</view>
+		<view class="line"></view>
+		<view class="dateNum">
+			续
+			<!-- <text>{{xuanZheData[1].chaDay}}</text> -->
+			<text>{{dateCount}}</text> 晚
+		</view>
+		<view class="line"></view>
+
+		<!-- <navigator url="/pages/riliTwo/riliTwo"> -->
+		<view class="checkInBox" bindtap="riliTwo">
+			<view class="checkInTitle">续房至</view>
+			<view>
+				<view class="checkInDate">
+					{{checkOutDate}}
+				</view>
+			</view>
+		</view>
+		<!-- </navigator> -->
+	</view>
+
+	<view class="divLine1"></view>
+
+	<view class="chooseRoom">
+		<view class="chooseRoomText">
+			<text>房间列表</text>
+		</view>
+		<view class="divLine"></view>
+
+
+		<block wx:for="{{roomList}}" wx:key='{{roomList}}'>
+			<view class="roomText">
+				<text class="roomLeft">房间 {{item.door}} :</text>
+				<block wx:for="{{item.roomNumbel}}" wx:key="{{roomNumbel}}">
+					<text class="nameclass">{{item}}</text>
+				</block>
+			</view>
+		</block>
+	</view>
+
+	<!-- 底部导航栏 -->
+	<view class="buttoms">
+		<view wx:if="{{totalPrice == -1}}" class="buttomLeftTip">
+			暂无空房
+		</view>
+		<block wx:else>
+			<view class="buttomLeft">
+				在线支付
+			</view>
+			<view class="buttomLeftPrice">
+				¥{{totalPrice}}
+			</view>
+		</block>
+		<view class="buttomRight" bindtap="affirm">
+			<text>确认续房</text>
+		</view>
+		<view class="buttomC}}" bindtap="openDetail">
+			<view>明细</view>
+			<image class="buttomImg" src="../image/xiajiantou1.png"></image>
+		</view>
+	</view>
+</view>

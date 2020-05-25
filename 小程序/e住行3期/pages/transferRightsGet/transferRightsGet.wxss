@@ -1,0 +1,169 @@
+/* pages/transferRightsGet/transferRightsGet.wxss */  
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+  color: #333;
+}
+
+.bg {
+  z-index: -1;
+  background-color: #f06c00;
+  height: 100rpx;
+  width: 100%;
+}
+.payInfo{
+  position: relative;
+  text-align: center;
+  padding: 120rpx 0 70rpx 0;
+  z-index: -1;
+  width: 100%;
+  background-color: #fff;
+}
+.avatarBox{
+  position: absolute;
+  height: 170rpx;
+  width: 170rpx;
+  left: 50%;
+  margin-left: -85rpx;
+  background-color: #fff;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 50%;
+}
+.avatar{
+  height: 150rpx;
+  width: 150rpx;
+  display: block;
+  margin: 10rpx;
+  border-radius: 50%;
+}
+.hotelProxy{
+  font-size: 32rpx;
+  letter-spacing: 1rpx;
+}
+.price{
+  margin-top: 30rpx;
+  font-size: 60rpx;
+  font-weight: 600;
+}
+.timeConst{
+  margin-top: 30rpx;
+}
+.time{
+  display: inline;
+  color: #f06c00;
+}
+.hotelInfoBox{
+  width: 100%;
+  margin-top: 30rpx;
+  background-color: #fff;
+  border-bottom: 2rpx solid rgb(243, 243, 243);
+}
+.hotelInfo{
+  width: 650rpx;
+  margin: 0 auto;
+  padding: 40rpx 0;
+}
+.hotelName{
+  font-size: 32rpx;
+  color: #333;
+}
+.roomInfo{
+  margin-top: 15rpx;
+  font-size: 28rpx;
+}
+.orderTime{
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
+.contactBox{
+  width: 100%;
+  padding: 20rpx 0;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+}
+.verifyBox{
+  width: 100%;
+  padding: 20rpx 0;
+  margin-bottom: 130rpx;
+  background-color: #fff;
+}
+.contact{
+  width: 650rpx;
+  height: 55rpx;
+  line-height: 55rpx;
+  margin: 20rpx auto;
+}
+.userConst{
+  width: 130rpx;
+  float: left;
+  color: #333;
+}
+.user{
+  float: left;
+  color: #333;
+  margin-left: 30rpx;
+  height: 55rpx;
+  line-height: 55rpx;
+}
+.inviteeInfo{
+  float: left;
+  margin-left: 30rpx;
+}
+.ipt{
+  color: #bbb;
+}
+.tip{
+  width: 650rpx;
+  margin: 0 auto;
+  text-align: left;
+  color: rgb(0, 150, 136);
+  font-size: 20rpx;
+}
+.share{
+  position: fixed;
+  width: 680rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  bottom: 30rpx;
+  left: 50%;
+  margin-left: -340rpx;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 34rpx;
+  background-color: #bbb;
+  letter-spacing: 1rpx;
+  border-radius: 10rpx;
+  pointer-events: none;
+}
+.active{
+  background-color: #f06c00;
+  pointer-events: auto;
+}
+.inviteConst{
+  margin-top: 20rpx;
+  letter-spacing: 2rpx;
+  text-align: center;
+  font-size: 40rpx;
+  color: #f06c00;
+}
+.waiting{
+  margin-top: 20rpx;
+  text-align: center;
+  color: rgb(21, 118, 162); 
+  letter-spacing: 1rpx;
+}
+.agree{
+  color: rgb(7, 193, 96);
+  margin-top: 20rpx;
+  text-align: center;
+  letter-spacing: 1rpx;
+  font-weight: bold;
+}
+.danger{
+  color: #d32f2f;
+  margin-top: 20rpx;
+  text-align: center;
+  letter-spacing: 1rpx;
+  font-weight: bold;
+}

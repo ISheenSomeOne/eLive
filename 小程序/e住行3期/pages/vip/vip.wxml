@@ -1,0 +1,43 @@
+<!--pages/vip/vip.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding:10rpx;'>
+	<view class="vipInfoBox">
+		<view class="leftBox">
+			<view class="avatar">
+				<image class="avatarImg" src="{{userInfo.avatarUrl}}"></image>
+			</view>
+			<view class="userName">{{vipInfo.name}}</view>
+		</view>
+		<view class="midBox">
+			<view class="levelBox">
+				<view class="myLevelBox">
+					<image src="../image/vipIcon.svg" class="mylevelIcon"></image>
+					<view class="mylevel">{{vipInfo.type}}</view>
+				</view>
+				<view class="upgradeBox">
+					<view class="upgradeLine"></view>
+					<view wx:if="{{allJiFen<nextLevel}}" class="upgrade">{{allJiFen}}/{{nextLevel}}</view>
+					<view wx:else class="upgrade top">您是顶级会员</view>
+				</view>
+			</view>
+			<view class="integral">可用积分
+				<text>{{vipInfo.jiFen}}</text>
+			</view>
+		</view>
+		<view class="rightBox">
+			<image class="levelIcon" src="{{vipInfo.icon}}"></image>
+		</view>
+	</view>
+	<view class="vipEntrance">
+		<view class="myOver"><text>余额</text> ￥{{vipInfo.balance}}</view>
+		<view class="card" bindtap="card">卡券包 <text>1</text> 张</view>
+	</view>
+	<view class="vipEntrance">
+		<view class="vipPrivilege" bindtap="vipPrivilege">会员特权</view>
+		<view class="recharge" bindtap="recharge">充值入口</view>
+	</view>
+	<view class="transaction" bindtap="transaction">交易记录</view>
+	<view class="pointsRecord" bindtap="pointsRecord">积分记录</view>
+</view>

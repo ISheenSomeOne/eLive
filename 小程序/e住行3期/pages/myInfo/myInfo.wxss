@@ -1,0 +1,52 @@
+/* pages/myInfo/myInfo.wxss */
+page {
+  background-color: rgb(243, 243, 243);
+  color: #333;
+  font-size: 30rpx;
+}
+.infoBox{
+  width: 660rpx;
+  margin: 25rpx auto 0 auto;
+  padding: 1rpx 20rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+}
+.infoItem{
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 100%;
+}
+.infoConst{
+  float: left;
+  font-size: 28rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+}
+.infoIcon{
+  float: right;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 25rpx;
+}
+.avntar{
+  float: right;
+  height: 80rpx;
+  width: 80rpx;
+  margin: 20rpx 20rpx 0 0;
+  border-radius: 50%;
+}
+.info{
+  float: right;
+  margin-right: 20rpx;
+}
+.logout{
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  letter-spacing: 2rpx;
+  width: 650rpx;
+  margin: 100rpx auto 0 auto;
+  border-radius: 10rpx;
+  color: #fff;
+  background-color: #f06c00
+}

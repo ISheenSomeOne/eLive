@@ -1,0 +1,139 @@
+<!--pages/orders/orders.wxml-->
+<!-- <view wx:if='{{}}'> -->
+<view wx:if="{{chooseCoupon}}" class="modalBg">
+  <!-- 弹出模态框  选择优惠券 -->
+  <view class="chooseCouponBox">
+    <view class="done" bindtap="done">完成</view>
+    <radio-group class="radio-group mgtop" bindchange="radioChange">
+      <view class="modalBox" wx:for="{{couponList}}" wx:key="couponList" wx:for-index='item_id' wx:for-item="item">
+        <view bindtap="judge" id='{{item_id}}'>
+          <!--点击判断该优惠券是否符合使用条件   -->
+          <view class="couponBox">
+            <view class="couponPrice">￥
+              <text>{{item.jian}}</text>
+            </view>
+            <view class="couponConst">优惠券</view>
+          </view>
+          <view class="couponInfo">
+            <radio class="couponRadio" value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+            <view class="couponName">{{item.name}}</view>
+            <view class="couponCont">满{{item.man}}减{{item.jian}}</view>
+
+            <view class="couponNav">
+              <view style="float:left" bindtap="seeStatus">
+                <view class="useStatus">使用说明</view>
+                <image class="useStatusIcon" wx:if="{{seeStatus}}" src="../image/shangjiantou1.png"></image>
+                <image class="useStatusIcon" wx:else src="../image/xiajiantou1.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="statusCont" wx:if="{{seeStatus}}">
+          适用于{{hotelName}}酒店，实际以带有优惠券标签的房型为标准
+        </view>
+      </view>
+    </radio-group>
+  </view>
+
+</view>
+<!-- </view> -->
+<!-- <view wx:else>
+  <view class="done" bindtap="done">完成</view>
+  <text>暂无优惠券可用</text>
+</view> -->
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="orders" style='margin-top: {{height}}px'>
+  <view class="bg"></view>
+  <!-- 背景 -->
+
+  <view class="orderHotel">
+    <!-- 订单房间信息 -->
+    <view class="roomName">{{name}}</view>
+    <view class="time">{{startTime}} 至 {{endTime}} 共{{dateCount}}晚</view>
+    <view class="roomInfo">无早餐 {{bed}} <text wx:if="{{area != null}}">{{area}}㎡</text> 还剩{{roomCount}}间</view>
+    <view class="tip">
+      <image class="tipIcon" src="../image/tip.png"></image>
+      <view class="tipInfo">{{date}} 18:00 前可免费取消修改订单</view>
+    </view>
+  </view>
+  <!-- <form bindsubmit="formsubmit" bindreset="formReset"> -->
+  <view class="roomNumTitle">
+    <view class="roomNum">房间数</view>
+    <view class="num">
+      <text>{{showValue}}</text>间</view>
+    <image wx:if="{{showRoomNumBox}}" bindtap="closeRoomNumBox" class="roomNumIcon" src="../image/shangjiantou.png"></image>
+    <image wx:else class="roomNumIcon" bindtap="openRoomNumBox" src="../image/xiajiantou.png"></image>
+    <!-- 房间数 -->
+  </view>
+  <view wx:if="{{showRoomNumBox}}" class="roomNumBox">
+    <!-- <slider class="chooseNum" bindchange="sliderchange" name='showValue' value="{{showValue}}" color="#f06d0030" selected-color="#f06d00" block-size="23" min='{{roomMin}}' max='{{roomCount}}' show-value/> -->
+    <block wx:for="{{roomCount}}" wx:key="index">
+      <view class="numItem {{(index+1 == showValue) ? 'active' : ''}}" data-index="{{index}}" bindtap="chooseNum">
+        {{index+1}}
+      </view>
+    </block>
+  </view>
+
+  <view class="userInfoBox">
+    <view class="tip">*请填写本人真实信息，以免为您的房间权限使用带来不便</view>
+    <!-- 联系人信息 -->
+    <view class="username">
+      <label class="info">姓名</label>
+      <view wx:if="{{hasBeenCompleted}}" class="ipt" bindtap="toInput">{{nameShow}}</view>
+      <input wx:else class="ipt" type='text' placeholder-class="iptP" name='contacts' bindinput="contacts" placeholder='{{contacts == "" ? "请填写姓名" : contacts}}' />
+      <image class='infoIcon' src='../image/ren.png'></image>
+    </view>
+    <view class="phone">
+      <label class="info">手机号</label>
+      <view wx:if="{{hasBeenCompleted}}" class="ipt" bindtap="toInput">{{telShow}}</view>
+      <input wx:else class="ipt" type='number' placeholder-class="iptP" name='tel' maxlength="11" bindinput="tel" placeholder='{{tel == "" ? "请填写电话号码" : tel}}' />
+      <image class='infoIcon' src='../image/lianxifangshi.png'></image>
+    </view>
+    <view class="phone">
+      <label class="info">身份证</label>
+      <view wx:if="{{hasBeenCompleted}}" class="ipt" bindtap="toInput">{{idCardShow}}</view>
+      <input wx:else class="ipt" type='idcard' placeholder-class="iptP" name='idcard' maxlength="6" bindinput="idcard" placeholder='{{idcard == "" ? "请填写身份证号后6位" : idcard}}' />
+      <image class='infoIcon' src='../image/shenfenzheng.svg'></image>
+    </view>
+  </view>
+  <view class="quanBox">
+    <!-- 优惠券 -->
+    <view class="quan" bindtap="conpons">
+      <image class="quanIcon" src="../image/quan.png"></image>
+      <view class="const">优惠券抵扣</view>
+      <image class="goIcon" src="../image/tiaozhuan.png"></image>
+      <view class="quanInfo">可用优惠￥{{jian}}元</view>
+    </view>
+  </view>
+  <view class="userInfoBox" style="margin-bottom:120rpx;">
+    <!-- 发票和备注 -->
+    <view class="username">
+      <label class="info">发票</label>
+      <input class="ipt" type='text' placeholder-class="iptF" name='receipt' bindinput="receipt" disabled="true" placeholder='如需发票，请填写开票信息' />
+    </view>
+    <view class="phone">
+      <label class="info">备注</label>
+      <input class="ipt" disabled="true" type='text' name='info' bindinput="info" placeholder-class="iptP" placeholder='需要告知酒店的特殊要求' />
+    </view>
+  </view>
+  <view class="priceInfo">
+    <!-- 支付信息 -->
+    <view class="priceBox">
+      <view class="price">
+        <text style="margin-right: 60rpx;">房间价格￥{{manPrice}}</text>
+        <text>押金￥{{deposit}}</text>
+      </view>
+
+      <!-- <view class="detailBox">
+        <view class="detail">明细</view>
+        <image class="detailIcon" src="../image/xiajiantou1.png"></image>
+      </view> -->
+      <view class="confirm" bindtap="submit">确定
+      </view>
+    </view>
+  </view>
+  <!-- </form> -->
+</view>

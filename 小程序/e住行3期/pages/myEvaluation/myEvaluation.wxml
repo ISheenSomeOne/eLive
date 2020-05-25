@@ -1,0 +1,46 @@
+<!--pages/myEvaluation/myEvaluation.wxml-->
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view class="topNav" style='margin-top: {{height}}px'>
+	<view class="topEval {{has ? 'active' : ''}}" bindtap="toSee">已评价</view>
+	<view class="topEval {{!has ? 'active' : ''}}" bindtap="toEvals">未评价</view>
+</view>
+<view style="margin-top: {{height*2}}px;"> </view>
+<block wx:if="{{has}}">
+	<view class="evalBox" wx:for="{{evalInfo}}" wx:key="index">
+		<view class="top">
+			<view class="hotelName">{{item.hotelName}}</view>
+			<view class="evalNum">{{item.serviceRate}}分</view>
+		</view>
+		<view class="{{item.seeAll ? 'showMain' : 'main'}}">{{item.comment}}</view>
+		<view class="bottom">
+			<view class="evalDate">{{item.createTime}}</view>
+			<view wx:if="{{item.seeAll}}" class="seeAll" data-index="{{index}}" bindtap="close">收起</view>
+			<view wx:else class="seeAll" data-index="{{index}}" bindtap="seeAll">查看全部</view>
+		</view>
+	</view>
+</block>
+
+<block wx:else>
+	<view style="margin-bottom:30rpx">
+		<view class="evalBox" wx:for="{{noEvalInfo}}" wx:key="index">
+			<view class="noEvalTop">
+				<view class="noEvalhotelName">{{item.hotelName}}</view>
+				<view class="noEvalConst">订单完成</view>
+			</view>
+			<view class="noEvalRow1">
+				<view class="roomName">{{item.roomTypeName}}</view>
+				<view class="timeNum">{{item.roomDay}}晚</view>
+				<view class="timeNum">{{item.roomNum}}间</view>
+				<view class="price">￥{{item.price}}</view>
+			</view>
+			<view class="noEvalRow2">
+				<view class="date">{{item.inTime}}至{{item.endTime}}</view>
+			</view>
+			<view class="toEvalBox">
+				<view class="toEval" data-index="{{index}}" bindtap="evaluation">评价</view>
+			</view>
+		</view>
+	</view>
+</block>

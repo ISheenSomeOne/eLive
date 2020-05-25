@@ -1,0 +1,219 @@
+<!--pages/hotelDetail/hotelDetail.wxml-->
+<view wx:if="{{newPeople}}" class="modalBg">
+	<!-- 弹出模态框  新人登录优惠券 -->
+	<view class="modalBox">
+		<view class="couponModalBox">
+			<view class="couponPrice">￥
+				<text>{{jian}}</text>
+			</view>
+			<view class="couponConst0">满减券{{CouponName}}</view>
+		</view>
+		<view class="couponInfo">
+			<view class="couponName0">新人首次订房有优惠</view>
+			<view class="couponCont">满{{man}}减{{jian}}</view>
+			<view class="deadline">有效期限 {{}}--{{}} </view>
+			<view class="couponNav">
+				<view style="float:left" catchtap="seeStatus">
+					<view class="useStatus">使用说明</view>
+					<image class="useStatusIcon" wx:if="{{seeStatus}}" src="../image/shangjiantou1.png"></image>
+					<image class="useStatusIcon" wx:else src="../image/xiajiantou1.png"></image>
+				</view>
+				<view class="navBtn" catchtap="getCoupon">领取</view>
+				<view class="navBtn" catchtap="next">下次吧</view>
+			</view>
+		</view>
+	</view>
+	<view class="statusCont" wx:if="{{seeStatus}}">
+		适用于{{hotelName}}酒店，实际以带有优惠券标签的房型为标准
+	</view>
+</view>
+<!-- 优惠券列表 -->
+<view class="page" data-weui-theme="{{theme}}">
+	<view wx:if="{{showDialog}}" class="fadeIn" bindtap="close">
+		<view class="weui-mask"></view>
+		<view class="weui-actionsheet weui-actionsheet_toggle" style="padding-bottom:20rpx;max-height:800rpx;overflow:">
+			<view class="weui-actionsheet__title">
+				<view class="weui-actionsheet__title-text">领取优惠券</view>
+			</view>
+			<view class="couponItem">
+				<view class="couponModalBox">
+					<view class="couponPrice">￥
+						<text>{{jian}}</text>
+					</view>
+					<view class="couponConst0">满减券{{CouponName}}</view>
+				</view>
+				<view class="couponInfo">
+					<view class="couponName0">新人首次订房有优惠</view>
+					<view class="couponCont">满{{man}}减{{jian}}</view>
+					<view class="deadline">有效期限 {{}}--{{}} </view>
+					<view class="couponNav">
+						<view class="navBtn" catchtap="getCoupon">领取</view>
+					</view>
+				</view>
+			</view>
+			<view class="couponItem">
+				<view class="couponModalBox">
+					<view class="couponPrice">￥
+						<text>{{jian}}</text>
+					</view>
+					<view class="couponConst0">满减券{{CouponName}}</view>
+				</view>
+				<view class="couponInfo">
+					<view class="couponName0">新人首次订房有优惠</view>
+					<view class="couponCont">满{{man}}减{{jian}}</view>
+					<view class="deadline">有效期限 {{}}--{{}} </view>
+					<view class="couponNav">
+						<view class="navBtn" bindtap="getCoupon">领取</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+<view class="hotelInfoBox" style="margin-top: {{height}}px">
+	<!-- 酒店详情 -->
+	<view class="hotelSwiperBox">
+		<!-- 酒店图片轮播 -->
+		<swiper class="hotelSwiper" indicator-dots="true" autoplay="true" interval="5000" duration="500" indicator-active-color="#fff">
+			<block wx:for="{{hotelImgList}}" wx:key="index">
+				<swiper-item>
+					<image class="swiperImg" src="{{item}}" mode="widthFix" lazy-load="true" />
+				</swiper-item>
+			</block>
+		</swiper>
+		<image class="xihuanIcon" src="../image/xihuan.png"></image>
+	</view>
+
+	<view class="hotelInfoBox">
+		<block wx:for="{{wxHotelDetails}}" wx:key="index">
+			<!-- 酒店信息 -->
+			<view class="hotelInfo">
+				<view class="hotelTop">
+					<!-- 酒店名字和类型 -->
+					<view class="hotelNameBox">
+						<view class="hotelName">{{item.name}}</view>
+						<view class="hotelType">{{item.star}}星级</view>
+					</view>
+					<view class="hotelStatusBox">
+						<!-- 酒店功能 -->
+						<view class="hotelTime">{{item.renovationTime}}年装修</view>
+						<view class="hotelStatus">
+							<image class="StatusIcon" src="../image/wifi.png"></image>
+							<view class="status">免费WIFI</view>
+						</view>
+						<view class="hotelStatus">
+							<image class="StatusIcon" src="../image/wifi.png"></image>
+							<view class="status">餐饮服务</view>
+						</view>
+						<view class="hotelStatus">
+							<image class="StatusIcon" src="../image/wifi.png"></image>
+							<view class="status">空调服务</view>
+						</view>
+					</view>
+					<view class="detailBox">
+						<!-- 酒店详情按钮 -->
+						<image class="detailIcon" src="../image/tiaozhuan1.png"></image>
+						<view class="detailConst">详情/设施</view>
+					</view>
+
+				</view>
+				<view class="hotelTop" bindtap="toEval">
+					<view class="rate">{{item.rate}}分</view>
+					<view class="rateDetail">
+						<view class="unique">地理位置好</view>
+						<view class="rateStatus">
+							<text>{{commentCount}}+</text>人消费，
+							<text>{{divide}}%</text>好评，
+							<text>{{totalCommentCount}}条</text>点评</view>
+					</view>
+					<view class="detailBox">
+						<!-- 点评问答按钮 -->
+						<image class="detailIcon" src="../image/tiaozhuan1.png"></image>
+						<view class="detailConst">点评/问答</view>
+					</view>
+				</view>
+				<view class="hotelTop" bindtap="goMap">
+					<view class="hotelAddress">{{item.address}}</view>
+					<view class='address'>{{hotelDistance}}</view>
+					<view class="detailBox">
+						<!-- 酒店详情按钮 -->
+						<image class="detailIcon" src="../image/tiaozhuan1.png"></image>
+						<view class="detailConst">地图/导航</view>
+					</view>
+				</view>
+				<view class="hotelBottom" bindtap="toContact">
+					<view class="hotelTel">{{tel}}</view>
+					<view class="detailBox">
+						<!-- 酒店详情按钮 -->
+						<image class="detailIcon" src="../image/tiaozhuan1.png"></image>
+						<view class="detailConst">联系酒店</view>
+					</view>
+				</view>
+				<view class="couponBoxb" bindtap="openCouponList">
+					<view class="couponb">
+						<view class="couponType">满减券</view>
+						<view class="couponContent">满100减10</view>
+					</view>
+					<view class="couponTip">
+						<view>领券</view>
+						<image class="more" src="../image/more.svg" />
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
+
+	<view class="couponBox">
+		<!-- 优惠券 -->
+		<!-- <view class="coupon">
+      <view class="couponWidth">
+        <view class="couponConst">优惠券</view>
+        <view class="couponName">满200减10</view>
+        <view class="couponName">满200减25</view>
+      </view>
+      <view class="getCoupon">
+        <image class="getCouponIcon" src="../image/tiaozhuan1.png"></image>
+        <view class="getCouponConst">领券</view>
+      </view>
+    </view> -->
+	</view>
+
+	<!-- 使用日期选择组件 -->
+	<chooseDate bind:getComponentDate="getComponentDate"></chooseDate>
+	<view class="roomList">
+		<!-- 房间列表 -->
+		<view class="room" wx:for="{{roomList}}" wx:for-index='item_id' wx:key="roomList" wx:if="{{item.roomCount}}">
+			<!-- 房间Item -->
+			<image class="roomImg" mode="aspectFill" src="{{item.imgs}}"></image>
+			<!-- 图片 -->
+			<view class="roomInfoBox">
+				<!-- 房间信息 -->
+				<view class="roomName">{{item.name}}</view>
+
+				<view class="roomDetailBox">
+					<!-- <view class="roomDetail" wx:for="{{item.roomDetail}}" wx:for-item="detail" wx:key="index">{{detail}}</view> -->
+					<view class="roomDetail">
+						<text>无早餐 </text>
+						<text>{{item.bed}} </text>
+						<text>还剩{{item.roomCount}}间</text>
+					</view>
+				</view>
+				<!-- <view class="roomUniqueBox">
+          <view class="roomUnique" wx:for="{{item.unique}}" wx:for-item="unique" wx:key="index">{{unique}}</view>
+        </view> -->
+			</view>
+			<!-- <view class="car" bindtap="" id='{{item_id}}'>加入购物车</view> -->
+			<view class="buy" bindtap="orders" id='{{item_id}}'>立即预定</view>
+			<view class="price">
+				<text wx:if="{{item.price > item.discountPrice}}">￥{{item.price}}</text>
+				￥{{item.discountPrice}}
+				<!-- <text>￥{{item.originPrice}}</text> -->
+			</view>
+		</view>
+	</view>
+	<view wx:if="{{haveMore}}" class="downContent">上拉加载更多</view>
+	<view wx:else class="downContent">我也是有底线的啊 T∧T</view>
+</view>

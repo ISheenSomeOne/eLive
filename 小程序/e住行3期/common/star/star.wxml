@@ -1,0 +1,7 @@
+<!--common/star/star.wxml-->
+<block wx:for="{{star}}" wx:key="index">
+  <image class="topStar" src="../../pages/image/star.svg"></image>
+</block>
+<block wx:if="{{starBan}}">
+  <image class="topStar" src="../../pages/image/starBan.svg"></image>
+</block>

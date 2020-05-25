@@ -1,0 +1,84 @@
+<!-- 优惠券列表 -->
+<view class="page" data-weui-theme="{{theme}}">
+	<view wx:if="{{showDialog}}" class="fadeIn" bindtap="close">
+		<view class="weui-mask"></view>
+		<view class="weui-actionsheet weui-actionsheet_toggle" style="padding-bottom:20rpx;max-height:800rpx;overflow:">
+			<view class="weui-actionsheet__title">
+				<view class="weui-actionsheet__title-text">领取优惠券</view>
+			</view>
+			<view class="couponItem">
+				<view class="couponModalBox">
+					<view class="couponPrice">￥
+						<text>{{jian}}</text>
+					</view>
+					<view class="couponConst0">满减券{{CouponName}}</view>
+				</view>
+				<view class="couponInfo">
+					<view class="couponName0">新人首次订房有优惠</view>
+					<view class="couponCont">满{{man}}减{{jian}}</view>
+					<view class="deadline">有效期限 {{}}--{{}} </view>
+					<view class="couponNav">
+						<view class="navBtn" catchtap="getCoupon">领取</view>
+					</view>
+				</view>
+			</view>
+			<view class="couponItem">
+				<view class="couponModalBox">
+					<view class="couponPrice">￥
+						<text>{{jian}}</text>
+					</view>
+					<view class="couponConst0">满减券{{CouponName}}</view>
+				</view>
+				<view class="couponInfo">
+					<view class="couponName0">新人首次订房有优惠</view>
+					<view class="couponCont">满{{man}}减{{jian}}</view>
+					<view class="deadline">有效期限 {{}}--{{}} </view>
+					<view class="couponNav">
+						<view class="navBtn" bindtap="getCoupon">领取</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+<!-- 顶部菜单 -->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding-top:1rpx'>
+	<view class="couponBox" bindtap="openCouponList">
+		<view class="coupon">
+			<view class="couponType">满减券</view>
+			<view class="couponContent">满100减10</view>
+		</view>
+		<view class="couponTip">
+			<view>领券</view>
+			<image class="more" src="../image/more.svg"/>
+		</view>
+	</view>
+	<view class='list'>
+		<block wx:for='{{hotelList}}' wx:key='hotellist' wx:for-index='item_id' wx:for-item="item">
+			<view class="list_item" bindtap="hotelDetail" id='{{item_id}}'>
+				<!-- <navigator url='/pages/hotelDetail/hotelDetail?id={{item.id}}'> -->
+				<view class='imgBox'>
+					<image class="img" src="{{item.logo}}" lazy-load="true" mode="scaleToFill" />
+				</view>
+				<view class='info'>
+					<view class="titleBox">
+						<view class='title'>{{item.name}} </view>
+						<view class="star"> {{item.rate}}分 </view>
+						<view class="star"> {{item.star}}星级</view>
+					</view>
+					<view class='num'>{{item.hotelDistance}}</view>
+				</view>
+				<view class='price'>
+					<text wx:if="{{item.hotelMinPrice > item.discount}}" class="originalPrice">￥{{item.hotelMinPrice}}</text> ￥{{item.discount}}
+					<view class="qi">起</view>
+				</view>
+				<!-- </navigator> -->
+				<view class='clear'></view>
+			</view>
+		</block>
+		<view wx:if="{{haveMore}}" class="downContent">上拉加载更多</view>
+		<view wx:else class="downContent">我也是有底线的啊 T∧T</view>
+	</view>
+</view>

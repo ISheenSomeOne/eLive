@@ -1,0 +1,257 @@
+/* pages/recharge/recharge.wxss */
+
+page {
+  position: relative;
+  font-size: 30rpx;
+  color: #333;
+  background-color: #fff;
+}
+
+.iptAmount{
+  height: 180rpx;
+  width: 700rpx;
+  margin: 20rpx auto;
+  background-color: #fff;
+  padding-top: 1rpx;
+  border-radius: 15rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.itp{
+  height: 120rpx;
+  line-height: 120rpx;
+  width: 600rpx;
+  margin: 25rpx auto 0 auto;
+  padding: 0 20rpx;
+  font-size: 50rpx;
+  border-bottom: 2rpx solid #eee;
+  font-weight: bold;
+}
+
+.iptP{
+  color: #bbb;
+}
+
+.priceBox{
+  width: 700rpx;
+  margin: 20rpx auto 0 auto;
+  padding-top: 1rpx;
+}
+
+.priceItem{
+  position: relative;
+  float: left;
+  height: 230rpx;
+  width: 310rpx;
+  text-align: center;
+  margin: 10rpx 20rpx;
+  background-color: #fff;
+  color: rgb(8, 182, 92);
+  /* box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190); */
+  padding: 0 20rpx;
+  font-size: 36rpx;
+}
+.rechargeMoney{
+  display: block;
+  height: 90rpx;
+  line-height: 95rpx;
+  font-size: 46rpx;
+  font-weight: bold;
+}
+
+.priceItemHover{
+  background-color: rgba(7, 193, 97);
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  color: #fff;
+}
+.sendBox{
+  width: 180rpx;
+  margin: 10rpx auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+.send{
+  color: #fff;
+  padding: 0 10rpx;
+  border-radius: 5rpx;
+  font-size: 34rpx;
+  background-color: rgba(7, 193, 97);
+}
+.sendIcon{
+  display: inline-block;
+  height: 50rpx;
+  width: 50rpx;
+  margin-right: 10rpx;
+}
+.sendMoney{
+  display: inline-block;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.sendMoney text{
+  font-size: 24rpx;
+}
+
+.clearfix:after {
+  /*伪元素是行内元素 正常浏览器清除浮动方法*/
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.tehui{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 60rpx;
+  width: 60rpx;
+}
+
+/* 模态框样式 */
+.modalBg{
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 3rpx
+}
+.modalBox{
+  width: 670rpx;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 300rpx auto 0 auto;
+  padding-bottom: 20rpx;
+}
+.modalTitle{
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 600rpx;
+  margin: 0 auto;
+}
+.modalHotelName{
+  float: left;
+}
+.tipBox{
+  float: left;
+  margin-left: 40rpx;
+}
+.tipIcon2{
+  float: left;
+  margin-top: 30rpx;
+  height: 20rpx;
+  width: 20rpx;
+
+}
+.tip2{
+  float: left;
+  font-size: 20rpx;
+  color: #029789;
+}
+.done{
+  float: right;
+  text-align: center;
+  width: 70rpx;
+  font-size: 24rpx;
+  color: rgb(7, 193, 96);
+}
+.listBox{
+  width: 100%;
+  max-height: 340rpx;
+  overflow: auto;
+}
+.listBox2{
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+.roomInfoBox{
+  position: relative;
+  width: 600rpx;
+  line-height: 100rpx;
+  margin: 0 auto;
+}
+.modalRoomInfo{
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 26rpx;
+  border-top: 2rpx solid rgb(243, 243, 243);
+}
+.closePay{
+  float: right;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 20rpx;
+}
+.pay{
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 35rpx;
+  background-color: #f06c00;
+  margin-top: 50rpx;
+  text-align: center;
+  color: #fff;
+}
+
+.reChoose{
+  float: right;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 37rpx;
+}
+.payPrice{
+  float: right;
+  font-size: 35rpx;
+  color: #f06c00;
+}
+
+.closePay{
+  float: right;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 20rpx;
+}
+.pay{
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 600rpx;
+  font-size: 35rpx;
+  background-color: #f06c00;
+  margin-top: 50rpx;
+  text-align: center;
+  color: #fff;
+}
+.payWayIcon{
+  float: left;
+  height: 40rpx;
+  width: 40rpx;
+  margin-top: 30rpx;
+}
+.info{
+  float: left;
+  margin-left: 30rpx;
+}
+.userRadio{
+  position: absolute;
+  height: 100rpx;
+  top: 0;
+  right: 0;
+}
+.payWayConst{
+  float: right;
+  margin-right: 10rpx;
+}
+.tip{
+  color: #009688;
+  text-align: center;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-top: 30rpx;
+  font-size: 24rpx;
+}
