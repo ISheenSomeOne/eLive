@@ -1,51 +1,8 @@
-<!-- 优惠券列表 -->
-<view class="page" data-weui-theme="{{theme}}">
-	<view wx:if="{{showDialog}}" class="fadeIn" bindtap="close">
-		<view class="weui-mask"></view>
-		<view class="weui-actionsheet weui-actionsheet_toggle" style="padding-bottom:20rpx;max-height:800rpx;overflow:">
-			<view class="weui-actionsheet__title">
-				<view class="weui-actionsheet__title-text">领取优惠券</view>
-			</view>
-			<view class="couponItem">
-				<view class="couponModalBox">
-					<view class="couponPrice">￥
-						<text>{{jian}}</text>
-					</view>
-					<view class="couponConst0">满减券{{CouponName}}</view>
-				</view>
-				<view class="couponInfo">
-					<view class="couponName0">新人首次订房有优惠</view>
-					<view class="couponCont">满{{man}}减{{jian}}</view>
-					<view class="deadline">有效期限 {{}}--{{}} </view>
-					<view class="couponNav">
-						<view class="navBtn" catchtap="getCoupon">领取</view>
-					</view>
-				</view>
-			</view>
-			<view class="couponItem">
-				<view class="couponModalBox">
-					<view class="couponPrice">￥
-						<text>{{jian}}</text>
-					</view>
-					<view class="couponConst0">满减券{{CouponName}}</view>
-				</view>
-				<view class="couponInfo">
-					<view class="couponName0">新人首次订房有优惠</view>
-					<view class="couponCont">满{{man}}减{{jian}}</view>
-					<view class="deadline">有效期限 {{}}--{{}} </view>
-					<view class="couponNav">
-						<view class="navBtn" bindtap="getCoupon">领取</view>
-					</view>
-				</view>
-			</view>
-		</view>
-	</view>
-</view>
 <!-- 顶部菜单 -->
 <navbar navbar-data='{{nvabarData}}'></navbar>
 
 <view style='margin-top: {{height}}px;padding-top:1rpx'>
-	<view class="couponBox" bindtap="openCouponList">
+	<view class="couponBox">
 		<view class="coupon">
 			<view class="couponType">满减券</view>
 			<view class="couponContent">满100减10</view>

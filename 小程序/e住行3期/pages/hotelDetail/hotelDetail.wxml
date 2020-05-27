@@ -1,4 +1,6 @@
 <!--pages/hotelDetail/hotelDetail.wxml-->
+<mp-halfScreenDialog bindbuttontap="buttontap" show="{{show}}" maskClosable="{{false}}" title="测试标题B" subTitle="测试标题B的副标题" desc="辅助描述内容，可根据实际需要安排" tips="辅助提示内容，可根据实际需要安排" buttons="{{buttons}}"></mp-halfScreenDialog>
+<button class="weui-btn" type="primary" bindtap="open">Open</button>
 <view wx:if="{{newPeople}}" class="modalBg">
 	<!-- 弹出模态框  新人登录优惠券 -->
 	<view class="modalBox">
@@ -13,13 +15,13 @@
 			<view class="couponCont">满{{man}}减{{jian}}</view>
 			<view class="deadline">有效期限 {{}}--{{}} </view>
 			<view class="couponNav">
-				<view style="float:left" catchtap="seeStatus">
+				<view style="float:left" bindtap="seeStatus">
 					<view class="useStatus">使用说明</view>
 					<image class="useStatusIcon" wx:if="{{seeStatus}}" src="../image/shangjiantou1.png"></image>
 					<image class="useStatusIcon" wx:else src="../image/xiajiantou1.png"></image>
 				</view>
-				<view class="navBtn" catchtap="getCoupon">领取</view>
-				<view class="navBtn" catchtap="next">下次吧</view>
+				<view class="navBtn" bindtap="getCoupon">领取</view>
+				<view class="navBtn" bindtap="next">下次吧</view>
 			</view>
 		</view>
 	</view>
@@ -27,47 +29,33 @@
 		适用于{{hotelName}}酒店，实际以带有优惠券标签的房型为标准
 	</view>
 </view>
-<!-- 优惠券列表 -->
-<view class="page" data-weui-theme="{{theme}}">
-	<view wx:if="{{showDialog}}" class="fadeIn" bindtap="close">
-		<view class="weui-mask"></view>
-		<view class="weui-actionsheet weui-actionsheet_toggle" style="padding-bottom:20rpx;max-height:800rpx;overflow:">
-			<view class="weui-actionsheet__title">
-				<view class="weui-actionsheet__title-text">领取优惠券</view>
+
+<view wx:if="{{seeCoupon}}" class="modalBg">
+	<!-- 弹出模态框  新人登录优惠券 -->
+	<view class="modalBox">
+		<view class="couponModalBox">
+			<view class="couponPrice">￥
+				<text>{{jian}}</text>
 			</view>
-			<view class="couponItem">
-				<view class="couponModalBox">
-					<view class="couponPrice">￥
-						<text>{{jian}}</text>
-					</view>
-					<view class="couponConst0">满减券{{CouponName}}</view>
+			<view class="couponConst0">满减券{{CouponName}}</view>
+		</view>
+		<view class="couponInfo">
+			<view class="couponName0">新人首次订房有优惠</view>
+			<view class="couponCont">满{{man}}减{{jian}}</view>
+			<view class="deadline">有效期限 {{}}--{{}} </view>
+			<view class="couponNav">
+				<view style="float:left" bindtap="seeStatus">
+					<view class="useStatus">使用说明</view>
+					<image class="useStatusIcon" wx:if="{{seeStatus}}" src="../image/shangjiantou1.png"></image>
+					<image class="useStatusIcon" wx:else src="../image/xiajiantou1.png"></image>
 				</view>
-				<view class="couponInfo">
-					<view class="couponName0">新人首次订房有优惠</view>
-					<view class="couponCont">满{{man}}减{{jian}}</view>
-					<view class="deadline">有效期限 {{}}--{{}} </view>
-					<view class="couponNav">
-						<view class="navBtn" catchtap="getCoupon">领取</view>
-					</view>
-				</view>
-			</view>
-			<view class="couponItem">
-				<view class="couponModalBox">
-					<view class="couponPrice">￥
-						<text>{{jian}}</text>
-					</view>
-					<view class="couponConst0">满减券{{CouponName}}</view>
-				</view>
-				<view class="couponInfo">
-					<view class="couponName0">新人首次订房有优惠</view>
-					<view class="couponCont">满{{man}}减{{jian}}</view>
-					<view class="deadline">有效期限 {{}}--{{}} </view>
-					<view class="couponNav">
-						<view class="navBtn" bindtap="getCoupon">领取</view>
-					</view>
-				</view>
+				<view class="navBtn" bindtap="getCoupon">领取</view>
+				<view class="navBtn" bindtap="next">下次吧</view>
 			</view>
 		</view>
+	</view>
+	<view class="statusCont" wx:if="{{seeStatus}}">
+		适用于{{hotelName}}酒店，实际以带有优惠券标签的房型为标准
 	</view>
 </view>
 
@@ -152,7 +140,7 @@
 						<view class="detailConst">联系酒店</view>
 					</view>
 				</view>
-				<view class="couponBoxb" bindtap="openCouponList">
+				<view class="couponBoxb">
 					<view class="couponb">
 						<view class="couponType">满减券</view>
 						<view class="couponContent">满100减10</view>
