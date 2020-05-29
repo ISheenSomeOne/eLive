@@ -2,7 +2,8 @@
 	"pages": [{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "酒店名称"
+			"navigationBarTitleText": "酒店名称",
+			"navigationStyle": "custom"
 		}
 	}    ,{
             "path" : "pages/order/order",
