@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-nav-bar backgroundColor="#007aff" color="#FFFFFF" title="酒店名称">
+		<uni-nav-bar backgroundColor="#007aff" color="#FFFFFF" title="房间管理">
 			<view slot="left">
 				<picker mode="selector" value="index" :range="typepikerData" @change="typeChange">
 					<view class="navBarLeft">
@@ -16,12 +16,16 @@
 		</uni-nav-bar>
 		<uni-drawer ref="showLeft" mode="left" :width="280" @change="changeRoomMenu($event)">
 			<view style="padding:30rpx;">
-				<view class="">
-					123
-				</view>
-				<view class="close">
-					<button type="default" @click="closeRoomMenu('showLeft')">关闭抽屉</button>
-				</view>
+				<uni-grid :square="false" :column="2" :show-border="false" :highlight="false">
+					<uni-grid-item class="roomCtrl"><button plain="true" type="primary">开锁</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button disabled="true" type="primary">开房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button plain="true" type="warn">退押</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="warn">退房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button plain="true" type="default">房态</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="default">续房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button plain="true" type="default">订单</button></uni-grid-item>
+				</uni-grid>
+				<view class="closeDrawer"><button type="warn" @click="closeRoomMenu('showLeft')">返回</button></view>
 			</view>
 		</uni-drawer>
 		<uni-fab direction="vertical" :pattern="fabStyle" horizontal="right" :content="fabCont" vertical="bottom" @fabClick="showColor"></uni-fab>
@@ -216,31 +220,50 @@ export default {
 	font-weight: normal;
 }
 
+.roomCtrl{
+	margin: 10px 0;
+}
+
+.roomCtrl button{
+	width: 85%;
+}
+
+.closeDrawer{
+	margin-top: 20px;
+}
+
 .kongxian {
 	background-color: $uni-color-success;
+	color: #FFF;
 }
 
 .yuliu {
-	background-color: #54d2ff;
+	background-color: $uni-color-yuliu;
+	color: #FFF;
 }
 
 .zaizhu {
 	background-color: $uni-color-primary;
+	color: #FFF;
 }
 
 .chaoshi {
 	background-color: $uni-color-error;
+	color: #FFF;
 }
 
 .dasao {
-	background-color: #999999;
+	background-color: $uni-color-dasao;
+	color: #FFF;
 }
 
 .weixiu {
 	background-color: $uni-color-warning;
+	color: #FFF;
 }
 
 .baoliu {
-	background-color: #343a40;
+	background-color: $uni-color-baoliu;
+	color: #FFF;
 }
 </style>
