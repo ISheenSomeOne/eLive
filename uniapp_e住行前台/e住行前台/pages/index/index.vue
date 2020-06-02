@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<uni-nav-bar backgroundColor="#007aff" color="#FFFFFF" title="房间管理">
-			<view slot="left">
+		<view class="topNavBar">
+			<view class="navBarLeft">
 				<picker mode="selector" value="index" :range="typepikerData" @change="typeChange">
 					<view class="navBarLeft">
 						{{ typepikerData[typeIndex] }}
@@ -9,11 +9,19 @@
 					</view>
 				</picker>
 			</view>
-			<view slot="right" class="navBarRight">
-				<switch style="transform:scale(0.6)" :checked="showEmpty" color="#4CD964" @change="emptyChange" />
-				<text>空</text>
+			<view class="navBarLeft">
+				<picker mode="selector" value="index" :range="floorpikerData" @change="floorChange">
+					<view class="navBarLeft">
+						{{ floorpikerData[floorIndex] }}
+						<uni-icons type="arrowdown" color="#FFF"></uni-icons>
+					</view>
+				</picker>
 			</view>
-		</uni-nav-bar>
+			<view class="navBarRight">
+				<text>显示空房</text>
+				<switch style="transform:scale(0.6)" :checked="showEmpty" color="#4CD964" @change="emptyChange" />
+			</view>
+		</view>
 		<uni-drawer ref="showLeft" mode="left" :width="280" @change="changeRoomMenu($event)">
 			<view style="padding:30rpx;">
 				<uni-grid :square="false" :column="2" :show-border="false" :highlight="false">
@@ -24,6 +32,7 @@
 					<uni-grid-item class="roomCtrl"><button plain="true" type="default">房态</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="default">续房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" type="default">订单</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="primary">消费</button></uni-grid-item>
 				</uni-grid>
 				<view class="closeDrawer"><button type="warn" @click="closeRoomMenu('showLeft')">返回</button></view>
 			</view>
@@ -67,6 +76,8 @@ export default {
 			gridColumn: 3,
 			typepikerData: ['选择房型', '智享打大床房', '豪华双床房', '豪华大床房'],
 			typeIndex: 0,
+			floorpikerData: ['选择楼层', '1楼', '2楼', '3楼'],
+			floorIndex: 0,
 			showEmpty: false,
 			isShowRoomMenu: false,
 			fabStyle: {
@@ -79,7 +90,7 @@ export default {
 				{
 					iconPath: '/static/icon/kongxian.svg',
 					selectedIconPath: '/static/icon/kongxian.svg',
-					text: '空闲',
+					text: '空闲30',
 					active: false
 				},
 				{
@@ -124,6 +135,9 @@ export default {
 	methods: {
 		typeChange: function(e) {
 			this.typeIndex = e.detail.value;
+		},
+		floorChange: function(e) {
+			this.floorIndex = e.detail.value;
 		},
 		emptyChange: function(e) {
 			this.showEmpty = e.target.value;
@@ -197,20 +211,30 @@ export default {
 	white-space: nowrap;
 }
 
+.topNavBar{
+	position: relative;
+	top: 0;
+	height: 44px;
+	line-height: 44px;
+	width: 100%;
+	background-color: $uni-color-primary;
+	color: #FFF;
+}
+
 .navBarLeft {
+	float: left;
+	margin-left: 10px;
 	font-size: 14px;
-	max-width: 90px;
+	max-width: 110px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
 .navBarRight {
+	float: right;
+	margin-right: 5px;
 	font-size: 14px;
-	max-width: 90px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
 }
 
 .tagYajin {
