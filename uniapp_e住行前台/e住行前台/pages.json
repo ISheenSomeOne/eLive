@@ -5,53 +5,54 @@
 			"navigationBarTitleText": "酒店名称",
 			"navigationStyle": "custom"
 		}
-	}    ,{
-            "path" : "pages/order/order",
-            "style" : {
-			"navigationBarTitleText": "订单列表"}
-        }
-        ,{
-            "path" : "pages/finance/finance",
-            "style" : {
-			"navigationBarTitleText": "酒店财务"}
-        }
-        ,{
-            "path" : "pages/other/other",
-            "style" : {
-			"navigationBarTitleText": "其他"}
-        }
-    ],
+	}, {
+		"path": "pages/order/order",
+		"style": {
+			"navigationBarTitleText": "订单列表",
+			"navigationStyle": "custom"
+		}
+	}, {
+		"path": "pages/finance/finance",
+		"style": {
+			"navigationBarTitleText": "酒店财务"
+		}
+	}, {
+		"path": "pages/other/other",
+		"style": {
+			"navigationBarTitleText": "其他"
+		}
+	}],
 	"tabBar": {
-	    "color": "#7A7E83",
-	    "selectedColor": "#007AFF",
-	    "borderStyle": "black",
-	    "backgroundColor": "#ffffff",
-	    "list": [{
-	        "pagePath": "pages/index/index",
-	        "iconPath": "static/icon/home.svg",
-	        "selectedIconPath": "static/icon/homeSelect.svg",
-	        "text": "房态"
-	    }, {
-	        "pagePath": "pages/order/order",
-	        "iconPath": "static/icon/order.svg",
-	        "selectedIconPath": "static/icon/orderSelect.svg",
-	        "text": "订单"
-	    }, {
-	        "pagePath": "pages/finance/finance",
-	        "iconPath": "static/icon/finance.svg",
-	        "selectedIconPath": "static/icon/financeSelect.svg",
-	        "text": "财务"
-	    }, {
-	        "pagePath": "pages/other/other",
-	        "iconPath": "static/icon/other.svg",
-	        "selectedIconPath": "static/icon/otherSelect.svg",
-	        "text": "其他"
-	    }]
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/icon/home.svg",
+			"selectedIconPath": "static/icon/homeSelect.svg",
+			"text": "房态"
+		}, {
+			"pagePath": "pages/order/order",
+			"iconPath": "static/icon/order.svg",
+			"selectedIconPath": "static/icon/orderSelect.svg",
+			"text": "订单"
+		}, {
+			"pagePath": "pages/finance/finance",
+			"iconPath": "static/icon/finance.svg",
+			"selectedIconPath": "static/icon/financeSelect.svg",
+			"text": "财务"
+		}, {
+			"pagePath": "pages/other/other",
+			"iconPath": "static/icon/other.svg",
+			"selectedIconPath": "static/icon/otherSelect.svg",
+			"text": "其他"
+		}]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "智享未来酒店",
-		"navigationBarBackgroundColor": "#007AFF" ,
+		"navigationBarBackgroundColor": "#007AFF",
 		"backgroundColor": "#FFFFFF"
 	}
 }
