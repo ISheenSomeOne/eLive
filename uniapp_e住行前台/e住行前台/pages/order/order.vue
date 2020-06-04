@@ -14,14 +14,20 @@
 		</view>
 
 		<!--内容区-->
-		<view class="uni-tab-bar" style="height: 100%;background-color: #54D2FF;">
-			<swiper :current="tabIndex" @change="tabChange">
+		<view class="uni-tab-bar">
+			<swiper :current="tabIndex" @change="tabChange" :style="{ height: swiperHeight + 'px' }">
 				<swiper-item>
-					<order-table></order-table>
+					<view class="swiper-item"><order-table></order-table></view>
 				</swiper-item>
-				<swiper-item>2</swiper-item>
-				<swiper-item>3</swiper-item>
-				<swiper-item>4</swiper-item>
+				<swiper-item>
+					<view class="swiper-item"><order-table></order-table></view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item"><order-table></order-table></view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item"><order-table></order-table></view>
+				</swiper-item>
 			</swiper>
 		</view>
 	</view>
@@ -51,19 +57,28 @@ export default {
 					id: '4'
 				}
 			],
-			swiperHeight: 0
+			swiperHeight: ''
 		};
+	},
+	mounted(){
+		this.setSwiperHeight();
 	},
 	methods: {
 		toggleTab(index) {
-			// console.log(index);
 			this.tabIndex = index;
 		},
 		//滑动切换swiper
 		tabChange(e) {
-			// console.log(e.detail);
 			const tabIndex = e.detail.current;
 			this.tabIndex = tabIndex;
+			this.setSwiperHeight();
+		},
+		setSwiperHeight() {
+			let query = uni.createSelectorQuery().in(this);
+			query.selectAll('.swiper-item').boundingClientRect();
+			query.exec(res => {
+				this.swiperHeight = res[0][this.tabIndex].height;
+			});
 		}
 	}
 };
@@ -78,20 +93,19 @@ export default {
 	line-height: 34px;
 }
 .swiper-tab-list {
-	color: #FFFFFF;
+	color: #ffffff;
 	width: 177rpx;
 	font-size: 14px;
 }
 .uni-tab-bar .active {
-	color: #FFF;
+	color: #fff;
 	font-weight: bold;
 }
 
 .active .swiper-tab-line {
-	border-bottom: 3px solid #FFF;
+	border-bottom: 3px solid #fff;
 	width: 80rpx;
 	margin: auto;
-	// border-top: 2rpx solid #FFF;
 	border-radius: 10px;
 }
 .uni-swiper-tab {

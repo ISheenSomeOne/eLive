@@ -1,19 +1,23 @@
 <template>
 	<view class="table-box">
 		<view class="table-list-item table-title">
-			<view class="table-cont-item">来源</view>
+			<view class="table-cont-item short">来源</view>
 			<view class="table-cont-item">姓名</view>
-			<view class="table-cont-item">房间信息</view>
-			<view class="table-cont-item">入离日期</view>
-			<view class="table-cont-item">房价</view>
+			<view class="table-cont-item long">房间信息</view>
+			<view class="table-cont-item short">入住</view>
+			<view class="table-cont-item short">离店</view>
+			<view class="table-cont-item short">房价</view>
 		</view>
-		<view class="table-list-item">
-			<view class="table-cont-item">美团</view>
-			<view class="table-cont-item">张三</view>
-			<view class="table-cont-item">1间 智享大床房</view>
-			<view class="table-cont-item">05-26至05-27</view>
-			<view class="table-cont-item">100</view>
-		</view>
+		<block v-for="(item,index) in orderList" :key="index">
+			<view class="table-list-item">
+				<view class="table-cont-item short"><text :class="item.originClass">{{item.origin}}</text></view>
+				<view class="table-cont-item">张是是三</view>
+				<view class="table-cont-item long">3×智享大床房</view>
+				<view class="table-cont-item short">05-26</view>
+				<view class="table-cont-item short">05-26</view>
+				<view class="table-cont-item short">12000</view>
+			</view>
+		</block>
 	</view>
 </template>
 
@@ -40,7 +44,17 @@ export default {
 	},
 	data() {
 		return {
-			badgeStyle: ''
+			orderList: [
+				{
+					'id': 1,
+					'origin': '美团',
+					'originClass': 'meituan'
+				},{
+					'id': 2,
+					'origin': '携程',
+					'originClass': 'xiecheng'
+				},
+			]
 		};
 	},
 	mounted() {},
@@ -50,12 +64,44 @@ export default {
 
 <style lang="scss" scoped>
 .table-box {
-	font-size: 14px;
+	font-size: 13px;
+}
+
+.table-list-item {
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #f1f1f1;
+	width: 730rpx;
+	margin: 0 auto;
 }
 
 .table-cont-item {
+	width: 110rpx;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.short{
+	width: 85rpx;
+}
+.long {
+	width: 205rpx;
 }
 
 .table-title {
+	font-weight: bold;
+}
+
+.meituan{
+	padding: 5px;
+	background-color: #FFC300;
+}
+.xiecheng{
+	padding: 5px;
+	background-color: #3983e5;
+	color: #FFF;
 }
 </style>

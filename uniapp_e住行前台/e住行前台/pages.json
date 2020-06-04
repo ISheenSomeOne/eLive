@@ -1,9 +1,22 @@
 {
 	"pages": [{
-		"path": "pages/index/index",
+		"path": "pages/login/login",
 		"style": {
-			"navigationBarTitleText": "酒店名称",
 			"navigationStyle": "custom"
+		}
+	}, {
+		"path": "pages/login/forget",
+		"style": {
+			"navigationBarBackgroundColor": "#FFFFFF",
+			"navigationBarTextStyle": "black",
+			"navigationBarTitleText": ""
+		}
+	}, {
+		"path": "pages/login/register",
+		"style": {
+			"navigationBarBackgroundColor": "#FFFFFF",
+			"navigationBarTextStyle": "black",
+			"navigationBarTitleText": ""
 		}
 	}, {
 		"path": "pages/order/order",
@@ -21,6 +34,12 @@
 		"style": {
 			"navigationBarTitleText": "其他"
 		}
+	}, {
+		"path": "pages/home/home",
+		"style": {
+			"navigationBarTitleText": "房态",
+			"navigationStyle": "custom"
+		}
 	}],
 	"tabBar": {
 		"color": "#7A7E83",
@@ -28,7 +47,7 @@
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
-			"pagePath": "pages/index/index",
+			"pagePath": "pages/home/home",
 			"iconPath": "static/icon/home.svg",
 			"selectedIconPath": "static/icon/homeSelect.svg",
 			"text": "房态"
