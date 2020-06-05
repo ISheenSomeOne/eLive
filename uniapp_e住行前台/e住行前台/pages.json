@@ -1,5 +1,11 @@
 {
-	"pages": [{
+	"pages": [ {
+		"path": "pages/order/order",
+		"style": {
+			"navigationBarTitleText": "订单列表",
+			"navigationStyle": "custom"
+		}
+	},{
 		"path": "pages/login/login",
 		"style": {
 			"navigationStyle": "custom"
@@ -17,12 +23,6 @@
 			"navigationBarBackgroundColor": "#FFFFFF",
 			"navigationBarTextStyle": "black",
 			"navigationBarTitleText": ""
-		}
-	}, {
-		"path": "pages/order/order",
-		"style": {
-			"navigationBarTitleText": "订单列表",
-			"navigationStyle": "custom"
 		}
 	}, {
 		"path": "pages/finance/finance",

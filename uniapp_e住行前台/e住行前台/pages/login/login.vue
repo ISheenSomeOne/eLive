@@ -2,7 +2,7 @@
 	<view class="login">
 		<view class="content">
 			<!-- 头部logo -->
-			<view class="header" style="background-color: #FFF;">
+			<view class="header">
 				<image src="/static/icon/logo.png"></image>
 			</view>
 			<!-- 主体表单 -->
@@ -32,19 +32,19 @@
 				<view class="login_icon">
 					<view class="cuIcon-weixin" @tap="login_weixin"></view>
 				</view>
-				<view class="login_icon">
+				<!-- <view class="login_icon">
 					<view class="cuIcon-weibo" @tap="login_weibo"></view>
 				</view>
 				<view class="login_icon">
 					<view class="cuIcon-github" @tap="login_github"></view>
-				</view>
+				</view> -->
 			</view>
 			
 			<!-- 底部信息 -->
 			<view class="footer">
 				<navigator url="forget" open-type="navigate">找回密码</navigator>
 				<text>|</text>
-				<navigator url="register" open-type="navigate">注册账号</navigator>
+				<navigator url="register" open-type="navigate">短信登录</navigator>
 			</view>
 		</view>
 	</view>
@@ -165,7 +165,7 @@
 				uni.showToast({
 					icon: 'none',
 					position: 'bottom',
-					title: '...'
+					title: '功能正在开发中'
 				});
 			},
 			login_weibo() {

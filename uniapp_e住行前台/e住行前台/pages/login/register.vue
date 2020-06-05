@@ -4,7 +4,7 @@
 		<view class="content">
 			<!-- 头部logo -->
 			<view class="header">
-				<image :src="logoImage"></image>
+				<image src="/static/icon/logo.png"></image>
 			</view>
 			<!-- 主体 -->
 			<view class="main">
@@ -14,13 +14,13 @@
 					maxlength="11"
 					placeholder="手机号"
 				></wInput>
-				<wInput
+				<!-- <wInput
 					v-model="passData"
 					type="password"
 					maxlength="11"
 					placeholder="登录密码"
 					isShowPass
-				></wInput>
+				></wInput> -->
 				<wInput
 					v-model="verCode"
 					type="number"
@@ -35,21 +35,21 @@
 			</view>
 				
 			<wButton 
-				text="注 册"
+				text="登 录"
 				:rotate="isRotate" 
 				@click.native="startReg()"
 			></wButton>
 			
 			<!-- 底部信息 -->
-			<view class="footer">
+			<!-- <view class="footer">
 				<text 
 					@tap="isShowAgree" 
 					class="cuIcon"
 					:class="showAgree?'cuIcon-radiobox':'cuIcon-round'"
-				>同意</text>
+				>同意</text> -->
 				<!-- 协议地址 -->
-				<navigator url="" open-type="navigate">《协议》</navigator>
-			</view>
+				<!-- <navigator url="" open-type="navigate">《协议》</navigator>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -101,14 +101,14 @@
 				    title: '模拟倒计时触发'
 				});
 				
-				setTimeout(function(){
-					_this.$refs.runCode.$emit('runCode',0); //假装模拟下需要 终止倒计时
-					uni.showToast({
-					    icon: 'none',
-						position: 'bottom',
-					    title: '模拟倒计时终止'
-					});
-				},3000)
+				// setTimeout(function(){
+				// 	_this.$refs.runCode.$emit('runCode',0); //假装模拟下需要 终止倒计时
+				// 	uni.showToast({
+				// 	    icon: 'none',
+				// 		position: 'bottom',
+				// 	    title: '模拟倒计时终止'
+				// 	});
+				// },3000)
 			},
 		    startReg() {
 				//注册

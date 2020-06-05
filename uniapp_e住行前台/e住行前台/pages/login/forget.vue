@@ -26,8 +26,8 @@
 					placeholder="验证码"
 					
 					isShowCode
-					codeText="获取重置码"
-					setTime="30"
+					codeText="获取验证码"
+					setTime="60"
 					ref="runCode"
 					@setCode="getVerCode()"
 				></wInput>
@@ -82,14 +82,14 @@
 				    title: '模拟倒计时触发'
 				});
 				
-				setTimeout(function(){
-					_this.$refs.runCode.$emit('runCode',0); //假装模拟下需要 终止倒计时
-					uni.showToast({
-					    icon: 'none',
-						position: 'bottom',
-					    title: '模拟倒计时终止'
-					});
-				},3000)
+				// setTimeout(function(){
+				// 	_this.$refs.runCode.$emit('runCode',0); //假装模拟下需要 终止倒计时
+				// 	uni.showToast({
+				// 	    icon: 'none',
+				// 		position: 'bottom',
+				// 	    title: '模拟倒计时终止'
+				// 	});
+				// },3000)
 			},
 			startRePass() {
 				//重置密码
