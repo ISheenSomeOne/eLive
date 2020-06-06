@@ -22,7 +22,7 @@ export default {
 /* #endif */
 
 html{
-	max-width: 1300px;
+	/* max-width: 1300px; */
 	text-align: center;
 	margin: 0 auto;
 }

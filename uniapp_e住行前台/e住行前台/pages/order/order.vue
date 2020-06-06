@@ -256,6 +256,7 @@ export default {
 }
 .createOrder{
 	background-color: #4cd964;
+	border-radius: 100px;
 }
 .uni-tab-bar .active {
 	color: #fff;

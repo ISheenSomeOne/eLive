@@ -138,7 +138,7 @@
 	}
 
 	.uni-calendar-item--checked {
-		background-color: #007aff;
+		background-color: #dd524d;
 		color: #fff;
 		opacity: 0.8;
 	}

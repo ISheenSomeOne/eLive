@@ -1,11 +1,11 @@
 {
-	"pages": [ {
+	"pages": [{
 		"path": "pages/order/order",
 		"style": {
 			"navigationBarTitleText": "订单列表",
 			"navigationStyle": "custom"
 		}
-	},{
+	}, {
 		"path": "pages/login/login",
 		"style": {
 			"navigationStyle": "custom"
@@ -40,6 +40,10 @@
 			"navigationBarTitleText": "房态",
 			"navigationStyle": "custom"
 		}
+	}, {
+		"path": "pages/order/orderInfo",
+		"style": {
+			"navigationBarTitleText": "订单详情"}
 	}],
 	"tabBar": {
 		"color": "#7A7E83",

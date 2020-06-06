@@ -1,6 +1,5 @@
 <template>
 	<view>
-		
 	</view>
 </template>
 
@@ -12,7 +11,12 @@
 			}
 		},
 		methods: {
-			
+			open(){
+			            this.$refs.calendar.open();
+			        },
+			        confirm(e) {
+			            console.log(e);
+			        }
 		}
 	}
 </script>

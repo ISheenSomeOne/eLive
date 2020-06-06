@@ -64,6 +64,21 @@
 				<uni-grid-item>
 					<view class="room baoliu"><text>301</text></view>
 				</uni-grid-item>
+				<uni-grid-item>
+					<view class="room baoliu"><text>301</text></view>
+				</uni-grid-item>
+				<uni-grid-item>
+					<view class="room baoliu"><text>301</text></view>
+				</uni-grid-item>
+				<uni-grid-item>
+					<view class="room baoliu"><text>301</text></view>
+				</uni-grid-item>
+				<uni-grid-item>
+					<view class="room baoliu"><text>301</text></view>
+				</uni-grid-item>
+				<uni-grid-item>
+					<view class="room baoliu"><text>301</text></view>
+				</uni-grid-item>
 			</uni-grid>
 		</view>
 	</view>
@@ -170,8 +185,12 @@ export default {
 			this.gridColumn = 6;
 		} else if (window.innerWidth < 1300) {
 			this.gridColumn = 7;
-		} else {
+		} else if (window.innerWidth < 1500) {
 			this.gridColumn = 8;
+		} else if (window.innerWidth < 1700) {
+			this.gridColumn = 9;
+		} else {
+			this.gridColumn = 10;
 		}
 	}
 };
