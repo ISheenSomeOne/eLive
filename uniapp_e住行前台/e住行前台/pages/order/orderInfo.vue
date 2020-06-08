@@ -108,6 +108,7 @@ export default {
 <style lang="scss">
 .order {
 	text-align: left;
+	padding-bottom: 20px;
 }
 .sectionClass {
 	margin-top: 0;
