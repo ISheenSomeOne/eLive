@@ -59,7 +59,7 @@
 			</uni-list-item>
 		</uni-list>
 		<uni-section class="sectionClass" title="财务信息" type="line"></uni-section>
-		<uni-list>
+		<uni-list class="mgBottom">
 			<uni-list-item class="listItemClass" title="订单总价" :showArrow="false">
 				<template v-slot:right="">
 					￥400
@@ -87,56 +87,97 @@
 				</template>
 			</uni-list-item>
 		</uni-list>
+		<view class="bottomMenu">
+			<uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" />
+		</view>
 	</view>
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			orderId: ''
-		};
-	},
-	methods: {},
-	onLoad: function(option) {
-		//获取传参
-		this.orderId = option.orderId;
-	}
-};
+	export default {
+		data() {
+			return {
+				orderId: '',
+				options: [],
+				buttonGroup: [{
+						text: '修改订单',
+						backgroundColor: '#ffa200',
+						color: '#fff'
+					},
+					{
+						text: '取消订单',
+						backgroundColor: '#ff0000',
+						color: '#fff'
+					}
+				]
+			};
+		},
+		methods: {
+			buttonClick(e) {
+				console.log(e)
+				this.options[2].info++
+			}
+		},
+		onLoad: function(option) {
+			//获取传参
+			this.orderId = option.orderId;
+		}
+	};
 </script>
 
 <style lang="scss">
-.order {
-	text-align: left;
-	padding-bottom: 20px;
-}
-.sectionClass {
-	margin-top: 0;
-}
-.listItemClass {
-	font-size: 14px;
-	color: #545151;
-}
-.name {
-	color: #ffffff;
-	background-color: #999999;
-	padding: 2px 4px;
-	margin-left: 5px;
-}
-.bgGreen {
-	padding: 2px 4px;
-	color: #ffffff;
-	background-color: #4cd964;
-}
-.bgYellow {
-	padding: 2px 4px;
-	color: #ffffff;
-	background-color: #f0ad4e;
-}
-.bgRed {
-	padding: 2px 4px;
-	color: #ffffff;
-	background-color: #dd524d;
-	margin-left: 5px;
-}
+	.order {
+		text-align: left;
+		padding-bottom: 20px;
+	}
+
+	.sectionClass {
+		margin-top: 0;
+	}
+	
+	.mgBottom{
+		margin-bottom: 40px;
+	}
+
+	.listItemClass {
+		font-size: 14px;
+		color: #545151;
+	}
+
+	.name {
+		color: #ffffff;
+		background-color: #999999;
+		padding: 2px 4px;
+		margin-left: 5px;
+	}
+
+	.bgGreen {
+		padding: 2px 4px;
+		color: #ffffff;
+		background-color: #4cd964;
+	}
+
+	.bgYellow {
+		padding: 2px 4px;
+		color: #ffffff;
+		background-color: #f0ad4e;
+	}
+
+	.bgRed {
+		padding: 2px 4px;
+		color: #ffffff;
+		background-color: #dd524d;
+		margin-left: 5px;
+	}
+
+	.bottomMenu {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
 </style>

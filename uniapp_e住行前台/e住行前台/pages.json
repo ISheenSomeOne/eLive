@@ -30,9 +30,9 @@
 			"navigationBarTitleText": "酒店财务"
 		}
 	}, {
-		"path": "pages/other/other",
+		"path": "pages/mine/mine",
 		"style": {
-			"navigationBarTitleText": "其他"
+			"navigationBarTitleText": "我的"
 		}
 	}, {
 		"path": "pages/home/home",
@@ -66,10 +66,10 @@
 			"selectedIconPath": "static/icon/financeSelect.svg",
 			"text": "财务"
 		}, {
-			"pagePath": "pages/other/other",
-			"iconPath": "static/icon/other.svg",
-			"selectedIconPath": "static/icon/otherSelect.svg",
-			"text": "其他"
+			"pagePath": "pages/mine/mine",
+			"iconPath": "static/icon/mine.svg",
+			"selectedIconPath": "static/icon/mineSelect.svg",
+			"text": "我的"
 		}]
 	},
 	"globalStyle": {
