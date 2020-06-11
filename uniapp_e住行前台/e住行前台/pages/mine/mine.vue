@@ -26,6 +26,7 @@
 			<!-- <uni-list-item :disabled="true" :show-extra-icon="true" :extra-icon="extraIcon2" :show-switch="true" :switch-checked="true"
 			 title="禁用状态" @switchChange="switchChange" /> -->
 		</uni-list>
+		<button class="logout" type="warn">退出登录</button>
 	</view>
 </template>
 
@@ -93,5 +94,9 @@
 		padding: 2px 0;
 		font-size: 14px;
 		color: #666;
+	}
+	.logout{
+		width: 90%;
+		margin-top: 20px;
 	}
 </style>

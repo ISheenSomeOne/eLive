@@ -72,6 +72,9 @@
 			_this= this;
 			//this.isLogin();
 		},
+		onLoad() {
+			
+		},
 		methods: {
 			isLogin(){
 				//判断缓存中是否登录过，直接登录
@@ -112,7 +115,24 @@
 		            return;
 		        }
 				
-				console.log("登录成功")
+				uni.request({
+				    url: '/api/zxkj/staff/login', //仅为示例，并非真实接口地址。
+					method: 'POST',
+				    data: {
+				        username: 'hdjd',
+						password: '123456',
+						securityUser: '2'
+				    },
+				    header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+				    success: (res) => {
+				        console.log(res.data);
+						uni.switchTab({
+						    url: '/pages/home/home'
+						});
+				    }
+				});
 				
 				_this.isRotate=true
 				setTimeout(function(){

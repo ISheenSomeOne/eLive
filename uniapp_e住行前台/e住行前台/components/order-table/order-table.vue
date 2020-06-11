@@ -9,6 +9,7 @@
 			<view class="table-cont-item short">房价</view>
 		</view>
 		<block v-for="(item, index) in orderList" :key="index">
+			<uni-badge v-show="index?0:true" text="退押金" size="small" type="error"></uni-badge>
 			<view class="table-list-item" @click="toOrderInfo(item.id)">
 				<view class="table-cont-item short">
 					<text :class="item.originClass">{{ item.origin }}</text>

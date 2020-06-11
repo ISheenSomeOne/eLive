@@ -29,15 +29,16 @@
 					<uni-grid-item class="roomCtrl"><button disabled="true" type="primary">开房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" type="warn">退押</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="warn">退房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="default" @click="openContinue('center')">续房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="default" @click="openChange('center')">换房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" type="default">房态</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="default">续房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" type="default">订单</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="primary">消费</button></uni-grid-item>
 				</uni-grid>
 				<view class="closeDrawer"><button type="warn" @click="closeRoomMenu('showLeft')">返回</button></view>
 			</view>
 		</uni-drawer>
-		<uni-fab direction="vertical" :pattern="fabStyle" horizontal="right" :content="fabCont" vertical="bottom" @fabClick="showColor"></uni-fab>
+		<uni-fab direction="vertical" :pattern="fabStyle" horizontal="right" :content="fabCont" vertical="bottom"></uni-fab>
 		<view class="container">
 			<uni-grid :column="gridColumn" :show-border="false" :highlight="false">
 				<uni-grid-item>
@@ -64,23 +65,46 @@
 				<uni-grid-item>
 					<view class="room baoliu"><text>301</text></view>
 				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room baoliu"><text>301</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room baoliu"><text>301</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room baoliu"><text>301</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room baoliu"><text>301</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room baoliu"><text>301</text></view>
-				</uni-grid-item>
 			</uni-grid>
 		</view>
+		<!-- 续房浮框 -->
+		<uni-popup ref="popupContinue" type="center">
+			<view class="popup-content">
+				<view class="cantinueItem">
+					<text class="fl">续住天数</text>
+					<slider class="cantinueSlider fl" min="0" max="15" backgroundColor="#DDDDDD" block-color="#007AFF" value="1" show-value="true" @change="continueDays" />
+				</view>
+				<view class="cantinueItem">
+					<text class="fl">补交房费</text>
+					<input class="fl cantinueInput" type="digit" value="0" />
+					<text class="fl">元</text>
+				</view>
+				<button class="cantinueBtn" type="primary">确定</button>
+			</view>
+		</uni-popup>
+		<!-- 换房浮框 -->
+		<uni-popup ref="popupChange" type="center">
+			<view class="popup-content">
+				<view class="changeItem">
+					<text class="fl">房型</text>
+					<picker class="fl ml" mode="selector" :range="changeTypeList" @change="changeTypeChange">
+						<view>{{changeTypeList[changeTypeIndex]}}</view>
+					</picker>
+				</view>
+				<view class="changeItem">
+					<text class="fl">房间</text>
+					<picker class="fl ml" mode="selector" :range="changeRoomList" @change="changeRoomChange">
+						<view>{{changeRoomList[changeRoomIndex]}}</view>
+					</picker>
+				</view>
+				<view class="changeItem">
+					<text class="fl">房费</text>
+					<input class="changeInput fl ml" type="digit" placeholder="默认为0" placeholder-style="text-align:left;font-size:14px" value="" />
+					<text class="fl">元</text>
+				</view>
+				<button class="cantinueBtn" type="primary">确定</button>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -88,6 +112,10 @@
 export default {
 	data() {
 		return {
+			changeTypeList: ['选择房型', '智享打大床房', '豪华双床房', '豪华大床房'],
+			changeTypeIndex:0,
+			changeRoomList: ['选择房间', '301', '302', '303'],
+			changeRoomIndex:0,
 			gridColumn: 3,
 			typepikerData: ['选择房型', '智享打大床房', '豪华双床房', '豪华大床房'],
 			typeIndex: 0,
@@ -165,7 +193,24 @@ export default {
 		},
 		changeRoomMenu: function(e) {
 			this.isShowRoomMenu = e;
-		}
+		},
+		openContinue: function() {
+			this.closeRoomMenu('showLeft');
+			this.$refs.popupContinue.open();
+		},
+		continueDays: function(e) {
+			console.log('value 发生变化：' + e.detail.value);
+		},
+		openChange:function() {
+			this.closeRoomMenu('showLeft');
+			this.$refs.popupChange.open();
+		},
+		changeTypeChange: function(e) {
+			this.changeTypeIndex = e.detail.value;
+		},
+		changeRoomChange: function(e) {
+			this.changeRoomIndex = e.detail.value;
+		},
 	},
 	onNavigationBarButtonTap(e) {
 		if (this.isShowRoomMenu) {
@@ -230,14 +275,14 @@ export default {
 	white-space: nowrap;
 }
 
-.topNavBar{
+.topNavBar {
 	position: relative;
 	top: 0;
 	height: 44px;
 	line-height: 44px;
 	width: 100%;
 	background-color: $uni-color-primary;
-	color: #FFF;
+	color: #fff;
 }
 
 .navBarLeft {
@@ -263,50 +308,97 @@ export default {
 	font-weight: normal;
 }
 
-.roomCtrl{
+.roomCtrl {
 	margin: 10px 0;
 }
 
-.roomCtrl button{
+.roomCtrl button {
 	width: 85%;
 }
 
-.closeDrawer{
+.closeDrawer {
 	margin-top: 20px;
 }
 
 .kongxian {
 	background-color: $uni-color-success;
-	color: #FFF;
+	color: #fff;
 }
 
 .yuliu {
 	background-color: $uni-color-yuliu;
-	color: #FFF;
+	color: #fff;
 }
 
 .zaizhu {
 	background-color: $uni-color-primary;
-	color: #FFF;
+	color: #fff;
 }
 
 .chaoshi {
 	background-color: $uni-color-error;
-	color: #FFF;
+	color: #fff;
 }
 
 .dasao {
 	background-color: $uni-color-dasao;
-	color: #FFF;
+	color: #fff;
 }
 
 .weixiu {
 	background-color: $uni-color-warning;
-	color: #FFF;
+	color: #fff;
 }
 
 .baoliu {
 	background-color: $uni-color-baoliu;
-	color: #FFF;
+	color: #fff;
+}
+.popup-content {
+	width: 620rpx;
+	background-color: #fff;
+	padding: 20px 15px 35px 15px;
+	border-radius: 10px;
+}
+.cantinueItem {
+	position: relative;
+	font-size: 14px;
+	height: 80px;
+	line-height: 80px;
+}
+.fl {
+	float: left;
+	margin-left: 5px;
+}
+.ml{
+	margin-left: 20px;
+}
+.cantinueSlider {
+	margin: 0 0 0 20px;
+	width: 400rpx;
+}
+
+.cantinueInput {
+	margin: 0 0 0 20px;
+	width: 70px;
+	height: 80px;
+	line-height: 80px;
+}
+.cantinueBtn{
+	margin-top: 15px;
+	width: 500rpx;
+}
+.changeItem{
+	font-size: 14px;
+	height: 80px;
+	line-height: 80px;
+	width: 500rpx;
+	margin: 0 auto;
+}
+.changeInput{
+	height: 80px;
+	line-height: 80px;
+	width: 70px;
+	text-align: left;
 }
 </style>
