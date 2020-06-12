@@ -27,12 +27,12 @@
 				<uni-grid :square="false" :column="2" :show-border="false" :highlight="false">
 					<uni-grid-item class="roomCtrl"><button plain="true" type="primary">开锁</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button disabled="true" type="primary">开房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button plain="true" type="warn">退押</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><navigator url="../order/roomOrder"><button plain="true" type="warn">退押</button></navigator></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="warn">退房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="default" @click="openContinue('center')">续房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="default" @click="openChange('center')">换房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button plain="true" type="default">房态</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button plain="true" type="default">订单</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="default" @click="openContinue">续房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="default" @click="openChange">换房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button plain="true" type="default" @click="openStatus">房态</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><navigator url="../order/roomOrder"><button plain="true" type="default">订单</button></navigator></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="primary">消费</button></uni-grid-item>
 				</uni-grid>
 				<view class="closeDrawer"><button type="warn" @click="closeRoomMenu('showLeft')">返回</button></view>
@@ -76,7 +76,7 @@
 				</view>
 				<view class="cantinueItem">
 					<text class="fl">补交房费</text>
-					<input class="fl cantinueInput" type="digit" value="0" />
+					<input class="fl cantinueInput" type="digit" placeholder="默认为0" placeholder-style="text-align:left;font-size:14px" value="" />
 					<text class="fl">元</text>
 				</view>
 				<button class="cantinueBtn" type="primary">确定</button>
@@ -103,6 +103,14 @@
 					<text class="fl">元</text>
 				</view>
 				<button class="cantinueBtn" type="primary">确定</button>
+			</view>
+		</uni-popup>
+		<!-- 房态浮框 -->
+		<uni-popup ref="popupStatus" type="bottom">
+			<view class="popup-bottom">
+				<button class="StatusBtn kongxian" hover-class="kongxianHover">空闲</button>
+				<button class="StatusBtn baoliu" hover-class="baoliuHover">保留</button>
+				<button class="StatusBtn weixiu" hover-class="weixiuHover">维修</button>
 			</view>
 		</uni-popup>
 	</view>
@@ -211,6 +219,10 @@ export default {
 		changeRoomChange: function(e) {
 			this.changeRoomIndex = e.detail.value;
 		},
+		openStatus:function() {
+			this.closeRoomMenu('showLeft');
+			this.$refs.popupStatus.open();
+		},
 	},
 	onNavigationBarButtonTap(e) {
 		if (this.isShowRoomMenu) {
@@ -251,6 +263,7 @@ export default {
 .room {
 	position: relative;
 	text-align: center;
+	min-height: 120rpx;
 	height: 90%;
 	width: 90%;
 	background-color: #007aff;
@@ -321,6 +334,7 @@ export default {
 }
 
 .kongxian {
+	transition: all 0.1s;
 	background-color: $uni-color-success;
 	color: #fff;
 }
@@ -346,11 +360,13 @@ export default {
 }
 
 .weixiu {
+	transition: all 0.1s;
 	background-color: $uni-color-warning;
 	color: #fff;
 }
 
 .baoliu {
+	transition: all 0.1s;
 	background-color: $uni-color-baoliu;
 	color: #fff;
 }
@@ -400,5 +416,24 @@ export default {
 	line-height: 80px;
 	width: 70px;
 	text-align: left;
+}
+.popup-bottom{
+	width: 690rpx;
+	background-color: #fff;
+	padding: 15px 15px 70px 15px;
+	border-radius: 10px;
+}
+.StatusBtn{
+	margin-top: 10px;
+	width: 600rpx;
+}
+.kongxianHover{
+	background-color: #3eb352;
+}
+.baoliuHover{
+	background-color: #5a646f;
+}
+.weixiuHover{
+	background-color: #cb9242;
 }
 </style>

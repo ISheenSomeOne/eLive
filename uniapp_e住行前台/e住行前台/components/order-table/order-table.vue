@@ -9,8 +9,8 @@
 			<view class="table-cont-item short">房价</view>
 		</view>
 		<block v-for="(item, index) in orderList" :key="index">
-			<uni-badge v-show="index?0:true" text="退押金" size="small" type="error"></uni-badge>
 			<view class="table-list-item" @click="toOrderInfo(item.id)">
+			<uni-badge class="tuiYaTip" v-show="index?0:true" text="退押金" size="small" type="error"></uni-badge>
 				<view class="table-cont-item short">
 					<text :class="item.originClass">{{ item.origin }}</text>
 				</view>
@@ -78,6 +78,7 @@ export default {
 }
 
 .table-list-item {
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	text-align: center;
@@ -113,5 +114,10 @@ export default {
 	padding: 5px;
 	background-color: #3983e5;
 	color: #fff;
+}
+.tuiYaTip{
+	position: absolute;
+	top: -4px;
+	right: -5px;
 }
 </style>

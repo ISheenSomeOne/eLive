@@ -17,7 +17,7 @@
 		</view>
 		<uni-list style="text-align: left;">
 			<uni-list-item title="员工管理" :show-extra-icon="true" :extra-icon="{color: '#007aff',size: '22',type: 'contact-filled'}" />
-			<uni-list-item title="房型房间" :show-extra-icon="true" :extra-icon="{color: '#4cd964',size: '22',type: 'home-filled'}" />
+			<navigator url="room/roomRoomType"><uni-list-item title="房型房间" :show-extra-icon="true" :extra-icon="{color: '#4cd964',size: '22',type: 'home-filled'}" /></navigator>
 			<uni-list-item title="活动管理" :show-extra-icon="true" :extra-icon="{color: '#54d2ff',size: '22',type: 'paperplane-filled'}" />
 			<uni-list-item title="会议管理" :show-extra-icon="true" :extra-icon="{color: '#999999',size: '22',type: 'chat-filled'}" />
 			<uni-list-item title="团队管理" :show-extra-icon="true" :extra-icon="{color: '#343a40',size: '22',type: 'chatboxes-filled'}" />
@@ -97,6 +97,8 @@
 	}
 	.logout{
 		width: 90%;
+		font-size: 16px;
 		margin-top: 20px;
+		margin-bottom: 10px;
 	}
 </style>

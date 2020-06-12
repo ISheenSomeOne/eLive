@@ -45,6 +45,26 @@
 		"style": {
 			"navigationBarTitleText": "订单详情"
 		}
+	}, {
+		"path": "pages/order/roomOrder",
+		"style": {
+			"navigationBarTitleText": "房间订单"
+		}
+	}, {
+		"path": "pages/mine/room/roomRoomType",
+		"style": {
+			"navigationBarTitleText": "房间类型"
+		}
+	}, {
+		"path": "pages/mine/room/roomTypeSetting",
+		"style": {
+			"navigationBarTitleText": "房型设置"
+		}
+	}, {
+		"path": "pages/mine/room/roomSetting",
+		"style": {
+			"navigationBarTitleText": "房间设置"
+		}
 	}],
 	"tabBar": {
 		"color": "#7A7E83",

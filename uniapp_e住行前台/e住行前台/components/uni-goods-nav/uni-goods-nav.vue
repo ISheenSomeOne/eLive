@@ -5,10 +5,10 @@
 		<view class="uni-tab__cart-box flex">
 			<view class="flex uni-tab__cart-sub-left">
 				<view v-for="(item,index) in options" :key="index" class="flex uni-tab__cart-button-left uni-tab__shop-cart" @click="onClick(index,item)">
-					<view class="uni-tab__icon">
+					<!-- <view class="uni-tab__icon"> -->
 						<uni-icons :type="item.icon" size="20" color="#646566"></uni-icons>
 						<!-- <image class="image" :src="item.icon" mode="widthFix" /> -->
-					</view>
+					<!-- </view> -->
 					<text class="uni-tab__text">{{ item.text }}</text>
 					<view class="flex uni-tab__dot-box">
 						<text v-if="item.info" :class="{ 'uni-tab__dots': item.info > 9 }" class="uni-tab__dot " :style="{'backgroundColor':item.infoBackgroundColor?item.infoBackgroundColor:'#ff0000',

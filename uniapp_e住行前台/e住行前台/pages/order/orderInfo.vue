@@ -125,7 +125,7 @@
 	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.order {
 		text-align: left;
 		padding-bottom: 20px;
