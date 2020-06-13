@@ -418,7 +418,7 @@ export default {
 	text-align: left;
 }
 .popup-bottom{
-	width: 690rpx;
+	max-width: 700rpx;
 	background-color: #fff;
 	padding: 15px 15px 70px 15px;
 	border-radius: 10px;

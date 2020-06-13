@@ -75,6 +75,7 @@ export default {
 <style lang="scss" scoped>
 .table-box {
 	font-size: 13px;
+	min-height: 85vh;
 }
 
 .table-list-item {
