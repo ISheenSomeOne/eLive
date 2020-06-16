@@ -26,4 +26,14 @@ html{
 	text-align: center;
 	margin: 0 auto;
 }
+.clearfix::before, .clearfix::after {
+	content: '';
+	display: table;
+}
+.clearfix::after{
+	clear: both;
+}
+.clearfix{
+	*zoom: 1;
+}
 </style>
