@@ -52,7 +52,7 @@
 			"disableHostCheck": true,
 			"proxy": {
 				"/api": {
-					"target": "http://kvy3s3.natappfree.cc", //目标接口域名
+					"target": "http://bbz6ah.natappfree.cc", //目标接口域名
 					"changeOrigin": true, //是否跨域
 					"secure": false ,// 设置支持https协议的代理
 					"pathRewrite":{"^/api":""}

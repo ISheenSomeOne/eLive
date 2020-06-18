@@ -59,7 +59,7 @@
 			</view>
 		</uni-list>
 		<uni-section class="sectionClass" title="房间信息(点击选择房间有的服务)" type="line"></uni-section>
-		<view class="clearfix" style="padding-bottom: 60px;">
+		<view class="clearfix" style="padding: 0 15px 60px 15px;">
 			<uni-fav star="false" :checked="checkList[0]" :content-text="contentText[0]" class="favBtn" @click="favClick(0)" />
 			<uni-fav star="false" :checked="checkList[1]" :content-text="contentText[1]" class="favBtn" @click="favClick(1)" />
 			<uni-fav star="false" :checked="checkList[2]" :content-text="contentText[2]" class="favBtn" @click="favClick(2)" />
@@ -195,6 +195,6 @@ export default {
 	float: left;
 	width: auto;
 	padding: 3px 5px;
-	margin: 7px 7px 0 0;
+	margin: 10px 10px 0 0;
 }
 </style>
