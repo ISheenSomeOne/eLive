@@ -5,8 +5,8 @@
 			<view class="header"><image src="/static/icon/logo.png"></image></view>
 			<!-- 主体表单 -->
 			<view class="main">
-				<wInput v-model="phoneData" type="text" maxlength="11" placeholder="用户名/电话"></wInput>
-				<wInput v-model="passData" type="password" maxlength="20" placeholder="密码"></wInput>
+				<wInput v-model="username" type="text" maxlength="11" placeholder="用户名/电话"></wInput>
+				<wInput v-model="password" type="password" maxlength="20" placeholder="密码"></wInput>
 			</view>
 			<wButton text="登 录" :rotate="isRotate" @click.native="startLogin()" class="wbutton"></wButton>
 
@@ -49,17 +49,17 @@ export default {
 		//this.isLogin();
 	},
 	computed: {
-		phoneData: {
+		username: {
 			get() {
-				return this.$store.state.login.phoneData;
+				return this.$store.state.login.username;
 			},
 			set(val) {
 				this.$store.commit('setPhoneData', val);
 			}
 		},
-		passData: {
+		password: {
 			get() {
-				return this.$store.state.login.passData;
+				return this.$store.state.login.password;
 			},
 			set(val) {
 				this.$store.commit('setPassData', val);
@@ -87,7 +87,7 @@ export default {
 			// }
 		},
 		startLogin() {
-			this.$store.dispatch('startLogin');
+			this.$store.dispatch("startLogin")
 		},
 		login_weixin() {
 			//微信登录
