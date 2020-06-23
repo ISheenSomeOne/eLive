@@ -104,6 +104,8 @@
 		align-items: center;
 		width: 100rpx;
 		height: 100rpx;
+		max-width: 80px;
+		max-height: 80px;
 	}
 
 	.uni-calendar-item__weeks-box-circle {

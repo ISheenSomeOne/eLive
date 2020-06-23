@@ -45,7 +45,7 @@
 							<view class='line'>
 							  <view class='lineLeft'>来源</view>
 							  <view class="lineRight">  
-								<picker mode="selector" :range="origin" :value="nowOrigin" @change="originChange">
+								<picker class="pickerClass" mode="selector" :range="origin" :value="nowOrigin" @change="originChange">
 									<view>{{origin[nowOrigin]}}</view>
 								</picker>
 								</view>
@@ -66,7 +66,7 @@
 							<view class='line'>
 							  <view class='lineLeft'>房型</view>
 								<view class="lineRight">  
-									<picker mode="selector" :range="roomType" :value="nowRoomType" @change="roomTypeChange">
+									<picker class="pickerClass" mode="selector" :range="roomType" :value="nowRoomType" @change="roomTypeChange">
 										<view>{{roomType[nowRoomType]}}</view>
 									</picker>
 								</view>
@@ -74,7 +74,7 @@
 							<view class='line'>
 							  <view class='lineLeft'>间数</view>
 								<view class="lineRight">
-									<picker mode="selector" :range="roomCount" :value="nowRoomCount" @change="roomCountChange">
+									<picker class="pickerClass" mode="selector" :range="roomCount" :value="nowRoomCount" @change="roomCountChange">
 										<view>{{roomCount[nowRoomCount]}}</view>
 									</picker>
 								</view>
@@ -82,7 +82,7 @@
 							<view class='line'>
 							  <view class='lineLeft'>支付方式</view>
 								<view class="lineRight">
-									<picker mode="selector" :range="payWay" :value="nowPayWay" @change="payWayChange">
+									<picker class="pickerClass" mode="selector" :range="payWay" :value="nowPayWay" @change="payWayChange">
 										<view>{{payWay[nowPayWay]}}</view>
 									</picker>
 								</view>
@@ -349,8 +349,8 @@ export default {
 			  width: 500rpx;
 			}
 			picker{
-			  height: 84rpx;
-			  line-height: 84rpx;
+			  height: 50px;
+			  line-height: 50px;
 			}
 		}
 		width: 90%;

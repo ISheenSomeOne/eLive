@@ -123,6 +123,7 @@ export default {
 	mutations
 }
 
+//公共请求方法
 function common_request(params) {
 	/*默认值*/
 	params.showLoading = params.showLoading == undefined ? true : params.showLoading;

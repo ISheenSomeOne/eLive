@@ -2,9 +2,9 @@
 	<view>
 		<view class="topNavBar">
 			<view class="navBarLeft">
-				<picker mode="selector" value="index" :range="typepikerData" @change="typeChange">
+				<picker mode="selector" value="index" :range="typePikerNameData" @change="typeChange">
 					<view class="navBarLeft">
-						{{ typepikerData[typeIndex] }}
+						{{ typePikerNameData[typePikerIndex] }}
 						<uni-icons type="arrowdown" color="#FFF"></uni-icons>
 					</view>
 				</picker>
@@ -27,12 +27,16 @@
 				<uni-grid :square="false" :column="2" :show-border="false" :highlight="false">
 					<uni-grid-item class="roomCtrl"><button plain="true" type="primary">开锁</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button disabled="true" type="primary">开房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><navigator url="../order/roomOrder"><button plain="true" type="warn">退押</button></navigator></uni-grid-item>
+					<uni-grid-item class="roomCtrl">
+						<navigator url="../order/roomOrder"><button plain="true" type="warn">退押</button></navigator>
+					</uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="warn">退房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="default" @click="openContinue">续房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="default" @click="openChange">换房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" type="default" @click="openStatus">房态</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><navigator url="../order/roomOrder"><button plain="true" type="default">订单</button></navigator></uni-grid-item>
+					<uni-grid-item class="roomCtrl">
+						<navigator url="../order/roomOrder"><button plain="true" type="default">订单</button></navigator>
+					</uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="primary">消费</button></uni-grid-item>
 				</uni-grid>
 				<view class="closeDrawer"><button type="warn" @click="closeRoomMenu('showLeft')">返回</button></view>
@@ -41,29 +45,11 @@
 		<uni-fab direction="vertical" :pattern="fabStyle" horizontal="right" :content="fabCont" vertical="bottom"></uni-fab>
 		<view class="container">
 			<uni-grid :column="gridColumn" :show-border="false" :highlight="false">
-				<uni-grid-item>
-					<view class="room kongxian" @click="showRoomMenu('showLeft')">
-						<uni-tag class="tagYajin" size="small" text="押金" type="error"></uni-tag>
-						<text>301</text>
+				<uni-grid-item v-for="(room, index) in roomList" :key="index">
+					<view :class="'room '+ room.state" @click="showRoomMenu('showLeft')">
+						<uni-tag v-if="room.refundApplicationCount" class="tagYajin" size="small" text="押金" type="error"></uni-tag>
+						<text>{{room.door}}</text>
 					</view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room yuliu"><text title="301232132132131">123123</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room zaizhu"><text>301</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room chaoshi"><text>301</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room dasao"><text title="301232132132131">3011</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room weixiu"><text>301</text></view>
-				</uni-grid-item>
-				<uni-grid-item>
-					<view class="room baoliu"><text>301</text></view>
 				</uni-grid-item>
 			</uni-grid>
 		</view>
@@ -88,13 +74,13 @@
 				<view class="changeItem">
 					<text class="fl">房型</text>
 					<picker class="fl ml" mode="selector" :range="changeTypeList" @change="changeTypeChange">
-						<view>{{changeTypeList[changeTypeIndex]}}</view>
+						<view>{{ changeTypeList[changeTypeIndex] }}</view>
 					</picker>
 				</view>
 				<view class="changeItem">
 					<text class="fl">房间</text>
 					<picker class="fl ml" mode="selector" :range="changeRoomList" @change="changeRoomChange">
-						<view>{{changeRoomList[changeRoomIndex]}}</view>
+						<view>{{ changeRoomList[changeRoomIndex] }}</view>
 					</picker>
 				</view>
 				<view class="changeItem">
@@ -125,10 +111,6 @@ export default {
 			changeRoomList: ['选择房间', '301', '302', '303'],
 			changeRoomIndex:0,
 			gridColumn: 3,
-			typepikerData: ['选择房型', '智享打大床房', '豪华双床房', '豪华大床房'],
-			typeIndex: 0,
-			floorpikerData: ['选择楼层', '1楼', '2楼', '3楼'],
-			floorIndex: 0,
 			showEmpty: false,
 			isShowRoomMenu: false,
 			fabStyle: {
@@ -137,58 +119,41 @@ export default {
 				selectedColor: '#007AFF',
 				buttonColor: '#007AFF'
 			},
-			fabCont: [
-				{
-					iconPath: '/static/icon/kongxian.svg',
-					selectedIconPath: '/static/icon/kongxian.svg',
-					text: '空闲30',
-					active: false
-				},
-				{
-					iconPath: '/static/icon/yuliu.svg',
-					selectedIconPath: '/static/icon/yuliu.svg',
-					text: '预留',
-					active: false
-				},
-				{
-					iconPath: '/static/icon/zaizhu.svg',
-					selectedIconPath: '/static/icon/zaizhu.svg',
-					text: '在住',
-					active: false
-				},
-				{
-					iconPath: '/static/icon/chaoshi.svg',
-					selectedIconPath: '/static/icon/chaoshi.svg',
-					text: '超时',
-					active: false
-				},
-				{
-					iconPath: '/static/icon/dasao.svg',
-					selectedIconPath: '/static/icon/dasao.svg',
-					text: '打扫',
-					active: false
-				},
-				{
-					iconPath: '/static/icon/weixiu.svg',
-					selectedIconPath: '/static/icon/weixiu.svg',
-					text: '维修',
-					active: false
-				},
-				{
-					iconPath: '/static/icon/baoliu.svg',
-					selectedIconPath: '/static/icon/baoliu.svg',
-					text: '保留',
-					active: false
-				}
-			]
+			
 		};
+	},
+	created:function(){
+		this.$store.dispatch('initRoomStatus')
+		this.$store.dispatch('initRoomType')
+		this.$store.commit('initHomeFloor')
+		// console.log(this.$store.state.home.roomList)
+	},
+	computed:{
+		roomList(){
+			return this.$store.state.home.roomList
+		},
+		fabCont(){
+			return this.$store.state.home.fabCont
+		},
+		typePikerNameData(){
+			return this.$store.state.home.typePikerNameData
+		},
+		typePikerIndex(){
+			return this.$store.state.home.typePikerIndex
+		},
+		floorpikerData(){
+			return this.$store.state.home.floorpikerData
+		},
+		floorIndex(){
+			return this.$store.state.home.floorIndex
+		},
 	},
 	methods: {
 		typeChange: function(e) {
-			this.typeIndex = e.detail.value;
+			this.$store.commit('homeRoomTypeChange',e.detail.value)
 		},
 		floorChange: function(e) {
-			this.floorIndex = e.detail.value;
+			this.$store.commit('homeFloorChange',e.detail.value)
 		},
 		emptyChange: function(e) {
 			this.showEmpty = e.target.value;
@@ -263,7 +228,7 @@ export default {
 .room {
 	position: relative;
 	text-align: center;
-	min-height: 120rpx;
+	// min-height: 60rpx;
 	height: 90%;
 	width: 90%;
 	background-color: #007aff;
@@ -386,7 +351,7 @@ export default {
 	float: left;
 	margin-left: 5px;
 }
-.ml{
+.ml {
 	margin-left: 20px;
 }
 .cantinueSlider {
@@ -400,40 +365,40 @@ export default {
 	height: 80px;
 	line-height: 80px;
 }
-.cantinueBtn{
+.cantinueBtn {
 	margin-top: 15px;
 	width: 500rpx;
 }
-.changeItem{
+.changeItem {
 	font-size: 14px;
 	height: 80px;
 	line-height: 80px;
 	width: 500rpx;
 	margin: 0 auto;
 }
-.changeInput{
+.changeInput {
 	height: 80px;
 	line-height: 80px;
 	width: 70px;
 	text-align: left;
 }
-.popup-bottom{
+.popup-bottom {
 	max-width: 700rpx;
 	background-color: #fff;
 	padding: 15px 15px 70px 15px;
 	border-radius: 10px;
 }
-.StatusBtn{
+.StatusBtn {
 	margin-top: 10px;
 	width: 600rpx;
 }
-.kongxianHover{
+.kongxianHover {
 	background-color: #3eb352;
 }
-.baoliuHover{
+.baoliuHover {
 	background-color: #5a646f;
 }
-.weixiuHover{
+.weixiuHover {
 	background-color: #cb9242;
 }
 </style>
