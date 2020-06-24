@@ -3,24 +3,27 @@ const state = {
 	roomList: [], //房间列表
 	roomStateCountList: [0, 0, 0, 0, 0, 0, 0], //房间状态的房间数列表
 	fabCont: [], //首页悬浮按钮数据
-	typePikerData: [],//所有房型数据
-	typePikerNameData: [],//房型选择器数据
-	typePikerIndex: 0,//房型选择当前下标
-	nowTypeId: '',//首页选择的房型id
-	floorpikerData: [],//楼层数组
-	floorIndex: 0,//楼层选择当前下标
-	nowFloor: '',//首页选择的楼层
+	typePikerData: [], //所有房型数据
+	typePikerNameData: [], //房型选择器数据
+	typePikerIndex: 0, //房型选择当前下标
+	nowTypeId: '', //首页选择的房型id
+	floorpikerData: [], //楼层数组
+	floorIndex: 0, //楼层选择当前下标
+	nowFloor: '', //首页选择的楼层
+	showEmpty: false, //显示空房
+	reqKong: '', //请求参数
+	nowRoom: {}, //首页选择的房间
 }
 const mutations = {
 	//初始化楼层
-	initHomeFloor(state){
+	initHomeFloor(state) {
 		state.floorpikerData = ['选择楼层']
-		for(let i = 1; i <= 50;i++){
-			state.floorpikerData.push(i+'楼')
+		for (let i = 1; i <= 50; i++) {
+			state.floorpikerData.push(i + '楼')
 		}
 	},
 	//初始化状态数据
-	initStateInfo(state){
+	initStateInfo(state) {
 		state.roomStateCountList = [0, 0, 0, 0, 0, 0, 0]
 		state.fabCont = [{
 				iconPath: '/static/icon/kongxian.svg',
@@ -74,7 +77,8 @@ const mutations = {
 			"start": getTime(),
 			"end": getTime(1),
 			"#rt.id": state.nowTypeId,
-			"floor": state.nowFloor
+			"#floor": state.nowFloor,
+			"#r.state": state.reqKong,
 		}
 		let postData = JSON.stringify(json)
 		common_request({
@@ -169,27 +173,73 @@ const mutations = {
 		})
 	},
 	//房态页面房间类型选择
-	homeRoomTypeChange(state,val) {
+	homeRoomTypeChange(state, val) {
 		state.typePikerIndex = val
-		if(state.typePikerIndex <= 0){
+		if (state.typePikerIndex <= 0) {
 			state.nowTypeId = ''
 		} else {
-			state.nowTypeId = state.typePikerData[state.typePikerIndex-1].id
+			state.nowTypeId = state.typePikerData[state.typePikerIndex - 1].id
 		}
 		//调用方法重新加载页面
 		this.commit('req_initRoomStatus')
 	},
 	//房态页面楼层选择
-	homeFloorChange(state,val) {
+	homeFloorChange(state, val) {
 		// console.log(val)
 		state.floorIndex = val
-		if(state.floorIndex <= 0){
+		if (state.floorIndex <= 0) {
 			state.nowFloor = ''
 		} else {
 			state.nowFloor = val
 		}
 		//调用方法重新加载页面
 		this.commit('req_initRoomStatus')
+	},
+	//选择空房改变事件
+	emptyChange(state, val) {
+		console.log(val)
+		state.showEmpty = val
+		if (val) {
+			state.reqKong = 4
+		} else {
+			state.reqKong = ''
+		}
+		//调用方法重新加载页面
+		this.commit('req_initRoomStatus')
+	},
+	//首页选择的房间
+	chooseRoomId(state, val) {
+		state.nowRoom = val
+	},
+	//首页更改房态
+	req_ChangeRoomState(state, val) {
+		common_request({
+			url: '/api/zxkj/room/updateStateById',
+			method: 'GET',
+			data: {
+				'id': state.nowRoom.id,
+				'state': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				console.log(res)
+				//调用方法重新加载页面
+				this.commit('req_initRoomStatus')
+				// if (res.data.code == 200) {
+				// 	uni.switchTab({
+				// 		url: '/pages/login/login'
+				// 	});
+				// } else {
+				// 	uni.showToast({
+				// 		title: '服务器错误',
+				// 		duration: 2000,
+				// 		icon: 'none'
+				// 	});
+				// }
+			},
+		})
 	},
 }
 const actions = {
@@ -202,6 +252,11 @@ const actions = {
 		commit
 	}) {
 		commit("req_initRoomType");
+	},
+	changeRoomState({
+		commit
+	}, value) {
+		commit("req_ChangeRoomState", value);
 	},
 }
 

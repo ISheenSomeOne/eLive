@@ -32,7 +32,6 @@
 </template>
 
 <script>
-var _this;
 import wInput from '../../components/watch-login/watch-input.vue'; //input
 import wButton from '../../components/watch-login/watch-button.vue'; //button
 
@@ -45,8 +44,6 @@ export default {
 		wButton
 	},
 	mounted() {
-		_this = this;
-		//this.isLogin();
 	},
 	computed: {
 		username: {

@@ -46,9 +46,9 @@
 		<view class="container">
 			<uni-grid :column="gridColumn" :show-border="false" :highlight="false">
 				<uni-grid-item v-for="(room, index) in roomList" :key="index">
-					<view :class="'room '+ room.state" @click="showRoomMenu('showLeft')">
+					<view :class="'room ' + room.state" @click="showRoomMenu(room)">
 						<uni-tag v-if="room.refundApplicationCount" class="tagYajin" size="small" text="押金" type="error"></uni-tag>
-						<text>{{room.door}}</text>
+						<text>{{ room.door }}</text>
 					</view>
 				</uni-grid-item>
 			</uni-grid>
@@ -94,9 +94,9 @@
 		<!-- 房态浮框 -->
 		<uni-popup ref="popupStatus" type="bottom">
 			<view class="popup-bottom">
-				<button class="StatusBtn kongxian" hover-class="kongxianHover">空闲</button>
-				<button class="StatusBtn baoliu" hover-class="baoliuHover">保留</button>
-				<button class="StatusBtn weixiu" hover-class="weixiuHover">维修</button>
+				<button class="StatusBtn kongxian" @click="changeRoomState(4)" hover-class="kongxianHover">空闲</button>
+				<button class="StatusBtn baoliu" @click="changeRoomState(5)" hover-class="baoliuHover">保留</button>
+				<button class="StatusBtn weixiu" @click="changeRoomState(3)" hover-class="weixiuHover">维修</button>
 			</view>
 		</uni-popup>
 	</view>
@@ -107,59 +107,65 @@ export default {
 	data() {
 		return {
 			changeTypeList: ['选择房型', '智享打大床房', '豪华双床房', '豪华大床房'],
-			changeTypeIndex:0,
+			changeTypeIndex: 0,
 			changeRoomList: ['选择房间', '301', '302', '303'],
-			changeRoomIndex:0,
+			changeRoomIndex: 0,
 			gridColumn: 3,
-			showEmpty: false,
 			isShowRoomMenu: false,
 			fabStyle: {
 				color: '#7A7E83',
 				backgroundColor: '#fff',
 				selectedColor: '#007AFF',
 				buttonColor: '#007AFF'
-			},
-			
+			}
 		};
 	},
-	created:function(){
-		this.$store.dispatch('initRoomStatus')
-		this.$store.dispatch('initRoomType')
-		this.$store.commit('initHomeFloor')
+	created: function() {
+		this.$store.dispatch('initRoomStatus');
+		this.$store.dispatch('initRoomType');
+		this.$store.commit('initHomeFloor');
 		// console.log(this.$store.state.home.roomList)
 	},
-	computed:{
-		roomList(){
-			return this.$store.state.home.roomList
+	computed: {
+		roomList() {
+			return this.$store.state.home.roomList;
 		},
-		fabCont(){
-			return this.$store.state.home.fabCont
+		fabCont() {
+			return this.$store.state.home.fabCont;
 		},
-		typePikerNameData(){
-			return this.$store.state.home.typePikerNameData
+		typePikerNameData() {
+			return this.$store.state.home.typePikerNameData;
 		},
-		typePikerIndex(){
-			return this.$store.state.home.typePikerIndex
+		typePikerIndex() {
+			return this.$store.state.home.typePikerIndex;
 		},
-		floorpikerData(){
-			return this.$store.state.home.floorpikerData
+		floorpikerData() {
+			return this.$store.state.home.floorpikerData;
 		},
-		floorIndex(){
-			return this.$store.state.home.floorIndex
+		floorIndex() {
+			return this.$store.state.home.floorIndex;
 		},
+		showEmpty() {
+			return this.$store.state.home.showEmpty;
+		}
 	},
 	methods: {
 		typeChange: function(e) {
-			this.$store.commit('homeRoomTypeChange',e.detail.value)
+			this.$store.commit('homeRoomTypeChange', e.detail.value);
 		},
 		floorChange: function(e) {
-			this.$store.commit('homeFloorChange',e.detail.value)
+			this.$store.commit('homeFloorChange', e.detail.value);
 		},
 		emptyChange: function(e) {
-			this.showEmpty = e.target.value;
+			this.$store.commit('emptyChange', e.detail.value);
 		},
 		showRoomMenu: function(e) {
-			this.$refs[e].open();
+			this.$store.commit('chooseRoomId', e);
+			this.$refs['showLeft'].open();
+		},
+		changeRoomState: function(e) {
+			this.$store.dispatch('changeRoomState',e)
+			this.closeRoomMenu('popupStatus');
 		},
 		closeRoomMenu: function(e) {
 			this.$refs[e].close();
@@ -174,7 +180,7 @@ export default {
 		continueDays: function(e) {
 			console.log('value 发生变化：' + e.detail.value);
 		},
-		openChange:function() {
+		openChange: function() {
 			this.closeRoomMenu('showLeft');
 			this.$refs.popupChange.open();
 		},
@@ -184,10 +190,20 @@ export default {
 		changeRoomChange: function(e) {
 			this.changeRoomIndex = e.detail.value;
 		},
-		openStatus:function() {
+		openStatus: function() {
+			let state = this.$store.state.home.nowRoom.state;
 			this.closeRoomMenu('showLeft');
-			this.$refs.popupStatus.open();
-		},
+			//只有空闲，打扫，维修，保留可以更改房态
+			if (state == 'kongxian' || state == 'dasao' || state == 'weixiu' || state == 'baoliu') {
+				this.$refs.popupStatus.open();
+			} else {
+				uni.showToast({
+					title: '当前状态不可更改！',
+					duration: 2000,
+					icon: 'none'
+				});
+			}
+		}
 	},
 	onNavigationBarButtonTap(e) {
 		if (this.isShowRoomMenu) {

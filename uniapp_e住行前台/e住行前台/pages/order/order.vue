@@ -32,7 +32,7 @@
 							<view class='line'>
 							  <view class='lineLeft'>入离时间</view>
 							  <view class="lineRight">
-								   <view @click="open">{{dateInfo}}</view>
+								   <view @click="open">{{createOrderDate?createOrderDate.before + ' 至 ' + createOrderDate.after:'选择日期'}}</view>
 								      <uni-calendar
 								      ref="calendar"
 								      :insert="false"
@@ -54,13 +54,13 @@
 							  <view class='lineLeft'>姓名</view>
 							  <view class="lineRight">  
 								<!-- data-name为自定义参数名称,同时也会以此为参数名存入data的form中-->
-								<input class="input" @input="inputChange" :value="form.name" data-name="name" placeholder-class="plaClass" placeholder='请输入姓名'></input>
+								<input class="input" @input="formChange" :value="form.name" data-name="name" placeholder-class="plaClass" placeholder='请输入姓名'></input>
 								</view>
 							</view>
 							<view class='line'>
 							  <view class='lineLeft'>手机号</view>
 								<view class="lineRight">  
-									<input class="input" type="number" @input="inputChange" :value="form.phone" data-name="phone" placeholder-class="plaClass" placeholder='请输入手机号'></input>
+									<input class="input" type="number" @input="formChange" :value="form.phone" data-name="phone" placeholder-class="plaClass" placeholder='请输入手机号'></input>
 								</view>
 							</view>
 							<view class='line'>
@@ -90,7 +90,7 @@
 							<view class='line'>
 							  <view class='lineLeft'>备注</view>
 								<view class="lineRight">  
-									<input class="input" @input="inputChange" :value="form.remarks" data-name="remarks" placeholder-class="plaClass" placeholder='备注'></input>
+									<input class="input" @input="formChange" :value="form.remarks" data-name="remarks" placeholder-class="plaClass" placeholder='备注'></input>
 									<view class="tips">选填</view>
 								</view>
 							</view>
@@ -132,7 +132,7 @@ export default {
 					id: '4'
 				}
 			],
-			origin:['选择来源','美团','携程','飞猪','去哪'],
+			origin:['选择来源','美团','携程','飞猪','去哪','艺龙','其他'],
 			roomType:['选择房型','豪华大床房','智享大床房','豪华双床房'],
 			roomCount: ['选择数量','1','2','3','4'],
 			payWay: ['选择方式','已支付','到店支付'],
@@ -143,9 +143,13 @@ export default {
 			swiperHeight: '',
 			customItem: '全部', //地址picker的全部功能
 			form:{
-				region: ['广东省', '广州市', '海珠区'] //默认参数
 			}
 		};
+	},
+	computed:{
+		createOrderDate(){
+			return this.$store.state.order.createOrderDate
+		}
 	},
 	mounted(){
 		this.setSwiperHeight();
@@ -176,11 +180,13 @@ export default {
 		            console.log(e);
 		        },
 				dateConfirm(e){
+					this.$store.commit('createOrderDateChange',e)
 		            console.log(e);
 				},
 				//input change
 				originChange(e){
 					this.nowOrigin = e.target.value
+					this.$store.commit('originChange',this.origin[this.nowOrigin])
 				},
 				roomTypeChange(e){
 					this.nowRoomType = e.target.value
@@ -188,16 +194,17 @@ export default {
 				roomCountChange(e){
 					this.nowRoomCount = e.target.value
 				},
-		change(e){
+		formChange(e){
 			let name = e.currentTarget.dataset.name;
 			let tempVal = e.target.value || e.detail.value;
 			if(this.form[name] === undefined){
-				console.log('首次添加属性名')
+				// console.log('首次添加属性名')
 				this.$set(this.form,name,tempVal)
 			}else{
 				// 若存在则直接赋值
 				this.form[name] = tempVal
 			}
+			this.$store.commit('formDataChange',this.form)
 		},
 		// 验证方法
 		toVaild(tempList){
