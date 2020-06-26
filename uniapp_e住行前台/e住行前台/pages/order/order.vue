@@ -12,7 +12,6 @@
 				</view>
 			</scroll-view>
 		</view>
-
 		<!--内容区-->
 		<view class="uni-tab-bar">
 			<swiper :current="tabIndex" @change="tabChange" :style="{ height: swiperHeight + 'px' }">
@@ -54,7 +53,7 @@
 							  <view class='lineLeft'>姓名</view>
 							  <view class="lineRight">  
 								<!-- data-name为自定义参数名称,同时也会以此为参数名存入data的form中-->
-								<input class="input" @input="formChange" :value="form.name" data-name="name" placeholder-class="plaClass" placeholder='请输入姓名'></input>
+								<input class="input" @input="formChange" :value="form.name" data-name="name" placeholder-class="plaClass" placeholder="请输入姓名"></input>
 								</view>
 							</view>
 							<view class='line'>
@@ -66,16 +65,16 @@
 							<view class='line'>
 							  <view class='lineLeft'>房型</view>
 								<view class="lineRight">  
-									<picker class="pickerClass" mode="selector" :range="roomType" :value="nowRoomType" @change="roomTypeChange">
-										<view>{{roomType[nowRoomType]}}</view>
+									<picker class="pickerClass" mode="selector" :range="createRoomTypePiker" :value="nowRoomType" @change="roomTypeChange">
+										<view>{{createRoomTypePiker[nowRoomType]}}</view>
 									</picker>
 								</view>
 							</view>
 							<view class='line'>
 							  <view class='lineLeft'>间数</view>
 								<view class="lineRight">
-									<picker class="pickerClass" mode="selector" :range="roomCount" :value="nowRoomCount" @change="roomCountChange">
-										<view>{{roomCount[nowRoomCount]}}</view>
+									<picker class="pickerClass" mode="selector" :range="createRoomCount[nowRoomType]" :value="nowRoomCount" @change="roomCountChange">
+										<view>{{createRoomCount[nowRoomType][nowRoomCount]}}</view>
 									</picker>
 								</view>
 							</view>
@@ -111,7 +110,6 @@
 export default {
 	data() {
 		return {
-			dateInfo: '选择日期',
 			tabIndex: 0, //选中标签栏的序列
 			contentList: ['待入住', '入住中', '全部', '创建订单'],
 			tabBars: [
@@ -133,12 +131,8 @@ export default {
 				}
 			],
 			origin:['选择来源','美团','携程','飞猪','去哪','艺龙','其他'],
-			roomType:['选择房型','豪华大床房','智享大床房','豪华双床房'],
-			roomCount: ['选择数量','1','2','3','4'],
 			payWay: ['选择方式','已支付','到店支付'],
 			nowOrigin: 0,
-			nowRoomType: 0,
-			nowRoomCount: 0,
 			nowPayWay: 0,
 			swiperHeight: '',
 			customItem: '全部', //地址picker的全部功能
@@ -149,10 +143,25 @@ export default {
 	computed:{
 		createOrderDate(){
 			return this.$store.state.order.createOrderDate
-		}
+		},
+		createRoomTypePiker(){
+			return this.$store.state.order.createRoomTypePiker
+		},
+		nowRoomType(){
+			return this.$store.state.order.nowRoomType
+		},
+		createRoomCount(){
+			return this.$store.state.order.createRoomCount
+		},
+		nowRoomCount(){
+			return this.$store.state.order.nowRoomCount
+		},
 	},
-	mounted(){
-		this.setSwiperHeight();
+	onShow() {
+		this.$store.dispatch("initCreateInfo")
+		setTimeout(()=>{
+			this.setSwiperHeight()
+		},200)
 	},
 	methods: {
 		toggleTab(index) {
@@ -166,10 +175,11 @@ export default {
 		},
 		//动态swiper高度
 		setSwiperHeight() {
-			let query = uni.createSelectorQuery().in(this);
+			let that = this
+			let query = uni.createSelectorQuery().in(that);
 			query.selectAll('.swiper-item').boundingClientRect();
 			query.exec(res => {
-				this.swiperHeight = res[0][this.tabIndex].height;
+				that.swiperHeight = res[0][that.tabIndex].height;
 			});
 		},
 		//打开日历
@@ -181,7 +191,6 @@ export default {
 		        },
 				dateConfirm(e){
 					this.$store.commit('createOrderDateChange',e)
-		            console.log(e);
 				},
 				//input change
 				originChange(e){
@@ -189,10 +198,14 @@ export default {
 					this.$store.commit('originChange',this.origin[this.nowOrigin])
 				},
 				roomTypeChange(e){
-					this.nowRoomType = e.target.value
+					this.$store.commit('roomTypeChange',e.target.value)
 				},
 				roomCountChange(e){
-					this.nowRoomCount = e.target.value
+					this.$store.commit('roomCountChange',e.target.value)
+				},
+				payWayChange(e){
+					this.nowPayWay = e.target.value
+					this.$store.commit('payWayChange',this.payWay[this.nowPayWay])
 				},
 		formChange(e){
 			let name = e.currentTarget.dataset.name;
@@ -334,7 +347,7 @@ export default {
 		  }
 			.lineLeft{
 			  display: flex;
-			  width: 20%;
+			  width: 23%;
 			  align-items: center;
 			  height: 100%;
 			  font-weight: bold;
@@ -367,5 +380,9 @@ export default {
 		position: relative;
 		margin: 0 auto;
 		padding-bottom: 60px;
+	}
+	.pickerClass{
+		width: 100%;
+		text-align: left;
 	}
 </style>
