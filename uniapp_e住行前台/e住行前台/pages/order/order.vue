@@ -60,6 +60,7 @@
 							  <view class='lineLeft'>手机号</view>
 								<view class="lineRight">  
 									<input class="input" type="number" @input="formChange" :value="form.phone" data-name="phone" placeholder-class="plaClass" placeholder='请输入手机号'></input>
+									<view class="tips">选填</view>
 								</view>
 							</view>
 							<view class='line'>
@@ -79,13 +80,19 @@
 								</view>
 							</view>
 							<view class='line'>
+							  <view class='lineLeft'>单价</view>
+								<view class="lineRight">  
+									<input class="input" type="digit" @input="formChange" :value="form.price" data-name="price" placeholder-class="plaClass" placeholder='请输入房间单价'></input>
+								</view>
+							</view>
+							<!-- <view class='line'>
 							  <view class='lineLeft'>支付方式</view>
 								<view class="lineRight">
 									<picker class="pickerClass" mode="selector" :range="payWay" :value="nowPayWay" @change="payWayChange">
 										<view>{{payWay[nowPayWay]}}</view>
 									</picker>
 								</view>
-							</view>
+							</view> -->
 							<view class='line'>
 							  <view class='lineLeft'>备注</view>
 								<view class="lineRight">  
@@ -115,19 +122,19 @@ export default {
 			tabBars: [
 				{
 					name: '待入住',
-					id: '1'
+					id: '0'
 				},
 				{
 					name: '入住中',
-					id: '2'
+					id: '1'
 				},
 				{
 					name: '全部',
-					id: '3'
+					id: '2'
 				},
 				{
 					name: '创建订单',
-					id: '4'
+					id: '3'
 				}
 			],
 			origin:['选择来源','美团','携程','飞猪','去哪','艺龙','其他'],
@@ -156,9 +163,23 @@ export default {
 		nowRoomCount(){
 			return this.$store.state.order.nowRoomCount
 		},
+		needRefresh(){
+			return this.$store.state.order.needRefresh
+		},
 	},
-	onShow() {
-		this.$store.dispatch("initCreateInfo")
+	watch:{
+		 needRefresh(newData, oldData) {
+			 let that = this
+			 if(newData){
+			 	that.nowOrigin = 0
+			 	that.nowPayWay = 0
+			 	that.form = {}
+			 }
+			 this.$store.commit('setNeedRefresh')
+		},
+	},
+	onLoad() {
+		this.$store.dispatch("initOrderListInfo",0)
 		setTimeout(()=>{
 			this.setSwiperHeight()
 		},200)
@@ -170,6 +191,12 @@ export default {
 		//滑动切换swiper
 		tabChange(e) {
 			const tabIndex = e.detail.current;
+			this.$store.commit('resetOrderPageNum')
+			if(tabIndex == 4){
+				this.$store.dispatch("initCreateInfo")
+			} else {
+				this.$store.dispatch("initOrderListInfo",tabIndex)
+			}
 			this.tabIndex = tabIndex;
 			this.setSwiperHeight();
 		},
@@ -237,24 +264,29 @@ export default {
 		},
 		// 提交
 		submit: util.throttle(function(e) {
+			let that = this
 			console.log('提交')
 			let tempList = [{
 				paramName:'name', //data-name和form中的参数名
 				failPass:'请输入正确的姓名', //失败的提示
 				rules:'name', //校验的规则名称
 			},{
-				paramName:'phone', //data-name和form中的参数名
-				failPass:'请输入正确的手机号', //失败的提示
-				rules:'phone', //校验的规则名称
-			},{
-				paramName:'id', //data-name和form中的参数名
-				failPass:'请输入正确的身份证', //失败的提示
-				rules:'cardid', //valid中的规则名称
-			}]
+				paramName:'price', //data-name和form中的参数名
+				failPass:'请输入房间单价', //失败的提示
+				rules: 'currency', //校验的规则名称
+			},
+			// {
+			// 	paramName:'phone', //data-name和form中的参数名
+			// 	failPass:'请输入正确的手机号', //失败的提示
+			// 	rules:'phone', //校验的规则名称
+			// },{
+			// 	paramName:'id', //data-name和form中的参数名
+			// 	failPass:'请输入正确的身份证', //失败的提示
+			// 	rules:'cardid', //valid中的规则名称
+			// },
+			]
 			if(this.toVaild(tempList)){
-				uni.showToast({
-					title:'通过'
-				})
+				this.$store.dispatch('createOrder')
 			}
 		}, 1000), //防重点击,1s内只可点击一次
 	}
@@ -276,7 +308,7 @@ export default {
 }
 .createOrder{
 	background-color: #4cd964;
-	border-radius: 100px;
+	border-radius: 2px;
 }
 .uni-tab-bar .active {
 	color: #fff;

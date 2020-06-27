@@ -25,17 +25,17 @@
 		<uni-drawer ref="showLeft" mode="left" :width="280" @change="changeRoomMenu($event)">
 			<view style="padding:30rpx;">
 				<uni-grid :square="false" :column="2" :show-border="false" :highlight="false">
-					<uni-grid-item class="roomCtrl"><button plain="true" type="primary">开锁</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button disabled="true" type="primary">开房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button plain="true" class="kongxianPlain" hover-class="kongxianPlainHover" @click="openRoom">开锁</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="kongxian" hover-class="kongxianHover">开房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl">
 						<navigator url="../order/roomOrder"><button plain="true" type="warn">退押</button></navigator>
 					</uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="warn">退房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="default" @click="openContinue">续房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="default" @click="openChange">换房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button plain="true" class="weixiuPlain" hover-class="weixiuPlainHover" @click="openContinue">续房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="weixiu" hover-class="weixiuHover" @click="openChange">换房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" type="default" @click="openStatus">房态</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl">
-						<navigator url="../order/roomOrder"><button plain="true" type="default">订单</button></navigator>
+						<navigator url="../order/roomOrder"><button class="baoliu" hover-class="baoliuHover" type="default">订单</button></navigator>
 					</uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button type="primary">消费</button></uni-grid-item>
 				</uni-grid>
@@ -203,7 +203,20 @@ export default {
 					icon: 'none'
 				});
 			}
-		}
+		},
+		openRoom: function(){
+			uni.showModal({
+				title: '提示',
+				content: '确定开门吗？',
+				success: function(res) {
+					if (res.confirm) {
+						this.$store.dispatch('openRoom')
+					} else if (res.cancel) {
+			
+					}
+				}
+			});
+		},
 	},
 	onNavigationBarButtonTap(e) {
 		if (this.isShowRoomMenu) {
@@ -416,5 +429,31 @@ export default {
 }
 .weixiuHover {
 	background-color: #cb9242;
+}
+.kongxianPlain{
+	transition: all 0.1s;
+	background-color: #FFFFFF;
+	color: $uni-color-success;
+	border: $uni-color-success 1px solid;
+}
+.weixiuPlain{
+	transition: all 0.1s;
+	background-color: #FFFFFF;
+	color: $uni-color-warning;
+	border: $uni-color-warning 1px solid;
+}
+.kongxianPlain{
+	transition: all 0.1s;
+	background-color: #FFFFFF;
+	color: $uni-color-success;
+	border: $uni-color-success 1px solid;
+}
+.kongxianPlainHover{
+	color: #FFFFFF;
+	background-color: $uni-color-success;
+}
+.weixiuPlainHover{
+	color: #FFFFFF;
+	background-color: $uni-color-warning;
 }
 </style>

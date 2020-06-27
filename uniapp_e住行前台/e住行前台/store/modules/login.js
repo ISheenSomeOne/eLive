@@ -52,7 +52,6 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				console.log(res.data);
 				if (res.data.code == 200) {
 					uni.setStorageSync('username', state.username)
 					uni.setStorageSync('password', state.password)
@@ -88,7 +87,8 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					uni.switchTab({
+					uni.removeStorageSync('token')
+					uni.reLaunch({
 						url: '/pages/login/login'
 					});
 				} else {
@@ -132,9 +132,8 @@ function common_request(params) {
 		'X-Requested-With': 'XMLHttpRequest'
 	} : params.header;
 	//请求头里一定要带上用户登录信息,没得商量  
-	params.header.token = JSON.stringify({
-		"token": uni.getStorageSync("token")
-	});
+	params.header.token = uni.getStorageSync("token");
+	params.header['X-Requested-With'] = 'XMLHttpRequest'
 	/**/
 	if (params.showLoading) {
 		uni.showLoading({
@@ -155,20 +154,19 @@ function common_request(params) {
 					icon: 'none'
 				});
 				setTimeout(() => {
-					uni.switchTab({
+					uni.reLaunch({
 						url: '/pages/login/login'
 					});
-				},2000)
-			} else {
-				var token = res.header.token;
+				}, 2000)
+			} else if (res.header.authorization != undefined) {
+				var token = res.header.authorization;
 				//更新token  
 				if (token) {
-					var token = uni.getStorageSync("token");
 					uni.setStorageSync("token", token);
 				}
-				//执行success方法
-				params.success(res);
 			}
+			//执行success方法
+			params.success(res);
 		},
 		complete: () => {
 			if (params.showLoading) {

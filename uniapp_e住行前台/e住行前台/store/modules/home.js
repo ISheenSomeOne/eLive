@@ -90,52 +90,48 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				let data = res.data.data
-				// console.log(data)
-				//初始化信息
-				this.commit('initStateInfo')
-				//添加剩余数量信息
-				for (let i = 0; i < data.length; i++) {
-					if (data[i].state == '空闲') {
-						if (data[i].haveYouBeenAssignedARoom == true) {
-							state.roomStateCountList[0]++
-							data[i].state = 'kongxian'
-						} else {
-							state.roomStateCountList[1]++
-							data[i].state = 'yuliu'
+				if (res.data.code == 200) {
+					let data = res.data.data.data
+					//初始化信息
+					this.commit('initStateInfo')
+					//添加剩余数量信息
+					for (let i = 0; i < data.length; i++) {
+						if (data[i].state == '空闲') {
+							if (data[i].haveYouBeenAssignedARoom == true) {
+								state.roomStateCountList[0]++
+								data[i].state = 'kongxian'
+							} else {
+								state.roomStateCountList[1]++
+								data[i].state = 'yuliu'
+							}
+						} else if (data[i].state == '在用') {
+							state.roomStateCountList[2]++
+							data[i].state = 'zaizhu'
+						} else if (data[i].state == '超时') {
+							state.roomStateCountList[3]++
+							data[i].state = 'chaoshi'
+						} else if (data[i].state == '打扫') {
+							state.roomStateCountList[4]++
+							data[i].state = 'dasao'
+						} else if (data[i].state == '维修') {
+							state.roomStateCountList[5]++
+							data[i].state = 'weixiu'
+						} else if (data[i].state == '保留') {
+							state.roomStateCountList[6]++
+							data[i].state = 'baoliu'
 						}
-					} else if (data[i].state == '在用') {
-						state.roomStateCountList[2]++
-						data[i].state = 'zaizhu'
-					} else if (data[i].state == '超时') {
-						state.roomStateCountList[3]++
-						data[i].state = 'chaoshi'
-					} else if (data[i].state == '打扫') {
-						state.roomStateCountList[4]++
-						data[i].state = 'dasao'
-					} else if (data[i].state == '维修') {
-						state.roomStateCountList[5]++
-						data[i].state = 'weixiu'
-					} else if (data[i].state == '保留') {
-						state.roomStateCountList[6]++
-						data[i].state = 'baoliu'
 					}
+					for (let i = 0; i < state.fabCont.length; i++) {
+						state.fabCont[i].text = state.fabCont[i].text + state.roomStateCountList[i]
+					}
+					state.roomList = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
 				}
-				for (let i = 0; i < state.fabCont.length; i++) {
-					state.fabCont[i].text = state.fabCont[i].text + state.roomStateCountList[i]
-				}
-				state.roomList = data
-				// if (res.data.code == 200) {
-				// 	uni.switchTab({
-				// 		url: '/pages/login/login'
-				// 	});
-				// } else {
-				// 	uni.showToast({
-				// 		title: '服务器错误',
-				// 		duration: 2000,
-				// 		icon: 'none'
-				// 	});
-				// }
 			},
 		})
 	},
@@ -153,22 +149,19 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				state.typePikerData = res.data
-				state.typePikerNameData = ['选择房型']
-				res.data.forEach((item) => {
-					state.typePikerNameData.push(item.name)
-				})
-				// if (res.data.code == 200) {
-				// 	uni.switchTab({
-				// 		url: '/pages/login/login'
-				// 	});
-				// } else {
-				// 	uni.showToast({
-				// 		title: '服务器错误',
-				// 		duration: 2000,
-				// 		icon: 'none'
-				// 	});
-				// }
+				if (res.data.code == 200) {
+					state.typePikerData = res.data.data
+					state.typePikerNameData = ['选择房型']
+					res.data.data.forEach((item) => {
+						state.typePikerNameData.push(item.name)
+					})
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
 			},
 		})
 	},
@@ -197,7 +190,7 @@ const mutations = {
 	},
 	//选择空房改变事件
 	emptyChange(state, val) {
-		console.log(val)
+		// console.log(val)
 		state.showEmpty = val
 		if (val) {
 			state.reqKong = 4
@@ -224,20 +217,52 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				console.log(res)
-				//调用方法重新加载页面
-				this.commit('req_initRoomStatus')
-				// if (res.data.code == 200) {
-				// 	uni.switchTab({
-				// 		url: '/pages/login/login'
-				// 	});
-				// } else {
-				// 	uni.showToast({
-				// 		title: '服务器错误',
-				// 		duration: 2000,
-				// 		icon: 'none'
-				// 	});
-				// }
+				if (res.data.code == 200) {
+					uni.showToast({
+						title: '成功',
+						duration: 2000
+					});
+					//调用方法重新加载页面
+					this.commit('req_initRoomStatus')
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	//开锁
+	req_OpenRoom(state) {
+		common_request({
+			url: '/api/zxkj/room/sweep/openLockByRoomId',
+			data: {
+				'roomId': state.nowRoom.id
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					uni.showToast({
+						title: '成功',
+						duration: 2000
+					});
+				} else if(res.data.code == -1 || res.data.code == 0 || res.data.code == -2) {
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false
+					})
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
 			},
 		})
 	},
@@ -258,6 +283,11 @@ const actions = {
 	}, value) {
 		commit("req_ChangeRoomState", value);
 	},
+	openRoom({
+		commit
+	}, value) {
+		commit("req_OpenRoom");
+	},
 }
 
 export default {
@@ -275,9 +305,8 @@ function common_request(params) {
 		'X-Requested-With': 'XMLHttpRequest'
 	} : params.header;
 	//请求头里一定要带上用户登录信息,没得商量  
-	params.header.token = JSON.stringify({
-		"token": uni.getStorageSync("token")
-	});
+	params.header.token = uni.getStorageSync("token");
+	params.header['X-Requested-With'] = 'XMLHttpRequest'
 	/**/
 	if (params.showLoading) {
 		uni.showLoading({
@@ -298,20 +327,19 @@ function common_request(params) {
 					icon: 'none'
 				});
 				setTimeout(() => {
-					uni.switchTab({
+					uni.reLaunch({
 						url: '/pages/login/login'
 					});
 				}, 2000)
-			} else {
-				var token = res.header.token;
+			} else if (res.header.authorization != undefined) {
+				var token = res.header.authorization;
 				//更新token  
 				if (token) {
-					var token = uni.getStorageSync("token");
 					uni.setStorageSync("token", token);
 				}
-				//执行success方法
-				params.success(res);
 			}
+			//执行success方法
+			params.success(res);
 		},
 		complete: () => {
 			if (params.showLoading) {
