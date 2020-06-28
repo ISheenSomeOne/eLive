@@ -16,13 +16,13 @@
 		<view class="uni-tab-bar">
 			<swiper :current="tabIndex" @change="tabChange" :style="{ height: swiperHeight + 'px' }">
 				<swiper-item>
-					<view class="swiper-item"><order-table></order-table></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table></view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item"><order-table></order-table></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table></view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item"><order-table></order-table></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table></view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
@@ -166,6 +166,9 @@ export default {
 		needRefresh(){
 			return this.$store.state.order.needRefresh
 		},
+		orderList(){
+			return this.$store.state.order.orderList
+		},
 	},
 	watch:{
 		 needRefresh(newData, oldData) {
@@ -180,19 +183,24 @@ export default {
 	},
 	onLoad() {
 		this.$store.dispatch("initOrderListInfo",0)
+		this.$store.dispatch("initCreateInfo")
 		setTimeout(()=>{
 			this.setSwiperHeight()
 		},200)
 	},
 	methods: {
 		toggleTab(index) {
-			this.tabIndex = index;
+			this.tabChangeFunc(index)
 		},
 		//滑动切换swiper
 		tabChange(e) {
 			const tabIndex = e.detail.current;
+			this.tabChangeFunc(tabIndex)
+		},
+		//页面切换调用
+		tabChangeFunc(tabIndex){
 			this.$store.commit('resetOrderPageNum')
-			if(tabIndex == 4){
+			if(tabIndex == 3){
 				this.$store.dispatch("initCreateInfo")
 			} else {
 				this.$store.dispatch("initOrderListInfo",tabIndex)

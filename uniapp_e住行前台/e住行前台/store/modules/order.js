@@ -199,20 +199,24 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
+				console.log(res.data)
 				if (res.data.code == 200) {
 					if(res.data.data){
 						res.data.data.forEach((item) => {
+							if(item.source == '美团'){
+								item.originClass = 'meituan'
+							} else if(item.source == '携程'){
+								item.originClass = 'xiecheng'
+							} else if(item.source == '微信'){
+								item.originClass = 'weixin'
+							} else{
+								item.originClass = ''
+							}
 							state.orderList.push(item)
 						})
 					} else {
 						state.orderPageCanReq = false
 					}
-					state.needRefresh = true
-					that.commit('req_initCreateInfo')
-					uni.showToast({
-						title: '创建成功',
-						duration: 2000,
-					});
 				} else {
 					uni.showModal({
 						title: '提示',
