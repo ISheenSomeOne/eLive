@@ -12,9 +12,11 @@ const state = {
 	nowRoomCount: 0, //创建订单现在选择的房间数量Index，需要配合上面nowRoomType使用
 	createPayWay: '', //创建订单的支付方式
 	needRefresh: false, //是否需要刷新（订单完成后）
-	orderPageNum: 0,//请求订单PageNum
+	orderPageNum: 0, //请求订单PageNum
 	orderList: [], //订单数组
-	orderPageCanReq: true,//订单列表页还有更多数据可以请求
+	orderPageCanReq: true, //订单列表页还有更多数据可以请求
+	orderId: '', //现在选择的orderid
+	needResetHeight: false, //需要重新定义高度
 }
 const mutations = {
 	//请求初始化信息
@@ -199,22 +201,32 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				console.log(res.data)
 				if (res.data.code == 200) {
-					if(res.data.data){
+					if (res.data.data != false) {
 						res.data.data.forEach((item) => {
-							if(item.source == '美团'){
+							if (item.source == '美团') {
 								item.originClass = 'meituan'
-							} else if(item.source == '携程'){
+							} else if (item.source == '携程') {
 								item.originClass = 'xiecheng'
-							} else if(item.source == '微信'){
+							} else if (item.source == '微信') {
 								item.originClass = 'weixin'
-							} else{
+							} else {
 								item.originClass = ''
 							}
+							item.checkin = formatDate(false, item.checkin)
+							item.checkout = formatDate(false, item.checkout)
 							state.orderList.push(item)
 						})
+						//等待浏览器渲染
+						setTimeout(()=>{
+							state.needResetHeight = true
+						},10)
 					} else {
+						uni.showToast({
+							title: '没有更多了',
+							duration: 2000,
+							icon: 'none'
+						});
 						state.orderPageCanReq = false
 					}
 				} else {
@@ -227,12 +239,42 @@ const mutations = {
 			},
 		})
 	},
+	//关闭重置
+	resetHeightFalse(state) {
+		state.needResetHeight = false
+	},
 	//重置pageNum
-	resetOrderPageNum(state){
+	resetOrderPageNum(state) {
 		state.orderPageNum = 0
 		state.orderList = []
 		state.orderPageCanReq = true
-	}
+	},
+	//请求初始化订单详情页面
+	req_initOrderDetailInfo(state,val) {
+		state.orderId = val
+		console.log(state.orderId)
+		common_request({
+			url: '/api/zxkj/order/mobileVersionGetOrderDetail',
+			data: {
+				'orderId': state.orderId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				console.log(res.data)
+				if (res.data.code == 200) {
+					state.roomTypeList = res.data.data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
 }
 const actions = {
 	initCreateInfo({
@@ -251,6 +293,12 @@ const actions = {
 		commit
 	}, value) {
 		commit('req_initOrderListInfo', value)
+	},
+	//初始化订单详情列表
+	initOrderDetailInfo({
+		commit
+	}, value) {
+		commit('req_initOrderDetailInfo',value)
 	},
 }
 
@@ -323,4 +371,22 @@ function getTime(days = 0) {
 	day >= 0 && day <= 9 ? (day = "0" + day) : ""
 	var timer = year + '-' + month + '-' + day
 	return timer;
+}
+
+//格式化时间为yy-MM-dd
+function formatDate(needYear, date) {
+	var d = new Date(date)
+	var month = '' + (d.getMonth() + 1)
+	var day = '' + d.getDate()
+	if (needYear) {
+		var year = d.getFullYear()
+	}
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	if (needYear) {
+		return [year, month, day].join('-');
+	}
+	return [month, day].join('-');
 }

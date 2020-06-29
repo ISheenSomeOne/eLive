@@ -16,7 +16,7 @@
 				</view>
 				<view class="table-cont-item">{{item.OwnerName}}</view>
 				<view class="table-cont-item long">
-					<block v-for="(roomType, inde) in item" :key="inde">{{roomType.roomCount+'×'+roomType.roomTypeName}}</block>
+					<block v-for="(roomType, inde) in item.roomTypeInfo" :key="inde">{{roomType.roomCount+'×'+roomType.roomTypeName}}</block>
 				</view>
 				<view class="table-cont-item short">{{item.checkin}}</view>
 				<view class="table-cont-item short">{{item.checkout}}</view>
@@ -29,28 +29,33 @@
 <script>
 	export default {
 		name: 'OrderTable',
-		// props: ['orderList'],
+		props: ['orderList'],
 		data() {
 			return {
-				orderList: [{
-						id: 1,
-						source: '美团',
-						originClass: 'meituan'
-					},
-					{
-						id: 2,
-						source: '携程',
-						originClass: 'xiecheng'
-					},
-					{
-						id: 3,
-						source: '微信',
-						originClass: 'weixin'
-					}
-				]
+				// orderList: [{
+				// 		id: 1,
+				// 		source: '美团',
+				// 		originClass: 'meituan'
+				// 	},
+				// 	{
+				// 		id: 2,
+				// 		source: '携程',
+				// 		originClass: 'xiecheng'
+				// 	},
+				// 	{
+				// 		id: 3,
+				// 		source: '微信',
+				// 		originClass: 'weixin'
+				// 	}
+				// ]
 			};
 		},
-		mounted() {},
+		beforeUpdate() {
+			// let info = uni.createSelectorQuery().select(".table-box");
+			// 	info.boundingClientRect(function(data) { //data - 各种参数
+			// 	console.log(data.height)
+			// }).exec()
+		},
 		methods: {
 			toOrderInfo(orderId) {
 				uni.navigateTo({
@@ -64,7 +69,8 @@
 <style lang="scss" scoped>
 	.table-box {
 		font-size: 13px;
-		min-height: 85vh;
+		min-height: 80vh;
+		margin-bottom: 10px;
 	}
 
 	.table-list-item {

@@ -119,8 +119,8 @@
 			}
 		},
 		onLoad: function(option) {
-			//获取传参
-			this.orderId = option.orderId;
+			//获取传参，赋值id
+			this.$store.dispatch('initOrderDetailInfo',option.orderId)
 		}
 	};
 </script>

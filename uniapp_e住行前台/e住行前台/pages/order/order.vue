@@ -16,13 +16,13 @@
 		<view class="uni-tab-bar">
 			<swiper :current="tabIndex" @change="tabChange" :style="{ height: swiperHeight + 'px' }">
 				<swiper-item>
-					<view class="swiper-item"><order-table :orderList="orderList"></order-table></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">加载更多···</button></view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item"><order-table :orderList="orderList"></order-table></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">加载更多···</button></view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item"><order-table :orderList="orderList"></order-table></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">加载更多···</button></view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
@@ -169,6 +169,12 @@ export default {
 		orderList(){
 			return this.$store.state.order.orderList
 		},
+		needResetHeight(){
+			return this.$store.state.order.needResetHeight
+		},
+		orderPageCanReq(){
+			return this.$store.state.order.orderPageCanReq
+		},
 	},
 	watch:{
 		 needRefresh(newData, oldData) {
@@ -180,17 +186,21 @@ export default {
 			 }
 			 this.$store.commit('setNeedRefresh')
 		},
+		needResetHeight(newData, oldData) {
+			 let that = this
+			 if(newData){
+				that.setSwiperHeight();
+				this.$store.commit('resetHeightFalse')
+			 }
+		},
 	},
 	onLoad() {
 		this.$store.dispatch("initOrderListInfo",0)
 		this.$store.dispatch("initCreateInfo")
-		setTimeout(()=>{
-			this.setSwiperHeight()
-		},200)
 	},
 	methods: {
 		toggleTab(index) {
-			this.tabChangeFunc(index)
+			this.tabIndex = index;
 		},
 		//滑动切换swiper
 		tabChange(e) {
@@ -199,23 +209,21 @@ export default {
 		},
 		//页面切换调用
 		tabChangeFunc(tabIndex){
+			this.tabIndex = tabIndex;
 			this.$store.commit('resetOrderPageNum')
 			if(tabIndex == 3){
 				this.$store.dispatch("initCreateInfo")
 			} else {
 				this.$store.dispatch("initOrderListInfo",tabIndex)
 			}
-			this.tabIndex = tabIndex;
-			this.setSwiperHeight();
 		},
 		//动态swiper高度
 		setSwiperHeight() {
 			let that = this
-			let query = uni.createSelectorQuery().in(that);
-			query.selectAll('.swiper-item').boundingClientRect();
-			query.exec(res => {
-				that.swiperHeight = res[0][that.tabIndex].height;
-			});
+			let info = uni.createSelectorQuery().select(".swiper-item");
+				info.boundingClientRect(function(data) { //data - 各种参数
+				that.swiperHeight = data.height
+			}).exec()
 		},
 		//打开日历
 		open(){
@@ -296,6 +304,11 @@ export default {
 			if(this.toVaild(tempList)){
 				this.$store.dispatch('createOrder')
 			}
+		}, 1000), //防重点击,1s内只可点击一次
+		//获取更多order信息
+		getMore: util.throttle(function(e) {
+			//加载更多
+			this.$store.dispatch("initOrderListInfo",this.tabIndex)
 		}, 1000), //防重点击,1s内只可点击一次
 	}
 };
@@ -424,5 +437,8 @@ export default {
 	.pickerClass{
 		width: 100%;
 		text-align: left;
+	}
+	.more-btn{
+		width: 500rpx;
 	}
 </style>
