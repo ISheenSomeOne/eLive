@@ -1,60 +1,79 @@
 <template>
 	<view class="order">
-		<uni-section class="sectionClass" title="房间信息" type="line"></uni-section>
-		<uni-list>
-			<uni-list-item class="listItemClass" title="房型数量" :showArrow="false">
-				<template v-slot:right="">
-					2 × 智享大床房
-				</template>
-			</uni-list-item>
-			<uni-list-item class="listItemClass" title="入离日期" :showArrow="false">
-				<template v-slot:right="">
-					05-26 至 05-27（1 晚）
-				</template>
-			</uni-list-item>
-			<uni-list-item class="listItemClass" title="201" :showArrow="false">
-				<template v-slot:right="">
-					<view class="name bgGreen">张三</view>
-					<view class="name bgYellow">李四</view>
-					<view class="name">李四</view>
-				</template>
-			</uni-list-item>
-		</uni-list>
+		<block v-for="(roomTypeList, index) in orderDetailInfo.roomTypeList" :key="index">
+			<uni-section class="sectionClass" title="房间信息" type="line"></uni-section>
+			<uni-list>
+				<uni-list-item class="listItemClass" title="房型数量" :showArrow="false">
+					<template v-slot:right="">
+						{{roomTypeList.roomTypeCount +' × '+ roomTypeList.roomTypeName}}
+					</template>
+				</uni-list-item>
+				<uni-list-item class="listItemClass" title="入离日期" :showArrow="false">
+					<template v-slot:right="">
+						{{roomTypeList.checkin +' 至 '+ roomTypeList.checkout +'（'+ roomTypeList.night +'晚）'}}
+					</template>
+				</uni-list-item>
+				<uni-list-item class="listItemClass" title="房费" :showArrow="false">
+					<template v-slot:right="">
+						￥{{roomTypeList.roomTypeCountPrice}}
+					</template>
+				</uni-list-item>
+				<uni-list-item v-if="roomTypeList.roomList.length == 0" class="listItemClass" title="房间号" :showArrow="false">
+					<template v-slot:right="">
+						房间未选
+					</template>
+				</uni-list-item>
+				<block else v-for="(roomList, inde) in roomTypeList.roomList" :key="inde">
+					<uni-list-item class="listItemClass" :title="roomList.roomNum" :showArrow="false">
+						<template v-slot:right="">
+							<block v-for="(userList, ind) in roomList.userList" :key="ind">
+								<view :class="'name'+ userList.state?'bgGreen':'bgYellow'">{{userList.username}}</view>
+							</block>
+						</template>
+					</uni-list-item>
+				</block>
+			</uni-list>
+		</block>
 		<uni-section class="sectionClass" title="订单信息" type="line"></uni-section>
 		<uni-list>
 			<uni-list-item class="listItemClass" title="交易状态" :showArrow="false">
 				<template v-slot:right="">
-					<view class="bgGreen">进行中</view>
+					<view :class="orderDetailInfo.stateClass">{{orderDetailInfo.stateName}}</view>
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="订单来源" :showArrow="false">
 				<template v-slot:right="">
-					美团
+					{{orderDetailInfo.source}}
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="订单号" :showArrow="false">
 				<template v-slot:right="">
-					zx1232134214432
+					{{orderDetailInfo.orderNum}}
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="付款方式" :showArrow="false">
 				<template v-slot:right="">
-					美团
+					{{orderDetailInfo.payWay}}
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="创建时间" :showArrow="false">
 				<template v-slot:right="">
-					2020-05-24 14:30:21
+					{{orderDetailInfo.createTime}}
+				</template>
+			</uni-list-item>
+			<uni-list-item class="listItemClass" title="下单人" :showArrow="false">
+				<template v-slot:right="">
+					{{orderDetailInfo.orderPeople}}
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="付款人" :showArrow="false">
 				<template v-slot:right="">
-					张三
+					{{orderDetailInfo.payPeople}}
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="联系方式" :showArrow="false">
 				<template v-slot:right="">
-					15087076546
+					{{orderDetailInfo.phone}}
 				</template>
 			</uni-list-item>
 		</uni-list>
@@ -62,34 +81,38 @@
 		<uni-list class="mgBottom">
 			<uni-list-item class="listItemClass" title="订单总价" :showArrow="false">
 				<template v-slot:right="">
-					￥400
+					￥{{orderDetailInfo.TotalPrice}}
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="房费" :showArrow="false">
 				<template v-slot:right="">
-					￥200
+					￥{{orderDetailInfo.roomPrice}}
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="押金" :showArrow="false">
 				<template v-slot:right="">
-					￥200
-					<view class="bgRed">未退</view>
+					￥{{orderDetailInfo.deposit}}
+					<view v-if="orderDetailInfo.state == 62" class="bgRed" @click="confirmDialog(orderDetailInfo.refundApplicationId)">未退</view>
 				</template>
 			</uni-list-item>
 			<uni-list-item class="listItemClass" title="消费" :showArrow="false">
 				<template v-slot:right="">
-					￥--
+					￥{{orderDetailInfo.consumption}}
 				</template>
 			</uni-list-item>
-			<uni-list-item class="listItemClass" title="收入" :showArrow="false">
+			<uni-list-item class="listItemClass" style="color: #ffa200;font-size: 16px;" title="收入" :showArrow="false">
 				<template v-slot:right="">
-					$--
+					￥{{orderDetailInfo.income}}
 				</template>
 			</uni-list-item>
 		</uni-list>
 		<view class="bottomMenu">
 			<uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" />
 		</view>
+		<!-- 退押信息 -->
+		<uni-popup ref="dialogInput" type="dialog">
+			<uni-popup-dialog mode="input" title="输入内容" :value="orderDetailInfo.deposit" placeholder="请输入退款金额" @confirm="refund"></uni-popup-dialog>
+		</uni-popup>
 	</view>
 </template>
 
@@ -97,8 +120,8 @@
 	export default {
 		data() {
 			return {
-				orderId: '',
 				options: [],
+				refundApplicationId: '',
 				buttonGroup: [{
 						text: '修改订单',
 						backgroundColor: '#ffa200',
@@ -112,15 +135,71 @@
 				]
 			};
 		},
+		computed: {
+			orderDetailInfo() {
+				return this.$store.state.order.orderDetailInfo
+			},
+		},
 		methods: {
 			buttonClick(e) {
 				console.log(e)
 				this.options[2].info++
+			},
+			//点击退押金
+			confirmDialog(id) {
+				this.refundApplicationId = id
+				this.$refs.dialogInput.open()
+			},
+			//输入金额后点击确定
+			refund(done, val) {
+				let that = this
+				uni.showModal({
+					title: '提示',
+					content: '确定退押金吗？',
+					success: function(res) {
+						if (res.confirm) {
+							if (val == '' || val == undefined) {
+								uni.showToast({
+									title: '请填写金额',
+									duration: 2000,
+									icon: 'none'
+								});
+							} else if (!isNaN(val)) {
+								uni.showToast({
+									title: '只能输入数字和小数点',
+									duration: 2000,
+									icon: 'none'
+								});
+							} else if (val < 0) {
+								uni.showToast({
+									title: '请输入正确的金额',
+									duration: 2000,
+									icon: 'none'
+								});
+							} else if (val > that.$store.state.order.orderDetailInfo.deposit) {
+								uni.showToast({
+									title: '不能超过押金数额',
+									duration: 2000,
+									icon: 'none'
+								});
+							} else {
+								let params = {
+									'id': that.refundApplicationId,
+									'refundPrice': val
+								}
+								that.$store.dispatch("refund", params)
+								done()
+							}
+						} else if (res.cancel) {
+							done()
+						}
+					}
+				});
 			}
 		},
 		onLoad: function(option) {
 			//获取传参，赋值id
-			this.$store.dispatch('initOrderDetailInfo',option.orderId)
+			this.$store.dispatch('initOrderDetailInfo', option.orderId)
 		}
 	};
 </script>
@@ -134,8 +213,8 @@
 	.sectionClass {
 		margin-top: 0;
 	}
-	
-	.mgBottom{
+
+	.mgBottom {
 		margin-bottom: 40px;
 	}
 

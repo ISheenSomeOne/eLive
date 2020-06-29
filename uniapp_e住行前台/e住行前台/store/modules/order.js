@@ -17,6 +17,7 @@ const state = {
 	orderPageCanReq: true, //订单列表页还有更多数据可以请求
 	orderId: '', //现在选择的orderid
 	needResetHeight: false, //需要重新定义高度
+	orderDetailInfo: '',//订单详情信息
 }
 const mutations = {
 	//请求初始化信息
@@ -251,8 +252,10 @@ const mutations = {
 	},
 	//请求初始化订单详情页面
 	req_initOrderDetailInfo(state,val) {
-		state.orderId = val
-		console.log(state.orderId)
+		if(val == ''){
+		} else {
+			state.orderId = val
+		}
 		common_request({
 			url: '/api/zxkj/order/mobileVersionGetOrderDetail',
 			data: {
@@ -262,9 +265,66 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				console.log(res.data)
 				if (res.data.code == 200) {
-					state.roomTypeList = res.data.data
+					let data = res.data.data
+					//格式化创建时间
+					data.createTime = data.createTime.replace(/T/,' ')
+					//state赋值
+					if(data.state == 51){
+						data.stateName = '待付款'
+						data.stateClass = 'bgYellow'
+					} else if(data.state == 52){
+						data.stateName = '待入住'
+						data.stateClass = 'bgYellow'
+					} else if(data.state == 112){
+						data.stateName = '入住中'
+						data.stateClass = 'bgGreen'
+					} else if(data.state == 62){
+						data.stateName = '待退款'
+						data.stateClass = 'bgRed'
+					} else if(data.state == 63){
+						data.stateName = '订单完成'
+						data.stateClass = 'bgGreen'
+					} else if(data.state == 54){
+						data.stateName = '交易取消'
+						data.stateClass = 'name'
+					}
+					
+					for(let i = 0;i < data.roomTypeList.length;i++){
+						data.roomTypeList[i].checkin = formatDate(false,data.roomTypeList[i].checkin)
+						data.roomTypeList[i].checkout = formatDate(false,data.roomTypeList[i].checkout)
+					}
+					state.orderDetailInfo = data
+				console.log(state.orderDetailInfo)
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	//请求退押金
+	req_refund(state,val) {
+		let that = this
+		common_request({
+			url: '/api/zxkj/refundApplication/confirmRefund',
+			data: {
+				'id': val.id,
+				'refundPrice': val.refundPrice
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					uni.showToast({
+						title: '退款成功',
+						duration: 2000
+					});
+					that.commit('req_initOrderDetailInfo','')
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -299,6 +359,12 @@ const actions = {
 		commit
 	}, value) {
 		commit('req_initOrderDetailInfo',value)
+	},
+	//退押金
+	refund({
+		commit
+	}, value) {
+		commit('req_refund',value)
 	},
 }
 
