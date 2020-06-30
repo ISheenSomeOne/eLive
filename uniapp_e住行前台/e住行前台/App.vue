@@ -37,4 +37,7 @@ html {
 .clearfix {
 	*zoom: 1;
 }
+.uni-swiper{
+	min-height: 80vh;
+}
 </style>

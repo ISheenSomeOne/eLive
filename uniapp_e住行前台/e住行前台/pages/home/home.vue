@@ -26,11 +26,11 @@
 			<view style="padding:30rpx;">
 				<uni-grid :square="false" :column="2" :show-border="false" :highlight="false">
 					<uni-grid-item class="roomCtrl"><button plain="true" class="kongxianPlain" hover-class="kongxianPlainHover" @click="openRoom">开锁</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button class="kongxian" hover-class="kongxianHover">开房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="kongxian" hover-class="kongxianHover" @click="createOrder">开房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl">
 						<navigator url="../order/roomOrder"><button plain="true" type="warn">退押</button></navigator>
 					</uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="warn">退房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button type="warn" @click="checkout">退房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" class="weixiuPlain" hover-class="weixiuPlainHover" @click="openContinue">续房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button class="weixiu" hover-class="weixiuHover" @click="openChange">换房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl"><button plain="true" type="default" @click="openStatus">房态</button></uni-grid-item>
@@ -58,37 +58,46 @@
 			<view class="popup-content">
 				<view class="cantinueItem">
 					<text class="fl">续住天数</text>
-					<slider class="cantinueSlider fl" min="0" max="15" backgroundColor="#DDDDDD" block-color="#007AFF" value="1" show-value="true" @change="continueDays" />
+					<slider
+						class="cantinueSlider fl"
+						min="0"
+						max="15"
+						backgroundColor="#DDDDDD"
+						block-color="#007AFF"
+						:value="addedDays"
+						show-value="true"
+						@change="continueDays"
+					/>
 				</view>
 				<view class="cantinueItem">
 					<text class="fl">补交房费</text>
-					<input class="fl cantinueInput" type="digit" placeholder="默认为0" placeholder-style="text-align:left;font-size:14px" value="" />
+					<input class="fl cantinueInput" type="digit" placeholder="默认为0" placeholder-style="text-align:left;font-size:14px" :value="continuePrice" />
 					<text class="fl">元</text>
 				</view>
-				<button class="cantinueBtn" type="primary">确定</button>
+				<button class="cantinueBtn" @click="confirmContinue" type="primary">续房</button>
 			</view>
 		</uni-popup>
 		<!-- 换房浮框 -->
 		<uni-popup ref="popupChange" type="center">
 			<view class="popup-content">
-				<view class="changeItem">
+				<!-- <view class="changeItem">
 					<text class="fl">房型</text>
 					<picker class="fl ml" mode="selector" :range="changeTypeList" @change="changeTypeChange">
 						<view>{{ changeTypeList[changeTypeIndex] }}</view>
 					</picker>
-				</view>
+				</view> -->
 				<view class="changeItem">
 					<text class="fl">房间</text>
-					<picker class="fl ml" mode="selector" :range="changeRoomList" @change="changeRoomChange">
-						<view>{{ changeRoomList[changeRoomIndex] }}</view>
+					<picker class="fl ml" mode="selector" :range="changeRoomName" @change="changeRoomChange">
+						<view>{{ changeRoomName[changeRoomIndex] }}</view>
 					</picker>
 				</view>
-				<view class="changeItem">
+				<!-- <view class="changeItem">
 					<text class="fl">房费</text>
 					<input class="changeInput fl ml" type="digit" placeholder="默认为0" placeholder-style="text-align:left;font-size:14px" value="" />
 					<text class="fl">元</text>
-				</view>
-				<button class="cantinueBtn" type="primary">确定</button>
+				</view> -->
+				<button class="cantinueBtn" @click="confirmChange" type="primary">换房</button>
 			</view>
 		</uni-popup>
 		<!-- 房态浮框 -->
@@ -108,8 +117,6 @@ export default {
 		return {
 			changeTypeList: ['选择房型', '智享打大床房', '豪华双床房', '豪华大床房'],
 			changeTypeIndex: 0,
-			changeRoomList: ['选择房间', '301', '302', '303'],
-			changeRoomIndex: 0,
 			gridColumn: 3,
 			isShowRoomMenu: false,
 			fabStyle: {
@@ -147,9 +154,46 @@ export default {
 		},
 		showEmpty() {
 			return this.$store.state.home.showEmpty;
+		},
+		addedDays() {
+			return this.$store.state.order.addedDays;
+		},
+		continuePrice: {
+			get() {
+				return this.$store.state.order.continuePrice;
+			},
+			set(val) {
+				this.$store.commit('setContinuePrice', val);
+			}
+		},
+		changeRoomName() {
+			return this.$store.state.home.changeRoomName;
+		},
+		changeRoomIndex() {
+			return this.$store.state.home.changeRoomIndex;
+		},
+		changeFlag() {
+			return this.$store.state.home.changeFlag;
+		}
+	},
+	watch: {
+		changeFlag(newData, oldData) {
+			let that = this;
+			if (newData) {
+				that.$refs.popupContinue.close();
+				that.$refs['showLeft'].open();
+			}
+			this.$store.commit('setChangeFlag');
 		}
 	},
 	methods: {
+		createOrder: function() {
+			uni.showToast({
+				title: '功能正在开发中',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
 		typeChange: function(e) {
 			this.$store.commit('homeRoomTypeChange', e.detail.value);
 		},
@@ -164,7 +208,7 @@ export default {
 			this.$refs['showLeft'].open();
 		},
 		changeRoomState: function(e) {
-			this.$store.dispatch('changeRoomState',e)
+			this.$store.dispatch('changeRoomState', e);
 			this.closeRoomMenu('popupStatus');
 		},
 		closeRoomMenu: function(e) {
@@ -174,21 +218,47 @@ export default {
 			this.isShowRoomMenu = e;
 		},
 		openContinue: function() {
-			this.closeRoomMenu('showLeft');
-			this.$refs.popupContinue.open();
+			let state = this.$store.state.home.nowRoom.state;
+			//只有在住可以续房
+			if (state == 'zaizhu') {
+				this.closeRoomMenu('showLeft');
+				this.$refs.popupContinue.open();
+				this.$store.commit('req_continueDays');
+			} else {
+				uni.showToast({
+					title: '当前房间不可续房',
+					duration: 2000,
+					icon: 'none'
+				});
+			}
 		},
 		continueDays: function(e) {
-			console.log('value 发生变化：' + e.detail.value);
+			if (this.$store.state.order.addedDays == e.detail.value) {
+			} else {
+				this.$store.commit('continueDays', e.detail.value);
+			}
 		},
 		openChange: function() {
-			this.closeRoomMenu('showLeft');
-			this.$refs.popupChange.open();
+			let state = this.$store.state.home.nowRoom.state;
+			//只有在住可以续房
+			if (state == 'zaizhu') {
+				this.closeRoomMenu('showLeft');
+				this.$store.dispatch('initChangeRoom');
+				this.$refs.popupChange.open();
+			} else {
+				uni.showToast({
+					title: '当前房间不可换房',
+					duration: 2000,
+					icon: 'none'
+				});
+			}
 		},
 		changeTypeChange: function(e) {
 			this.changeTypeIndex = e.detail.value;
 		},
 		changeRoomChange: function(e) {
-			this.changeRoomIndex = e.detail.value;
+			this.$store.commit('setChangeRoomIndex', e.detail.value);
+			// this.changeRoomIndex = e.detail.value;
 		},
 		openStatus: function() {
 			let state = this.$store.state.home.nowRoom.state;
@@ -204,19 +274,32 @@ export default {
 				});
 			}
 		},
-		openRoom: function(){
+		openRoom: function() {
 			uni.showModal({
 				title: '提示',
 				content: '确定开门吗？',
 				success: function(res) {
 					if (res.confirm) {
-						this.$store.dispatch('openRoom')
+						this.$store.dispatch('openRoom');
 					} else if (res.cancel) {
-			
 					}
 				}
 			});
 		},
+		//点击续房
+		confirmContinue: function() {
+			this.$store.dispatch('confirmContinue');
+			this.$refs.popupContinue.close();
+			this.$refs['showLeft'].open();
+		},
+		//点击换房
+		confirmChange: function() {
+			this.$store.dispatch('confirmChange');
+		},
+		//点击退房
+		checkout: function() {
+			this.$store.dispatch('checkout');
+		}
 	},
 	onNavigationBarButtonTap(e) {
 		if (this.isShowRoomMenu) {
@@ -430,30 +513,30 @@ export default {
 .weixiuHover {
 	background-color: #cb9242;
 }
-.kongxianPlain{
+.kongxianPlain {
 	transition: all 0.1s;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	color: $uni-color-success;
 	border: $uni-color-success 1px solid;
 }
-.weixiuPlain{
+.weixiuPlain {
 	transition: all 0.1s;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	color: $uni-color-warning;
 	border: $uni-color-warning 1px solid;
 }
-.kongxianPlain{
+.kongxianPlain {
 	transition: all 0.1s;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	color: $uni-color-success;
 	border: $uni-color-success 1px solid;
 }
-.kongxianPlainHover{
-	color: #FFFFFF;
+.kongxianPlainHover {
+	color: #ffffff;
 	background-color: $uni-color-success;
 }
-.weixiuPlainHover{
-	color: #FFFFFF;
+.weixiuPlainHover {
+	color: #ffffff;
 	background-color: $uni-color-warning;
 }
 </style>

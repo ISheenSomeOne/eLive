@@ -16,13 +16,13 @@
 		<view class="uni-tab-bar">
 			<swiper :current="tabIndex" @change="tabChange" :style="{ height: swiperHeight + 'px' }">
 				<swiper-item>
-					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">加载更多···</button></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button></view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">加载更多···</button></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button></view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">加载更多···</button></view>
+					<view class="swiper-item"><order-table :orderList="orderList"></order-table><button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button></view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
@@ -193,8 +193,15 @@ export default {
 				this.$store.commit('resetHeightFalse')
 			 }
 		},
+		swiperHeight(newData, oldData) {
+			 let that = this
+			 if(newData){
+				console.log(newData)
+			 }
+		},
 	},
 	onLoad() {
+			this.$store.commit('resetOrderPageNum')
 		this.$store.dispatch("initOrderListInfo",0)
 		this.$store.dispatch("initCreateInfo")
 	},
@@ -220,10 +227,17 @@ export default {
 		//动态swiper高度
 		setSwiperHeight() {
 			let that = this
-			let info = uni.createSelectorQuery().select(".swiper-item");
-				info.boundingClientRect(function(data) { //data - 各种参数
-				that.swiperHeight = data.height
-			}).exec()
+			let height = ''
+			let setHeight = setInterval(()=>{
+				let info = uni.createSelectorQuery().select(".swiper-item");
+					info.boundingClientRect(function(data) { //data - 各种参数
+					height = data.height
+				}).exec()
+				if(height != ''){
+					that.swiperHeight = height
+					clearInterval(setHeight)
+				}
+			},5)
 		},
 		//打开日历
 		open(){
@@ -307,7 +321,7 @@ export default {
 		}, 1000), //防重点击,1s内只可点击一次
 		//获取更多order信息
 		getMore: util.throttle(function(e) {
-			//加载更多
+			//查看更多
 			this.$store.dispatch("initOrderListInfo",this.tabIndex)
 		}, 1000), //防重点击,1s内只可点击一次
 	}
@@ -315,6 +329,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	.swiper-item{
+		min-height: 80vh;
+	}
 .swiper-list-box {
 	display: flex;
 	justify-content: space-around;
