@@ -111,12 +111,13 @@
 		</view>
 		<!-- 退押信息 -->
 		<uni-popup ref="dialogInput" type="dialog">
-			<uni-popup-dialog mode="input" title="输入内容" :value="orderDetailInfo.deposit" placeholder="请输入退款金额" @confirm="refund"></uni-popup-dialog>
+			<uni-popup-dialog mode="input" title="退押金额" :value="orderDetailInfo.deposit" @confirm="refund"></uni-popup-dialog>
 		</uni-popup>
 	</view>
 </template>
 
 <script>
+	import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue'
 	export default {
 		data() {
 			return {
@@ -134,6 +135,9 @@
 					}
 				]
 			};
+		},
+		components:{
+			uniPopupDialog
 		},
 		computed: {
 			orderDetailInfo() {
@@ -158,13 +162,7 @@
 					content: '确定退押金吗？',
 					success: function(res) {
 						if (res.confirm) {
-							if (val == '' || val == undefined) {
-								uni.showToast({
-									title: '请填写金额',
-									duration: 2000,
-									icon: 'none'
-								});
-							} else if (!isNaN(val)) {
+							if (isNaN(val)) {
 								uni.showToast({
 									title: '只能输入数字和小数点',
 									duration: 2000,
