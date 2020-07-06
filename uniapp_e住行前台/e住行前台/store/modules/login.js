@@ -10,6 +10,15 @@ const mutations = {
 		state.username = uni.getStorageSync('username')
 		state.password = uni.getStorageSync('password')
 	},
+	//判断是否已经登录
+	isLogin(state) {
+		if (uni.getStorageSync('autoLogin')) {
+			state.username = uni.getStorageSync('username')
+			state.password = uni.getStorageSync('password')
+			this.commit('req_login')
+		}
+		
+	},
 	//输入用户名
 	setPhoneData(state, val) {
 		state.username = val;
@@ -55,6 +64,7 @@ const mutations = {
 				if (res.data.code == 200) {
 					uni.setStorageSync('username', state.username)
 					uni.setStorageSync('password', state.password)
+					uni.setStorageSync('autoLogin',true)
 					uni.switchTab({
 						url: '/pages/home/home'
 					});
@@ -88,6 +98,7 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					uni.removeStorageSync('token')
+					uni.setStorageSync('autoLogin',false)
 					uni.reLaunch({
 						url: '/pages/login/login'
 					});
@@ -147,7 +158,15 @@ function common_request(params) {
 		header: params.header,
 		method: params.method,
 		success: (res) => {
+			if (res.header.authorization != undefined) {
+				var token = res.header.authorization;
+				//更新token  
+				if (token) {
+					uni.setStorageSync("token", token);
+				}
+			}
 			if (res.data.code == 401) {
+				uni.setStorageSync('autoLogin',false)
 				uni.showToast({
 					title: '登录已过期',
 					duration: 2000,
@@ -158,20 +177,10 @@ function common_request(params) {
 						url: '/pages/login/login'
 					});
 				}, 2000)
-			} else if (res.header.authorization != undefined) {
-				var token = res.header.authorization;
-				//更新token  
-				if (token) {
-					uni.setStorageSync("token", token);
-				}
+			} else {
+				//执行success方法
+				params.success(res);
 			}
-			//执行success方法
-			params.success(res);
 		},
-		complete: () => {
-			if (params.showLoading) {
-				uni.hideLoading();
-			}
-		}
 	});
 }

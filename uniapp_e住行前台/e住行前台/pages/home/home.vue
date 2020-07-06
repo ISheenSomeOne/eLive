@@ -275,12 +275,13 @@ export default {
 			}
 		},
 		openRoom: function() {
+			let that = this
 			uni.showModal({
 				title: '提示',
 				content: '确定开门吗？',
 				success: function(res) {
 					if (res.confirm) {
-						this.$store.dispatch('openRoom');
+						that.$store.dispatch('openRoom');
 					} else if (res.cancel) {
 					}
 				}

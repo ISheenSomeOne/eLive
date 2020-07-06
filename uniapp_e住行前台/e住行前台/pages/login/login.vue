@@ -66,6 +66,9 @@ export default {
 			return this.$store.state.login.isRotate;
 		}
 	},
+	onLoad() {
+		this.$store.commit('isLogin')
+	},
 	methods: {
 		isLogin() {
 			//判断缓存中是否登录过，直接登录

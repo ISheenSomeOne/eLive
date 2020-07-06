@@ -69,7 +69,7 @@
 <style lang="scss" scoped>
 	.table-box {
 		font-size: 13px;
-		min-height: 80vh;
+		min-height: 75vh;
 		margin-bottom: 10px;
 	}
 

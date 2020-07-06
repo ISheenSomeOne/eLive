@@ -201,7 +201,7 @@ export default {
 		},
 	},
 	onLoad() {
-			this.$store.commit('resetOrderPageNum')
+		this.$store.commit('resetOrderPageNum')
 		this.$store.dispatch("initOrderListInfo",0)
 		this.$store.dispatch("initCreateInfo")
 	},
@@ -238,6 +238,9 @@ export default {
 					clearInterval(setHeight)
 				}
 			},5)
+			setTimeout(()=>{
+				clearInterval(setHeight)
+			},2000)
 		},
 		//打开日历
 		open(){

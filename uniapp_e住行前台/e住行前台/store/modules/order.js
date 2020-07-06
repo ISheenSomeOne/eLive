@@ -20,7 +20,7 @@ const state = {
 	needResetHeight: false, //需要重新定义高度
 	orderDetailInfo: '', //订单详情信息
 	addedDays: 1, //续房天数
-	continuePrice: '',//续房金额
+	continuePrice: '', //续房金额
 }
 const mutations = {
 	//请求初始化信息
@@ -54,6 +54,13 @@ const mutations = {
 					})
 					state.createRoomTypePiker.unshift('选择房型')
 					state.createRoomCount.unshift(['请先选择房型'])
+					state.createRoomType.unshift({
+						'none': ''
+					})
+					//等待浏览器渲染
+					setTimeout(() => {
+						state.needResetHeight = true
+					},20)
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -66,7 +73,7 @@ const mutations = {
 	},
 	//创建订单的日期改变
 	createOrderDateChange(state, val) {
-		console.log(val.range)
+		// console.log(val.range)
 		if (val.range.after == '') {
 			state.createOrderDate = ''
 		} else {
@@ -151,7 +158,7 @@ const mutations = {
 	req_createOrder(state) {
 		let that = this
 		state.createFormData.phone == undefined ? state.createFormData.phone = '' : ''
-		state.createFormData.remarks == undefined ? state.createFormData.remarks = '' : ''
+		state.createFormData.remarks == undefined ? state.createFormData.remarks = '' : '',
 		common_request({
 			url: '/api/zxkj/order/createOTAOrder',
 			data: {
@@ -194,8 +201,8 @@ const mutations = {
 	req_initOrderListInfo(state, val) {
 		state.orderPageNum++
 		let roomId = ''
-		if(home.state.nowRoom.id != undefined){
-			console.log(home.state.nowRoom.id != undefined)
+		if (home.state.nowRoom.id != undefined) {
+			// console.log(home.state.nowRoom.id != undefined)
 			roomId = home.state.nowRoom.id
 		}
 		common_request({
@@ -398,7 +405,7 @@ const mutations = {
 						title: '续房成功',
 						duration: 2000
 					});
-				}  else {
+				} else {
 					uni.showModal({
 						title: '提示',
 						content: '服务器错误',
@@ -477,7 +484,15 @@ function common_request(params) {
 		header: params.header,
 		method: params.method,
 		success: (res) => {
+			if (res.header.authorization != undefined) {
+				var token = res.header.authorization;
+				//更新token  
+				if (token) {
+					uni.setStorageSync("token", token);
+				}
+			}
 			if (res.data.code == 401) {
+				uni.setStorageSync('autoLogin', false)
 				uni.showToast({
 					title: '登录已过期',
 					duration: 2000,
@@ -488,15 +503,10 @@ function common_request(params) {
 						url: '/pages/login/login'
 					});
 				}, 2000)
-			} else if (res.header.authorization != undefined) {
-				var token = res.header.authorization;
-				//更新token  
-				if (token) {
-					uni.setStorageSync("token", token);
-				}
+			} else {
+				//执行success方法
+				params.success(res);
 			}
-			//执行success方法
-			params.success(res);
 		},
 		complete: () => {
 			if (params.showLoading) {
