@@ -115,7 +115,7 @@
 export default {
 	data() {
 		return {
-			changeTypeList: ['选择房型', '智享打大床房', '豪华双床房', '豪华大床房'],
+			changeTypeList: [],
 			changeTypeIndex: 0,
 			gridColumn: 3,
 			isShowRoomMenu: false,
@@ -132,6 +132,9 @@ export default {
 		this.$store.dispatch('initRoomType');
 		this.$store.commit('initHomeFloor');
 		// console.log(this.$store.state.home.roomList)
+	},
+	onShow() {
+		this.$store.dispatch('initRoomStatus')
 	},
 	computed: {
 		roomList() {
@@ -219,8 +222,9 @@ export default {
 		},
 		openContinue: function() {
 			let state = this.$store.state.home.nowRoom.state;
+			let sanke = this.$store.state.home.nowRoom.haveYouBeenAssignedARoom
 			//只有在住可以续房
-			if (state == 'zaizhu') {
+			if (state == 'zaizhu' || (state == 'kongxian' && sanke == false)) {
 				this.closeRoomMenu('showLeft');
 				this.$refs.popupContinue.open();
 				this.$store.commit('req_continueDays');
@@ -240,8 +244,9 @@ export default {
 		},
 		openChange: function() {
 			let state = this.$store.state.home.nowRoom.state;
-			//只有在住可以续房
-			if (state == 'zaizhu') {
+			let sanke = this.$store.state.home.nowRoom.haveYouBeenAssignedARoom
+			//只有在住可以换房
+			if (state == 'zaizhu' || (state == 'kongxian' && sanke == false)) {
 				this.closeRoomMenu('showLeft');
 				this.$store.dispatch('initChangeRoom');
 				this.$refs.popupChange.open();

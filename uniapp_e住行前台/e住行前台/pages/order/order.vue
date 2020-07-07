@@ -201,7 +201,7 @@ export default {
 		},
 	},
 	onLoad() {
-		this.$store.commit('resetOrderPageNum')
+		this.$store.commit('resetOrderPageNum',true)
 		this.$store.dispatch("initOrderListInfo",0)
 		this.$store.dispatch("initCreateInfo")
 	},

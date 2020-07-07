@@ -60,7 +60,7 @@ const mutations = {
 					//等待浏览器渲染
 					setTimeout(() => {
 						state.needResetHeight = true
-					},20)
+					}, 20)
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -159,39 +159,39 @@ const mutations = {
 		let that = this
 		state.createFormData.phone == undefined ? state.createFormData.phone = '' : ''
 		state.createFormData.remarks == undefined ? state.createFormData.remarks = '' : '',
-		common_request({
-			url: '/api/zxkj/order/createOTAOrder',
-			data: {
-				'startTime': state.createOrderDate.before,
-				'endTime': state.createOrderDate.after,
-				'source': state.createSource,
-				'roomType': state.createRoomType[state.nowRoomType].roomTypeId,
-				'roomCount': state.createRoomCount[state.nowRoomType][state.nowRoomCount],
-				'price': state.createFormData.price,
-				'phone': state.createFormData.phone,
-				'owner': state.createFormData.name,
-				'remarks': state.createFormData.remarks
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				if (res.data.code == 200) {
-					state.needRefresh = true
-					that.commit('req_initCreateInfo')
-					uni.showToast({
-						title: '创建成功',
-						duration: 2000,
-					});
-				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
-				}
-			},
-		})
+			common_request({
+				url: '/api/zxkj/order/createOTAOrder',
+				data: {
+					'startTime': state.createOrderDate.before,
+					'endTime': state.createOrderDate.after,
+					'source': state.createSource,
+					'roomType': state.createRoomType[state.nowRoomType].roomTypeId,
+					'roomCount': state.createRoomCount[state.nowRoomType][state.nowRoomCount],
+					'price': state.createFormData.price,
+					'phone': state.createFormData.phone,
+					'owner': state.createFormData.name,
+					'remarks': state.createFormData.remarks
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: (res) => {
+					if (res.data.code == 200) {
+						state.needRefresh = true
+						that.commit('req_initCreateInfo')
+						uni.showToast({
+							title: '创建成功',
+							duration: 2000,
+						});
+					} else {
+						uni.showModal({
+							title: '提示',
+							content: '服务器错误',
+							showCancel: false
+						})
+					}
+				},
+			})
 	},
 	//设置为false
 	setNeedRefresh(state) {
@@ -260,11 +260,13 @@ const mutations = {
 		state.needResetHeight = false
 	},
 	//重置pageNum
-	resetOrderPageNum(state) {
+	resetOrderPageNum(state, val) {
 		state.orderPageNum = 0
 		state.orderList = []
 		state.orderPageCanReq = true
-		home.state.nowRoom = {}
+		if (val) {
+			home.state.nowRoom = {}
+		}
 	},
 	//请求初始化订单详情页面
 	req_initOrderDetailInfo(state, val) {

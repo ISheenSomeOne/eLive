@@ -14,7 +14,7 @@
 			};
 		},
 		onLoad() {
-			this.$store.commit('resetOrderPageNum')
+			this.$store.commit('resetOrderPageNum',false)
 			this.$store.dispatch('initOrderListInfo',2)
 		},
 		computed: {

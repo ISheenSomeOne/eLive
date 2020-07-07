@@ -13,10 +13,10 @@ const state = {
 	showEmpty: false, //显示空房
 	reqKong: '', //请求参数
 	nowRoom: {}, //首页选择的房间
-	changeRoomInfo: {},//换房信息
-	changeRoomName: [],//换房房间名
-	changeRoomIndex: 0,//换房下标
-	changeFlag: false,//是否关闭换房悬浮框
+	changeRoomInfo: {}, //换房信息
+	changeRoomName: [], //换房房间名
+	changeRoomIndex: 0, //换房下标
+	changeFlag: false, //是否关闭换房悬浮框
 }
 const mutations = {
 	//初始化楼层
@@ -101,7 +101,7 @@ const mutations = {
 					//添加剩余数量信息
 					for (let i = 0; i < data.length; i++) {
 						if (data[i].state == '空闲') {
-							if (data[i].haveYouBeenAssignedARoom == true) {
+							if (data[i].canTheHousing == true) {
 								state.roomStateCountList[0]++
 								data[i].state = 'kongxian'
 							} else {
@@ -254,7 +254,7 @@ const mutations = {
 						title: '成功',
 						duration: 2000
 					});
-				} else if(res.data.code == -1 || res.data.code == 0 || res.data.code == -2) {
+				} else if (res.data.code == -1 || res.data.code == 0 || res.data.code == -2) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,
@@ -272,6 +272,7 @@ const mutations = {
 	},
 	//请求退房
 	req_checkout(state) {
+		let that = this
 		common_request({
 			url: '/api/zxkj/room/checkOutByRoomId',
 			data: {
@@ -286,7 +287,8 @@ const mutations = {
 						title: '退房成功',
 						duration: 2000
 					});
-				} else if(res.data.code == -1) {
+					that.commit('req_initRoomStatus')
+				} else if (res.data.code == -1) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,
@@ -305,7 +307,7 @@ const mutations = {
 	//请求换房参数
 	req_initChangeRoom(state) {
 		common_request({
-			url: '/api/zxkj/room/getQtExchangeRoomsByRoomId/'+state.nowRoom.id,
+			url: '/api/zxkj/room/getQtExchangeRoomsByRoomId/' + state.nowRoom.id,
 			method: 'GET',
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
@@ -313,15 +315,18 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
-					data.rooms.unshift({'door': '选择房间','id':''})
-					
+					data.rooms.unshift({
+						'door': '选择房间',
+						'id': ''
+					})
+
 					state.changeRoomName = []
 					data.rooms.forEach((item) => {
 						state.changeRoomName.push(item.door)
 					})
-					
+
 					state.changeRoomInfo = data
-				} else if(res.data.code == -1) {
+				} else if (res.data.code == -1) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,
@@ -358,7 +363,7 @@ const mutations = {
 						title: '换房成功',
 						duration: 2000
 					});
-				} else if(res.data.code == -1) {
+				} else if (res.data.code == -1) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,
@@ -411,9 +416,10 @@ const actions = {
 		commit("req_initChangeRoom");
 	},
 	confirmChange({
-		state,commit
+		state,
+		commit
 	}) {
-		if(state.changeRoomIndex == 0){
+		if (state.changeRoomIndex == 0) {
 			uni.showToast({
 				title: '请选择房间',
 				duration: 2000,
@@ -463,7 +469,7 @@ function common_request(params) {
 				}
 			}
 			if (res.data.code == 401) {
-				uni.setStorageSync('autoLogin',false)
+				uni.setStorageSync('autoLogin', false)
 				uni.showToast({
 					title: '登录已过期',
 					duration: 2000,

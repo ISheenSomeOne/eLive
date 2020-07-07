@@ -18,15 +18,18 @@
 						￥{{roomTypeList.roomTypeCountPrice}}
 					</template>
 				</uni-list-item>
-				<uni-list-item v-if="roomTypeList.roomList.length == 0" class="listItemClass" title="房间号" :showArrow="false">
-					<template v-slot:right="">
-						房间未选
-					</template>
-				</uni-list-item>
-				<block else v-for="(roomList, inde) in roomTypeList.roomList" :key="inde">
-					<uni-list-item class="listItemClass" :title="roomList.roomNum" :showArrow="false">
+				<block v-for="(roomList, inde) in roomTypeList.roomList" :key="inde">
+					<uni-list-item v-if="roomList.roomNum == null" class="listItemClass" title="房间号" :showArrow="false">
 						<template v-slot:right="">
-							<block v-for="(userList, ind) in roomList.userList" :key="ind">
+							房间未选
+						</template>
+					</uni-list-item>
+					<uni-list-item else class="listItemClass" :title="roomList.roomNum" :showArrow="false">
+						<template v-slot:right="">
+							<block v-if="roomList.userList.length == 0">
+								<view class="name">未添加入住人</view>
+							</block>
+							<block else v-for="(userList, ind) in roomList.userList" :key="ind">
 								<view :class="'name'+ userList.state?'bgGreen':'bgYellow'">{{userList.username}}</view>
 							</block>
 						</template>
