@@ -25,19 +25,19 @@
 		<uni-drawer ref="showLeft" mode="left" :width="280" @change="changeRoomMenu($event)">
 			<view style="padding:30rpx;">
 				<uni-grid :square="false" :column="2" :show-border="false" :highlight="false">
-					<uni-grid-item class="roomCtrl"><button plain="true" class="kongxianPlain" hover-class="kongxianPlainHover" @click="openRoom">开锁</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button class="kongxian" hover-class="kongxianHover" @click="createOrder">开房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="tongYi" hover-class="tongYiPlainHover" @click="openRoom">开锁</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="tongYi" hover-class="tongYiPlainHover" @click="createOrder">开房</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl">
-						<navigator url="../order/roomOrder"><button plain="true" type="warn">退押</button></navigator>
+						<navigator url="../order/roomOrder"><button class="tongYi" hover-class="tongYiPlainHover">退押</button></navigator>
 					</uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="warn" @click="checkout">退房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button plain="true" class="weixiuPlain" hover-class="weixiuPlainHover" @click="openContinue">续房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button class="weixiu" hover-class="weixiuHover" @click="openChange">换房</button></uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button plain="true" type="default" @click="openStatus">房态</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="tongYi" hover-class="tongYiPlainHover" @click="checkout">退房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="tongYi" hover-class="tongYiPlainHover" @click="openContinue">续房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="tongYi" hover-class="tongYiPlainHover" @click="openChange">换房</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="tongYi" hover-class="tongYiPlainHover" @click="openStatus">房态</button></uni-grid-item>
 					<uni-grid-item class="roomCtrl">
-						<navigator url="../order/roomOrder"><button class="baoliu" hover-class="baoliuHover" type="default">订单</button></navigator>
+						<navigator url="../order/roomOrder"><button class="tongYi" hover-class="tongYiPlainHover">订单</button></navigator>
 					</uni-grid-item>
-					<uni-grid-item class="roomCtrl"><button type="primary">消费</button></uni-grid-item>
+					<uni-grid-item class="roomCtrl"><button class="tongYi" hover-class="tongYiPlainHover">消费</button></uni-grid-item>
 				</uni-grid>
 				<view class="closeDrawer"><button type="warn" @click="closeRoomMenu('showLeft')">返回</button></view>
 			</view>
@@ -416,6 +416,12 @@ export default {
 	margin-top: 20px;
 }
 
+.tongYi{
+	transition: all 0.1s;
+	background-color: #666;
+	color: #fff;
+}
+
 .kongxian {
 	transition: all 0.1s;
 	background-color: $uni-color-success;
@@ -540,6 +546,10 @@ export default {
 .kongxianPlainHover {
 	color: #ffffff;
 	background-color: $uni-color-success;
+}
+.tongYiPlainHover {
+	color: #ffffff;
+	background-color: #888;
 }
 .weixiuPlainHover {
 	color: #ffffff;
