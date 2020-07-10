@@ -183,7 +183,7 @@ export default {
 		changeFlag(newData, oldData) {
 			let that = this;
 			if (newData) {
-				that.$refs.popupContinue.close();
+				that.$refs.popupChange.close();
 				that.$refs['showLeft'].open();
 			}
 			this.$store.commit('setChangeFlag');

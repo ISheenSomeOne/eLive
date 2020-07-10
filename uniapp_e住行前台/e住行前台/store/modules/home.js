@@ -348,9 +348,9 @@ const mutations = {
 	},
 	req_confirmChange(state) {
 		common_request({
-			url: '/api/zxkj/room/sweep/openLockByRoomId',
+			url: '/api/zxkj/OrderRoom/exchangeRoomByOldRoomIdAndNewRoomId',
 			data: {
-				'newRoomId': state.changeRoomInfo.rooms[changeRoomIndex].id,
+				'newRoomId': state.changeRoomInfo.rooms[state.changeRoomIndex].id,
 				'oldOrderRoomId': state.changeRoomInfo.orderRoomId
 			},
 			header: {
@@ -359,6 +359,11 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					state.changeFlag = true
+					state.changeRoomIndex = 0
+					
+					//调用方法重新加载页面
+					this.commit('req_initRoomStatus')
+					
 					uni.showToast({
 						title: '换房成功',
 						duration: 2000
