@@ -1,6 +1,14 @@
 <template>
 	<view>
 		<view class="topNavBar">
+			<view class="navBarLeft bgHotel">
+				<picker mode="selector" value="index" :range="floorpikerData" @change="hotelChange">
+					<view class="navBarLeft">
+						{{ floorpikerData[floorIndex] }}
+						<uni-icons type="arrowdown" color="#007AFF"></uni-icons>
+					</view>
+				</picker>
+			</view>
 			<view class="navBarLeft">
 				<picker mode="selector" value="index" :range="typePikerNameData" @change="typeChange">
 					<view class="navBarLeft">
@@ -9,14 +17,14 @@
 					</view>
 				</picker>
 			</view>
-			<view class="navBarLeft">
+			<!-- <view class="navBarLeft">
 				<picker mode="selector" value="index" :range="floorpikerData" @change="floorChange">
 					<view class="navBarLeft">
 						{{ floorpikerData[floorIndex] }}
 						<uni-icons type="arrowdown" color="#FFF"></uni-icons>
 					</view>
 				</picker>
-			</view>
+			</view> -->
 			<view class="navBarRight">
 				<text>显示空房</text>
 				<switch style="transform:scale(0.6)" :checked="showEmpty" color="#4CD964" @change="emptyChange" />
@@ -203,6 +211,9 @@ export default {
 		floorChange: function(e) {
 			this.$store.commit('homeFloorChange', e.detail.value);
 		},
+		hotelChange: function(e) {
+			this.$store.commit('hotelChange', e.detail.value);
+		},
 		emptyChange: function(e) {
 			this.$store.commit('emptyChange', e.detail.value);
 		},
@@ -386,6 +397,7 @@ export default {
 	margin-left: 10px;
 	font-size: 14px;
 	max-width: 110px;
+	height: 44px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -418,7 +430,7 @@ export default {
 
 .tongYi{
 	transition: all 0.1s;
-	background-color: #666;
+	background: linear-gradient(to right, #999 , #555);
 	color: #fff;
 }
 
@@ -554,5 +566,15 @@ export default {
 .weixiuPlainHover {
 	color: #ffffff;
 	background-color: $uni-color-warning;
+}
+.bgHotel {
+	margin-top: 3px;
+	padding: 0 3px 0 0;
+	height: 38px;
+	line-height: 38px;
+	background-color: #fff;
+	color: #007aff;
+	padding: -5px 0;
+	border-radius: 5px;
 }
 </style>

@@ -349,7 +349,7 @@ export default {
 }
 .createOrder{
 	background-color: #4cd964;
-	border-radius: 2px;
+	border-radius: 5px;
 }
 .uni-tab-bar .active {
 	color: #fff;

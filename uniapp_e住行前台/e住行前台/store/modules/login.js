@@ -17,7 +17,7 @@ const mutations = {
 			state.password = uni.getStorageSync('password')
 			this.commit('req_login')
 		}
-		
+
 	},
 	//输入用户名
 	setPhoneData(state, val) {
@@ -62,9 +62,10 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
+					uni.setStorageSync("current", state.username);
 					uni.setStorageSync('username', state.username)
 					uni.setStorageSync('password', state.password)
-					uni.setStorageSync('autoLogin',true)
+					uni.setStorageSync('autoLogin', true)
 					uni.switchTab({
 						url: '/pages/home/home'
 					});
@@ -97,11 +98,23 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					uni.removeStorageSync('token')
-					uni.setStorageSync('autoLogin',false)
-					uni.reLaunch({
-						url: '/pages/login/login'
-					});
+					let userList = uni.getStorageSync("userList");
+					//删除当前用户的数据,并切换用户
+					delete userList[current];
+					if (Object.keys(userList).length === 0) {
+						setTimeout(() => {
+							uni.reLaunch({
+								url: '/pages/login/login'
+							});
+						}, 2000)
+					uni.setStorageSync('autoLogin', false)
+					} else {
+						uni.setStorageSync("current", getFirstAttr(userList));
+						uni.reLaunch({
+							url: '/pages/home/home'
+						});
+					}
+					uni.setStorageSync("userList", JSON.stringify(userList));
 				} else {
 					uni.showToast({
 						title: '服务器错误',
@@ -142,8 +155,17 @@ function common_request(params) {
 	params.header = params.header == undefined ? {
 		'X-Requested-With': 'XMLHttpRequest'
 	} : params.header;
-	//请求头里一定要带上用户登录信息,没得商量  
-	params.header.token = uni.getStorageSync("token");
+	//请求头里一定要带上用户登录信息,没得商量,从userList里面获取token,根据当前用户
+	let userList = uni.getStorageSync("userList");
+	let current = uni.getStorageSync("current");
+	let userListJson = null;
+	if (userList === "") {
+		userList = "{}";
+		userListJson = JSON.parse(userList);
+	} else {
+		userListJson = userList
+	}
+	params.header.token = userListJson[current];
 	params.header['X-Requested-With'] = 'XMLHttpRequest'
 	/**/
 	if (params.showLoading) {
@@ -158,29 +180,49 @@ function common_request(params) {
 		header: params.header,
 		method: params.method,
 		success: (res) => {
-			if (res.header.authorization != undefined) {
-				var token = res.header.authorization;
-				//更新token  
-				if (token) {
-					uni.setStorageSync("token", token);
-				}
-			}
+			//执行success方法
+			params.success(res);
 			if (res.data.code == 401) {
-				uni.setStorageSync('autoLogin',false)
 				uni.showToast({
 					title: '登录已过期',
 					duration: 2000,
 					icon: 'none'
 				});
-				setTimeout(() => {
+				//删除当前用户的数据,并切换用户
+				delete userListJson[current];
+				uni.setStorageSync("userList", JSON.stringify(userListJson));
+				if (Object.keys(userListJson).length === 0) {
+					setTimeout(() => {
+						uni.reLaunch({
+							url: '/pages/login/login'
+						});
+					}, 2000)
+				} else {
+					uni.setStorageSync("current", getFirstAttr(userListJson));
 					uni.reLaunch({
-						url: '/pages/login/login'
+						url: '/pages/home/home'
 					});
-				}, 2000)
-			} else {
-				//执行success方法
-				params.success(res);
+				}
+			} else if (res.header.authorization != undefined) {
+				var token = res.header.authorization;
+				current = uni.getStorageSync("current");
+				//更新token  
+				if (token) {
+					userListJson[current] = token;
+					uni.setStorageSync("userList", userListJson);
+				}
 			}
 		},
+		complete: () => {
+			if (params.showLoading) {
+				uni.hideLoading();
+			}
+		}
 	});
+}
+// 封装一个方法，对json进行循环，实际上执行一次就return了，返回第一个属性
+function getFirstAttr(obj) {
+	for (var k in obj) {
+		return k;
+	}
 }

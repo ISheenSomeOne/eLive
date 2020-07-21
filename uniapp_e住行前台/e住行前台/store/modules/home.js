@@ -360,10 +360,10 @@ const mutations = {
 				if (res.data.code == 200) {
 					state.changeFlag = true
 					state.changeRoomIndex = 0
-					
+
 					//调用方法重新加载页面
 					this.commit('req_initRoomStatus')
-					
+
 					uni.showToast({
 						title: '换房成功',
 						duration: 2000
@@ -450,8 +450,17 @@ function common_request(params) {
 	params.header = params.header == undefined ? {
 		'X-Requested-With': 'XMLHttpRequest'
 	} : params.header;
-	//请求头里一定要带上用户登录信息,没得商量  
-	params.header.token = uni.getStorageSync("token");
+	//请求头里一定要带上用户登录信息,没得商量,从userList里面获取token,根据当前用户
+	var userList = uni.getStorageSync("userList");
+	var current = uni.getStorageSync("current");
+	var userListJson = null;
+	if (userList === "") {
+		userList = "{}";
+		userListJson = JSON.parse(userList);
+	} else {
+		userListJson = userList
+	}
+	params.header.token = userListJson[current];
 	params.header['X-Requested-With'] = 'XMLHttpRequest'
 	/**/
 	if (params.showLoading) {
@@ -466,28 +475,37 @@ function common_request(params) {
 		header: params.header,
 		method: params.method,
 		success: (res) => {
-			if (res.header.authorization != undefined) {
-				var token = res.header.authorization;
-				//更新token  
-				if (token) {
-					uni.setStorageSync("token", token);
-				}
-			}
+			//执行success方法
+			params.success(res);
 			if (res.data.code == 401) {
-				uni.setStorageSync('autoLogin', false)
 				uni.showToast({
 					title: '登录已过期',
 					duration: 2000,
 					icon: 'none'
 				});
-				setTimeout(() => {
+				//删除当前用户的数据,并切换用户
+				delete userListJson[current];
+				uni.setStorageSync("userList", JSON.stringify(userListJson));
+				if (Object.keys(userListJson).length === 0) {
+					setTimeout(() => {
+						uni.reLaunch({
+							url: '/pages/login/login'
+						});
+					}, 2000)
+				} else {
+					uni.setStorageSync("current", getFirstAttr(userListJson));
 					uni.reLaunch({
-						url: '/pages/login/login'
+						url: '/pages/home/home'
 					});
-				}, 2000)
-			} else {
-				//执行success方法
-				params.success(res);
+				}
+			} else if (res.header.authorization != undefined) {
+				var token = res.header.authorization;
+				current = uni.getStorageSync("current");
+				//更新token  
+				if (token) {
+					userListJson[current] = token;
+					uni.setStorageSync("userList", userListJson);
+				}
 			}
 		},
 		complete: () => {
@@ -496,6 +514,12 @@ function common_request(params) {
 			}
 		}
 	});
+}
+// 封装一个方法，对json进行循环，实际上执行一次就return了，返回第一个属性
+function getFirstAttr(obj) {
+	for (var k in obj) {
+		return k;
+	}
 }
 
 //公共获取当前时间方法
