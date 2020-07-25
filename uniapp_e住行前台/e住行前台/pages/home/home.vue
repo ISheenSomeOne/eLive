@@ -2,9 +2,9 @@
 	<view>
 		<view class="topNavBar">
 			<view class="navBarLeft bgHotel">
-				<picker mode="selector" value="index" :range="floorpikerData" @change="hotelChange">
+				<picker mode="selector" value="index" :range="loginData" @change="loginChange">
 					<view class="navBarLeft">
-						{{ floorpikerData[floorIndex] }}
+						{{ loginData[loginIndex] }}
 						<uni-icons type="arrowdown" color="#007AFF"></uni-icons>
 					</view>
 				</picker>
@@ -136,9 +136,10 @@ export default {
 		};
 	},
 	created: function() {
-		this.$store.dispatch('initRoomStatus');
+		this.$store.commit('initLoginData');
 		this.$store.dispatch('initRoomType');
-		this.$store.commit('initHomeFloor');
+		this.$store.dispatch('initRoomStatus');
+		// this.$store.commit('initHomeFloor');
 		// console.log(this.$store.state.home.roomList)
 	},
 	onShow() {
@@ -185,7 +186,13 @@ export default {
 		},
 		changeFlag() {
 			return this.$store.state.home.changeFlag;
-		}
+		},
+		loginData() {
+			return this.$store.state.login.loginData;
+		},
+		loginIndex() {
+			return this.$store.state.login.loginIndex;
+		},
 	},
 	watch: {
 		changeFlag(newData, oldData) {
@@ -195,7 +202,7 @@ export default {
 				that.$refs['showLeft'].open();
 			}
 			this.$store.commit('setChangeFlag');
-		}
+		},
 	},
 	methods: {
 		createOrder: function() {
@@ -213,6 +220,9 @@ export default {
 		},
 		hotelChange: function(e) {
 			this.$store.commit('hotelChange', e.detail.value);
+		},
+		loginChange: function(e) {
+			this.$store.commit('loginChange', e.detail.value);
 		},
 		emptyChange: function(e) {
 			this.$store.commit('emptyChange', e.detail.value);

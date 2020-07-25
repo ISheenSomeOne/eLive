@@ -3,6 +3,8 @@ const state = {
 	username: '', //用户/电话
 	password: '', //密码
 	isRotate: false, //是否加载旋转
+	loginData: [], //登录信息
+	loginIndex: 0, //登录列表下标
 }
 const mutations = {
 	//初始化用户信息
@@ -10,12 +12,43 @@ const mutations = {
 		state.username = uni.getStorageSync('username')
 		state.password = uni.getStorageSync('password')
 	},
-	//判断是否已经登录
+	//初始化登录信息
+	initLoginData(state) {
+		let current = uni.getStorageSync('userList')
+		let userList = uni.getStorageSync('userList')
+		//更新登录列表
+		state.loginData = []
+		for (let key in userList) {
+			state.loginData.push(key)
+		}
+		for(let i=0;i<state.loginData.length;i++){
+			if(state.loginData[i] == current){
+				state.loginIndex = i
+			}
+		}
+	},
+	//切换登录用户
+	loginChange(state, val) {
+		state.loginIndex = val
+		uni.setStorageSync('current', state.loginData[val])
+		uni.reLaunch({
+			url: '/pages/home/home'
+		});
+	},
+	//判断是否自动登录
 	isLogin(state) {
+		let userList = uni.getStorageSync('userList')
+
 		if (uni.getStorageSync('autoLogin')) {
-			state.username = uni.getStorageSync('username')
-			state.password = uni.getStorageSync('password')
-			this.commit('req_login')
+			if (userList != '' && userList != null && userList != undefined && userList != '{}') {
+				uni.reLaunch({
+					url: '/pages/home/home'
+				});
+			} else {
+				this.commit('initUserInfo')
+			}
+		} else {
+			this.commit('initUserInfo')
 		}
 
 	},
@@ -100,21 +133,19 @@ const mutations = {
 				if (res.data.code == 200) {
 					let userList = uni.getStorageSync("userList");
 					//删除当前用户的数据,并切换用户
-					delete userList[current];
+					delete userList[uni.getStorageSync('current')];
 					if (Object.keys(userList).length === 0) {
-						setTimeout(() => {
-							uni.reLaunch({
-								url: '/pages/login/login'
-							});
-						}, 2000)
-					uni.setStorageSync('autoLogin', false)
+						uni.reLaunch({
+							url: '/pages/login/login'
+						});
+						uni.setStorageSync('autoLogin', false)
 					} else {
 						uni.setStorageSync("current", getFirstAttr(userList));
+						uni.setStorageSync("userList", userList);
 						uni.reLaunch({
 							url: '/pages/home/home'
 						});
 					}
-					uni.setStorageSync("userList", JSON.stringify(userList));
 				} else {
 					uni.showToast({
 						title: '服务器错误',
@@ -124,6 +155,14 @@ const mutations = {
 				}
 			},
 		})
+	},
+	//退出全部登录
+	logoutAll(state) {
+		uni.setStorageSync('userList','')
+		uni.setStorageSync('autoLogin',false)
+		uni.reLaunch({
+			url: '/pages/login/login'
+		});
 	},
 }
 const actions = {
@@ -159,7 +198,7 @@ function common_request(params) {
 	let userList = uni.getStorageSync("userList");
 	let current = uni.getStorageSync("current");
 	let userListJson = null;
-	if (userList === "") {
+	if (userList == '' || userList == null || userList == undefined || userList == '{}') {
 		userList = "{}";
 		userListJson = JSON.parse(userList);
 	} else {
@@ -208,8 +247,15 @@ function common_request(params) {
 				current = uni.getStorageSync("current");
 				//更新token  
 				if (token) {
+					console.log(typeof(userListJson))
 					userListJson[current] = token;
 					uni.setStorageSync("userList", userListJson);
+
+					//更新登录列表
+					state.loginData = []
+					for (let key in userListJson) {
+						state.loginData.push(key)
+					}
 				}
 			}
 		},

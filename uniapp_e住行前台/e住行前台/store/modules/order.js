@@ -471,10 +471,10 @@ function common_request(params) {
 		'X-Requested-With': 'XMLHttpRequest'
 	} : params.header;
 	//请求头里一定要带上用户登录信息,没得商量,从userList里面获取token,根据当前用户
-	var userList = uni.getStorageSync("userList");
-	var current = uni.getStorageSync("current");
-	var userListJson = null;
-	if (userList === "") {
+	let userList = uni.getStorageSync("userList");
+	let current = uni.getStorageSync("current");
+	let userListJson = null;
+	if (userList == '' || userList == null || userList == undefined) {
 		userList = "{}";
 		userListJson = JSON.parse(userList);
 	} else {
@@ -525,6 +525,8 @@ function common_request(params) {
 				if (token) {
 					userListJson[current] = token;
 					uni.setStorageSync("userList", userListJson);
+					console.log(state)
+					state.loginData = uni.getStorageInfoSync('userList')
 				}
 			}
 		},

@@ -454,7 +454,7 @@ function common_request(params) {
 	var userList = uni.getStorageSync("userList");
 	var current = uni.getStorageSync("current");
 	var userListJson = null;
-	if (userList === "") {
+	if (userList == '' || userList == null || userList == undefined) {
 		userList = "{}";
 		userListJson = JSON.parse(userList);
 	} else {

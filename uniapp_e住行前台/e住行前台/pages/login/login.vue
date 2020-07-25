@@ -67,6 +67,7 @@ export default {
 		}
 	},
 	onLoad() {
+		
 		this.$store.commit('isLogin')
 	},
 	methods: {
