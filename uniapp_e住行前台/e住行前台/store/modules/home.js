@@ -17,6 +17,7 @@ const state = {
 	changeRoomName: [], //换房房间名
 	changeRoomIndex: 0, //换房下标
 	changeFlag: false, //是否关闭换房悬浮框
+	current: '', //当前登录用户
 }
 const mutations = {
 	//初始化楼层
@@ -346,6 +347,7 @@ const mutations = {
 	setChangeRoomIndex(state, val) {
 		state.changeRoomIndex = val
 	},
+	//换房请求
 	req_confirmChange(state) {
 		common_request({
 			url: '/api/zxkj/OrderRoom/exchangeRoomByOldRoomIdAndNewRoomId',
@@ -453,6 +455,7 @@ function common_request(params) {
 	//请求头里一定要带上用户登录信息,没得商量,从userList里面获取token,根据当前用户
 	var userList = uni.getStorageSync("userList");
 	var current = uni.getStorageSync("current");
+	state.current = current
 	var userListJson = null;
 	if (userList == '' || userList == null || userList == undefined) {
 		userList = "{}";

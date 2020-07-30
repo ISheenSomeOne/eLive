@@ -4,7 +4,7 @@
 			<view class="navBarLeft bgHotel">
 				<picker mode="selector" value="index" :range="loginData" @change="loginChange">
 					<view class="navBarLeft">
-						{{ loginData[loginIndex] }}
+						{{ current }}
 						<uni-icons type="arrowdown" color="#007AFF"></uni-icons>
 					</view>
 				</picker>
@@ -192,6 +192,9 @@ export default {
 		},
 		loginIndex() {
 			return this.$store.state.login.loginIndex;
+		},
+		current() {
+			return this.$store.state.home.current;
 		},
 	},
 	watch: {

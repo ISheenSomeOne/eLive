@@ -1,7 +1,7 @@
 <template>
 	<view class="uni-calendar" @touchmove.stop.prevent="clean">
 		<view v-if="!insert&&show" class="uni-calendar__mask" :class="{'uni-calendar--mask-show':aniMaskShow}" @click="clean"></view>
-		<view v-if="insert || show" class="uni-calendar__content" :class="{'uni-calendar--fixed':!insert,'uni-calendar--ani-show':aniMaskShow}">
+		<view v-if="insert || show" class="uni-calendar__content" :class="{'uni-calendar--fixed':!insert,'uni-calendar--ani-show':aniMaskShow,'btm':btm}">
 			<view v-if="!insert" class="uni-calendar__header uni-calendar--fixed-top">
 				<view class="uni-calendar__header-btn-box" @click="close">
 					<text class="uni-calendar__header-text uni-calendar--fixed-width">取消</text>
@@ -117,6 +117,10 @@
 			showMonth: {
 				type: Boolean,
 				default: true
+			},
+			btm: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -264,6 +268,10 @@
 
 	.uni-calendar--mask-show {
 		opacity: 1
+	}
+	
+	.btm{
+		bottom: 50px!important;
 	}
 
 	.uni-calendar--fixed {
