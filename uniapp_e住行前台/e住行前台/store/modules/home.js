@@ -527,10 +527,11 @@ function getFirstAttr(obj) {
 
 //公共获取当前时间方法
 function getTime(days = 0) {
-	var date = new Date(),
-		year = date.getFullYear(),
-		month = date.getMonth() + 1,
-		day = date.getDate() + days
+	let date = new Date()
+	date = new Date(date.setDate(date.getDate() + days))
+	let year = date.getFullYear(),
+	month = date.getMonth() + 1,
+	day = date.getDate()
 	month >= 1 && month <= 9 ? (month = "0" + month) : ""
 	day >= 0 && day <= 9 ? (day = "0" + day) : ""
 	var timer = year + '-' + month + '-' + day

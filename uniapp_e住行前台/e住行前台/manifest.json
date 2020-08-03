@@ -48,31 +48,27 @@
         }
     },
      "h5" : {
-             "devServer" : {
-                 "disableHostCheck" : true,
-                 "proxy" : {
-                     "/api" : {
-                         "target" : "https://zxkj.webinn.online", //目标接口域名
-                         "changeOrigin" : true, //是否跨域
-                         "secure" : false, // 设置支持https协议的代理
-                         "pathRewrite" : {
-                             "^/api" : ""
-                         }
-                     }
-                 },
-                 "publicPath" : "./",
-                 "https" : true
-             },
-             "router" : {
-                 "mode" : "hash",
-                 "base" : "./"
-             },
-             "optimization" : {
-                 "treeShaking" : {
-                     "enable" : true
-                 }
-             },
-             "title" : "e住行后台管理系统",
-             "domain" : "zxkj.webinn.online"
-         }
+            "devServer" : {
+                "disableHostCheck" : true,
+                "proxy" : {
+                    "/api" : {
+                        // "target" : "https://zxkj.webinn.online", //目标接口域名
+                        "target" : "http://f8994g.natappfree.cc", //目标接口域名
+                        "changeOrigin" : true, //是否跨域
+                        "secure" : false, // 设置支持https协议的代理
+                        "pathRewrite" : {
+                            "^/api" : ""
+                        }
+                    }
+                }
+            },
+            "router" : {
+                "mode" : "history"
+            },
+            "optimization" : {
+                "treeShaking" : {
+                    "enable" : true
+                }
+            }
+        }
 }
