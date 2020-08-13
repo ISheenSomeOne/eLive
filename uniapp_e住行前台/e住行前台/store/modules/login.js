@@ -14,15 +14,15 @@ const mutations = {
 	},
 	//初始化登录信息
 	initLoginData(state) {
-		let current = uni.getStorageSync('userList')
+		let current = uni.getStorageSync('current')
 		let userList = uni.getStorageSync('userList')
 		//更新登录列表
 		state.loginData = []
 		for (let key in userList) {
 			state.loginData.push(key)
 		}
-		for(let i=0;i<state.loginData.length;i++){
-			if(state.loginData[i] == current){
+		for (let i = 0; i < state.loginData.length; i++) {
+			if (state.loginData[i] == current) {
 				state.loginIndex = i
 			}
 		}
@@ -82,6 +82,7 @@ const mutations = {
 			});
 			return;
 		}
+		uni.setStorageSync("current", state.username);
 		//调用请求方法
 		common_request({
 			url: '/api/zxkj/staff/login',
@@ -95,7 +96,6 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					uni.setStorageSync("current", state.username);
 					uni.setStorageSync('username', state.username)
 					uni.setStorageSync('password', state.password)
 					uni.setStorageSync('autoLogin', true)
@@ -135,10 +135,12 @@ const mutations = {
 					//删除当前用户的数据,并切换用户
 					delete userList[uni.getStorageSync('current')];
 					if (Object.keys(userList).length === 0) {
-						uni.reLaunch({
-							url: '/pages/login/login'
-						});
 						uni.setStorageSync('autoLogin', false)
+						setTimeout(() => {
+							uni.reLaunch({
+								url: '/pages/login/login'
+							});
+						}, 2000)
 					} else {
 						uni.setStorageSync("current", getFirstAttr(userList));
 						uni.setStorageSync("userList", userList);
@@ -158,8 +160,8 @@ const mutations = {
 	},
 	//退出全部登录
 	logoutAll(state) {
-		uni.setStorageSync('userList','')
-		uni.setStorageSync('autoLogin',false)
+		uni.setStorageSync('userList', '')
+		uni.setStorageSync('autoLogin', false)
 		uni.reLaunch({
 			url: '/pages/login/login'
 		});
@@ -219,8 +221,6 @@ function common_request(params) {
 		header: params.header,
 		method: params.method,
 		success: (res) => {
-			//执行success方法
-			params.success(res);
 			if (res.data.code == 401) {
 				uni.showToast({
 					title: '登录已过期',
@@ -229,7 +229,7 @@ function common_request(params) {
 				});
 				//删除当前用户的数据,并切换用户
 				delete userListJson[current];
-				uni.setStorageSync("userList", JSON.stringify(userListJson));
+				uni.setStorageSync("userList", userListJson);
 				if (Object.keys(userListJson).length === 0) {
 					setTimeout(() => {
 						uni.reLaunch({
@@ -247,7 +247,6 @@ function common_request(params) {
 				current = uni.getStorageSync("current");
 				//更新token  
 				if (token) {
-					console.log(typeof(userListJson))
 					userListJson[current] = token;
 					uni.setStorageSync("userList", userListJson);
 
@@ -257,6 +256,11 @@ function common_request(params) {
 						state.loginData.push(key)
 					}
 				}
+				//执行success方法
+				params.success(res);
+			} else {
+				//执行success方法
+				params.success(res);
 			}
 		},
 		complete: () => {

@@ -138,7 +138,7 @@ export default {
 	created: function() {
 		this.$store.commit('initLoginData');
 		this.$store.dispatch('initRoomType');
-		this.$store.dispatch('initRoomStatus');
+		// this.$store.dispatch('initRoomStatus');
 		// this.$store.commit('initHomeFloor');
 		// console.log(this.$store.state.home.roomList)
 	},

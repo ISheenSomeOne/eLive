@@ -65,7 +65,15 @@
 		"style": {
 			"navigationBarTitleText": "房间设置"
 		}
-	}],
+	}    ,{
+            "path" : "pages/mine/company/company",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/company/companyInfo",
+            "style" : {}
+        }
+    ],
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",

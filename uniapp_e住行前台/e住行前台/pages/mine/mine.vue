@@ -30,7 +30,9 @@
 				<uni-list-item title="房型房间" :show-extra-icon="true" :extra-icon="{ color: '#4cd964', size: '22', type: 'home-filled' }" />
 			</navigator>
 			<uni-list-item title="活动管理" :show-extra-icon="true" :extra-icon="{ color: '#54d2ff', size: '22', type: 'paperplane-filled' }" />
-			<uni-list-item title="会议管理" :show-extra-icon="true" :extra-icon="{ color: '#999999', size: '22', type: 'chat-filled' }" />
+			<navigator url="company/company">
+				<uni-list-item title="协议公司" :show-extra-icon="true" :extra-icon="{ color: '#999999', size: '22', type: 'chat-filled' }" />
+			</navigator>
 			<uni-list-item title="团队管理" :show-extra-icon="true" :extra-icon="{ color: '#343a40', size: '22', type: 'chatboxes-filled' }" />
 			<uni-list-item title="门锁管理" :show-extra-icon="true" :extra-icon="{ color: '#dd524d', size: '22', type: 'locked-filled' }" />
 			<uni-list-item title="商品管理" :show-extra-icon="true" :extra-icon="{ color: '#f0ad4e', size: '22', type: 'cart-filled' }" />
@@ -76,7 +78,7 @@ export default {
 			});
 		},
 		moreLogin() {
-			uni.setStorageSync('autoLogin',false)
+			uni.setStorageSync('autoLogin', false);
 			uni.reLaunch({
 				url: '/pages/login/login'
 			});

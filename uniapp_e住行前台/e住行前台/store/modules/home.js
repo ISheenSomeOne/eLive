@@ -453,11 +453,11 @@ function common_request(params) {
 		'X-Requested-With': 'XMLHttpRequest'
 	} : params.header;
 	//请求头里一定要带上用户登录信息,没得商量,从userList里面获取token,根据当前用户
-	var userList = uni.getStorageSync("userList");
-	var current = uni.getStorageSync("current");
+	let userList = uni.getStorageSync("userList");
+	let current = uni.getStorageSync("current");
 	state.current = current
-	var userListJson = null;
-	if (userList == '' || userList == null || userList == undefined) {
+	let userListJson = null;
+	if (userList == '' || userList == null || userList == undefined || userList == '{}') {
 		userList = "{}";
 		userListJson = JSON.parse(userList);
 	} else {
@@ -478,8 +478,6 @@ function common_request(params) {
 		header: params.header,
 		method: params.method,
 		success: (res) => {
-			//执行success方法
-			params.success(res);
 			if (res.data.code == 401) {
 				uni.showToast({
 					title: '登录已过期',
@@ -488,13 +486,16 @@ function common_request(params) {
 				});
 				//删除当前用户的数据,并切换用户
 				delete userListJson[current];
-				uni.setStorageSync("userList", JSON.stringify(userListJson));
+				uni.setStorageSync("userList", userListJson);
+				console.log(Object.keys(userListJson).length)
+				console.log(userListJson)
 				if (Object.keys(userListJson).length === 0) {
+					uni.setStorageSync('autoLogin', false)
 					setTimeout(() => {
 						uni.reLaunch({
 							url: '/pages/login/login'
 						});
-					}, 2000)
+					},2000)
 				} else {
 					uni.setStorageSync("current", getFirstAttr(userListJson));
 					uni.reLaunch({
@@ -509,6 +510,11 @@ function common_request(params) {
 					userListJson[current] = token;
 					uni.setStorageSync("userList", userListJson);
 				}
+				//执行success方法
+				params.success(res);
+			} else {
+				//执行success方法
+				params.success(res);
 			}
 		},
 		complete: () => {
@@ -530,8 +536,8 @@ function getTime(days = 0) {
 	let date = new Date()
 	date = new Date(date.setDate(date.getDate() + days))
 	let year = date.getFullYear(),
-	month = date.getMonth() + 1,
-	day = date.getDate()
+		month = date.getMonth() + 1,
+		day = date.getDate()
 	month >= 1 && month <= 9 ? (month = "0" + month) : ""
 	day >= 0 && day <= 9 ? (day = "0" + day) : ""
 	var timer = year + '-' + month + '-' + day
