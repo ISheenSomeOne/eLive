@@ -69,23 +69,24 @@ export default {
 	computed: {
 		companyId() {
 			return this.$store.state.company.companyId;
-		}
-		// companyData: {
-		// 	get() {
-		// 		return this.$store.state.company.companyData;
-		// 	},
-		// 	set(val) {
-		// 		this.$store.commit('setCompanyData', val);
-		// 	}
-		// },
+		},
+		needOverflow() {
+			return this.$store.state.company.needOverflow;
+		},
+	},
+	watch:{
+		needOverflow(newData, oldData) {
+			this.companyData = this.$store.state.company.companyInfo;
+			this.$store.commit('setChangeCompanyFlag');
+		},		
 	},
 	onLoad(option) {
 		if (option.id) {
 			this.$store.commit('setCompanyId', option.id);
-			this.$store.commit('req_initCompanyInfo');
-			const companyData = this.$store.state.company.companyInfo;
-			this.companyData = companyData;
 		}
+	},
+	onReady() {
+		
 	},
 	onUnload() {
 		this.$store.commit('delCompanyId');

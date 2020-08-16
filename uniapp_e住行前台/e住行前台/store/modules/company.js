@@ -16,11 +16,13 @@ const state = {
 	companyList: [], //公司列表
 	companyInfo: '', //公司详情
 	normalCount: '', //正常状态数量
+	needOverflow: false, //当数据请求完毕需要重新赋值到页面
 }
 const mutations = {
 	//改变setCompanyId
 	setCompanyId(state, val) {
 		state.companyId = val
+		this.commit('req_initCompanyInfo')
 	},
 	//改变companyData
 	setCompanyData(state, val) {
@@ -30,22 +32,24 @@ const mutations = {
 	delCompanyId(state, val) {
 		state.companyId = ''
 	},
-	
+	setChangeCompanyFlag(state, val) {
+		state.needOverflow = false
+	},
+
 	//请求初始化公司列表
 	req_initCompanyList(state) {
 		common_request({
 			url: '/api/zxkj/company/getCompanyList',
-			data: {
-			},
+			data: {},
 			success: (res) => {
 				if (res.data.code == 200) {
 					let normalCount = 0
-					res.data.data.forEach((item)=>{
+					res.data.data.forEach((item) => {
 						item.state == 0 ? normalCount++ : ''
 					})
 					state.normalCount = normalCount
 					state.companyList = res.data.data
-					
+
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -68,8 +72,8 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					console.log(res.data.data)
 					state.companyInfo = res.data.data
+					state.needOverflow = true
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -136,7 +140,7 @@ const mutations = {
 		// 		}
 		// 	},
 		// })
-		
+
 		common_request({
 			url: '/api/zxkj/company/createCompany',
 			data: {
@@ -147,7 +151,13 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					console.log(res.data.data)
+					uni.showToast({
+						title: '添加成功',
+						duration: 1000
+					});
+					setTimeout(() => {
+						uni.navigateBack({});
+					}, 1000)
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -159,32 +169,71 @@ const mutations = {
 		})
 	},
 	//请求修改协议公司信息
-	// req_updateCompany(state) {
-	// 	common_request({
-	// 		url: '/api/zxkj/company/updateCompany',
-	// 		data: {
-	// 			'name': state.firstDate,
-	// 			'linkman': state.lastDate,
-	// 			'tel': state.firstDate,
-	// 			'add': state.firstDate
-	// 		},
-	// 		header: {
-	// 			'content-type': 'application/x-www-form-urlencoded'
-	// 		},
-	// 		success: (res) => {
-	// 			if (res.data.code == 200) {
-	// 				let data = res.data.data
-	// 				console.log(data)
-	// 			} else {
-	// 				uni.showModal({
-	// 					title: '提示',
-	// 					content: '服务器错误',
-	// 					showCancel: false
-	// 				})
-	// 			}
-	// 		},
-	// 	})
-	// }
+	req_updateCompany(state) {
+		if (state.companyData.name == '') {
+			uni.showToast({
+				icon: 'none',
+				title: '请填写公司名称',
+				duration: 2000
+			});
+			return
+		}
+		if (state.companyData.add == '') {
+			uni.showToast({
+				icon: 'none',
+				title: '请填写公司地址',
+				duration: 2000
+			});
+			return
+		}
+		if (state.companyData.person == '') {
+			uni.showToast({
+				icon: 'none',
+				title: '请填写公司联系人',
+				duration: 2000
+			});
+			return
+		}
+		if (state.companyData.contact == '') {
+			uni.showToast({
+				icon: 'none',
+				title: '请填写联系方式',
+				duration: 2000
+			});
+			return
+		}
+		common_request({
+			url: '/api/zxkj/company/updateCompanyInfo',
+			data: {
+				'companyId': state.companyId,
+				'companyName': state.companyData.companyName,
+				'companyAdd': state.companyData.companyAdd,
+				'linkman': state.companyData.linkman,
+				'tel': state.companyData.tel,
+				'state': state.companyData.state
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					uni.showToast({
+						title: '修改成功',
+						duration: 1000
+					});
+					setTimeout(() => {
+						uni.navigateBack({});
+					}, 1000)
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	}
 }
 const actions = {
 	//创建协议公司
