@@ -2,28 +2,30 @@
 	<view style="padding-top: 10px;">
 		<view class="topBox">
 			<view class="topBoxItem">
-				<view class="topItemTop">3</view>
-				<view class="topItemBottom">公司数量</view>
+				<view class="topItemTop">{{companyList.length}}</view>
+				<view class="topItemBottom">公司总数</view>
+			</view>
+			<view class="topBoxItem">
+				<view class="topItemTop">{{normalCount}}</view>
+				<view class="topItemBottom">异常数量</view>
 			</view>
 		</view>
 		<view class="tableBox">
 			<view class="tableTitle">
-				<view class="tableItem" style="width: 300rpx;">公司名称</view>
+				<view class="tableItem" style="width: 280rpx;">公司名称</view>
 				<view class="tableItem" style="width: 120rpx;">联系人</view>
 				<view class="tableItem" style="width: 180rpx;">电话</view>
+				<view class="tableItem" style="width: 100rpx;">状态</view>
 			</view>
-			<!-- <block v-for="(item, index) in listData" :key="index"> -->
-			<view class="tableList" @click="toCompanyInfo(123)">
-				<view class="tableItem" style="width: 300rpx;">云南住行科技有限公司</view>
-				<view class="tableItem" style="width: 120rpx;">张三</view>
-				<view class="tableItem" style="width: 180rpx;">13888131313</view>
-			</view>
-			<view class="tableList">
-				<view class="tableItem" style="width: 300rpx;">云南住行科技有限公司</view>
-				<view class="tableItem" style="width: 120rpx;">张三</view>
-				<view class="tableItem" style="width: 180rpx;">13888131313</view>
-			</view>
-			<!-- </block> -->
+			<block v-for="(item, index) in companyList" :key="index">
+				<view class="tableList" @click="toCompanyInfo(item.id)">
+					<view class="tableItem" style="width: 280rpx;">{{item.companyName}}</view>
+					<view class="tableItem" style="width: 120rpx;">{{item.linkman}}</view>
+					<view class="tableItem" style="width: 180rpx;">{{item.tel}}</view>
+					<view class="tableItem green" v-if="item.state" style="width: 100rpx;">正常</view>
+					<view class="tableItem red" v-else style="width: 100rpx;">停用</view>
+				</view>
+			</block>
 		</view>
 		<view class="bottomMenu"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
 	</view>
@@ -47,6 +49,17 @@ export default {
 				}
 			]
 		};
+	},
+	computed: {
+		companyList() {
+			return this.$store.state.company.companyList;
+		},
+		normalCount() {
+			return this.$store.state.company.normalCount;
+		},
+	},
+	onShow() {
+		this.$store.dispatch('initCompanyList');
 	},
 	methods: {
 		buttonClick(e) {
@@ -94,6 +107,7 @@ export default {
 
 .tableBox {
 	margin: 10px;
+	margin-bottom: 55px;
 	color: #333;
 	border-radius: 10px;
 }
@@ -111,7 +125,7 @@ export default {
 .tableList {
 	display: flex;
 	justify-content: space-between;
-	font-size: 20rpx;
+	font-size: 22rpx;
 	height: 60rpx;
 	line-height: 60rpx;
 	border-bottom: 1px solid #f8f8f8;
@@ -132,5 +146,13 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
+}
+.green{
+	color: #3eb352;
+	font-weight: bold;
+}
+.red{
+	color: $uni-color-error;
+	font-weight: bold;
 }
 </style>
