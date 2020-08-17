@@ -13,6 +13,8 @@ const app = new Vue({
 })
 app.$mount()
 
+const api = 'https://zxkj.webinn.online'
+
 
 Vue.prototype.common_request = function(params){
 	console.log('9999')

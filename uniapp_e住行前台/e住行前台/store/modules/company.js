@@ -149,6 +149,9 @@ const mutations = {
 				'linkman': state.companyData.linkman,
 				'tel': state.companyData.tel
 			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
 			success: (res) => {
 				if (res.data.code == 200) {
 					uni.showToast({
@@ -205,7 +208,7 @@ const mutations = {
 		common_request({
 			url: '/api/zxkj/company/updateCompanyInfo',
 			data: {
-				'companyId': state.companyId,
+				'id': state.companyId,
 				'companyName': state.companyData.companyName,
 				'companyAdd': state.companyData.companyAdd,
 				'linkman': state.companyData.linkman,

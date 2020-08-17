@@ -43,7 +43,7 @@
 				</view>
 			</view>
 		</uni-list>
-		<image v-if="companyId" class="qrClass" mode="widthFix" :src="companyData.qr"></image>
+		<image v-if="companyId" class="qrClass" mode="widthFix" :src="imgApi + companyData.qr"></image>
 		<button class="addType" hover-class="addTypeHover" @click="comfirm">确 定</button>
 	</view>
 </template>
@@ -67,6 +67,9 @@ export default {
 		};
 	},
 	computed: {
+		imgApi() {
+			return this.$store.state.home.imgApi;
+		},
 		companyId() {
 			return this.$store.state.company.companyId;
 		},

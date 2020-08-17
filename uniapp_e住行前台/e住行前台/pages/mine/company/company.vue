@@ -14,7 +14,7 @@
 			<view class="tableTitle">
 				<view class="tableItem" style="width: 280rpx;">公司名称</view>
 				<view class="tableItem" style="width: 120rpx;">联系人</view>
-				<view class="tableItem" style="width: 180rpx;">电话</view>
+				<view class="tableItem" style="width: 180rpx;">联系方式</view>
 				<view class="tableItem" style="width: 100rpx;">状态</view>
 			</view>
 			<block v-for="(item, index) in companyList" :key="index">

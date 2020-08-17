@@ -18,6 +18,8 @@ const state = {
 	changeRoomIndex: 0, //换房下标
 	changeFlag: false, //是否关闭换房悬浮框
 	current: '', //当前登录用户
+	imgApi: 'https://zxkj.webinn.online/zxkj/imgs/', //正式环境
+	// imgApi: 'http://9e839285f12d7e57.natapp.cc:9997/zxkj/imgs/', //测试环境
 }
 const mutations = {
 	//初始化楼层
@@ -74,6 +76,29 @@ const mutations = {
 			}
 		]
 	},
+	//请求获取用户权限
+	req_getAuth(state) {
+		common_request({
+			url: '/api/zxkj/getAuth',
+			method: 'GET',
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					//初始化信息
+					uni.setStorageSync('authList', data)
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
 	//请求初始化房态数据
 	req_initRoomStatus(state) {
 		let json = {
@@ -86,6 +111,8 @@ const mutations = {
 			"#r.state": state.reqKong,
 		}
 		let postData = JSON.stringify(json)
+
+		this.dispatch('getAuth')
 		common_request({
 			url: '/api/zxkj/room/getIconListData',
 			data: {
@@ -436,6 +463,11 @@ const actions = {
 			commit("req_confirmChange");
 		}
 	},
+	getAuth({
+		commit
+	}) {
+		commit("req_getAuth");
+	},
 }
 
 export default {
@@ -495,7 +527,7 @@ function common_request(params) {
 						uni.reLaunch({
 							url: '/pages/login/login'
 						});
-					},2000)
+					}, 2000)
 				} else {
 					uni.setStorageSync("current", getFirstAttr(userListJson));
 					uni.reLaunch({
