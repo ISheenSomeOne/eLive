@@ -2,13 +2,13 @@
 	<view>
 		<uni-calendar ref="calendar" :btm="true" :insert="false" :lunar="true" :range="true" @confirm="dateConfirm" />
 		<view class="topBox">
-			<view class="calendar-button" @click="openCalendar">{{financeDate.before}} 至 {{financeDate.after}}</view>
 			<picker class="pickerClass" mode="selector" :range="datePiker" :value="datePikerIndex" @change="financeDateChange">
 				<view>
 					{{ datePiker[datePikerIndex] }}
 					<uni-icons class="dateIcon" color="#777" type="arrowdown"></uni-icons>
 				</view>
 			</picker>
+			<view class="calendar-button" @click="openCalendar">{{financeDate.before}} 至 {{financeDate.after}}</view>
 		</view>
 		<view class="mainBox">
 			<view class="mainTop">

@@ -65,12 +65,44 @@
 		"style": {
 			"navigationBarTitleText": "房间设置"
 		}
+	}, {
+		"path": "pages/mine/company/company",
+		"style": {}
+	}, {
+		"path": "pages/mine/company/companyInfo",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/teamIndex",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/eduList",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/createExam",
+		"style": {
+			"navigationBarTitleText": "创建教育订单"
+		}
+	}, {
+		"path": "pages/mine/team/edu/createSuccess",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/unifiedPayment",
+		"style": {
+		}
 	}    ,{
-            "path" : "pages/mine/company/company",
+            "path" : "pages/mine/team/edu/eduOrderInfo",
             "style" : {}
         }
         ,{
-            "path" : "pages/mine/company/companyInfo",
+            "path" : "pages/mine/team/meeting/meetingList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/team/tour/tourList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/orderDistribution",
             "style" : {}
         }
     ],

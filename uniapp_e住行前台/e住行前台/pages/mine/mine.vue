@@ -33,7 +33,9 @@
 			<navigator url="company/company">
 				<uni-list-item v-if="company" title="协议公司" :show-extra-icon="true" :extra-icon="{ color: '#999999', size: '22', type: 'chat-filled' }" />
 			</navigator>
-			<uni-list-item title="团队管理" :show-extra-icon="true" :extra-icon="{ color: '#343a40', size: '22', type: 'chatboxes-filled' }" />
+			<navigator url="team/teamIndex">
+				<uni-list-item title="团队管理" :show-extra-icon="true" :extra-icon="{ color: '#343a40', size: '22', type: 'chatboxes-filled' }" />
+			</navigator>
 			<uni-list-item title="门锁管理" :show-extra-icon="true" :extra-icon="{ color: '#dd524d', size: '22', type: 'locked-filled' }" />
 			<uni-list-item title="商品管理" :show-extra-icon="true" :extra-icon="{ color: '#f0ad4e', size: '22', type: 'cart-filled' }" />
 			<!-- <uni-list-item :disabled="true" :show-extra-icon="true" :extra-icon="extraIcon2" :show-switch="true" :switch-checked="true"
@@ -49,11 +51,11 @@
 export default {
 	data() {
 		return {
-			company: false, //是否有协议公司权限
+			company: false //是否有协议公司权限
 		};
 	},
 	onShow() {
-		uni.getStorageSync('authList').indexOf('|208|') > -1 ? this.company = true : this.company = false
+		uni.getStorageSync('authList').indexOf('|208|') > -1 ? (this.company = true) : (this.company = false);
 	},
 	methods: {
 		logout() {
