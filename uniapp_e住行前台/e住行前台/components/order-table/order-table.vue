@@ -21,7 +21,7 @@
 				<view class="table-cont-item short">{{ item.price }}</view>
 			</view>
 		</block>
-		<!-- team -->
+		<!-- teamList -->
 		<block v-if="listType == 'eduList'" v-for="(item, index) in tableList" :key="index">
 			<view class="table-list-item1" @click="toEduOrderInfo(item.id)">
 				<view class="table-cont-item2 long">{{ item.name }}</view>
@@ -29,6 +29,15 @@
 				<view class="table-cont-item">{{ item.contact }}</view>
 				<view class="table-cont-item">{{ item.time }}</view>
 				<view class="table-cont-item short">{{ item.state }}</view>
+			</view>
+		</block>
+		<!-- eduOrderDistribution -->
+		<block v-if="listType == 'orderDistributionList'" v-for="(item, index) in tableList" :key="index">
+			<view class="table-list-item1" @click="toEduOrderInfo(item.id)">
+				<view class="table-cont-item">{{ item.numbering }}</view>
+				<view class="table-cont-item">{{ item.carNumber }}</view>
+				<view class="table-cont-item">{{ item.driver }}</view>
+				<view class="table-cont-item">{{ item.peopleNum }}</view>
 			</view>
 		</block>
 	</view>
@@ -82,7 +91,6 @@ export default {
 <style lang="scss" scoped>
 .table-box {
 	font-size: 12px;
-	min-height: 75vh;
 	margin-bottom: 10px;
 }
 

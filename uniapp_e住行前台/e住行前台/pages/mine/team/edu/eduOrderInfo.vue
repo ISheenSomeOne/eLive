@@ -103,10 +103,12 @@
 export default {
 	data() {
 		return {
-				options: [{
+			options: [
+				{
 					icon: 'trash',
 					text: '取消'
-				}],
+				}
+			],
 			buttonGroup: [
 				{
 					text: '修改订单',
@@ -121,14 +123,14 @@ export default {
 			]
 		};
 	},
-	methods:{
+	methods: {
 		buttonClick(e) {
-			if(e.index == 1){
+			if (e.index == 1) {
 				uni.navigateTo({
 					url: '/pages/mine/team/edu/orderDistribution'
 				});
 			}
-		},
+		}
 	}
 };
 </script>

@@ -21,113 +21,68 @@
 							<view class="leftInfo">已分配 80</view>
 							<view class="rightInfo">未分配 12</view>
 						</view>
-						<order-table :listType="'order'" :titleList="titleList" :tableList="orderList"></order-table>
-						<button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button>
+						<order-table :listType="'orderDistributionList'" :titleList="titleList" :tableList="orderDistributionList"></order-table>
+						<view class="buttonBox" @click="addCar">添加车辆</view>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<order-table :listType="'order'" :titleList="titleList" :tableList="orderList"></order-table>
-						<button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="swiper-item">
-						<order-table :listType="'order'" :titleList="titleList" :tableList="orderList"></order-table>
-						<button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button>
+						<view class="topInfo">
+							<view class="leftInfo">已分配 80</view>
+							<view class="rightInfo">未分配 12</view>
+						</view>
+						<view class="container999">
+							<uni-section class="titleClass" title="汇都酒店" type="line"></uni-section>
+							<view class="line">
+								<view class="lineLeft">201</view>
+								<view class="lineRight">张三，李四</view>
+							</view>
+							<view class="line">
+								<view class="lineLeft">201</view>
+								<view class="lineRight">张三，李四</view>
+							</view>
+							<uni-section class="titleClass" title="汇都酒店" type="line"></uni-section>
+							<view class="line">
+								<view class="lineLeft">201</view>
+								<view class="lineRight">张三，李四</view>
+							</view>
+							<view class="line">
+								<view class="lineLeft">201</view>
+								<view class="lineRight">张三，李四</view>
+							</view>
+							<view class="buttonBox" @click="addHotel">添加酒店房间</view>
+						</view>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
 						<view class="container999">
-							<view class="title">创建订单</view>
 							<view class="line">
-								<view class="lineLeft">入离时间</view>
-								<view class="lineRight" @click="open">
-									<view>{{ createOrderDate ? createOrderDate.before + ' 至 ' + createOrderDate.after : '选择日期' }}</view>
-									<uni-calendar ref="calendar" :insert="false" :lunar="true" :range="true" @confirm="dateConfirm" />
-								</view>
+								<view class="lineLeft">201</view>
+								<view class="lineRight">张三，李四</view>
 							</view>
 							<view class="line">
-								<view class="lineLeft">来源</view>
-								<view class="lineRight">
-									<picker class="pickerClass" mode="selector" :range="origin" :value="nowOrigin" @change="originChange">
-										<view>{{ origin[nowOrigin] }}</view>
-									</picker>
-								</view>
+								<view class="lineLeft">201</view>
+								<view class="lineRight">张三，李四</view>
 							</view>
-							<view class="line">
-								<view class="lineLeft">姓名</view>
-								<view class="lineRight">
-									<!-- data-name为自定义参数名称,同时也会以此为参数名存入data的form中-->
-									<input class="input" @input="formChange" :value="form.name" data-name="name" placeholder-class="plaClass" placeholder="请输入姓名" />
-								</view>
-							</view>
-							<view class="line">
-								<view class="lineLeft">手机号</view>
-								<view class="lineRight">
-									<input
-										class="input"
-										type="number"
-										@input="formChange"
-										:value="form.phone"
-										data-name="phone"
-										placeholder-class="plaClass"
-										placeholder="请输入手机号"
-									/>
-									<view class="tips">选填</view>
-								</view>
-							</view>
-							<view class="line">
-								<view class="lineLeft">房型</view>
-								<view class="lineRight">
-									<picker class="pickerClass" mode="selector" :range="createRoomTypePiker" :value="nowRoomType" @change="roomTypeChange">
-										<view>{{ createRoomTypePiker[nowRoomType] }}</view>
-									</picker>
-								</view>
-							</view>
-							<view class="line">
-								<view class="lineLeft">间数</view>
-								<view class="lineRight">
-									<picker class="pickerClass" mode="selector" :range="createRoomCount[nowRoomType]" :value="nowRoomCount" @change="roomCountChange">
-										<view>{{ createRoomCount[nowRoomType][nowRoomCount] }}</view>
-									</picker>
-								</view>
-							</view>
-							<view class="line">
-								<view class="lineLeft">单价</view>
-								<view class="lineRight">
-									<input
-										class="input"
-										type="digit"
-										@input="formChange"
-										:value="form.price"
-										data-name="price"
-										placeholder-class="plaClass"
-										placeholder="请输入房间单价"
-									/>
-								</view>
-							</view>
-							<!-- <view class='line'>
-							  <view class='lineLeft'>支付方式</view>
-								<view class="lineRight">
-									<picker class="pickerClass" mode="selector" :range="payWay" :value="nowPayWay" @change="payWayChange">
-										<view>{{payWay[nowPayWay]}}</view>
-									</picker>
-								</view>
-							</view> -->
-							<view class="line">
-								<view class="lineLeft">备注</view>
-								<view class="lineRight">
-									<input class="input" @input="formChange" :value="form.remarks" data-name="remarks" placeholder-class="plaClass" placeholder="备注" />
-									<view class="tips">选填</view>
-								</view>
-							</view>
-							<view class="buttonBox" @click="submit">提交</view>
+						</view>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="container999">
+						<view class="line">
+							<view class="lineLeft">201</view>
+							<view class="lineRight">张三，李四</view>
+						</view>
+						<view class="line">
+							<view class="lineLeft">201</view>
+							<view class="lineRight">张三，李四</view>
 						</view>
 					</view>
 				</swiper-item>
 			</swiper>
+			<view class="buttonBoxAdd" v-show="!showMenu1" @click="submit">创建订单</view>
+			<view class="bottomMenu" v-show="showMenu1"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
 		</view>
 	</view>
 </template>
@@ -138,15 +93,65 @@ const util = require('../../../../util/util.js'); //防重点击函数
 export default {
 	data() {
 		return {
+			options: [],
+			buttonGroup: [
+				{
+					text: '自动分配',
+					backgroundColor: '#007aff',
+					color: '#fff'
+				},
+				{
+					text: '发送提醒',
+					backgroundColor: '#4cd964',
+					color: '#fff'
+				}
+			],
 			tabIndex: 0, //选中标签栏的序列
 			contentList: ['待入住', '入住中', '全部', '创建订单'],
-			titleList: [
-				{ cont: '来源', width: 'short' },
-				{ cont: '姓名', width: 'normal' },
-				{ cont: '房间信息', width: 'long' },
-				{ cont: '入住', width: 'short' },
-				{ cont: '离店', width: 'short' },
-				{ cont: '房价', width: 'short' }
+			titleList: [{ cont: '编号', width: 'normal' }, { cont: '车牌号', width: 'normal' }, { cont: '司机', width: 'normal' }, { cont: '人数/容量', width: 'normal' }],
+			orderDistributionList: [
+				{
+					numbering: '1号车',
+					carNumber: '云A 12345',
+					driver: '张三',
+					peopleNum: '40/40'
+				},
+				{
+					numbering: '2号车',
+					carNumber: '云A 54321',
+					driver: '李四',
+					peopleNum: '40/40'
+				},
+				{
+					numbering: '3号车',
+					carNumber: '云A 23123',
+					driver: '王五',
+					peopleNum: '0/40'
+				},
+				{
+					numbering: '2号车',
+					carNumber: '云A 54321',
+					driver: '李四',
+					peopleNum: '40/40'
+				},
+				{
+					numbering: '3号车',
+					carNumber: '云A 23123',
+					driver: '王五',
+					peopleNum: '0/40'
+				},
+				{
+					numbering: '2号车',
+					carNumber: '云A 54321',
+					driver: '李四',
+					peopleNum: '40/40'
+				},
+				{
+					numbering: '3号车',
+					carNumber: '云A 23123',
+					driver: '王五',
+					peopleNum: '0/40'
+				}
 			],
 			tabBars: [
 				{
@@ -172,7 +177,8 @@ export default {
 			nowPayWay: 0,
 			swiperHeight: '',
 			customItem: '全部', //地址picker的全部功能
-			form: {}
+			form: {},
+			showMenu1: true
 		};
 	},
 	computed: {
@@ -245,11 +251,10 @@ export default {
 		//页面切换调用
 		tabChangeFunc(tabIndex) {
 			this.tabIndex = tabIndex;
-			this.$store.commit('resetOrderPageNum');
-			if (tabIndex == 3) {
-				this.$store.dispatch('initCreateInfo');
+			if (tabIndex == 0 || tabIndex == 1) {
+				this.showMenu1 = true;
 			} else {
-				this.$store.dispatch('initOrderListInfo', tabIndex);
+				this.showMenu1 = false;
 			}
 		},
 		//动态swiper高度
@@ -363,14 +368,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.titleClass {
+	font-weight: bold;
+}
+.buttonBox {
+	width: 91%;
+	margin: 10px auto;
+	height: 40px;
+	border-radius: 100px;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #4cd964;
+	font-size: 18px;
+}
+.buttonBoxAdd {
+	width: 91%;
+	margin: 0 auto;
+	height: 40px;
+	border-radius: 100px;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	background-color: #4cd964;
+}
 .topInfo {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 10px;
 	padding: 0 10px;
 }
 .leftInfo {
-	background-color: rgb(187,234,214);
+	background-color: rgb(187, 234, 214);
 	border-radius: 2px;
 	padding: 2px 6px;
 	font-size: 13px;
@@ -390,7 +424,8 @@ export default {
 	font-weight: bold;
 }
 .swiper-item {
-	min-height: 80vh;
+	margin-top: 10px;
+	padding-bottom: 70px;
 }
 .swiper-list-box {
 	display: flex;
@@ -432,21 +467,6 @@ export default {
 		line-height: 40px;
 		padding-left: 4%;
 		border-bottom: 1px solid #f5f5f5;
-	}
-	.buttonBox {
-		width: 91%;
-		margin: 0 auto;
-		height: 40px;
-		border-radius: 100px;
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: fixed;
-		bottom: 10px;
-		left: 0;
-		right: 0;
-		background-color: #4cd964;
 	}
 	.tri {
 		width: 0;
@@ -517,5 +537,15 @@ export default {
 }
 .more-btn {
 	width: 500rpx;
+}
+.bottomMenu {
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: column;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 </style>
