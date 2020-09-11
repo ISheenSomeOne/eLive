@@ -56,32 +56,18 @@
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<view class="container999">
-							<view class="line">
-								<view class="lineLeft">201</view>
-								<view class="lineRight">张三，李四</view>
-							</view>
-							<view class="line">
-								<view class="lineLeft">201</view>
-								<view class="lineRight">张三，李四</view>
-							</view>
-						</view>
+						<view class="addItem">曲靖XXXX学校</view>
+						<view class="addItem">楚雄XXXXXXXXX学校</view>
+						<view class="addItem">曲靖XXXX学校</view>
+						<view class="addItem">楚雄XXXXXXXXX学校</view>
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="container999">
-						<view class="line">
-							<view class="lineLeft">201</view>
-							<view class="lineRight">张三，李四</view>
-						</view>
-						<view class="line">
-							<view class="lineLeft">201</view>
-							<view class="lineRight">张三，李四</view>
-						</view>
-					</view>
+					<view class="addItem">曲靖XXXX学校</view>
+					<view class="addItem">楚雄XXXXXXXXX学校</view>
 				</swiper-item>
 			</swiper>
-			<view class="buttonBoxAdd" v-show="!showMenu1" @click="submit">创建订单</view>
+			<view class="buttonBoxAdd" v-show="!showMenu1" @click="sendRemind">发送提醒</view>
 			<view class="bottomMenu" v-show="showMenu1"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
 		</view>
 	</view>
@@ -240,6 +226,11 @@ export default {
 		this.$store.dispatch('initCreateInfo');
 	},
 	methods: {
+		addCar(orderId) {
+			uni.navigateTo({
+				url: '/pages/mine/team/edu/carInfo'
+			});
+		},
 		toggleTab(index) {
 			this.tabIndex = index;
 		},
@@ -368,6 +359,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.addItem {
+	height: 40px;
+	line-height: 40px;
+	width: 670rpx;
+	border-bottom: 1px solid #f5f5f5;
+	font-size: 14px;
+	margin: 0 auto;
+}
 .titleClass {
 	font-weight: bold;
 }
@@ -404,7 +403,7 @@ export default {
 	padding: 0 10px;
 }
 .leftInfo {
-	background-color: rgb(187, 234, 214);
+	background-color: rgb(160, 234, 193);
 	border-radius: 2px;
 	padding: 2px 6px;
 	font-size: 13px;
@@ -546,6 +545,6 @@ export default {
 	position: fixed;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	bottom: 5px;
 }
 </style>

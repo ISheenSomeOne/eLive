@@ -31,13 +31,13 @@
 				<view class="table-cont-item short">{{ item.state }}</view>
 			</view>
 		</block>
-		<!-- eduOrderDistribution -->
+		<!-- eduOrderDistributionCar -->
 		<block v-if="listType == 'orderDistributionList'" v-for="(item, index) in tableList" :key="index">
-			<view class="table-list-item1" @click="toEduOrderInfo(item.id)">
+			<view class="table-list-item1" @click="toCarInfo(item.id)">
 				<view class="table-cont-item">{{ item.numbering }}</view>
 				<view class="table-cont-item">{{ item.carNumber }}</view>
 				<view class="table-cont-item">{{ item.driver }}</view>
-				<view class="table-cont-item">{{ item.peopleNum }}</view>
+					<view @click.stop="toUserList(item.id)" class="linkClass table-cont-item">{{ item.peopleNum }}</view>
 			</view>
 		</block>
 	</view>
@@ -79,9 +79,19 @@ export default {
 				url: '/pages/order/orderInfo?orderId=' + orderId
 			});
 		},
-		toEduOrderInfo(orderId){
+		toEduOrderInfo(orderId) {
 			uni.navigateTo({
 				url: '/pages/mine/team/edu/eduOrderInfo?orderId=' + orderId
+			});
+		},
+		toCarInfo(orderId) {
+			uni.navigateTo({
+				url: '/pages/mine/team/edu/carInfo?orderId=' + orderId
+			});
+		},
+		toUserList(id){
+			uni.navigateTo({
+				url: '/pages/mine/team/edu/eduUserList?id=' + id
 			});
 		}
 	}
@@ -89,6 +99,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	.linkClass{
+		color: #007aff;
+	}
 .table-box {
 	font-size: 12px;
 	margin-bottom: 10px;
@@ -124,7 +137,7 @@ export default {
 	text-overflow: ellipsis;
 }
 
-.table-cont-item2{
+.table-cont-item2 {
 	width: 110rpx;
 	line-height: 24px;
 	overflow: hidden;

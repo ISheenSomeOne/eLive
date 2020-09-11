@@ -103,6 +103,17 @@
         }
         ,{
             "path" : "pages/mine/team/edu/orderDistribution",
+            "style" : {
+			"navigationBarTitleText": "分配详情"}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/carInfo",
+            "style" : {
+			"navigationBarTitleText": "车辆信息"
+			}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/eduUserList",
             "style" : {}
         }
     ],
