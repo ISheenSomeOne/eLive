@@ -116,6 +116,15 @@
             "path" : "pages/mine/team/edu/eduUserList",
             "style" : {}
         }
+        ,{
+            "path" : "pages/mine/team/edu/eduHotel",
+            "style" : {
+			"navigationBarTitleText": "教育酒店房间"}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/hotelAddRoom",
+            "style" : {}
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",

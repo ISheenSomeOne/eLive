@@ -32,7 +32,7 @@
 							<view class="rightInfo">未分配 12</view>
 						</view>
 						<view class="container999">
-							<uni-section class="titleClass" title="汇都酒店" type="line"></uni-section>
+							<navigator url="eduHotel"><uni-section class="titleClass" @click="hotelInfo" title="汇都酒店" type="line"></uni-section></navigator>
 							<view class="line">
 								<view class="lineLeft">201</view>
 								<view class="lineRight">张三，李四</view>
@@ -41,7 +41,7 @@
 								<view class="lineLeft">201</view>
 								<view class="lineRight">张三，李四</view>
 							</view>
-							<uni-section class="titleClass" title="汇都酒店" type="line"></uni-section>
+							<navigator url="eduHotel"><uni-section class="titleClass" @click="hotelInfo" title="汇都酒店" type="line"></uni-section></navigator>
 							<view class="line">
 								<view class="lineLeft">201</view>
 								<view class="lineRight">张三，李四</view>
@@ -50,7 +50,7 @@
 								<view class="lineLeft">201</view>
 								<view class="lineRight">张三，李四</view>
 							</view>
-							<view class="buttonBox" @click="addHotel">添加酒店房间</view>
+							<view class="buttonBox" @click="hotelInfo">添加酒店房间</view>
 						</view>
 					</view>
 				</swiper-item>
@@ -226,6 +226,11 @@ export default {
 		this.$store.dispatch('initCreateInfo');
 	},
 	methods: {
+		hotelInfo(hotelId) {
+			uni.navigateTo({
+				url: 'eduHotel'
+			});
+		},
 		addCar(orderId) {
 			uni.navigateTo({
 				url: '/pages/mine/team/edu/carInfo'

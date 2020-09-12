@@ -33,11 +33,22 @@
 		</block>
 		<!-- eduOrderDistributionCar -->
 		<block v-if="listType == 'orderDistributionList'" v-for="(item, index) in tableList" :key="index">
-			<view class="table-list-item1" @click="toCarInfo(item.id)">
+			<view style="font-size: 14px;" class="table-list-item1" @click="toCarInfo(item.id)">
 				<view class="table-cont-item">{{ item.numbering }}</view>
 				<view class="table-cont-item">{{ item.carNumber }}</view>
 				<view class="table-cont-item">{{ item.driver }}</view>
-					<view @click.stop="toUserList(item.id)" class="linkClass table-cont-item">{{ item.peopleNum }}</view>
+				<view @click.stop="toUserList(item.id)" class="linkClass table-cont-item">{{ item.peopleNum }}</view>
+			</view>
+		</block>
+		<!-- eduDistributionItem -->
+		<block v-if="listType == 'eduDistributionItem'" v-for="(item, index) in tableList" :key="index">
+			<view class="table-list-item1" @longpress="del(item.memberId)" @click="toCarInfo(item.memberId)">
+				<view class="table-cont-item short">{{ item.memberName }}</view>
+				<view class="table-cont-item short">{{ item.sex }}</view>
+				<view class="table-cont-item short">{{ item.car }}</view>
+				<view class="table-cont-item">{{ item.startingName }}</view>
+				<view class="table-cont-item long">{{ item.hotelRoom }}</view>
+				<view class="table-cont-item">{{ item.examSite }}</view>
 			</view>
 		</block>
 	</view>
@@ -50,7 +61,7 @@ export default {
 	data() {
 		return {
 			// orderList: [{
-			// 		id: 1,
+			// 		id: 1,kkkkkkk
 			// 		source: '美团',
 			// 		originClass: 'meituan'
 			// 	},
@@ -89,9 +100,22 @@ export default {
 				url: '/pages/mine/team/edu/carInfo?orderId=' + orderId
 			});
 		},
-		toUserList(id){
+		toUserList(id) {
 			uni.navigateTo({
 				url: '/pages/mine/team/edu/eduUserList?id=' + id
+			});
+		},
+		del(id){
+			uni.showModal({
+				title: '提示',
+				content: '确定删除吗？',
+				confirmColor: '#dd524d',
+				success: function(res) {
+					if (res.confirm) {
+						console.log(111)
+					} else if (res.cancel) {
+					}
+				}
 			});
 		}
 	}
@@ -99,9 +123,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.linkClass{
-		color: #007aff;
-	}
+.linkClass {
+	color: #007aff;
+}
 .table-box {
 	font-size: 12px;
 	margin-bottom: 10px;
