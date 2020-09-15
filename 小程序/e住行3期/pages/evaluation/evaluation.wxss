@@ -147,13 +147,14 @@ page {
   max-height: 180rpx;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .userRatePicItem{
+  margin-left: 10rpx;
   height: 160rpx;
   width: 160rpx;
-  border-radius: 5rpx;
+  border-radius: 6rpx;
 }
 .goodBox{
   width: 100%;

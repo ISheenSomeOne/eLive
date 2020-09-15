@@ -43,7 +43,7 @@
     {{item.comment}}
   </view>
   <view class="userRatePic">
-    <image class="userRatePicItem" wx:for="{{item.imgs}}" wx:for-item="picItem" src="{{api + '/zxkj/img/' + picItem}}" wx:key="index" mode="aspectFill"></image>
+    <image class="userRatePicItem" wx:for="{{item.imgs}}" wx:for-item="picItem" src="{{api + '/zxkj/imgs/' + picItem}}" wx:key="index" mode="aspectFill"></image>
   </view>
   <!-- <view class="goodBox">
     <view wx:if="{{item.hasGood}}" class="good" bindtap="zan" data-index="{{index}}" data-rateid="{{item.rateId}}">

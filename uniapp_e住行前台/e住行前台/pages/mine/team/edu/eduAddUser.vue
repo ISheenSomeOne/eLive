@@ -1,10 +1,7 @@
 <template>
 	<view>
-		<uni-notice-bar style="margin: 0;" :single="true" text="长按某一行即可删除" />
-		<view style="margin-bottom: 60px;">
-			<order-table :listType="'eduDistributionItem'" :titleList="titleList" :tableList="eduDistributionItem"></order-table>
-		</view>
-		<view class="buttonBoxAdd" @click="toAddUser">添加人员</view>
+		<view style="margin-bottom: 60px;"><order-table :listType="'eduAddUserList'" :titleList="titleList" :tableList="eduAddUserList"></order-table></view>
+		<view class="buttonBoxAdd" @click="comfirm">确定</view>
 	</view>
 </template>
 
@@ -13,6 +10,7 @@ export default {
 	data() {
 		return {
 			titleList: [
+				{ cont: '选择', width: 'short' },
 				{ cont: '姓名', width: 'short' },
 				{ cont: '性别', width: 'short' },
 				{ cont: '车辆', width: 'short' },
@@ -20,7 +18,7 @@ export default {
 				{ cont: '酒店房间', width: 'long' },
 				{ cont: '考点', width: 'normal' }
 			],
-			eduDistributionItem: [
+			eduAddUserList: [
 				{
 					memberId: '123',
 					memberName: '张三',
@@ -47,16 +45,9 @@ export default {
 					startingName: 'xxxxx学校',
 					hotelRoom: '春田惠谷酒店-201',
 					examSite: 'xxxxx学校'
-				},
+				}
 			]
 		};
-	},
-	methods: {
-		toAddUser(){
-				uni.navigateTo({
-					url: 'eduAddUser'
-				});
-		}
 	}
 };
 </script>

@@ -42,7 +42,19 @@
 		</block>
 		<!-- eduDistributionItem -->
 		<block v-if="listType == 'eduDistributionItem'" v-for="(item, index) in tableList" :key="index">
-			<view class="table-list-item1" @longpress="del(item.memberId)" @click="toCarInfo(item.memberId)">
+			<view class="table-list-item1" @longpress="del(item.memberId)" @click="toUserInfo(item.memberId)">
+				<view class="table-cont-item short">{{ item.memberName }}</view>
+				<view class="table-cont-item short">{{ item.sex }}</view>
+				<view class="table-cont-item short">{{ item.car }}</view>
+				<view class="table-cont-item">{{ item.startingName }}</view>
+				<view class="table-cont-item long">{{ item.hotelRoom }}</view>
+				<view class="table-cont-item">{{ item.examSite }}</view>
+			</view>
+		</block>
+		<!-- eduAddUserList -->
+		<block v-if="listType == 'eduAddUserList'" v-for="(item, index) in tableList" :key="index">
+			<view class="table-list-item1">
+				<view class="table-cont-item short"><checkbox name="chooseUser" value="cb" checked="true" /></view>
 				<view class="table-cont-item short">{{ item.memberName }}</view>
 				<view class="table-cont-item short">{{ item.sex }}</view>
 				<view class="table-cont-item short">{{ item.car }}</view>
@@ -103,6 +115,11 @@ export default {
 		toUserList(id) {
 			uni.navigateTo({
 				url: '/pages/mine/team/edu/eduUserList?id=' + id
+			});
+		},
+		toUserInfo(memberId){
+			uni.navigateTo({
+				url: '/pages/mine/team/edu/eduUserInfo?memberId=' + memberId
 			});
 		},
 		del(id){

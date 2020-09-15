@@ -67,7 +67,7 @@
 					<view class="addItem">楚雄XXXXXXXXX学校</view>
 				</swiper-item>
 			</swiper>
-			<view class="buttonBoxAdd" v-show="!showMenu1" @click="sendRemind">发送提醒</view>
+			<view class="buttonBoxAdd" v-show="!showMenu1" @click="openChooseSend">发送提醒</view>
 			<view class="bottomMenu" v-show="showMenu1"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
 		</view>
 	</view>
@@ -114,30 +114,6 @@ export default {
 					driver: '王五',
 					peopleNum: '0/40'
 				},
-				{
-					numbering: '2号车',
-					carNumber: '云A 54321',
-					driver: '李四',
-					peopleNum: '40/40'
-				},
-				{
-					numbering: '3号车',
-					carNumber: '云A 23123',
-					driver: '王五',
-					peopleNum: '0/40'
-				},
-				{
-					numbering: '2号车',
-					carNumber: '云A 54321',
-					driver: '李四',
-					peopleNum: '40/40'
-				},
-				{
-					numbering: '3号车',
-					carNumber: '云A 23123',
-					driver: '王五',
-					peopleNum: '0/40'
-				}
 			],
 			tabBars: [
 				{
@@ -226,6 +202,19 @@ export default {
 		this.$store.dispatch('initCreateInfo');
 	},
 	methods: {
+		//下方按钮事件
+		buttonClick(e) {
+			//点击发送提醒
+			if (e.index == 1) {
+				this.openChooseSend();
+			}
+		},
+		//打开选择群组界面
+		openChooseSend() {
+			uni.navigateTo({
+				url: '/pages/mine/team/edu/chooseSend'
+			});
+		},
 		hotelInfo(hotelId) {
 			uni.navigateTo({
 				url: 'eduHotel'
@@ -364,6 +353,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.popupBox {
+	width: 100% !important;
+	min-height: 30vh !important;
+	max-height: 60vh !important;
+	overflow: scroll;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	padding-bottom: 10px !important;
+}
 .addItem {
 	height: 40px;
 	line-height: 40px;

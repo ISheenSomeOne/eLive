@@ -1,4 +1,4 @@
-// pages/start/start.js
+// pages/companyStart/companyStart.js
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var util = require('../../utils/util.js')
 var qqmapsdk
@@ -39,9 +39,8 @@ Page({
     value: [0, 0, 0],
     values: [0, 0, 0],
     condition: false,
-
-   
-
+    companyId: '',//扫码得到的公司Id
+    companyName: '',//协议公司名称
   },
 
   /**
@@ -94,8 +93,15 @@ Page({
     qqmapsdk = new QQMapWX({
       key: 'UNRBZ-3P43P-2TRDB-VEXS2-KCQQO-CWB6D' //自己的key秘钥 http://lbs.qq.com/console/mykey.html 在这个网址申请
     });
-    console.log("onLoad");
     let vm = this;
+    let companyId = decodeURIComponent(options.q).split('=')[1]
+    vm.setData({
+      companyId: companyId
+      // companyId: 2
+    })
+    if(vm.data.companyId){
+      vm.getCompanyName()
+    }
     vm.getUserLocation();
 
     //获取当天日期
@@ -132,6 +138,57 @@ Page({
     this.setData({
       startTime: app.globalData1.startTime,
       endTime: app.globalData1.endTime
+    })
+  },
+
+  /**
+   * 接口获取公司名称
+   */
+  getCompanyName: function(){
+    let that = this
+    wx.request({
+      url: app.globalData.rootApi + '/zxkj/company/wxGetCompanyName',
+      data: {
+        companyId: this.data.companyId
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        if(res.data.code == 200){
+          that.setData({
+            companyName: res.data.data
+          })
+        } else if(res.data.code == -1){
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
+            showCancel: false,
+            success (res) {
+              if (res.confirm) {
+                wx.switchTab({
+                  url: '/pages/start/start',
+                })
+              }
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '服务器错误',
+            showCancel: false,
+            success (res) {
+              if (res.confirm) {
+                
+              }
+            }
+          })
+        }
+      },
+      fail: function(res) {
+
+      }
     })
   },
 
@@ -255,6 +312,7 @@ Page({
   },
 
   hotelList:util.throttle(function (e) {
+    let that = this
     console.log('endTime---' + app.globalData1.endTime)
     //如果只选择了一个日期
     if (app.globalData1.endTime == '请选择') {
@@ -264,10 +322,14 @@ Page({
         duration: 2000
       })
     } else { //选择了两个日期
-      var obj = JSON.stringify([this.data.region[0], this.data.region[1], this.data.region[2], this.data.latitude, this.data.longitude, '']);
-      wx.navigateTo({
-        url: '/pages/hotelList/hotelList?obj=' + obj,
-      })
+      if(this.data.companyId != '' && this.data.companyId != undefined && this.data.companyId != null){
+        var obj = JSON.stringify([this.data.region[0], this.data.region[1], this.data.region[2], this.data.latitude, this.data.longitude,this.data.companyId]);
+        wx.navigateTo({
+          url: '/pages/hotelList/hotelList?obj=' + obj,
+        })
+      } else {
+        
+      }
     }
   },3000),
 

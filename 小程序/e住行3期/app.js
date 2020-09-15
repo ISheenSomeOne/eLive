@@ -172,7 +172,8 @@
         bed: '', //床型 
         area: '', //面积
         price: '', //价格
-        deposit: '' //押金
+        deposit: '', //押金
+        minNegotiatedPrice: '', //协议价格
       },
 
       globalData1: {
@@ -215,7 +216,7 @@
         iv: '',
         encryptedData: '',
         // rootApi: 'http://192.168.2.135:9955',//彭兴华测试环境
-        // rootApi: 'http://puqrpw.natappfree.cc',//测试环境
+        // rootApi: 'http://siwce9.natappfree.cc',//测试环境
         rootApi:'https://zxkj.webinn.online',//正式环境
         imgApi: 'https://zxkj.webinn.online/zxkj/imgs/' //'http://webinn.online:9955/zxkj/img/'
       }

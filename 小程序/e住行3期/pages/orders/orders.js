@@ -72,6 +72,15 @@ Page({
     var that = this;
     var DATE = util.formatDate(new Date());
     let title = 'nvabarData.title'
+    if(options.companyId != '' && options.companyId != null && options.companyId != 'undefined'){
+      that.setData({
+        companyId: options.companyId
+      })
+    } else {
+      that.setData({
+        companyId: ''
+      })
+    }
 
     //如果openid为空
     if (!wx.getStorageSync('openid')) {
@@ -93,6 +102,7 @@ Page({
       area: app.globalData2.area,
       price: app.globalData2.price,
       deposit: app.globalData2.deposit,
+      minNegotiatedPrice: app.globalData2.minNegotiatedPrice,
       startTime: app.globalData1.startTime,
       endTime: app.globalData1.endTime,
       dateCount: app.globalData1.dateCount,
@@ -441,7 +451,7 @@ Page({
           })
         } else {
           wx.navigateTo({
-            url: '/pages/orderTwo/orderTwo?showValue=' + that.data.showValue + '&contacts=' + that.data.contacts + '&tel=' + that.data.tel + '&info=' + that.data.info
+            url: '/pages/orderTwo/orderTwo?showValue=' + that.data.showValue + '&contacts=' + that.data.contacts + '&tel=' + that.data.tel + '&info=' + that.data.info + '&companyId=' + that.data.companyId
           })
         }
       },
@@ -509,9 +519,15 @@ Page({
     //房间数量 * 房间价格 * 住的天数 -优惠券价格 + 押金 deposit
     var showValue = this.data.showValue;
     var price = parseFloat(this.data.price);
+    var minNegotiatedPrice =  parseFloat(this.data.minNegotiatedPrice);
     var deposit = parseInt(this.data.deposit);
     var dateCount = parseInt(this.data.dateCount)
-    var manPrice = showValue * price * dateCount;
+
+    if(this.data.companyId != ''){
+      var manPrice = showValue * minNegotiatedPrice * dateCount;
+    } else {
+      var manPrice = showValue * price * dateCount;
+    }
     // var totalPrice = showValue * price * dateCount + deposit;
 
     this.setData({

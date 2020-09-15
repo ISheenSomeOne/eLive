@@ -129,6 +129,7 @@ Page({
     let images = that.data.images
     let updateImg = {};
     let ok = []
+    console.log('length' + images.length)
     if(images.length ==0){
       wx.request({
         url: app.globalData.rootApi + '/zxkj/comment/wxAddComment',
