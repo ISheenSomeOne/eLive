@@ -1,0 +1,30 @@
+<!--pages/team/edu/pay/pay.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding-top: 1px;'>
+  <!-- 考试信息 -->
+  <view class="infoBox">
+    <view class="infoItem">
+      <view class="itemLeft">房间费用</view>
+      <view class="itemRight">￥100 <text>￥200</text></view>
+    </view>
+    <view class="infoItem">
+      <view class="itemLeft">其他费用</view>
+      <view class="itemRight">￥100</view>
+    </view>
+    <view class="infoItem" style="font-size:40rpx">
+      <view class="itemLeft">总费用</view>
+      <view class="itemRight" style="font-size:44rpx">￥200</view>
+    </view>
+    <view class="tip">
+      <view>注意</view>
+      <view>1.您承担一半的房间费用。</view>
+      <view>1.您支付整间房间的费用。</view>
+      <view>2.支付成功后下发合住邀请码</view>
+      <view>1.您不需要支付房间的费用。</view>
+    </view>
+    <view class="pay">
+      支付
+    </view>
+  </view>
+</view>

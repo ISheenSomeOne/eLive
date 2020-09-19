@@ -1,0 +1,106 @@
+<!--pages/team/edu/signUp/signUp.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding-top: 1px;'>
+	<!-- 考试信息 -->
+	<view class="infoBox">
+		<text class="infoTitle">考试信息</text>
+		<view class="infoItem">
+			<view class="itemLeft">名称</view>
+			<view class="itemRight">云南省xxxx考试</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">时间</view>
+			<view class="itemRight">2020-10-01 至 2020-10-02</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">说明</view>
+			<view class="itemRight" style="line-height:50rpx">暗室逢灯个家说过话集合发是的水电费暗室逢灯个家说过话集合发是的水电费</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">链接</view>
+			<view class="itemRight">http://ddfgs</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">报名截止</view>
+			<view class="itemRight">2020-09-28 24:00</view>
+		</view>
+	</view>
+
+	<!-- 接送信息 -->
+	<view class="infoBox bgBlue">
+		<view class="infoItem">
+			<view class="itemLeft">接送服务</view>
+			<view class="itemRight">
+				<switch color="#1485ee" checked="{{needCar}}" bindchange="needCarChange" />
+			</view>
+		</view>
+		<view hidden="{{!needCar}}" class="infoItem">
+			<view class="itemLeft">考点</view>
+			<view class="itemRight">
+				<picker bindchange="examSiteChange" value="{{examSiteIndex}}" range="{{examSiteList}}">
+					<view class="picker">
+						{{examSiteList[examSiteIndex]}}
+					</view>
+				</picker>
+			</view>
+		</view>
+		<view hidden="{{!needCar}}" class="infoItem">
+			<view class="itemLeft">出发点</view>
+			<view class="itemRight">
+				<picker bindchange="startingChange" value="{{startingIndex}}" range="{{startingList}}">
+					<view class="picker">
+						{{startingList[startingIndex]}}
+					</view>
+				</picker>
+			</view>
+		</view>
+	</view>
+
+	<!-- 个人信息 -->
+	<view class="infoBox">
+		<text class="infoTitle">填写个人信息</text>
+		<view class="infoItem">
+			<view class="itemLeft">身份证号</view>
+			<view class="itemRight">
+				<input type="idcard" class="itemInput" placeholder="请输入身份证号"></input>
+			</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">姓名</view>
+			<view class="itemRight">
+				<input placeholder="请输入姓名" class="itemInput"></input></view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">手机号</view>
+			<view class="itemRight"><input type="number" class="itemInput" placeholder="请输入手机号"></input></view>
+		</view>
+	</view>
+
+	<!-- 入住方式 -->
+	<view class="infoBox">
+		<text class="infoTitle">选择住宿方式</text>
+		<view class="infoItem" style="margin-top:10rpx">
+			<radio-group style="width:100%" bindchange="liveWayChange">
+				<view style="width:100%;font-size:24rpx;display: flex;justify-content: space-between;">
+					<radio value="0" checked="true" color="#1485ee">系统分配</radio>
+					<radio value="1" color="#1485ee">邀请他人</radio>
+					<radio value="2" color="#1485ee">加入他人</radio>
+					<radio value="3" color="#1485ee">一人独住</radio>
+				</view>
+			</radio-group>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">说明</view>
+			<view wx:if="{{liveWay == 0}}" class="itemRight" style="line-height:40rpx;font-size:26rpx;color:#029789">与他人（同性别）同住，系统将自动为您分配房间</view>
+			<view wx:if="{{liveWay == 1}}" class="itemRight" style="line-height:40rpx;font-size:26rpx;color:#029789">为您创建一个房间，并且您将支付一间房的费用，支付成功后获得邀请码，可邀请他人同住</view>
+			<view wx:if="{{liveWay == 2}}" class="itemRight" style="line-height:40rpx;font-size:26rpx;color:#029789">加入他人创建的房间，您不支付房间费用，请在下方填写邀请码</view>
+			<view wx:if="{{liveWay == 3}}" class="itemRight" style="line-height:40rpx;font-size:26rpx;color:#029789">不与他人合住，我们将为您安排单独房间，您将支付一间房的全部费用</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">邀请码</view>
+			<view class="itemRight"><input type="text" class="itemInput" placeholder="请输入邀请码"></input></view>
+		</view>
+		<button class="confirm" type="primary" bindtap="confirm">下一步</button>
+	</view>
+</view>

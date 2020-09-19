@@ -493,5 +493,5 @@ page {
 
 .recharge {
   float: right;
-  color: rgb(9, 187, 7);
+  color: #07c160;
 }

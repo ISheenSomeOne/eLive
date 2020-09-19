@@ -1,5 +1,9 @@
 {
   "pages": [
+    "pages/team/orderList/orderList",
+    "pages/team/edu/pay/pay",
+    "pages/mine/mine",
+    "pages/team/edu/signUp/signUp",
     "pages/start/start",
     "pages/companyStart/companyStart",
     "pages/hotelDetail/hotelDetail",
@@ -43,7 +47,6 @@
     "pages/shopping/shopping",
     "pages/ownerInfo/ownerInfo",
     "pages/proxyPay/proxyPay",
-    "pages/mine/mine",
     "pages/map/map",
     "pages/checkInHotel/checkInHotel",
     "pages/noContent/noContent",
@@ -54,7 +57,8 @@
     "pages/exchange/exchange",
     "pages/help/help",
     "pages/myHotel/myHotel",
-    "pages/setting/setting"
+    "pages/setting/setting",
+    "pages/team/edu/orderInfo/orderInfo"
   ],
   "tabBar": {
     "selectedColor": "#f06c00",
