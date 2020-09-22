@@ -1,4 +1,4 @@
-// pages/team/edu/pay/pay.js
+// pages/team/orderList/orderList.js
 let app = getApp()
 Page({
 

@@ -11,7 +11,7 @@ page {
 .infoBox {
   position: relative;
   width: 690rpx;
-  margin: 20rpx auto;
+  margin: 25rpx auto;
   font-size: 30rpx;
   background-color: #fff;
   box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
@@ -22,9 +22,10 @@ page {
 .infoTitle {
   position: relative;
   width: 650rpx;
-  margin: 0 auto;
+  margin: 0 auto 10rpx auto;
   line-height: 70rpx;
   border-bottom: 1rpx solid rgb(240, 240, 240);
+  font-weight: bold;
 }
 .infoTitle view{
   position: absolute;
@@ -35,8 +36,9 @@ page {
   border-radius: 4rpx;
   height: 40rpx;
   line-height: 40rpx;
-  font-size: 22rpx;   
+  font-size: 22rpx;
   color: #fff;
+  font-weight: normal;
 }
 
 .infoItem {
