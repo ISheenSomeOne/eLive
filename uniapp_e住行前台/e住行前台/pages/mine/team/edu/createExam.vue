@@ -42,10 +42,10 @@
 			<view class="line">
 				<view class="lineLeft">入离时间</view>
 				<view class="lineRight">
-					<picker mode="date" :value="form.checkinDate" @change="bindCheckinDateChange">
+					<picker mode="date" :value="form.checkinDate" @change="checkinDateChange">
 						<view class="uni-input">{{ form.checkinDate }}</view>
 					</picker>
-					<picker mode="date" :value="form.checkoutDate" @change="bindCheckoutDateChange">
+					<picker mode="date" :value="form.checkoutDate" @change="checkoutDateChange">
 						<view class="uni-input">{{ form.checkoutDate }}</view>
 					</picker>
 				</view>
@@ -53,22 +53,24 @@
 			<uni-section class="titleClass" title="考点信息" type="line"></uni-section>
 			<view class="line">
 				<view class="lineLeft">考点数量</view>
-				<view class="lineRight"><input class="input" v-model="examSiteNum" type="number" placeholder-class="plaClass" placeholder="请输入考点数量" /></view>
+				<view class="lineRight">
+					<input class="input" @input="examSiteNumChange" v-model="examSiteNum" type="number" placeholder-class="plaClass" placeholder="请输入考点数量" />
+				</view>
 			</view>
 
 			<!-- 考点列表 -->
-			<block v-for="(item, index) in examSiteNum" :key="index">
+			<block v-for="(item, index) in Number(examSiteNum)" :key="index">
 				<view class="line">
 					<view class="lineLeft">考点{{ index + 1 }}</view>
 					<view class="lineRight">
 						<input class="input" v-model="form.examSiteList[index].name" placeholder-class="plaClass" placeholder="请输入考点名称" />
-					</view>
+						</view>
 				</view>
 				<view class="line">
 					<view class="lineLeft">经纬度</view>
 					<view class="lineRight">
-						<input class="input" v-model="form.examSiteList[index].longitude" placeholder-class="plaClass" placeholder="请输入考点经度" />
-						<input class="input" v-model="form.examSiteList[index].latitude" placeholder-class="plaClass" placeholder="请输入考点纬度" />
+						<input class="input" v-model="form.examSiteList[index].longitude" placeholder-class="plaClass" placeholder="请输入经度" />
+						<input class="input" v-model="form.examSiteList[index].latitude" placeholder-class="plaClass" placeholder="请输入纬度" />
 						<view class="tips">选填</view>
 					</view>
 				</view>
@@ -76,13 +78,11 @@
 			<uni-section class="titleClass" title="起点信息" type="line"></uni-section>
 			<view class="line">
 				<view class="lineLeft">起点数量</view>
-				<view class="lineRight">
-					<input class="input" type="number" v-model="startingNum" placeholder-class="plaClass" placeholder="请输入起点数量" />
-				</view>
+				<view class="lineRight"><input class="input" @input="startingNumChange" type="number" v-model="startingNum" placeholder-class="plaClass" placeholder="请输入起点数量" /></view>
 			</view>
 
 			<!-- 起点列表 -->
-			<block v-for="(item, index) in startingNum" :key="index">
+			<block v-for="(item, index) in Number(startingNum)" :key="index">
 				<view class="line">
 					<view class="lineLeft">起点{{ index + 1 }}</view>
 					<view class="lineRight">
@@ -104,8 +104,8 @@
 				<view class="line">
 					<view class="lineLeft">经纬度</view>
 					<view class="lineRight">
-						<input class="input" v-model="form.startingList[index].examSiteLongitude" placeholder-class="plaClass" placeholder="请输入起点经度" />
-						<input class="input" v-model="form.startingList[index].examSiteLatitude" placeholder-class="plaClass" placeholder="请输入起点纬度" />
+						<input class="input" v-model="form.startingList[index].examSiteLongitude" placeholder-class="plaClass" placeholder="请输入经度" />
+						<input class="input" v-model="form.startingList[index].examSiteLatitude" placeholder-class="plaClass" placeholder="请输入纬度" />
 						<view class="tips">选填</view>
 					</view>
 				</view>
@@ -179,27 +179,41 @@ export default {
 			deadline: '选择报名截止日期（当日24点）',
 			nowPayway: 0,
 			payway: ['选择支付方式', '统一支付', '学生支付', '已支付'],
-			examSiteNum: 2,
-			startingNum: 2,
+			examSiteNum: 1,
+			startingNum: 1,
 			form: {
-				examName: '',//考试名称
-				examStartDate: '选择开始日期',//考试开始
-				examEndDate: '选择结束日期',//考试结束
+				examName: '', //考试名称
+				examStartDate: '选择开始日期', //考试开始
+				examEndDate: '选择结束日期', //考试结束
 				deadline: '选择报名截止日期（当日24点）', //报名截止
 				examLink: '', //报名链接
-				examDirections: '',//考试说明
-				examSiteList: [], //考点列表
-				startingList: [], //起点列表
-				checkinDate: '选择入住日期',//入住日期
-				checkoutDate: '选择离店日期',//入住日期
-				payway: '',//支付方式
-				principal: '',//负责人
+				examDirections: '', //考试说明
+				examSiteList: [
+					{
+						name: '',
+						longitude: '',
+						latitude: ''
+					}
+				], //考点列表
+				startingList: [
+					{
+						name: '',
+						startingDate: '选择出发日期',
+						startingTime: '选择出发时间',
+						longitude: '',
+						latitude: ''
+					}
+				], //起点列表
+				checkinDate: '选择入住日期', //入住日期
+				checkoutDate: '选择离店日期', //入住日期
+				payway: '', //支付方式
+				principal: '', //负责人
 				contact: '', //联系方式
 				allFee: '', //需付金额
 				roomFee: '', //房费
 				otherFee: '', // 其他费用
 				peopleNum: '', // 人数
-				remarks: '', //备注
+				remarks: '' //备注
 			}
 		};
 	},
@@ -209,6 +223,36 @@ export default {
 		// },
 	},
 	methods: {
+		//考点数量改变，改变数据结构
+		examSiteNumChange: function(e) {
+			let val = e.target.value;
+			let that = this;
+			let item = {
+				name: '',
+				longitude: '',
+				latitude: ''
+			};
+			that.form.examSiteList = [];
+			for (let i = 0; i < that.examSiteNum; i++) {
+				that.form.examSiteList.push(item);
+			}
+		},
+		//起点数量改变，改变数据结构
+		startingNumChange: function(e) {
+			let val = e.target.value;
+			let that = this;
+			let item = {
+				name: '',
+				startingDate: '选择出发日期',
+				startingTime: '选择出发时间',
+				longitude: '',
+				latitude: ''
+			};
+			that.form.startingList = [];
+			for (let i = 0; i < that.startingNum; i++) {
+				that.form.startingList.push(item);
+			}
+		},
 		//考试开始日期
 		examStartDateChange: function(e) {
 			this.form.examStartDate = e.target.value;
@@ -220,8 +264,11 @@ export default {
 		deadlineChange: function(e) {
 			this.form.deadline = e.target.value;
 		},
-		bindCheckoutDateChange: function(e) {
-			this.checkoutDate = e.target.value;
+		checkinDateChange: function(e) {
+			this.form.checkinDate = e.target.value;
+		},
+		checkoutDateChange: function(e) {
+			this.form.checkoutDate = e.target.value;
 		},
 		bindStartDateChange: function(e) {
 			this.startDate = e.target.value;
@@ -236,9 +283,9 @@ export default {
 			this.startingTime = e.target.value;
 		},
 		// 房间
-		paywayChange(e){
+		paywayChange(e) {
 			this.nowPayWay = e.target.value;
-			this.form.payWay = this.nowPayway
+			this.form.payWay = this.nowPayway;
 		},
 		//表单数据变化中转
 		formChange(e) {
