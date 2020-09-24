@@ -61,10 +61,8 @@
 			<!-- 考点列表 -->
 			<block v-for="(item, index) in Number(examSiteNum)" :key="index">
 				<view class="line">
-					<view class="lineLeft">考点{{ index + 1 }}</view>
-					<view class="lineRight">
-						<input class="input" v-model="form.examSiteList[index].name" placeholder-class="plaClass" placeholder="请输入考点名称" />
-						</view>
+					<view class="lineLeft">考点{{ item }}</view>
+					<view class="lineRight"><input class="input" @input="examSiteChange($event, 0, index)" :value="form.examSiteList[index].name" placeholder-class="plaClass" placeholder="请输入考点名称" /></view>
 				</view>
 				<view class="line">
 					<view class="lineLeft">经纬度</view>
@@ -78,35 +76,37 @@
 			<uni-section class="titleClass" title="起点信息" type="line"></uni-section>
 			<view class="line">
 				<view class="lineLeft">起点数量</view>
-				<view class="lineRight"><input class="input" @input="startingNumChange" type="number" v-model="startingNum" placeholder-class="plaClass" placeholder="请输入起点数量" /></view>
+				<view class="lineRight">
+					<input class="input" @input="startingNumChange" type="number" v-model="startingNum" placeholder-class="plaClass" placeholder="请输入起点数量" />
+				</view>
 			</view>
 
 			<!-- 起点列表 -->
-			<block v-for="(item, index) in Number(startingNum)" :key="index">
-				<view class="line">
-					<view class="lineLeft">起点{{ index + 1 }}</view>
-					<view class="lineRight">
-						<input class="input" v-model="form.startingList[index].name" placeholder-class="plaClass" placeholder="请输入起点名称" />
+			<block>
+				<view v-for="(item, index) in Number(startingNum)" :key="index">
+					<view class="line">
+						<view class="lineLeft">起点{{ item }}</view>
+						<view class="lineRight"><input class="input" v-model="form.startingList[index].name" placeholder-class="plaClass" placeholder="请输入起点名称" /></view>
 					</view>
-				</view>
-				<view class="line">
-					<view class="lineLeft">出发时间</view>
-					<view class="lineRight">
-						<picker mode="date" :value="form.startingList[index].startingDate" @change="bindStartingDateChange">
-							<view class="uni-input">{{ form.startingList[index].startingDate }}</view>
-						</picker>
-						<picker mode="time" :value="form.startingList[index].startingTime" @change="bindStartingTimeChange">
-							<view class="uni-input">{{ form.startingList[index].startingTime }}</view>
-						</picker>
-						<view class="tips">选填</view>
+					<view class="line">
+						<view class="lineLeft">出发时间</view>
+						<view class="lineRight">
+							<picker mode="date" :value="form.startingList[index].startingDate" @change="bindStartingDateChange">
+								<view class="uni-input">{{ form.startingList[index].startingDate }}</view>
+							</picker>
+							<picker mode="time" :value="form.startingList[index].startingTime" @change="bindStartingTimeChange">
+								<view class="uni-input">{{ form.startingList[index].startingTime }}</view>
+							</picker>
+							<view class="tips">选填</view>
+						</view>
 					</view>
-				</view>
-				<view class="line">
-					<view class="lineLeft">经纬度</view>
-					<view class="lineRight">
-						<input class="input" v-model="form.startingList[index].examSiteLongitude" placeholder-class="plaClass" placeholder="请输入经度" />
-						<input class="input" v-model="form.startingList[index].examSiteLatitude" placeholder-class="plaClass" placeholder="请输入纬度" />
-						<view class="tips">选填</view>
+					<view class="line">
+						<view class="lineLeft">经纬度</view>
+						<view class="lineRight">
+							<input class="input" v-model="form.startingList[index].examSiteLongitude" placeholder-class="plaClass" placeholder="请输入经度" />
+							<input class="input" v-model="form.startingList[index].examSiteLatitude" placeholder-class="plaClass" placeholder="请输入纬度" />
+							<view class="tips">选填</view>
+						</view>
 					</view>
 				</view>
 			</block>
@@ -222,6 +222,10 @@ export default {
 		// 	return this.$store.state.edu.createExam;
 		// },
 	},
+	onLoad() {
+		// this.form = JSON.stringify(this.form)
+		// JSON.parse(this.form)
+	},
 	methods: {
 		//考点数量改变，改变数据结构
 		examSiteNumChange: function(e) {
@@ -232,10 +236,35 @@ export default {
 				longitude: '',
 				latitude: ''
 			};
-			that.form.examSiteList = [];
-			for (let i = 0; i < that.examSiteNum; i++) {
-				that.form.examSiteList.push(item);
+			if (val == '') {
+				this.examSiteNum = 1;
+				let org = that.form.examSiteList[0];
+				that.form.examSiteList = [];
+				that.form.examSiteList.push(org);
+			} else {
+				that.form.examSiteList = [];
+				for (let i = 0; i < that.examSiteNum; i++) {
+					that.form.examSiteList.push(item);
+				}
 			}
+		},
+		//输入考点信息
+		examSiteChange: function(e,prop, index) {
+			console.log(prop)
+			let val = e.detail.value;
+			let list = JSON.parse(JSON.stringify(this.form.examSiteList));
+			switch(prop){
+				case 0:
+					list[index].name = val;
+					break;
+				case 1:
+					list[index].longitude = val;
+					break;
+				case 2:
+					list[index].latitude = val;
+					break;
+			}
+			this.form.examSiteList = list;
 		},
 		//起点数量改变，改变数据结构
 		startingNumChange: function(e) {
@@ -248,9 +277,15 @@ export default {
 				longitude: '',
 				latitude: ''
 			};
-			that.form.startingList = [];
-			for (let i = 0; i < that.startingNum; i++) {
-				that.form.startingList.push(item);
+			if (val == '') {
+				let org = that.form.startingList[0];
+				that.form.startingList = [];
+				that.form.startingList.push(org);
+			} else {
+				that.form.startingList = [];
+				for (let i = 0; i < that.startingNum; i++) {
+					that.form.startingList.push(item);
+				}
 			}
 		},
 		//考试开始日期
