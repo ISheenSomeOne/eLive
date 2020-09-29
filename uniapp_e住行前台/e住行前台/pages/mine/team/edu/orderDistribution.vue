@@ -199,6 +199,7 @@ export default {
 	onLoad(options) {
 		if(options.orderId != ''){
 			this.orderId = options.orderId
+			this.$store.commit('resetHeightFalse')
 		}
 	},
 	methods: {
