@@ -4,95 +4,100 @@
 			<uni-section class="titleClass" title="订单详情" type="line"></uni-section>
 			<view class="line">
 				<view class="lineLeft">考试名称</view>
-				<view class="lineRight">2020云南省公务员考试—曲靖xx学吃是校</view>
+				<view class="lineRight">{{ eduOrderInfo.examName }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">入离时间</view>
-				<view class="lineRight">2020-10-30 至 2020-10-31</view>
+				<view class="lineRight">{{ eduOrderInfo.checkinDate }} 至 {{ eduOrderInfo.checkoutDate }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">考试时间</view>
-				<view class="lineRight">2020-10-30 至 2020-10-31</view>
+				<view class="lineRight">{{ eduOrderInfo.examStartDate }} 至 {{ eduOrderInfo.examEndDate }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">报名截止</view>
-				<view class="lineRight">2020-10-20 24:00</view>
+				<view class="lineRight">{{ eduOrderInfo.deadline }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">网站链接</view>
-				<view class="lineRight">http://djfgduf.com</view>
+				<view class="lineRight">{{ eduOrderInfo.examLink }}</view>
 			</view>
 			<view class="line" style="height: auto;">
 				<view class="lineLeft" style="line-height: 50px;">考试说明</view>
-				<view class="lineRight" style="padding: 2px 0ds;">手动阀规范化课本上的反馈光华科技发达国家回复的打分间隔后即可水电费更健康的会发生个都是分开几个号</view>
+				<view class="lineRight" style="padding: 2px 0ds;">{{ eduOrderInfo.examDescription }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">负责人</view>
-				<view class="lineRight">张三</view>
+				<view class="lineRight">{{ eduOrderInfo.principal }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">联系方式</view>
-				<view class="lineRight">13231313333</view>
+				<view class="lineRight">{{ eduOrderInfo.contact }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">人数</view>
-				<view class="lineRight">200</view>
+				<view class="lineRight">{{ eduOrderInfo.peopleNum }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">状态</view>
-				<view class="lineRight"><view class="bgYellow">报名中</view></view>
+				<view class="lineRight">
+					<view class="bgYellow">{{ eduOrderInfo.state }}</view>
+				</view>
 			</view>
 			<!-- 出发点信息 -->
 			<uni-section class="titleClass" title="出发点信息" type="line"></uni-section>
-			<view class="line">
-				<view class="lineLeft">出发点1</view>
-				<view class="lineRight">昆明市第十中学</view>
-			</view>
-			<view class="line">
-				<view class="lineLeft">出发时间</view>
-				<view class="lineRight">2020-10-30 14:00</view>
-			</view>
-			<view class="line">
-				<view class="lineLeft">出发位置</view>
-				<view class="lineRight">
-					123.2232 , 23.4233
-					<view class="tips">查看</view>
+			<block v-for="(item, index) in eduOrderInfo.startingList" :key="index">
+				<view class="line">
+					<view class="lineLeft">出发点{{ index }}</view>
+					<view class="lineRight">{{ item.name }}</view>
 				</view>
-			</view>
+				<view class="line">
+					<view class="lineLeft">出发时间</view>
+					<view class="lineRight">{{ item.startingDate }} {{ item.startingTime }}</view>
+				</view>
+				<view class="line">
+					<view class="lineLeft">出发位置</view>
+					<view class="lineRight">
+						{{ item.longitude }} , {{ item.latitude }}
+						<view class="tips">查看</view>
+					</view>
+				</view>
+			</block>
 			<!-- 考点信息 -->
 			<uni-section class="titleClass" title="考点信息" type="line"></uni-section>
-			<view class="line">
-				<view class="lineLeft">考点1</view>
-				<view class="lineRight">昆明市第十中学</view>
-			</view>
-			<view class="line">
-				<view class="lineLeft">考点位置</view>
-				<view class="lineRight">
-					123.2232 , 23.4233
-					<view class="tips">查看</view>
+			<block v-for="(item, index) in eduOrderInfo.examSiteList" :key="index">
+				<view class="line">
+					<view class="lineLeft">考点{{ index }}</view>
+					<view class="lineRight">{{ item.name }}</view>
 				</view>
-			</view>
+				<view class="line">
+					<view class="lineLeft">{{ item.examName }}</view>
+					<view class="lineRight">
+						{{ item.longitude }} , {{ item.latitude }}
+						<view class="tips">查看</view>
+					</view>
+				</view>
+			</block>
 			<uni-section class="titleClass" title="酒店信息" type="line"></uni-section>
-			<view class="line">
-				<view class="lineLeft">酒店1</view>
-				<view class="lineRight">昆明汇都酒店</view>
-			</view>
-			<view class="line">
-				<view class="lineLeft">酒店2</view>
-				<view class="lineRight">昆明欣润酒店</view>
+			<view class="line" v-for="(item, index) in eduOrderInfo.hotelList" :key="index">
+				<view class="lineLeft">酒店{{ index }}</view>
+				<view class="lineRight">
+					{{ item.name }}
+					<view class="tips">{{ item.num }}</view>
+				</view>
 			</view>
 			<uni-section class="titleClass" title="财务信息" type="line"></uni-section>
 			<view class="line">
 				<view class="lineLeft">房费</view>
-				<view class="lineRight">￥30000</view>
+				<view class="lineRight">￥{{ eduOrderInfo.roomFee }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">其他费用</view>
-				<view class="lineRight">￥20000</view>
+				<view class="lineRight">￥{{ eduOrderInfo.otherFee }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">总费用</view>
-				<view class="lineRight">￥50000</view>
+				<view class="lineRight">￥{{ eduOrderInfo.allFee }}</view>
 			</view>
 		</view>
 		<view class="bottomMenu"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
@@ -103,6 +108,7 @@
 export default {
 	data() {
 		return {
+			orderId: '',
 			options: [
 				{
 					icon: 'trash',
@@ -123,11 +129,28 @@ export default {
 			]
 		};
 	},
+	computed: {
+		eduOrderInfo() {
+			return this.$store.state.edu.eduOrderInfo;
+		}
+	},
+	onLoad(options) {
+		if (options.orderId != '') {
+			this.orderId = options.orderId;
+			that.$store.commit('req_getExamOrderInfo', this.orderId);
+		}
+	},
 	methods: {
 		buttonClick(e) {
-			if (e.index == 1) {
+			//修改
+			if (e.index == 0) {
+				// uni.navigateTo({
+				// 	url: '/pages/mine/team/edu/orderDistribution'
+				// });
+			//分配
+			} else if (e.index == 1)  {
 				uni.navigateTo({
-					url: '/pages/mine/team/edu/orderDistribution'
+					url: '/pages/mine/team/edu/orderDistribution?orderId='+this.orderId
 				});
 			}
 		}

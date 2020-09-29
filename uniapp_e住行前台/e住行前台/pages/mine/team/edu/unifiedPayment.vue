@@ -1,27 +1,27 @@
 <template>
 	<view class="unifiedPayment">
-		<uni-title type="h1" title="2020云南省公务员考试" align="center"></uni-title>
-		<uni-title type="h4" title="2020年10月30日——2020年10月31日" align="center"></uni-title>
+		<uni-title type="h1" :title="paymentInfo.examName" align="center"></uni-title>
+		<uni-title type="h4" :title="paymentInfo.examStartDate+' —— '+paymentInfo.examStartDate" align="center"></uni-title>
 		<view class="container999">
-			<view class="line">
+			<view class="line" v-if="paymentInfo.peopleNum">
 				<view class="lineLeft">人数</view>
-				<view class="lineRight">200</view>
+				<view class="lineRight">{{paymentInfo.peopleNum}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">入住时间</view>
-				<view class="lineRight">2020年10月30日</view>
+				<view class="lineRight">{{paymentInfo.checkinDate}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">离店时间</view>
-				<view class="lineRight">2020年10月31日</view>
+				<view class="lineRight">{{paymentInfo.checkoutDate}}</view>
 			</view>
-			<view class="line" style="height: auto;">
+			<view class="line" style="height: auto;" v-if="paymentInfo.remarks">
 				<view class="lineLeft" style="height: 50px;line-height: 50px;">备注</view>
-				<view class="lineRight" style="padding: 5px 0 5px 10px;">8月12日DCloud受邀参加iWEB峰会后，9月19日DCloud CEO 王安在千人小程序峰会——见实大会，做了主题为《App和小程序，鱼与熊掌如何兼得？》的分享。</view>
+				<view class="lineRight" style="padding: 5px 0 5px 10px;">{{paymentInfo.remarks}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">支付费用</view>
-				<view class="lineRight" style="font-size: 20px;font-weight: bold;color: #dd524d;">￥20200</view>
+				<view class="lineRight" style="font-size: 20px;font-weight: bold;color: #dd524d;">￥{{paymentInfo.allFee}}</view>
 			</view>
 			<view class="buttonBox" @click="submit">支 付</view>
 		</view>
@@ -31,10 +31,29 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			examId: ''
+		};
+	},
+	computed:{
+		paymentInfo() {
+			return this.$store.state.edu.paymentInfo;
+		},
+	},
+	onLoad(option) {
+		let that = this
+		if(option.examId != ''){
+			that.examId = option.examId
+			that.$store.commit('req_getUnifiedPaymentInfo', that.examId);
+		}
 	},
 	mounted() {
 		document.querySelector('.uni-page-head-hd').style.display = 'none';
+	},
+	methods:{
+		submit:function(){
+			this.$store.commit('unifiedPaymentPay')
+		}
 	}
 };
 </script>

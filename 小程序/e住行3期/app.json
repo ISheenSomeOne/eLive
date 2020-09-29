@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/team/edu/signUp/signUp",
     "pages/team/edu/orderInfo/orderInfo",
     "pages/team/orderList/orderList",
     "pages/team/edu/pay/pay",
     "pages/mine/mine",
-    "pages/team/edu/signUp/signUp",
     "pages/start/start",
     "pages/companyStart/companyStart",
     "pages/hotelDetail/hotelDetail",

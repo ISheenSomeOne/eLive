@@ -1,6 +1,12 @@
 import home from './home.js'
 const state = {
-	createExam: '',//创建考试表单
+	createExamData: '', //创建考试表单
+	unifiedPaymentLink: '', //【统一支付】页面链接
+	qr: '', //学生报名二维码图片
+	paymentInfo: '',//统一支付页面信息
+	eduList: '', //教育列表
+	eduListPage: 1,//教育列表下次请求页码
+	eduOrderInfo: '',//教育订单详情
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -8,44 +14,41 @@ const mutations = {
 		state.createExam = val
 		console.log(state.createExam)
 	},
-	//请求初始化信息
-	req_initCreateInfo(state) {
+	//请求-创建考试
+	req_createExam(state, value) {
+		let val = value
+		val.examSiteList = JSON.stringify(val.examSiteList)
+		val.startingList = JSON.stringify(val.startingList)
 		common_request({
-			url: '/api/zxkj/metting/getRoomTypeByHotelId',
+			url: '/api/zxkj/exam/createExam',
 			data: {
-				'startTime': state.createOrderDate.before,
-				'endTime': state.createOrderDate.after
+				'examName': val.examName,
+				'examStartDate': val.examStartDate,
+				'examEndDate': val.examEndDate,
+				'deadline': val.deadline,
+				'examLink': val.examLink,
+				'examDirections': val.examDirections,
+				'examSiteList': val.examSiteList,
+				'startingList': val.startingList,
+				'checkinDate': val.checkinDate,
+				'checkoutDate': val.checkoutDate,
+				'payWay': val.payWay,
+				'principal': val.principal,
+				'contact': val.contact,
+				'allFee': val.allFee,
+				'roomFee': val.roomFee,
+				'otherFee': val.otherFee,
+				'peopleNum': val.peopleNum,
+				'remarks': val.remarks,
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					state.createRoomTypePiker = []
-					state.createRoomCount = []
-					state.createRoomType = res.data.data
-					state.nowRoomType = 0
-					state.nowRoomCount = 0
-					state.createFormData = ''
-					state.createSource = ''
-
-					state.createRoomType.forEach((item) => {
-						let countList = []
-						state.createRoomTypePiker.push(item.name)
-						for (let i = 1; i <= item.roomCount; i++) {
-							countList.push(i)
-						}
-						state.createRoomCount.push(countList)
-					})
-					state.createRoomTypePiker.unshift('选择房型')
-					state.createRoomCount.unshift(['请先选择房型'])
-					state.createRoomType.unshift({
-						'none': ''
-					})
-					//等待浏览器渲染
-					setTimeout(() => {
-						state.needResetHeight = true
-					}, 20)
+					uni.navigateTo({
+						url: 'createSuccess?examId=' + res.data.data
+					});
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -56,32 +59,159 @@ const mutations = {
 			},
 		})
 	},
-	//创建订单的日期改变
-	createOrderDateChange(state, val) {
-		// console.log(val.range)
-		if (val.range.after == '') {
-			state.createOrderDate = ''
-		} else {
-			if (Date.parse(val.range.before) > Date.parse(val.range.after)) {
-				let temp = val.range.before
-				val.range.before = val.range.after
-				val.range.after = temp
-			} else if (Date.parse(val.range.before) == Date.parse(val.range.after)) {
-				state.createOrderDate = ''
-				return
-			}
-			state.createOrderDate = val.range
-			this.commit('req_initCreateInfo')
-		}
+	//请求-成功创建
+	req_getExamLinkGroup(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getExamLinkGroup',
+			data: {
+				'examId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					state.qr = res.data.data.qr
+					// uni.navigateTo({
+					// 	url: 'createSuccess?examId='+res.data.data
+					// });
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
 	},
-	//创建订单的来源改变
-	originChange(state, val) {
-		if (val == '选择来源') {
-			state.createSource = ''
-		} else {
-			state.createSource = val
-		}
+	//获取统一支付信息页面
+	req_getUnifiedPaymentInfo(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getUnifiedPaymentInfo',
+			data: {
+				'examId': val
+			},
+			method: 'GET',
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					data.examStartDate = formatDate1(true, data.examStartDate)
+					data.examEndDate = formatDate1(true, data.examEndDate)
+					data.checkinDate = formatDate1(true, data.checkinDate)
+					data.checkoutDate = formatDate1(true, data.checkoutDate)
+					state.paymentInfo = res.data.data
+					// state.qr = res.data.data.qr
+					// uni.navigateTo({
+					// 	url: 'createSuccess?examId='+res.data.data
+					// });
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
 	},
+	// unifiedPaymentPay(state){
+	// 	if (typeof WeixinJSBridge == "undefined"){
+	// 	   if( document.addEventListener ){
+	// 	       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	// 	   }else if (document.attachEvent){
+	// 	       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+	// 	       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+	// 	   }
+	// 	}else{
+	// 	   onBridgeReady();
+	// 	}
+	// },
+	// req_unifiedPaymentPay(state){
+	// 	WeixinJSBridge.invoke(
+	// 	      'getBrandWCPayRequest', {
+	// 	         "appId":"wxa2b9b0e8f700f867",     //公众号名称，由商户传入     
+	// 	         "timeStamp": new Date().getTime(), //时间戳，自1970年以来的秒数     
+	// 	         "nonceStr":state.paymentInfo.num, //随机串     
+	// 	         "package":"prepay_id=u802345jgfjsdfgsdg888",     
+	// 	         "signType":"MD5",         //微信签名方式：     
+	// 	         "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+	// 	      },
+	// 	      function(res){
+	// 	      if(res.err_msg == "get_brand_wcpay_request:ok" ){
+	// 	      // 使用以上方式判断前端返回,微信团队郑重提示：
+	// 	            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+	// 	      } 
+	// 	   }); 
+	// },
+	
+	//重置列表页码
+	resetEduList(state) {
+		state.eduList = ''
+		state.eduListPage = 1
+		state.eduListCanReq = true
+	},
+	
+	//获取教育订单列表
+	req_getTeamOderList(state) {
+		common_request({
+			url: '/api/zxkj/exam/getEduList',
+			data: {
+				'page': state.eduListPage
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					data.examStartDate = formatDate(true, data.examStartDate)
+					state.eduList = data
+					state.eduListPage++
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取教育订单详情
+	req_getExamOrderInfo(state,val) {
+		common_request({
+			url: '/api/zxkj/exam/getExamOrderInfo',
+			data: {
+				'examId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					data.examStartDate = formatDate(true, data.examStartDate)
+					data.examEndDate = formatDate(true, data.examEndDate)
+					data.checkinDate = formatDate(true, data.checkinDate)
+					data.checkoutDate = formatDate(true, data.checkoutDate)
+					data.deadline = formatDate(true, data.deadline)+ ' 23:59:59'
+					state.eduOrderInfo = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
 	//创建订单的支付方式改变
 	payWayChange(state, val) {
 		if (val == '选择方式') {
@@ -400,10 +530,10 @@ const mutations = {
 	},
 }
 const actions = {
-	initCreateInfo({
+	createExam({
 		commit
-	}) {
-		commit("req_initCreateInfo");
+	}, value) {
+		commit("req_createExam", value);
 	},
 	//创建订单
 	createOrder({
@@ -541,7 +671,7 @@ function getTime(days = 0) {
 	return timer;
 }
 
-//格式化时间为yy-MM-dd
+//格式化时间为yyyy-MM-dd
 function formatDate(needYear, date) {
 	var d = new Date(date)
 	var month = '' + (d.getMonth() + 1)
@@ -557,4 +687,19 @@ function formatDate(needYear, date) {
 		return [year, month, day].join('-');
 	}
 	return [month, day].join('-');
+}
+
+//格式化时间为yyyy年MM月dd日
+function formatDate1(needYear, date) {
+	var d = new Date(date)
+	var month = '' + (d.getMonth() + 1)
+	var day = '' + d.getDate()
+	if (needYear) {
+		var year = d.getFullYear()
+	}
+
+	if (needYear) {
+		return year + '年' + month + '月' + day + '日'
+	}
+	return month + '月' + day + '日'
 }

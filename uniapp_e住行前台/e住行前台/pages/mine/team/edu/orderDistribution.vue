@@ -79,7 +79,7 @@ const util = require('../../../../util/util.js'); //防重点击函数
 export default {
 	data() {
 		return {
-			options: [],
+			orderId: '',
 			buttonGroup: [
 				{
 					text: '自动分配',
@@ -196,10 +196,10 @@ export default {
 			}
 		}
 	},
-	onLoad() {
-		this.$store.commit('resetOrderPageNum', true);
-		this.$store.dispatch('initOrderListInfo', 0);
-		this.$store.dispatch('initCreateInfo');
+	onLoad(options) {
+		if(options.orderId != ''){
+			this.orderId = options.orderId
+		}
 	},
 	methods: {
 		//下方按钮事件

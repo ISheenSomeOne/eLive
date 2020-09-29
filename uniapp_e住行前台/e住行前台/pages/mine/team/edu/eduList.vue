@@ -20,38 +20,22 @@ export default {
 				{'cont':'电 话','width': 'normal' },
 				{'cont':'考试时间','width': 'normal' },
 				{'cont':'状态','width': 'short' },
-			],
-			eduList:[
-				{
-					'name': '2020云南省公务员考试—曲靖xx学吃是校',
-					'principal':'张三疯',
-					'contact': '13888192903',
-					'time': '2020-10-10',
-					'state': '待付款'
-				},
-				{
-					'name': '2020云南省公务员考试—曲靖xx学吃是校',
-					'principal':'张三疯',
-					'contact': '13888192903',
-					'time': '2020-10-10',
-					'state': '待付款'
-				},
-				{
-					'name': '2020云南省公务员考试—曲靖xx学吃是校',
-					'principal':'张三疯',
-					'contact': '13888192903',
-					'time': '2020-10-10',
-					'state': '待付款'
-				},
-				{
-					'name': '2020云南省公务员考试—曲靖xx学吃是校',
-					'principal':'张三疯',
-					'contact': '13888192903',
-					'time': '2020-10-10',
-					'state': '待付款'
-				},
 			]
 		};
+	},
+	computed:{
+		eduList() {
+			return this.$store.state.edu.eduList;
+		},
+	},
+	onLoad() {
+			that.$store.commit('resetEduList')
+			that.$store.commit('req_getEduList')
+	},
+	methods:{
+		getMore(){
+			that.$store.commit('req_getEduList')
+		}
 	}
 };
 </script>
