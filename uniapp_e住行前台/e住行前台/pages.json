@@ -65,12 +65,72 @@
 		"style": {
 			"navigationBarTitleText": "房间设置"
 		}
+	}, {
+		"path": "pages/mine/company/company",
+		"style": {}
+	}, {
+		"path": "pages/mine/company/companyInfo",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/teamIndex",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/eduList",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/createExam",
+		"style": {
+			"navigationBarTitleText": "创建教育订单"
+		}
+	}, {
+		"path": "pages/mine/team/edu/createSuccess",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/unifiedPayment",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/eduOrderInfo",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/meeting/meetingList",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/tour/tourList",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/orderDistribution",
+		"style": {
+			"navigationBarTitleText": "分配详情"
+		}
+	}, {
+		"path": "pages/mine/team/edu/carInfo",
+		"style": {
+			"navigationBarTitleText": "车辆信息"
+		}
+	}, {
+		"path": "pages/mine/team/edu/eduUserList",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/eduHotel",
+		"style": {
+			"navigationBarTitleText": "教育酒店房间"
+		}
+	}, {
+		"path": "pages/mine/team/edu/hotelAddRoom",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/eduUserInfo",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/eduAddUser",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/chooseSend",
+		"style": {
+			"navigationBarTitleText": "选择发送群组"
+		}
 	}    ,{
-            "path" : "pages/mine/company/company",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/mine/company/companyInfo",
+            "path" : "pages/mine/team/edu/editSend",
             "style" : {}
         }
     ],
@@ -103,7 +163,7 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "智享未来酒店",
+		"navigationBarTitleText": "智享未来",
 		"navigationBarBackgroundColor": "#007AFF",
 		"backgroundColor": "#FFFFFF"
 	}

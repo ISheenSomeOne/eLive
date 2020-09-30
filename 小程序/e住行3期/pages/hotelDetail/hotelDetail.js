@@ -49,7 +49,8 @@ Page({
     commentCount: '', //酒店的消费人数
     wxHotelDetails:'',
     divide:'',//好评率
-    tel: ''
+    tel: '',
+    companyId: '',
   },
   //房型列表请求
   requestRoomList: function() {
@@ -274,6 +275,15 @@ Page({
   onLoad: function(options) {
     let that = this;
     let title = 'nvabarData.title'
+    if(options.companyId != '' && options.companyId != null && options.companyId != 'undefined'){
+      that.setData({
+        companyId: options.companyId
+      })
+    } else {
+      that.setData({
+        companyId: ''
+      })
+    }
     that.setData({
       newPeople: false,
       hotelId: app.globalData1.hotelId,
@@ -286,9 +296,6 @@ Page({
       // address: app.globalData1.address,
       [title]: app.globalData1.hotelName
     });
-
-
-
   },
 
   /**
@@ -306,8 +313,8 @@ Page({
     wx.request({
       url: app.globalData.rootApi +'/zxkj/hotel/wxHotelDetailInfo',
       data: {
-        // hotelId: app.globalData1.hotelId,
-        hotelId: 100036,
+        hotelId: app.globalData1.hotelId,
+        // hotelId: 100036,
       },
       header: { 'content-type': 'application/x-www-form-urlencoded'},
       method: 'POST',
@@ -369,8 +376,11 @@ Page({
       var deposit = that.data.roomList[i].deposit;
       app.globalData2.deposit = that.data.roomList[i].deposit
 
+      var minNegotiatedPrice = that.data.roomList[i].minNegotiatedPrice;
+      app.globalData2.minNegotiatedPrice =  that.data.roomList[i].minNegotiatedPrice;
+
       wx.navigateTo({
-        url: '/pages/orders/orders',
+        url: '/pages/orders/orders?companyId=' + that.data.companyId,
       })
     }
 

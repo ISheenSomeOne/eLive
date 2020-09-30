@@ -90,7 +90,7 @@ page {
 .menuColumn{
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: start;
   width: 340rpx;
   border-bottom: 2rpx solid rgb(243, 243, 243);
   

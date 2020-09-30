@@ -1,0 +1,163 @@
+/* pages/companyStart/companyStart.wxss */
+
+page {
+  position: relative;
+  font-size: 30rpx;
+}
+
+.start {
+  position: relative;
+}
+
+.bgImg {
+  width: 100%;
+  height: 480rpx;
+  padding-top: 120rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 46rpx;
+  font-weight: bold;
+  letter-spacing: 1rpx;
+  background: linear-gradient(to right, rgb(240, 109, 0), rgb(250, 139, 0));
+  border-bottom-left-radius: 15rpx;
+  border-bottom-right-radius: 15rpx;
+}
+.bgImg text{
+  height: 300rpx;
+  width: 100%;
+  line-height: 120rpx;
+  text-shadow:2rpx 2rpx 4rpx #333;
+}
+
+.searchBox {
+  position: absolute;
+  top: 550rpx;
+  width: 720rpx;
+  padding-bottom: 50rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin-left: 15rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+}
+
+.maps {
+  position: relative;
+  width: 640rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 20rpx auto;
+  border-bottom: 2rpx solid rgb(221, 221, 221);
+}
+
+.addressBox {
+}
+
+.pickers {
+  width: 500rpx;
+  height: 50rpx;
+  font-size: 100%;
+}
+
+.getLocation {
+  position: absolute;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+  top: 0;
+  right: 2rpx;
+  height: 80rpx;
+  width: 80rpx;
+}
+
+.locationIcon {
+  position: absolute;
+  top: 10rpx;
+  right: 15rpx;
+  width: 35rpx;
+  height: 35rpx;
+}
+
+/* .localtionIcon::after{
+  content: '获取位置';
+  position: absolute;
+  top: 20rpx;
+  right: 0rpx;
+  width: 80rpx;
+ font-size: 18rpx;
+  color: rgb(141, 141, 141);
+} */
+
+.getLocationBtn {
+  position: absolute;
+  top: 20rpx;
+  right: 0rpx;
+  height: 20rpx;
+  width: 64rpx;
+  font-size: 16rpx;
+  color: #7e7e7e;
+}
+
+.searchBtn {
+  margin: 50rpx auto 0 auto;
+  height: 80rpx;
+  width: 600rpx;
+  line-height: 80rpx;
+  border-radius: 50rpx;
+  background: linear-gradient(to right, rgb(240, 109, 0), rgb(250, 139, 0));
+  color: #fff;
+  text-align: center;
+  letter-spacing: 2rpx;
+  font-size: 32rpx;
+}
+
+.dateChoose {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 640rpx;
+  margin: 0 auto;
+}
+
+.checkInBox {
+  height: 80rpx;
+  width: 180rpx;
+  border-radius: 3rpx;
+  text-align: center;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  padding-top: 10rpx;
+}
+
+.checkInTitle {
+  font-size: 20rpx;
+}
+
+.checkInDate {
+  margin-top: 5rpx;
+  color: #f57800;
+}
+
+.dateNum {
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  border-radius: 3rpx;
+  text-align: center;
+}
+
+.line {
+  width: 90rpx;
+  border-bottom: 2rpx solid rgb(221, 221, 221);
+}
+
+.address {
+  width: 550rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

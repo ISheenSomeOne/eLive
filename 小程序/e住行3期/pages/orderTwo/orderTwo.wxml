@@ -122,7 +122,7 @@
       <view class="originalPriceBox">
         <!-- 原价 -->
         <view class="originalConst">房间原价</view>
-        <view class="originalPrice">￥{{price}}</view>
+        <view class="originalPrice">￥{{manPrice}}</view>
       </view>
       <view class="timePriceBox" wx:for="{{timePrice}}" wx:key="index">
         <!-- 时间明细 -->

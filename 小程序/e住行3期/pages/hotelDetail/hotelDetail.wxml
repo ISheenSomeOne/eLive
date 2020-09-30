@@ -1,6 +1,6 @@
 <!--pages/hotelDetail/hotelDetail.wxml-->
-<mp-halfScreenDialog bindbuttontap="buttontap" show="{{show}}" maskClosable="{{false}}" title="测试标题B" subTitle="测试标题B的副标题" desc="辅助描述内容，可根据实际需要安排" tips="辅助提示内容，可根据实际需要安排" buttons="{{buttons}}"></mp-halfScreenDialog>
-<button class="weui-btn" type="primary" bindtap="open">Open</button>
+<!-- <mp-halfScreenDialog bindbuttontap="buttontap" show="{{show}}" maskClosable="{{false}}" title="测试标题B" subTitle="测试标题B的副标题" desc="辅助描述内容，可根据实际需要安排" tips="辅助提示内容，可根据实际需要安排" buttons="{{buttons}}"></mp-halfScreenDialog>
+<button class="weui-btn" type="primary" bindtap="open">Open</button> -->
 <view wx:if="{{newPeople}}" class="modalBg">
 	<!-- 弹出模态框  新人登录优惠券 -->
 	<view class="modalBox">
@@ -140,7 +140,7 @@
 						<view class="detailConst">联系酒店</view>
 					</view>
 				</view>
-				<view class="couponBoxb">
+				<!-- <view class="couponBoxb">
 					<view class="couponb">
 						<view class="couponType">满减券</view>
 						<view class="couponContent">满100减10</view>
@@ -149,7 +149,7 @@
 						<view>领券</view>
 						<image class="more" src="../image/more.svg" />
 					</view>
-				</view>
+				</view> -->
 			</view>
 		</block>
 	</view>
@@ -195,7 +195,12 @@
 			</view>
 			<!-- <view class="car" bindtap="" id='{{item_id}}'>加入购物车</view> -->
 			<view class="buy" bindtap="orders" id='{{item_id}}'>立即预定</view>
-			<view class="price">
+			<view class="price" wx:if="{{companyId != ''}}">
+				<text>￥{{item.price}}</text>
+				￥{{item.minNegotiatedPrice}}
+				<!-- <text>￥{{item.originPrice}}</text> -->
+			</view>
+			<view class="price" wx:else>
 				<text wx:if="{{item.price > item.discountPrice}}">￥{{item.price}}</text>
 				￥{{item.discountPrice}}
 				<!-- <text>￥{{item.originPrice}}</text> -->

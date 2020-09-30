@@ -51,7 +51,9 @@ Page({
     orderId: '',
     see: false,
     paymentMethod: 1, //付款方式  1.余额  2.微信
-    balances: ''
+    balances: '',
+    minNegotiatedPrice: '',
+    companyId: ''
   },
 
 
@@ -66,6 +68,17 @@ Page({
     // let timePrice = 'timePrice[' + index + '].other[' + j + '].breakfast'
     var DATE = util.formatDate(new Date());
     let title = 'nvabarData.title'
+    console.log(options)
+    if(options.companyId != '' && options.companyId != null && options.companyId != 'undefined'){
+      vm.setData({
+        companyId: options.companyId
+      })
+      console.log('-------'+vm.data.companyId)
+    } else {
+      vm.setData({
+        companyId: ''
+      })
+    }
     vm.setData({
       date: DATE,
       hotelId: app.globalData1.hotelId,
@@ -76,6 +89,7 @@ Page({
       roomName: app.globalData2.roomName,
       name: app.globalData2.roomName,
       price: app.globalData2.price,
+      minNegotiatedPrice: app.globalData2.minNegotiatedPrice,
       deposit: app.globalData2.deposit * app.globalData3.showValue,
       manPrice: app.globalData3.manPrice * app.globalData3.showValue,
       jian: app.globalData3.jian,
@@ -92,7 +106,7 @@ Page({
       showTel: app.globalData3.tel.replace(/(\d{3})(\d{4})(\d{4})/, "$1****$3"),
       receipt: app.globalData3.receipt, //发票
       info: app.globalData3.info, //备注
-      [title]: app.globalData1.hotelName
+      [title]: app.globalData1.hotelName,
     })
     console.log('wode开始时间', app.globalData1.startTime)
     console.log('wode结束时间', app.globalData1.endTime)
@@ -268,7 +282,8 @@ Page({
         startTime: that.data.startTime,
         endTime: that.data.endTime,
         couponId: that.data.couponId,
-        openid: wx.getStorageSync('openid')
+        openid: wx.getStorageSync('openid'),
+        companyId: that.data.companyId
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'

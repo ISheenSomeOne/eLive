@@ -32,6 +32,13 @@
         <view class="menuStatus">旅客 地址 发票</view>
       </view>
     </view>
+    <view class="menuItem" bindtap="look">
+      <image class="menuIcon" src="../image/xingcheng.svg"></image>
+      <view class="menuInfo">
+        <view class="menuName" >行程</view>
+        <view class="menuStatus">考试 会议 旅行团</view>
+      </view>
+    </view>
     <view class="menuItem" bindtap="help">
       <image class="menuIcon" src="../image/help.svg"></image>
       <view class="menuInfo">

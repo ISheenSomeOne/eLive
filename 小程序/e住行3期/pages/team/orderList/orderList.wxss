@@ -1,0 +1,138 @@
+/* pages/team/orderList/orderList.wxss */
+page {
+  background-color: rgb(243, 243, 243);
+  font-size: 30rpx;
+  color: #333;
+  position: relative;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.infoBox {
+  position: relative;
+  width: 690rpx;
+  margin: 25rpx auto;
+  font-size: 30rpx;
+  background-color: #fff;
+  box-shadow: 0rpx 3rpx 10rpx rgb(190, 190, 190);
+  padding: 4rpx 0 14rpx 0;
+  border-radius: 10rpx;
+}
+
+.infoTitle {
+  position: relative;
+  width: 650rpx;
+  margin: 0 auto 10rpx auto;
+  line-height: 70rpx;
+  border-bottom: 1rpx solid rgb(240, 240, 240);
+  font-weight: bold;
+}
+.infoTitle view{
+  position: absolute;
+  right: 0;
+  top: 14rpx;
+  padding: 0 10rpx;
+  background-color: #07c160;
+  border-radius: 4rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 22rpx;
+  color: #fff;
+  font-weight: normal;
+}
+
+.infoItem {
+  width: 650rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  line-height: 60rpx;
+  font-size: 26rpx;
+}
+
+.infoItem view{
+  color: #f06c00;
+  /* font-weight: bold; */
+  font-size: 34rpx;
+}
+
+.itemLeft {
+  font-weight: bold;
+  height: 100%;
+  width: 140rpx;
+}
+
+.itemRight {
+  width: 500rpx;
+}
+
+.itemRight view {
+  color: #07c160;
+}
+
+.itemRight text {
+  margin-left: 20rpx;
+  font-size: 24rpx;
+  padding: 8rpx 14rpx;
+  border-radius: 5rpx;
+  background-color: #1485ee;
+  color: #fff;
+}
+
+.state {
+  font-size: 50rpx;
+  text-align: center;
+  color: #f06c00;
+}
+
+.colorGreen {
+  color: #07c160;
+}
+
+.stateTip {
+  width: 100%;
+  text-align: center;
+  margin-top: 10rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 22rpx;
+  color: #999;
+  letter-spacing: 1rpx;
+}
+
+.remainingTime {
+  color: #f06c00;
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.remainingTimeItem {
+  border: 2rpx solid #f06c00;
+  font-size: 40rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 0 20rpx;
+  margin: 15rpx 20rpx;
+}
+
+.pay {
+  width: 100%;
+  text-align: center;
+  margin: 20rpx auto 40rpx auto;
+  height: 70rpx;
+  border-radius: 10rpx;
+  line-height: 70rpx;
+  font-size: 35rpx;
+  color: #fff;
+  background-color: #f06c00;
+  letter-spacing: 1rpx;
+}
+
+.pay:active {
+  background-color: #c25700;
+  box-shadow: #999 0 2rpx 8rpx;
+}

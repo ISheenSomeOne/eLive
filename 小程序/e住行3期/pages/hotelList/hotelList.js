@@ -30,7 +30,8 @@ Page({
     endTime: '',
     pageNumber: 1,
     haveMore: true,
-    list: ''
+    list: '',
+    companyId: ''
   },
 
   /**
@@ -40,6 +41,18 @@ Page({
     console.log('options', options);
     var list = JSON.parse(options.obj)
     var that = this;
+    
+    if(list[5] != '' && list[5] != null && list[5] != 'undefined'){
+      that.setData({
+        companyId: list[5]
+      })
+    } else {
+      that.setData({
+        companyId: ''
+      })
+      console.log('----------')
+      console.log(that.data.companyId)
+    }
     that.setData({
       startTime: app.globalData1.startTime,
       endTime: app.globalData1.endTime,
@@ -62,6 +75,7 @@ Page({
         address: that.data.list[0] + ',' + that.data.list[1] + ',' + that.data.list[2],
         latitude: that.data.list[3],
         longitude: that.data.list[4],
+        companyId: that.data.list[5],
         startTime: that.data.startTime,
         endTime: that.data.endTime,
         pageNumber: that.data.pageNumber
@@ -173,7 +187,6 @@ Page({
   hotelDetail: util.throttle(function(e) {
     var that = this;
     var i = e.currentTarget.id;
-    console.log('dssssssssssssss', e.currentTarget.id)
     var hotelId = that.data.hotelList[i].id;
     app.globalData1.hotelId = that.data.hotelList[i].id;
     //经纬度
@@ -193,7 +206,6 @@ Page({
     var hotelDistance = that.data.hotelList[i].hotelDistance;
     app.globalData1.hotelDistance = that.data.hotelList[i].hotelDistance;
     app.globalData1.tels = that.data.hotelList[i].tels;
-    console.log("i", e.currentTarget.id)
     //判断是否授权
     if (!wx.getStorageSync('openid')) {
       wx.navigateTo({ //跳转到授权页面
@@ -215,7 +227,7 @@ Page({
                 }
               });
               wx.navigateTo({
-                url: '/pages/hotelDetail/hotelDetail?hotelId=' + hotelId + '&name=' + name + '&star=' + star + '&renovationTime=' + renovationTime + '&rate=' + rate + '&street=' + street + '&hotelDistance=' + hotelDistance,
+                url: '/pages/hotelDetail/hotelDetail?hotelId=' + hotelId + '&name=' + name + '&star=' + star + '&renovationTime=' + renovationTime + '&rate=' + rate + '&street=' + street + '&hotelDistance=' + hotelDistance + '&companyId=' + that.data.list[5],
               })
             } else {
               wx.navigateTo({ //跳转到授权页面

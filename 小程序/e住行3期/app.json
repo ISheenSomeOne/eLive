@@ -1,7 +1,13 @@
 {
   "pages": [
-    "pages/hotelDetail/hotelDetail",
+    "pages/team/edu/signUp/signUp",
+    "pages/team/edu/orderInfo/orderInfo",
+    "pages/team/orderList/orderList",
+    "pages/team/edu/pay/pay",
+    "pages/mine/mine",
     "pages/start/start",
+    "pages/companyStart/companyStart",
+    "pages/hotelDetail/hotelDetail",
     "pages/hotelList/hotelList",
     "pages/transactionDetail/transactionDetail",
     "pages/transactionLog/transactionLog",
@@ -42,7 +48,6 @@
     "pages/shopping/shopping",
     "pages/ownerInfo/ownerInfo",
     "pages/proxyPay/proxyPay",
-    "pages/mine/mine",
     "pages/map/map",
     "pages/checkInHotel/checkInHotel",
     "pages/noContent/noContent",

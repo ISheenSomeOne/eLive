@@ -5,6 +5,7 @@ import order from './modules/order.js'
 import login from './modules/login.js'
 import finance from './modules/finance.js'
 import company from './modules/company.js'
+import edu from './modules/edu.js'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         home,
 		login,
 		finance,
-		company
+		company,
+		edu
     }
 })

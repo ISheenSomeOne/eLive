@@ -28,9 +28,9 @@ Page({
     province: '',
     city: '',
     district: '',
-    region: ['北京市', '北京市', '东城区'], 
-    latitude: '999',
-    longitude: '999',
+    region: ['云南省', '昆明市', '官渡区'], 
+    latitude: '666',
+    longitude: '666',
 
     startTime: '',//开始时间
     endTime: '',//结束时间
@@ -264,7 +264,7 @@ Page({
         duration: 2000
       })
     } else { //选择了两个日期
-      var obj = JSON.stringify([this.data.region[0], this.data.region[1], this.data.region[2], this.data.latitude, this.data.longitude]);
+      var obj = JSON.stringify([this.data.region[0], this.data.region[1], this.data.region[2], this.data.latitude, this.data.longitude, '']);
       wx.navigateTo({
         url: '/pages/hotelList/hotelList?obj=' + obj,
       })
