@@ -137,7 +137,7 @@ export default {
 			payWay: ['选择方式', '已支付', '到店支付'],
 			nowOrigin: 0,
 			nowPayWay: 0,
-			swiperHeight: '',
+			swiperHeight: 800,
 			customItem: '全部', //地址picker的全部功能
 			form: {},
 			showMenu1: true
@@ -147,30 +147,6 @@ export default {
 		createOrderDate() {
 			return this.$store.state.order.createOrderDate;
 		},
-		createRoomTypePiker() {
-			return this.$store.state.order.createRoomTypePiker;
-		},
-		nowRoomType() {
-			return this.$store.state.order.nowRoomType;
-		},
-		createRoomCount() {
-			return this.$store.state.order.createRoomCount;
-		},
-		nowRoomCount() {
-			return this.$store.state.order.nowRoomCount;
-		},
-		needRefresh() {
-			return this.$store.state.order.needRefresh;
-		},
-		orderList() {
-			return this.$store.state.order.orderList;
-		},
-		needResetHeight() {
-			return this.$store.state.order.needResetHeight;
-		},
-		orderPageCanReq() {
-			return this.$store.state.order.orderPageCanReq;
-		}
 	},
 	watch: {
 		needRefresh(newData, oldData) {
