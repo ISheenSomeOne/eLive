@@ -89,6 +89,7 @@ const mutations = {
 					let data = res.data.data
 					//初始化信息
 					uni.setStorageSync('authList', data)
+					console.log(uni.getStorageSync('authList'))
 				} else {
 					uni.showModal({
 						title: '提示',
