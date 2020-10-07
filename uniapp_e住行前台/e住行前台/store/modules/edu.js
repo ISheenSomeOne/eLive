@@ -33,6 +33,7 @@ const mutations = {
 				'checkinDate': val.checkinDate,
 				'checkoutDate': val.checkoutDate,
 				'payWay': val.payWay,
+				'serviceType': val.serviceType,
 				'principal': val.principal,
 				'contact': val.contact,
 				'allFee': val.allFee,
@@ -156,7 +157,7 @@ const mutations = {
 	},
 	
 	//获取教育订单列表
-	req_getTeamOderList(state) {
+	req_getEduList(state) {
 		common_request({
 			url: '/api/zxkj/exam/getEduList',
 			data: {
@@ -183,11 +184,42 @@ const mutations = {
 	},
 	
 	//获取教育订单详情
-	req_getExamOrderInfo(state,val) {
+	req_getEduOrderInfo(state,val) {
 		common_request({
-			url: '/api/zxkj/exam/getExamOrderInfo',
+			url: '/api/zxkj/exam/getEduOrderInfo',
 			data: {
 				'examId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					data.examStartDate = formatDate(true, data.examStartDate)
+					data.examEndDate = formatDate(true, data.examEndDate)
+					data.checkinDate = formatDate(true, data.checkinDate)
+					data.checkoutDate = formatDate(true, data.checkoutDate)
+					data.deadline = formatDate(true, data.deadline)+ ' 23:59:59'
+					state.eduOrderInfo = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取教育订单分配信息
+	req_getEduDistribution(state,val) {
+		common_request({
+			url: '/api/zxkj/exam/getEduDistribution',
+			data: {
+				'examId': val.examId,
+				'type': val.type
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'

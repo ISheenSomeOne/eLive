@@ -53,7 +53,7 @@
                 "proxy" : {
                     "/api" : {
                         // "target" : "https://zxkj.webinn.online", //目标接口域名
-                        "target" : "http://268k46d037.zicp.vip", //目标接口域名
+                        "target" : "http://zxkj.nat123.fun:47544", //目标接口域名
                         "changeOrigin" : true, //是否跨域
                         "secure" : false, // 设置支持https协议的代理
                         "pathRewrite" : {

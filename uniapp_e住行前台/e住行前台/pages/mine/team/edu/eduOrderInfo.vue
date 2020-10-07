@@ -108,7 +108,7 @@
 export default {
 	data() {
 		return {
-			orderId: '',
+			examId: '',
 			options: [
 				{
 					icon: 'trash',
@@ -135,9 +135,10 @@ export default {
 		}
 	},
 	onLoad(options) {
-		if (options.orderId != '') {
-			this.orderId = options.orderId;
-			that.$store.commit('req_getExamOrderInfo', this.orderId);
+		let that = this
+		if (options.examId != '') {
+			that.examId = options.examId;
+			that.$store.commit('req_getEduOrderInfo', that.examId);
 		}
 	},
 	methods: {
@@ -150,7 +151,7 @@ export default {
 			//分配
 			} else if (e.index == 1)  {
 				uni.navigateTo({
-					url: '/pages/mine/team/edu/orderDistribution?orderId='+this.orderId
+					url: '/pages/mine/team/edu/orderDistribution?examId='+this.examId
 				});
 			}
 		}

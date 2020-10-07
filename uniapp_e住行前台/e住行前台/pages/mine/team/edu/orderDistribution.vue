@@ -79,7 +79,7 @@ const util = require('../../../../util/util.js'); //防重点击函数
 export default {
 	data() {
 		return {
-			orderId: '',
+			examId: '',
 			buttonGroup: [
 				{
 					text: '自动分配',
@@ -173,9 +173,15 @@ export default {
 		}
 	},
 	onLoad(options) {
-		if(options.orderId != ''){
-			this.orderId = options.orderId
-			this.$store.commit('resetHeightFalse')
+		let that = this
+		if (options.examId != '') {
+			that.examId = options.examId;
+			let val = { examId: that.examId,type: 1 };
+			that.$store.commit('req_getEduDistribution', val);
+		}
+		if(options.examId != ''){
+			that.examId = options.examId
+			that.$store.commit('resetHeightFalse')
 		}
 	},
 	methods: {

@@ -172,6 +172,14 @@
 				<view class="lineLeft">支付金额</view>
 				<view class="lineRight"><input class="input" type="digit" v-model="form.allFee" placeholder-class="plaClass" placeholder="请输入支付金额" /></view>
 			</view>
+			<view class="line" v-if="form.payWay == 1 || form.payWay == 3">
+				<view class="lineLeft">服务类型</view>
+				<view class="lineRight">
+					<picker class="pickerClass" mode="selector" :range="serviceType" :value="nowServiceType" @change="serviceTypeChange">
+						<view>{{ serviceType[nowServiceType] }}</view>
+					</picker>
+				</view>
+			</view>
 			<view class="line" v-if="form.payWay == 2">
 				<view class="lineLeft">房费</view>
 				<view class="lineRight"><input class="input" type="digit" v-model="form.roomFee" placeholder-class="plaClass" placeholder="请输入金额" /></view>
@@ -233,14 +241,17 @@ export default {
 				checkinDate: '选择入住日期', //入住日期
 				checkoutDate: '选择离店日期', //入住日期
 				payWay: '', //支付方式
+				serviceType: '',//服务类型
 				principal: '', //负责人
 				contact: '', //联系方式
 				allFee: '', //需付金额
 				roomFee: '', //房费
 				otherFee: '', // 其他费用
 				peopleNum: '', // 人数
-				remarks: '' //备注
-			}
+				remarks: '', //备注
+			},
+				nowServiceType: 0, //服务类型下标
+				serviceType: ['选择服务类型','住宿及接送','仅住宿','仅接送'] //服务类型
 		};
 	},
 	computed: {
@@ -354,6 +365,11 @@ export default {
 			this.form.allFee = ''
 			this.form.roomFee = ''
 			this.form.otherFee = ''
+		},
+		//
+		serviceTypeChange(e) {
+			this.nowServiceType = e.detail.value;
+			this.form.serviceType = this.nowServiceType;
 		},
 		submit: function() {
 			let that = this;
