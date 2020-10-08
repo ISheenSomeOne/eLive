@@ -7,6 +7,8 @@ const state = {
 	eduList: '', //教育列表
 	eduListPage: 1,//教育列表下次请求页码
 	eduOrderInfo: '',//教育订单详情
+	eduDistributionInfo: '',//教育订单分配信息
+	eduCarInfo: '', //教育车辆信息
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -227,12 +229,141 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
-					data.examStartDate = formatDate(true, data.examStartDate)
-					data.examEndDate = formatDate(true, data.examEndDate)
-					data.checkinDate = formatDate(true, data.checkinDate)
-					data.checkoutDate = formatDate(true, data.checkoutDate)
-					data.deadline = formatDate(true, data.deadline)+ ' 23:59:59'
-					state.eduOrderInfo = data
+					state.eduDistributionInfo = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//
+	req_autoDistribution(state,val) {
+		common_request({
+			url: '/api/zxkj/exam/autoDistribution',
+			data: {
+				'examId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取车辆信息
+	req_getCarInfo(state,val) {
+		common_request({
+			url: '/api/zxkj/exam/getCarInfo',
+			data: {
+				'carId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.eduCarInfo = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//添加车辆信息
+	req_addCarInfo(state,val) {
+		val = JSON.stringify(val)
+		common_request({
+			url: '/api/zxkj/exam/addCarInfo',
+			data: {
+				 'numbering': val.numbering,
+				 'carNumber': val.carNumber,
+				 'driver': val.driver,
+				 'contact': val.contact,
+				 'peopleNum': val.peopleNum
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//修改车辆信息
+	req_updateCarInfo(state,val) {
+		let carId = JSON.stringify(val.carId)
+		let carInfo = JSON.stringify(val.carInfo)
+		
+		common_request({
+			url: '/api/zxkj/exam/updateCarInfo',
+			data: {
+				'carId': val.carId,
+				 'numbering': carInfo.numbering,
+				 'carNumber': carInfo.carNumber,
+				 'driver': carInfo.driver,
+				 'contact': carInfo.contact,
+				 'peopleNum': carInfo.peopleNum
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//删除车辆信息
+	req_delEduCar(state,val) {
+		common_request({
+			url: '/api/zxkj/exam/delEduCarInfo',
+			data: {
+				'carId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
 				} else {
 					uni.showModal({
 						title: '提示',

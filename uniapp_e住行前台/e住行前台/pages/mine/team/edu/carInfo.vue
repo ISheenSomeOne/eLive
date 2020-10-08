@@ -4,88 +4,126 @@
 			<view class="line">
 				<view class="lineLeft">编号</view>
 				<view class="lineRight">
-					<input class="input" @input="formChange" value="" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车辆编号" />
+					<input class="input" v-model="form.numbering" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车辆编号" />
 				</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">车牌号</view>
 				<view class="lineRight">
-					<input class="input" @input="formChange" value="" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车牌号" />
+					<input class="input" v-model="form.carNumber" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车牌号" />
 				</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">司机</view>
 				<view class="lineRight">
-					<input class="input" @input="formChange" value="" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入司机姓名" />
+					<input class="input" v-model="form.driver" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入司机姓名" />
 				</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">联系方式</view>
 				<view class="lineRight">
-					<input class="input" @input="formChange" value="" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入联系方式" />
+					<input class="input" v-model="form.contact" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入联系方式" />
 				</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">核载人数</view>
 				<view class="lineRight">
-					<input class="input" @input="formChange" value="" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车辆核载人数" />
+					<input class="input" v-model="form.peopleNum" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车辆核载人数" />
 				</view>
 			</view>
 		</view>
-			<view class="buttonBox" v-show="!true" @click="submit">创建订单</view>
-			<view class="bottomMenu" v-show="true"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
+		<view class="buttonBox" v-show="showAdd" @click="addCarInfo">创建订单</view>
+		<view class="bottomMenu" v-show="!showAdd"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				
-					options: [],
-					buttonGroup: [
-						{
-							text: '删除车辆',
-							backgroundColor: '#dd524d',
-							color: '#fff'
-						},
-						{
-							text: '确定修改',
-							backgroundColor: '#4cd964',
-							color: '#fff'
-						}
-					],
-			};
+export default {
+	data() {
+		return {
+			carId: '',
+			showAdd: true,
+			form: {
+				numbering: '',
+				carNumber: '',
+				driver: '',
+				contact: '',
+				peopleNum: ''
+			},
+			options: [],
+			buttonGroup: [
+				{
+					text: '删除车辆',
+					backgroundColor: '#dd524d',
+					color: '#fff'
+				},
+				{
+					text: '确定修改',
+					backgroundColor: '#4cd964',
+					color: '#fff'
+				}
+			]
+		};
+	},
+	computed:{
+		eduCarInfo() {
+			return this.$store.state.edu.eduCarInfo;
+		},
+	},
+	onLoad(options) {
+		if(options.carId != '' && options.carId != undefined && options.carId != null){
+			this.carId = options.cardId
+			this.showAdd = false
+			this.$store.commit('req_getCarInfo', this.carId);
+			this.form = this.$store.state.edu.eduCarInfo
 		}
+	},
+	methods:{
+		//下方按钮事件
+		buttonClick(e) {
+			//点击删除车辆
+			if (e.index == 0) {
+				this.$store.commit('req_delEduCar', this.carId);
+			}
+			//点击确定修改
+			if (e.index == 1) {
+				this.$store.commit('req_updateCarInfo', this.form);
+			}
+		},
+		//添加车辆
+		addCarInfo() {
+			this.$store.commit('req_addCarInfo', this.form);
+		},
 	}
+};
 </script>
 
 <style lang="scss" scoped>
-	.bottomMenu {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex-direction: column;
-		position: fixed;
-		left: 0;
-		right: 0;
-		bottom: 10px;
-	}
-	.buttonBox {
-		width: 91%;
-		margin: 0 auto;
-		height: 40px;
-		border-radius: 100px;
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: fixed;
-		bottom: 10px;
-		left: 0;
-		right: 0;
-		background-color: #4cd964;
-	}
+.bottomMenu {
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: column;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 10px;
+}
+.buttonBox {
+	width: 91%;
+	margin: 0 auto;
+	height: 40px;
+	border-radius: 100px;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	background-color: #4cd964;
+}
 .plaClass {
 	color: #cfcfcf;
 	line-height: 50px;

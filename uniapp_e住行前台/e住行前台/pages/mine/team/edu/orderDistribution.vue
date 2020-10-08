@@ -18,53 +18,54 @@
 				<swiper-item>
 					<view class="swiper-item">
 						<view class="topInfo">
-							<view class="leftInfo">已分配 80</view>
-							<view class="rightInfo">未分配 12</view>
+							<view class="leftInfo">已分配 {{ eduDistributionInfo.allocated }}</view>
+							<view class="rightInfo">未分配 {{ eduDistributionInfo.unassigned }}</view>
 						</view>
-						<order-table :listType="'orderDistributionList'" :titleList="titleList" :tableList="orderDistributionList"></order-table>
+						<order-table :listType="'orderDistributionList'" :titleList="titleList" :tableList="eduDistributionInfo.carList"></order-table>
 						<view class="buttonBox" @click="addCar">添加车辆</view>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
 						<view class="topInfo">
-							<view class="leftInfo">已分配 80</view>
-							<view class="rightInfo">未分配 12</view>
+							<view class="leftInfo">已分配 {{ eduDistributionInfo.allocated }}</view>
+							<view class="rightInfo">未分配 {{ eduDistributionInfo.unassigned }}</view>
 						</view>
 						<view class="container999">
-							<navigator url="eduHotel"><uni-section class="titleClass" @click="hotelInfo" title="汇都酒店" type="line"></uni-section></navigator>
-							<view class="line">
-								<view class="lineLeft">201</view>
-								<view class="lineRight">张三，李四</view>
-							</view>
-							<view class="line">
-								<view class="lineLeft">201</view>
-								<view class="lineRight">张三，李四</view>
-							</view>
-							<navigator url="eduHotel"><uni-section class="titleClass" @click="hotelInfo" title="汇都酒店" type="line"></uni-section></navigator>
-							<view class="line">
-								<view class="lineLeft">201</view>
-								<view class="lineRight">张三，李四</view>
-							</view>
-							<view class="line">
-								<view class="lineLeft">201</view>
-								<view class="lineRight">张三，李四</view>
-							</view>
+							<block v-for="(hotelInfo, index) in eduDistributionInfo.hotelList" :key="index">
+								<uni-section class="titleClass" @click="hotelInfo(hotelInfo.hotelId)" :title="hotelInfo.hotelName" type="line"></uni-section>
+								<block v-for="(roomInfo, index) in hotelInfo.roomList" :key="index">
+									<view class="line">
+										<view class="lineLeft">{{ roomInfo.roomName }}</view>
+										<view class="lineRight" @click="toUserList(roomInfo.roomId)">{{ roomInfo.userNameList }}</view>
+									</view>
+								</block>
+							</block>
 							<view class="buttonBox" @click="hotelInfo">添加酒店房间</view>
 						</view>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<view class="addItem">曲靖XXXX学校</view>
-						<view class="addItem">楚雄XXXXXXXXX学校</view>
-						<view class="addItem">曲靖XXXX学校</view>
-						<view class="addItem">楚雄XXXXXXXXX学校</view>
+						<view class="topInfo">
+							<view class="leftInfo">已分配 {{ eduDistributionInfo.allocated }}</view>
+							<view class="rightInfo">未分配 {{ eduDistributionInfo.unassigned }}</view>
+						</view>
+						<block v-for="(startingList, index) in eduDistributionInfo.startingList" :key="index">
+							<view class="addItem" @click="toUserList(startingList.startingId)">{{ startingList.startingName }}</view>
+						</block>
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="addItem">曲靖XXXX学校</view>
-					<view class="addItem">楚雄XXXXXXXXX学校</view>
+					<view class="swiper-item">
+						<view class="topInfo">
+							<view class="leftInfo">已分配 {{ eduDistributionInfo.allocated }}</view>
+							<view class="rightInfo">未分配 {{ eduDistributionInfo.unassigned }}</view>
+						</view>
+						<block v-for="(examSiteList, index) in eduDistributionInfo.examSiteList" :key="index">
+							<view class="addItem" @click="toUserList(examSiteList.examSiteId)">{{ examSiteList.examSiteName }}</view>
+						</block>
+					</view>
 				</swiper-item>
 			</swiper>
 			<view class="buttonBoxAdd" v-show="!showMenu1" @click="openChooseSend">发送提醒</view>
@@ -92,6 +93,7 @@ export default {
 					color: '#fff'
 				}
 			],
+			options: [],
 			tabIndex: 0, //选中标签栏的序列
 			contentList: ['待入住', '入住中', '全部', '创建订单'],
 			titleList: [{ cont: '编号', width: 'normal' }, { cont: '车牌号', width: 'normal' }, { cont: '司机', width: 'normal' }, { cont: '人数/容量', width: 'normal' }],
@@ -113,7 +115,7 @@ export default {
 					carNumber: '云A 23123',
 					driver: '王五',
 					peopleNum: '0/40'
-				},
+				}
 			],
 			tabBars: [
 				{
@@ -137,16 +139,19 @@ export default {
 			payWay: ['选择方式', '已支付', '到店支付'],
 			nowOrigin: 0,
 			nowPayWay: 0,
-			swiperHeight: 800,
+			swiperHeight: 300,
 			customItem: '全部', //地址picker的全部功能
 			form: {},
 			showMenu1: true
 		};
 	},
 	computed: {
-		createOrderDate() {
-			return this.$store.state.order.createOrderDate;
+		needResetHeight() {
+			return this.$store.state.order.needResetHeight;
 		},
+		eduDistributionInfo() {
+			return this.$store.state.edu.eduDistributionInfo;
+		}
 	},
 	watch: {
 		needRefresh(newData, oldData) {
@@ -172,21 +177,23 @@ export default {
 			}
 		}
 	},
-	onLoad(options) {
-		let that = this
-		if (options.examId != '') {
-			that.examId = options.examId;
-			let val = { examId: that.examId,type: 1 };
+	onLoad(option) {
+		let that = this;
+		if (option.examId != '') {
+			that.examId = option.examId;
+			let val = { examId: that.examId, type: 1 };
 			that.$store.commit('req_getEduDistribution', val);
-		}
-		if(options.examId != ''){
-			that.examId = options.examId
-			that.$store.commit('resetHeightFalse')
+			that.$store.commit('resetHeightFalse');
 		}
 	},
 	methods: {
 		//下方按钮事件
 		buttonClick(e) {
+			//点击自动分配
+			if (e.index == 1) {
+				this.$store.commit('req_autoDistribution',this.examId);
+			}
+			
 			//点击发送提醒
 			if (e.index == 1) {
 				this.openChooseSend();
@@ -200,12 +207,22 @@ export default {
 		},
 		hotelInfo(hotelId) {
 			uni.navigateTo({
-				url: 'eduHotel'
+				url: 'eduHotel?hotelId=' + hotelId
 			});
 		},
-		addCar(orderId) {
+		roomInfo(roomId) {
+			uni.navigateTo({
+				url: 'eduHotel?hotelId=' + hotelId
+			});
+		},
+		addCar() {
 			uni.navigateTo({
 				url: '/pages/mine/team/edu/carInfo'
+			});
+		},
+		toUserList(id) {
+			uni.navigateTo({
+				url: '/pages/mine/team/edu/eduUserList?id=' + id
 			});
 		},
 		toggleTab(index) {
@@ -213,8 +230,12 @@ export default {
 		},
 		//滑动切换swiper
 		tabChange(e) {
+			console.log(this.tabIndex)
 			const tabIndex = e.detail.current;
 			this.tabChangeFunc(tabIndex);
+			
+			let val = { examId: this.examId, type: this.tabIndex };
+			this.$store.commit('req_getEduDistribution', val);
 		},
 		//页面切换调用
 		tabChangeFunc(tabIndex) {

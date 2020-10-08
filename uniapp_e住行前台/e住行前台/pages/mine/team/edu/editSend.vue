@@ -1,5 +1,13 @@
 <template>
 	<view class="editSend">
+		<view class="switchItem">
+			<view class="uni-list-cell-db">自动发送行程</view>
+			<switch checked />
+		</view>
+		<view class="switchItem">
+			<view class="uni-list-cell-db">需要反馈</view>
+			<switch checked />
+		</view>
 		<textarea class="textareClass" maxlength="-1" placeholder="在此输入要发送的内容（注意:不可换行）" @blur="bindTextAreaBlur" auto-height />
 		<view class="sendButton" @click="confirm">发 送</view>
 	</view>
@@ -19,6 +27,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	.switchItem{
+		display: flex;
+		justify-content: space-between;
+		width: 670rpx;
+		margin: 0 auto;
+		height: 100rpx;
+		line-height: 100rpx;
+		border-bottom: 1rpx solid #eee;
+	}
 .sendButton {
 	width: 91%;
 	margin: 0 auto;
@@ -39,7 +56,7 @@ export default {
 	min-height: 30vh;
 	text-align: left;
 	padding: 10px;
-	width: 670rpx;
+	width: 650rpx;
 	margin: 12px auto 60px auto;
 	background-color: #f3f3f3;
 	border-radius: 2px;

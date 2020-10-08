@@ -33,11 +33,11 @@
 		</block>
 		<!-- eduOrderDistributionCar -->
 		<block v-if="listType == 'orderDistributionList'" v-for="(item, index) in tableList" :key="index">
-			<view style="font-size: 14px;" class="table-list-item1" @click="toCarInfo(item.id)">
+			<view style="font-size: 14px;" class="table-list-item1" @click="toCarInfo(item.carId)">
 				<view class="table-cont-item">{{ item.numbering }}</view>
 				<view class="table-cont-item">{{ item.carNumber }}</view>
 				<view class="table-cont-item">{{ item.driver }}</view>
-				<view @click.stop="toUserList(item.id)" class="linkClass table-cont-item">{{ item.peopleNum }}</view>
+				<view @click.stop="toUserList(item.carId)" class="linkClass table-cont-item">{{ item.peopleNum + '/' + item.carCapacity }}</view>
 			</view>
 		</block>
 		<!-- eduDistributionItem -->
@@ -107,9 +107,9 @@ export default {
 				url: '/pages/mine/team/edu/eduOrderInfo?orderId=' + orderId
 			});
 		},
-		toCarInfo(orderId) {
+		toCarInfo(carId) {
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/carInfo?orderId=' + orderId
+				url: '/pages/mine/team/edu/carInfo?carId=' + carId
 			});
 		},
 		toUserList(id) {
