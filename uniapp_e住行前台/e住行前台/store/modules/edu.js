@@ -3,12 +3,15 @@ const state = {
 	createExamData: '', //创建考试表单
 	unifiedPaymentLink: '', //【统一支付】页面链接
 	qr: '', //学生报名二维码图片
-	paymentInfo: '',//统一支付页面信息
+	paymentInfo: '', //统一支付页面信息
 	eduList: '', //教育列表
-	eduListPage: 1,//教育列表下次请求页码
-	eduOrderInfo: '',//教育订单详情
-	eduDistributionInfo: '',//教育订单分配信息
+	eduListPage: 1, //教育列表下次请求页码
+	eduOrderInfo: '', //教育订单详情
+	eduDistributionInfo: '', //教育订单分配信息
 	eduCarInfo: '', //教育车辆信息
+	eduHotelInfo: '', //教育酒店信息
+	navigateBack: false, //返回上一级
+	EduHotelRoom: '',//教育酒店房间信息
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -150,14 +153,14 @@ const mutations = {
 	// 	      } 
 	// 	   }); 
 	// },
-	
+
 	//重置列表页码
 	resetEduList(state) {
 		state.eduList = ''
 		state.eduListPage = 1
 		state.eduListCanReq = true
 	},
-	
+
 	//获取教育订单列表
 	req_getEduList(state) {
 		common_request({
@@ -184,9 +187,9 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取教育订单详情
-	req_getEduOrderInfo(state,val) {
+	req_getEduOrderInfo(state, val) {
 		common_request({
 			url: '/api/zxkj/exam/getEduOrderInfo',
 			data: {
@@ -202,7 +205,7 @@ const mutations = {
 					data.examEndDate = formatDate(true, data.examEndDate)
 					data.checkinDate = formatDate(true, data.checkinDate)
 					data.checkoutDate = formatDate(true, data.checkoutDate)
-					data.deadline = formatDate(true, data.deadline)+ ' 23:59:59'
+					data.deadline = formatDate(true, data.deadline) + ' 23:59:59'
 					state.eduOrderInfo = data
 				} else {
 					uni.showModal({
@@ -214,9 +217,9 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取教育订单分配信息
-	req_getEduDistribution(state,val) {
+	req_getEduDistribution(state, val) {
 		common_request({
 			url: '/api/zxkj/exam/getEduDistribution',
 			data: {
@@ -240,9 +243,9 @@ const mutations = {
 			},
 		})
 	},
-	
-	//
-	req_autoDistribution(state,val) {
+
+	//自动分配
+	req_autoDistribution(state, val) {
 		common_request({
 			url: '/api/zxkj/exam/autoDistribution',
 			data: {
@@ -264,9 +267,9 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取车辆信息
-	req_getCarInfo(state,val) {
+	req_getCarInfo(state, val) {
 		common_request({
 			url: '/api/zxkj/exam/getCarInfo',
 			data: {
@@ -289,18 +292,19 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//添加车辆信息
-	req_addCarInfo(state,val) {
-		val = JSON.stringify(val)
+	req_addCarInfo(state, val) {
+		let form = JSON.stringify(val.form)
 		common_request({
 			url: '/api/zxkj/exam/addCarInfo',
 			data: {
-				 'numbering': val.numbering,
-				 'carNumber': val.carNumber,
-				 'driver': val.driver,
-				 'contact': val.contact,
-				 'peopleNum': val.peopleNum
+				'examId': val.examId,
+				'numbering': form.numbering,
+				'carNumber': form.carNumber,
+				'driver': form.driver,
+				'contact': form.contact,
+				'peopleNum': form.peopleNum
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
@@ -318,21 +322,21 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//修改车辆信息
-	req_updateCarInfo(state,val) {
+	req_updateCarInfo(state, val) {
 		let carId = JSON.stringify(val.carId)
 		let carInfo = JSON.stringify(val.carInfo)
-		
+
 		common_request({
 			url: '/api/zxkj/exam/updateCarInfo',
 			data: {
 				'carId': val.carId,
-				 'numbering': carInfo.numbering,
-				 'carNumber': carInfo.carNumber,
-				 'driver': carInfo.driver,
-				 'contact': carInfo.contact,
-				 'peopleNum': carInfo.peopleNum
+				'numbering': carInfo.numbering,
+				'carNumber': carInfo.carNumber,
+				'driver': carInfo.driver,
+				'contact': carInfo.contact,
+				'peopleNum': carInfo.peopleNum
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
@@ -350,9 +354,9 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//删除车辆信息
-	req_delEduCar(state,val) {
+	req_delEduCar(state, val) {
 		common_request({
 			url: '/api/zxkj/exam/delEduCarInfo',
 			data: {
@@ -374,7 +378,91 @@ const mutations = {
 			},
 		})
 	},
+
+	//获取教育订单酒店房间信息
+	req_getEduHotel(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getEduHotel',
+			data: {
+				'examId': val.examId,
+				'hotelId': val.eduHotelId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.eduHotelInfo = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
 	
+	//添加教育订单酒店信息
+	req_makeAddHotelLink(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/makeAddHotelLink',
+			data: {
+				'examId': val.examId,
+				'hotelId': val.eduHotelId,
+				'roomCount': val.roomCount
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.navigateBack = true
+					
+					setTimeout(()=>{
+						state.navigateBack = false
+					},1000)
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取需要添加的酒店房型房间信息
+	req_getEduHotelRoom(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getEduHotelRoom',
+			data: {
+				'examId': val.examId,
+				'hotelId': val.eduHotelId,
+				'roomTypeId': val.roomTypeId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.EduHotelRoom = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+
 	//创建订单的支付方式改变
 	payWayChange(state, val) {
 		if (val == '选择方式') {

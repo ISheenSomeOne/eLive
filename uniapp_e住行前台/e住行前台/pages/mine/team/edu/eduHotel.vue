@@ -3,42 +3,36 @@
 		<view class="container999">
 			<view class="line">
 				<view class="lineLeft">酒店</view>
-				<view class="lineRight">
-					<picker class="pickerClass" mode="selector" :range="hotelList" :value="nowHotel" @change="hotelChange">
-						<view>{{ hotelList[nowHotel] }}</view>
+				<view v-if="hasHotel" class="lineRight">{{ eduHotelInfo.nowHotelName }}</view>
+				<view v-else class="lineRight">
+					<picker class="pickerClass" mode="selector" :range="hotelNameList" :value="nowHotel" @change="hotelChange">
+						<view>{{ hotelNameList[nowHotel] }}</view>
 					</picker>
 				</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">房间数量</view>
-				<view class="lineRight">
-					<input class="input" @input="formChange" type="number" value="" data-name="otherFee" placeholder-class="plaClass" placeholder="请输入房间数量" />
+				<view v-if="hasHotel" class="lineRight">{{ eduHotelInfo.nowRoomCount }}</view>
+				<view v-else class="lineRight">
+					<input class="input" type="number" v-model="roomCount" placeholder-class="plaClass" placeholder="请输入房间数量" />
 				</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">链接</view>
-				<view class="lineRight" @click="toAddRoom">gssdf2131234fdsv</view>
+				<view v-if="hasHotel" class="lineRight" style="overflow: auto;text-align: left;">
+					{{ 'http://localhost:8080/pages/mine/team/edu/hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId }}
+				</view>
 			</view>
 		</view>
-		<view class="roomBox clearfix">
-			<view class="roomItem">
-				11112201222122121
-			</view>
-			<view class="roomItem">
-				201
-			</view>
-			<view class="roomItem">
-				201
-			</view>
-			<view class="roomItem">
-				201
-			</view>
-			<view class="roomItem">
-				201
-			</view>
-		</view>
-		<view class="buttonBox" v-show="true" @click="submit">确定</view>
-		<view class="bottomMenu" v-show="!true"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
+		<!-- <view class="roomBox clearfix">
+			<view class="roomItem">1121</view>
+			<view class="roomItem">201</view>
+			<view class="roomItem">201</view>
+			<view class="roomItem">201</view>
+			<view class="roomItem">201</view>
+		</view> -->
+		<view class="buttonBox" v-show="!hasHotel" @click="submit">确定</view>
+		<view class="bottomMenu" v-show="hasHotel"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
 	</view>
 </template>
 
@@ -46,7 +40,12 @@
 export default {
 	data() {
 		return {
-			hotelList: ['选择酒店', '汇都酒店', '兴润酒店'],
+			examId: '',
+			eduHotelId: '',
+			roomCount: '',
+			hasHotel: false,
+			hotelList: [],
+			hotelNameList: [],
 			nowHotel: 0,
 			options: [],
 			buttonGroup: [
@@ -63,36 +62,80 @@ export default {
 			]
 		};
 	},
+	computed: {
+		eduHotelInfo() {
+			return this.$store.state.edu.eduHotelInfo;
+		},
+		navigateBack() {
+			return this.$store.state.edu.navigateBack;
+		}
+	},
+	watch:{
+		navigateBack(newData, oldData) {
+			if (newData) {
+				uni.navigateBack({
+					delta:1
+				})
+			}
+		},
+	},
+	onLoad(options) {
+		//是否有考试id
+		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+			this.examId = options.examId;
+		}
+		//是否有酒店id
+		if (options.eduHotelId != '' && options.eduHotelId != undefined && options.eduHotelId != null) {
+			this.eduHotelId = options.eduHotelId;
+			this.hasHotel = true;
+		} else {
+			console.log(1);
+			this.hasHotel = false;
+		}
+		let val = { examId: this.examId, eduHotelId: this.eduHotelId };
+		this.$store.commit('req_getEduHotel', val); //获取酒店信息
+
+		//初始化hotelList
+		this.hotelList = this.$store.state.edu.eduHotelInfo.hotelList;
+		if (this.hotelList) {
+			this.hotelNameList.push('选择酒店');
+			this.hotelList.forEach(item => {
+				this.hotelNameList.push(item.hotelName);
+			});
+		}
+	},
 	methods: {
 		hotelChange: function(e) {
-			this.date = e.target.value;
+			this.nowHotel = e.target.value;
 		},
-		submit:function(){
-			uni.navigateTo({
-				url: 'hotelAddRoom'
-			});
+		submit: function() {
+			let val = {examId: this.examId, hotelId: this.eduHotelId, roomCount: this.roomCount}
+			this.$store.commit('req_makeAddHotelLink', val);
+			// uni.navigateTo({
+			// 	url: 'hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId
+			// });
 		}
 	}
 };
 </script>
 
 <style lang="scss">
-	.roomBox{
-		.roomItem{
-			height: 40px;
-			line-height: 40px;
-			width: 150rpx;
-			background-color: #007aff;
-			color: #fff;
-			float: left;
-			margin: 8px 15rpx;
-			font-size: 14px;
-			border-radius: 2px;
-			overflow: auto;
-		}
-		width: 720rpx;
-		margin: 0 auto;
+.roomBox {
+	.roomItem {
+		height: 40px;
+		line-height: 40px;
+		width: 150rpx;
+		background-color: #007aff;
+		color: #fff;
+		float: left;
+		margin: 8px 15rpx;
+		font-size: 14px;
+		border-radius: 2px;
+		overflow: auto;
 	}
+	width: 720rpx;
+	margin: 0 auto;
+}
 .bottomMenu {
 	/* #ifndef APP-NVUE */
 	display: flex;
@@ -103,21 +146,21 @@ export default {
 	right: 0;
 	bottom: 5px;
 }
-	.buttonBox {
-		width: 91%;
-		margin: 0 auto;
-		height: 40px;
-		border-radius: 100px;
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: fixed;
-		bottom: 10px;
-		left: 0;
-		right: 0;
-		background-color: #4cd964;
-	}
+.buttonBox {
+	width: 91%;
+	margin: 0 auto;
+	height: 40px;
+	border-radius: 100px;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	background-color: #4cd964;
+}
 .container999 {
 	.title {
 		height: 40px;

@@ -29,12 +29,12 @@ export default {
 		},
 	},
 	onLoad() {
-			that.$store.commit('resetEduList')
-			that.$store.commit('req_getEduList')
+			this.$store.commit('resetEduList')
+			this.$store.commit('req_getEduList')
 	},
 	methods:{
 		getMore(){
-			that.$store.commit('req_getEduList')
+			this.$store.commit('req_getEduList')
 		}
 	}
 };

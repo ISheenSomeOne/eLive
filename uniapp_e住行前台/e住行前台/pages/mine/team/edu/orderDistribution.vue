@@ -41,7 +41,7 @@
 									</view>
 								</block>
 							</block>
-							<view class="buttonBox" @click="hotelInfo">添加酒店房间</view>
+							<view class="buttonBox" @click="hotelInfo()">添加酒店房间</view>
 						</view>
 					</view>
 				</swiper-item>
@@ -207,17 +207,17 @@ export default {
 		},
 		hotelInfo(hotelId) {
 			uni.navigateTo({
-				url: 'eduHotel?hotelId=' + hotelId
+				url: 'eduHotel?eduHotelId=' + hotelId + '&examId=' + this.examId
 			});
 		},
 		roomInfo(roomId) {
 			uni.navigateTo({
-				url: 'eduHotel?hotelId=' + hotelId
+				url: 'eduHotel?eduRoomId=' + roomId
 			});
 		},
 		addCar() {
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/carInfo'
+				url: '/pages/mine/team/edu/carInfo?examId='+this.examId
 			});
 		},
 		toUserList(id) {

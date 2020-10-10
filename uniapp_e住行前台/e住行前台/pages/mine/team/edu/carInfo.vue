@@ -41,6 +41,7 @@
 export default {
 	data() {
 		return {
+			examId: '',
 			carId: '',
 			showAdd: true,
 			form: {
@@ -66,11 +67,14 @@ export default {
 		};
 	},
 	computed:{
-		eduCarInfo() {
-			return this.$store.state.edu.eduCarInfo;
-		},
+		// eduCarInfo() {
+		// 	return this.$store.state.edu.eduCarInfo;
+		// },
 	},
 	onLoad(options) {
+		if(options.examId != '' && options.examId != undefined && options.examId != null){
+			this.examId = options.examId
+		}
 		if(options.carId != '' && options.carId != undefined && options.carId != null){
 			this.carId = options.cardId
 			this.showAdd = false
@@ -92,7 +96,8 @@ export default {
 		},
 		//添加车辆
 		addCarInfo() {
-			this.$store.commit('req_addCarInfo', this.form);
+			let val = {examId: this.examId, form: this.form}
+			this.$store.commit('req_addCarInfo', val);
 		},
 	}
 };
