@@ -3,43 +3,43 @@
 		<view class="container999">
 			<view class="line">
 				<view class="lineLeft">姓名</view>
-				<view class="lineRight">张三</view>
+				<view class="lineRight">{{eduUserInfo.userName}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">性别</view>
-				<view class="lineRight">男</view>
+				<view class="lineRight">{{eduUserInfo.sex}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">电话</view>
-				<view class="lineRight">15087032222</view>
+				<view class="lineRight">{{eduUserInfo.contact}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">身份证号</view>
-				<view class="lineRight">530111199610221232</view>
+				<view class="lineRight">{{eduUserInfo.idCard}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">住宿方式</view>
-				<view class="lineRight">合住邀请</view>
+				<view class="lineRight">{{eduUserInfo.liveWay}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">车辆</view>
-				<view class="lineRight">1号车</view>
+				<view class="lineRight">{{eduUserInfo.carNumbering}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">出发点</view>
-				<view class="lineRight">xxxxxx学校</view>
+				<view class="lineRight">{{eduUserInfo.startiung}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">酒店房间</view>
-				<view class="lineRight">汇都酒店 - 201</view>
+				<view class="lineRight">{{eduUserInfo.hotel + '-' + eduUserInfo.room}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">考点</view>
-				<view class="lineRight">xxxx学校</view>
+				<view class="lineRight">{{eduUserInfo.examSite}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">支付费用</view>
-				<view class="lineRight">￥600</view>
+				<view class="lineRight">￥{{eduUserInfo.allFee}}</view>
 			</view>
 		</view>
 	</view>
@@ -48,7 +48,29 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			examId: '',
+			memberId: ''
+		};
+	},
+	computed:{
+		eduUserInfo() {
+			return this.$store.state.edu.eduUserInfo;
+		},
+	},
+	onLoad(options) {
+		let that = this;
+		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+			that.examId = options.examId;
+			if (options.memberId != '' && options.memberId != undefined && options.memberId != null) {
+				that.memberId = options.memberId;
+				let val = { examId: that.examId, memberId: that.memberId };
+				that.$store.commit('req_getEduUserInfo', val);
+			}
+		}
+	},
+	methods:{
+		
 	}
 };
 </script>

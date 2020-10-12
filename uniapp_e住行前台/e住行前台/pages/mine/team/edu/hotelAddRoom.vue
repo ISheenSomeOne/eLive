@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<view class="topTip">
-			<text>{{ EduHotelRoom.hotelName }}</text>
+			<text>{{ eduHotelRoom.hotelName }}</text>
 			—还需选择
-			<text>{{ EduHotelRoom.needRoom }}</text>
+			<text>{{ eduHotelRoom.needRoom }}</text>
 			间房
 		</view>
 		<picker class="pickerClass" mode="selector" :range="roomTypeNameList" :value="nowRoomType" @change="roomTypeChange">
@@ -13,7 +13,6 @@
 			<block v-for="(room, index) in roomList" :key="index">
 				<uni-fav :content-text="room.roomName" class="roomItem" :checked="room.check" @click="chooseRoom(index)" />
 			</block>
-			
 		</view>
 		<view class="buttonBox" v-show="true" @click="submit">创建订单</view>
 	</view>
@@ -30,8 +29,8 @@ export default {
 		};
 	},
 	computed: {
-		EduHotelRoom() {
-			return this.$store.state.edu.EduHotelRoom;
+		eduHotelRoom() {
+			return this.$store.state.edu.eduHotelRoom;
 		}
 	},
 	onLoad(options) {
@@ -59,7 +58,7 @@ export default {
 			this.initEduHotelRoom();
 		},
 		initEduHotelRoom: function() {
-			let data = this.$store.state.edu.EduHotelRoom;
+			let data = this.$store.state.edu.eduHotelRoom;
 			//渲染roomTypeList
 			this.roomTypeList = data.roomTypeList;
 			//初始化房间类型列表
@@ -87,6 +86,16 @@ export default {
 		},
 		chooseRoom(index) {
 			this.roomList[index].check = !this.roomList[index].check;
+		},
+		submit() {
+			let list = []
+			for (let i = 0; i < this.roomList.length; i++) {
+				if(this.roomList[i].check){
+					list.push(this.roomList[i].roomId)
+				}
+			}
+			let val = { examId: this.examId, eduHotelId: this.eduHotelId, roomList: this.list }
+			this.$store.commit('req_addEduHotelRoom', val);
 		}
 	}
 };

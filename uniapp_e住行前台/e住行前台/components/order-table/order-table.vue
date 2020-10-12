@@ -47,29 +47,31 @@
 				<view class="table-cont-item short">{{ item.sex }}</view>
 				<view class="table-cont-item short">{{ item.car }}</view>
 				<view class="table-cont-item">{{ item.startingName }}</view>
-				<view class="table-cont-item long">{{ item.hotelRoom }}</view>
+				<view class="table-cont-item long">{{ item.hotelName + '-' + item.roomName }}</view>
 				<view class="table-cont-item">{{ item.examSite }}</view>
 			</view>
 		</block>
 		<!-- eduAddUserList -->
-		<block v-if="listType == 'eduAddUserList'" v-for="(item, index) in tableList" :key="index">
-			<view class="table-list-item1">
-				<view class="table-cont-item short"><checkbox name="chooseUser" value="cb" checked="true" /></view>
-				<view class="table-cont-item short">{{ item.memberName }}</view>
-				<view class="table-cont-item short">{{ item.sex }}</view>
-				<view class="table-cont-item short">{{ item.car }}</view>
-				<view class="table-cont-item">{{ item.startingName }}</view>
-				<view class="table-cont-item long">{{ item.hotelRoom }}</view>
-				<view class="table-cont-item">{{ item.examSite }}</view>
-			</view>
-		</block>
+		<checkbox-group @change="eduAddUserListCheckboxChange">
+			<block v-if="listType == 'eduAddUserList'" v-for="(item, index) in tableList" :key="index">
+				<view class="table-list-item1">
+					<view class="table-cont-item short"><checkbox name="chooseUser" :value="item.memberId" :checked="item.checked" /></view>
+					<view class="table-cont-item short">{{ item.name }}</view>
+					<view class="table-cont-item short">{{ item.sex }}</view>
+					<view class="table-cont-item short">{{ item.carNumbering }}</view>
+					<view class="table-cont-item">{{ item.starting }}</view>
+					<view class="table-cont-item long">{{ item.hotel + '-' + item.room }}</view>
+					<view class="table-cont-item">{{ item.examSite }}</view>
+				</view>
+			</block>
+		</checkbox-group>
 	</view>
 </template>
 
 <script>
 export default {
 	name: 'OrderTable',
-	props: ['tableList', 'titleList', 'listType'],
+	props: ['tableList', 'titleList', 'listType', 'examId', 'addType'],
 	data() {
 		return {
 			// orderList: [{
@@ -117,23 +119,38 @@ export default {
 				url: '/pages/mine/team/edu/eduUserList?id=' + id
 			});
 		},
-		toUserInfo(memberId){
+		toUserInfo(memberId) {
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/eduUserInfo?memberId=' + memberId
+				url: '/pages/mine/team/edu/eduUserInfo?examId=' + this.examId + 'memberId=' + memberId
 			});
 		},
-		del(id){
+		del(memberId) {
+			let that = this;
 			uni.showModal({
 				title: '提示',
 				content: '确定删除吗？',
 				confirmColor: '#dd524d',
 				success: function(res) {
 					if (res.confirm) {
-						console.log(111)
+						let val = { examId: that.examId, addType: that.addType, memberId: memberId };
+						that.$store.commit('req_delEduUserListItem', val);
 					} else if (res.cancel) {
 					}
 				}
 			});
+		},
+		eduAddUserListCheckboxChange(e) {
+			let tableList = this.tableList,
+				values = e.detail.value;
+			for (let i = 0, lenI = tableList.length; i < lenI; ++i) {
+				const item = tableList[i];
+				if (values.includes(item.value)) {
+					this.$set(item, 'checked', true);
+				} else {
+					this.$set(item, 'checked', false);
+				}
+			}
+			this.$emit('getNewList',this.tableList)
 		}
 	}
 };

@@ -11,7 +11,12 @@ const state = {
 	eduCarInfo: '', //教育车辆信息
 	eduHotelInfo: '', //教育酒店信息
 	navigateBack: false, //返回上一级
-	EduHotelRoom: '',//教育酒店房间信息
+	eduHotelRoom: '',//教育酒店房间信息
+	eduDistributionMax: '',//获取用户列表的最大值
+	eduDistributionItem: '',//获取用户列表
+	needRefresh: false,//页面需要刷新
+	eduUserInfo: '',//教育用户信息
+	unassignedList: '',//未分配用户列表
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -451,7 +456,177 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
-					state.EduHotelRoom = data
+					state.eduHotelRoom = data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//添加的酒店房型房间信息
+	req_addEduHotelRoom(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getEduHotelRoom',
+			data: {
+				'examId': val.examId,
+				'hotelId': val.eduHotelId,
+				'roomList': val.roomList
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取分类下的用户列表
+	req_getEduUserList(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getEduUserList',
+			data: {
+				'examId': val.examId,
+				'carId': val.carId,
+				'roomId': val.roomId,
+				'startingId': val.startingId,
+				'examSiteId': val.examSiteId,
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					state.eduDistributionMax = res.data.data.max
+					state.eduDistributionItem = res.data.data.userList
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//删除用户列表中的一个
+	req_delEduUserListItem(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getEduUserList',
+			data: {
+				'examId': val.examId,
+				'carId': val.carId,
+				'roomId': val.roomId,
+				'startingId': val.startingId,
+				'examSiteId': val.examSiteId,
+				'memberId': val.memberId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					uni.showToast({
+						title: '删除成功',
+						duration: 2000,
+						icon: 'success'
+					});
+					state.needRefresh = true
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//改变页面更新状态
+	changeNeedRefresh(state) {
+		state.needRefresh = !state.needRefresh
+	},
+	
+	//获取教育用户信息
+	req_getEduUserInfo(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getEduUserInfo',
+			data: {
+				'examId': val.examId,
+				'memberId': val.memberId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					state.eduUserInfo = res.data.data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取教育用户信息
+	req_getUnassignedList(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getUnassignedList',
+			data: {
+				'examId': val.examId,
+				'type': val.type
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					state.unassignedList = res.data.data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取教育用户信息
+	req_addDistribution(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getUnassignedList',
+			data: {
+				'examId': val.examId,
+				'type': val.type,
+				'userList': val.userList
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					// state.unassignedList = res.data.data
 				} else {
 					uni.showModal({
 						title: '提示',
