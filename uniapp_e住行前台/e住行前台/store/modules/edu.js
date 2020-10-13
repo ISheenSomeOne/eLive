@@ -17,6 +17,9 @@ const state = {
 	needRefresh: false,//页面需要刷新
 	eduUserInfo: '',//教育用户信息
 	unassignedList: '',//未分配用户列表
+	remindContent: '',//提醒的内容
+	travel: '',//考试行程
+	needFeedback: false,//是否需要反馈
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -626,7 +629,96 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
+					state.navigateBack = true
 					// state.unassignedList = res.data.data
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//发送提醒
+	req_sendRemind(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/sendRemind',
+			data: {
+				'examId': val.examId,
+				'type': val.type,
+				'remindContent': val.remindContent,
+				'needTravel': val.needTravel,
+				'needFeedback': val.needFeedback
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					state.navigateBack = true
+					uni.showToast({
+						title: '发送成功',
+						duration: 2000,
+						icon: 'none'
+					});
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//打开查看提醒
+	req_getRemind(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getRemind',
+			data: {
+				'examRemindId': val.examRemindId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.remindContent = data.remindContent
+					state.travel = data.travel
+					state.needFeedback = data.needFeedback
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//教育收到提醒确认反馈
+	req_examConfirmRemind(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/getRemind',
+			data: {
+				'examRemindId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					uni.showToast({
+						title: '反馈成功',
+						duration: 2000,
+						icon: 'none'
+					});
 				} else {
 					uni.showModal({
 						title: '提示',

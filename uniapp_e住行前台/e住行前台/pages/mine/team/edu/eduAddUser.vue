@@ -39,7 +39,19 @@ export default {
 	computed: {
 		unassignedList() {
 			return this.$store.state.edu.unassignedList;
+		},
+		navigateBack() {
+			return this.$store.state.edu.navigateBack;
 		}
+	},
+	watch:{
+		navigateBack(newData, oldData) {
+			if (newData) {
+				uni.navigateBack({
+					delta:1
+				})
+			}
+		},
 	},
 	onLoad(options) {
 		let that = this;

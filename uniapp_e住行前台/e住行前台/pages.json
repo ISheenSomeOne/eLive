@@ -133,6 +133,10 @@
             "path" : "pages/mine/team/edu/editSend",
             "style" : {}
         }
+        ,{
+            "path" : "pages/mine/team/edu/checkRemind",
+            "style" : {}
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",

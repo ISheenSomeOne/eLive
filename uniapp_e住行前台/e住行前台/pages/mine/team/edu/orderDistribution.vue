@@ -179,7 +179,7 @@ export default {
 	},
 	onLoad(option) {
 		let that = this;
-		if (option.examId != '') {
+		if (options.examId != '' && options.examId != undefined && options.examId != null) {
 			that.examId = option.examId;
 			let val = { examId: that.examId, type: 1 };
 			that.$store.commit('req_getEduDistribution', val);
@@ -201,6 +201,12 @@ export default {
 		},
 		//打开选择群组界面
 		openChooseSend() {
+			let that = this
+			//延后开发选择群组开发
+			uni.navigateTo({
+				url: '/pages/mine/team/edu/editSend?examId=' + that.examId
+			});
+			
 			uni.navigateTo({
 				url: '/pages/mine/team/edu/chooseSend'
 			});
