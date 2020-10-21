@@ -3,67 +3,86 @@
 
 <view style='margin-top: {{height}}px;padding-top: 1px;'>
   <!-- 订单状态 -->
-  <view class="infoBox">
-    <view class="state">
+  <view class="infoBox" style="margin-bottom:120rpx">
+    <view wx:if="{{orderInfo.payState == 5 && !isTimeOut}}" class="state">
       待支付
     </view>
-    <view class="stateTip">
-      请在 2020-09-28 09:30:12 前支付，超时订单将自动取消
+    <view wx:if="{{orderInfo.payState == 6}}" class="state colorGreen">
+      报名成功
     </view>
-    <view class="remainingTime">
-      <view class="remainingTimeItem">23</view> :
-      <view class="remainingTimeItem">32</view>
+    <view wx:if="{{orderInfo.payState == 7 || isTimeOut}}" class="state colorRed">
+      订单取消
     </view>
-    <view class="pay" bindtap="payNow">立即支付</view>
+    <view wx:if="{{orderInfo.payState == 5}}" class="stateTip">
+      请在 {{timeOut}} 前支付，超时订单将自动取消
+    </view>
+    <view class="remainingTime" wx:if="{{orderInfo.payState == 5 && !isTimeOut}}">
+      <view class="remainingTimeItem">{{remainingTimeMinu}}</view> :
+      <view class="remainingTimeItem">{{remainingTimeSec}}</view>
+    </view>
+    <view wx:if="{{orderInfo.payState == 5 && !isTimeOut}}" class="pay" bindtap="pay">立即支付</view>
 
     <!-- 考试信息 -->
 		<text class="infoTitle">考试信息</text>
 		<view class="infoItem">
 			<view class="itemLeft">考试名称</view>
-			<view class="itemRight">云南省xxxx考试</view>
+			<view class="itemRight">{{orderInfo.examName}}</view>
 		</view>
 		<view class="infoItem">
 			<view class="itemLeft">考试时间</view>
-			<view class="itemRight">2020-10-01 至 2020-10-02</view>
+			<view class="itemRight">{{orderInfo.examStartDate}} 至 {{orderInfo.examEndDate}}</view>
 		</view>
 		<view class="infoItem">
 			<view class="itemLeft">考点信息</view>
-			<view class="itemRight">云南省xxxx学校</view>
+			<view class="itemRight">{{orderInfo.examSite}}</view>
 		</view>
 		<view class="infoItem">
 			<view class="itemLeft">出发信息</view>
-			<view class="itemRight">云南省ssssssxxxx学校 <view>时间： 2020-09-30 14:00</view></view>
+			<view class="itemRight">{{orderInfo.starting.name}} <view>时间： {{orderInfo.starting.startingDate}} {{orderInfo.starting.startingTime}}</view></view>
     </view>
     
     <!-- 住宿信息 -->
 		<text class="infoTitle">住宿信息</text>
+		<view class="infoItem" wx:if="{{orderInfo.invitationCode}}">
+			<view class="itemLeft">邀请码</view>
+			<view class="itemRight">{{orderInfo.invitationCode}}</view>
+		</view>
 		<view class="infoItem">
 			<view class="itemLeft">酒店房间</view>
-			<view class="itemRight">汇都酒店 - 201</view>
+			<view class="itemRight" wx:if="{{orderInfo.roomNum}}">{{orderInfo.hotelName}} - {{orderInfo.roomNum}}</view>
+			<view class="itemRight" wx:else>暂未分配</view>
 		</view>
 		<view class="infoItem">
-			<view class="itemLeft">入住人1</view>
-			<view class="itemRight">张三 13888334333</view>
+			<view class="itemLeft">入离时间</view>
+			<view class="itemRight">{{orderInfo.checkinDate}} 至 {{orderInfo.checkoutDate}}</view>
 		</view>
-		<view class="infoItem">
-			<view class="itemLeft">入住人2</view>
-			<view class="itemRight">李四 13888334333 <text>拨号</text></view>
-    </view>
+		<view class="infoItem" wx:for="{{orderInfo.liveTime}}" wx:key="index">
+			<view class="itemLeft">入住人{{index + 1}}</view>
+			<view class="itemRight">{{item.name}} {{item.tel}} <text>拨号</text></view>
+		</view>
     
     <!-- 订单信息 -->
 		<text class="infoTitle">订单信息</text>
-		<view class="infoItem">
+		<view class="infoItem" wx:if="{{orderInfo.serviceType != 3 && orderInfo.payWay == 2}}">
 			<view class="itemLeft">房间费用</view>
-			<view class="itemRight">￥100</view>
+			<view class="itemRight">￥{{orderInfo.roomFee}}</view>
 		</view>
-		<view class="infoItem">
+		<view class="infoItem" wx:if="{{orderInfo.serviceType != 2 && orderInfo.payWay == 2}}">
 			<view class="itemLeft">其他费用</view>
-			<view class="itemRight">￥100</view>
+			<view class="itemRight">￥{{orderInfo.otherFee}}</view>
+		</view>
+		<view class="infoItem" wx:if="{{orderInfo.payWay == 2}}">
+			<view class="itemLeft">总费用</view>
+			<view class="itemRight">￥{{orderInfo.allFee}}</view>
+		</view>
+		<view class="infoItem" wx:if="{{orderInfo.payWay != 2}}">
+			<view class="itemLeft">总费用</view>
+			<view class="itemRight">统一支付</view>
 		</view>
 		<view class="infoItem">
-			<view class="itemLeft">总费用</view>
-			<view class="itemRight">￥200</view>
+			<view class="itemLeft">订单号</view>
+			<view class="itemRight">{{orderInfo.examOrderNum}}</view>
 		</view>
-		<button class="confirm" type="primary" bindtap="confirm">完成</button>
+		<button class="confirm" type="primary" bindtap="done">完成</button>
   </view>
 </view>

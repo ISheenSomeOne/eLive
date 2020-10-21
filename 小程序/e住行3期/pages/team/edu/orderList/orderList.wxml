@@ -1,0 +1,26 @@
+<!--pages/team/orderList/orderList.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding-top: 1px;'>
+  <block wx:for="{{listInfo}}" wx:key="index">
+    <view class="infoBox" bindtap="lookOrder({{item.examId}})">
+      <view class="infoTitle">{{item.examName}} <view wx:if="{{item.examOrderState == 5}}" class="bgYellow">待支付</view>
+        <view wx:if="{{item.examOrderState == 6}}">报名成功</view>
+        <view wx:if="{{item.examOrderState == 7}}" class="bgGray">已取消</view>
+      </view>
+      <view class="infoItem">
+        <text wx:if="{{item.hotelName}}">{{item.hotelName}}</text><text wx:else>暂未分配酒店</text>
+        <view wx:if="{{item.allFee}}">￥{{item.allFee}}</view><view wx:else>统一支付</view>
+      </view>
+      <view class="infoItem" wx:if="{{item.roomNum}}">
+        {{item.roomType}} - {{item.roomNum}}
+      </view>
+      <view class="infoItem" wx:else>
+        暂未分配房间
+      </view>
+      <view class="infoItem">
+        {{item.examStartDate}} 至 {{item.examEndDate}}
+      </view>
+    </view>
+  </block>
+</view>

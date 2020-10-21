@@ -42,5 +42,8 @@
   line-height: 80rpx;
 }
 .confirm{
-  margin-top: 20rpx;
+  z-index: 100;
+  position: fixed;
+  bottom: 20rpx;
+  width: 650rpx;
 }

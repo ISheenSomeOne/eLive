@@ -40,6 +40,12 @@ page {
   color: #fff;
   font-weight: normal;
 }
+.bgYellow{
+  background-color: #f06c00;
+}
+.bgGray{
+  background-color: #999;
+}
 
 .infoItem {
   width: 650rpx;

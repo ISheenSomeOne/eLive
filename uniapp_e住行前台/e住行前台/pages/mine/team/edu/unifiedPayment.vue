@@ -1,29 +1,31 @@
 <template>
 	<view class="unifiedPayment">
 		<uni-title type="h1" :title="paymentInfo.examName" align="center"></uni-title>
-		<uni-title type="h4" :title="paymentInfo.examStartDate+' —— '+paymentInfo.examStartDate" align="center"></uni-title>
+		<uni-title type="h4" :title="paymentInfo.examStartDate + ' —— ' + paymentInfo.examEndDate" align="center"></uni-title>
 		<view class="container999">
 			<view class="line" v-if="paymentInfo.peopleNum">
 				<view class="lineLeft">人数</view>
-				<view class="lineRight">{{paymentInfo.peopleNum}}</view>
+				<view class="lineRight">{{ paymentInfo.peopleNum }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">入住时间</view>
-				<view class="lineRight">{{paymentInfo.checkinDate}}</view>
+				<view class="lineRight">{{ paymentInfo.checkinDate }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">离店时间</view>
-				<view class="lineRight">{{paymentInfo.checkoutDate}}</view>
+				<view class="lineRight">{{ paymentInfo.checkoutDate }}</view>
 			</view>
 			<view class="line" style="height: auto;" v-if="paymentInfo.remarks">
 				<view class="lineLeft" style="height: 50px;line-height: 50px;">备注</view>
-				<view class="lineRight" style="padding: 5px 0 5px 10px;">{{paymentInfo.remarks}}</view>
+				<view class="lineRight" style="padding: 5px 0 5px 10px;">{{ paymentInfo.remarks }}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">支付费用</view>
-				<view class="lineRight" style="font-size: 20px;font-weight: bold;color: #dd524d;">￥{{paymentInfo.allFee}}</view>
+				<view class="lineRight" style="font-size: 20px;font-weight: bold;color: #dd524d;">￥{{ paymentInfo.allFee }}</view>
 			</view>
-			<view class="buttonBox" @click="submit">支 付</view>
+			<!-- <view class="buttonBox" @click="submit">支 付</view> -->
+			<view v-if="!unifiedPaymentPaid" class="buttonBox" @click="submit">支 付</view>
+			<view v-else class="buttonBox">已支付</view>
 		</view>
 	</view>
 </template>
@@ -32,27 +34,73 @@
 export default {
 	data() {
 		return {
-			examId: ''
+			examId: '',
+			isWX: false //是否微信打开
 		};
 	},
-	computed:{
+	computed: {
 		paymentInfo() {
 			return this.$store.state.edu.paymentInfo;
 		},
+		unifiedPaymentPaid() {
+			return this.$store.state.edu.unifiedPaymentPaid;
+		}
 	},
-	onLoad(option) {
-		let that = this
-		if(option.examId != ''){
-			that.examId = option.examId
+	watch:{
+		unifiedPaymentPaid(newData, oldData) {
+			let that = this
+			if (newData) {
+				uni.navigateTo({
+					url: 'createSuccess?examId='+that.examId
+				});
+			}
+		},
+	},
+	onLoad(options) {
+		let that = this;
+		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+			that.examId = options.examId;
+			//判断这个订单是否需要付款
+			that.$store.commit('req_howMuchDoesThisOrderCost', that.examId);
+			//初始化页面
 			that.$store.commit('req_getUnifiedPaymentInfo', that.examId);
+		}
+		//判断是否微信扫码打开
+		var ua = navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+			that.isWX = true;
+			console.log('微信浏览器');
+		} else {
+			that.isWX = false;
+			console.log('其他浏览器');
+			uni.showModal({
+				title: '提示',
+				content: '请在微信打开',
+				showCancel: false,
+				confirmText: '知道了',
+				success: function(res) {}
+			});
 		}
 	},
 	mounted() {
 		document.querySelector('.uni-page-head-hd').style.display = 'none';
 	},
-	methods:{
-		submit:function(){
-			this.$store.commit('unifiedPaymentPay')
+	methods: {
+		submit: function() {
+			let that = this;
+			that.$store.commit('unifiedPaymentPay', that.examId);
+			if (that.isWX) {
+				//开始微信支付
+				that.$store.commit('unifiedPaymentPay', that.examId);
+			} else {
+				uni.showModal({
+					title: '提示',
+					content: '请在微信打开',
+					showCancel: false,
+					confirmText: '好的',
+					success: function(res) {}
+				});
+			}
 		}
 	}
 };

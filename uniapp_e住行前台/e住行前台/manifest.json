@@ -59,7 +59,16 @@
                         "pathRewrite" : {
                             "^/api" : ""
                         }
-                    }
+                    },
+					"/wxPay" : {
+					    // "target" : "https://zxkj.webinn.online", //目标接口域名
+					    "target" : "https://open.weixin.qq.com", //目标接口域名
+					    "changeOrigin" : true, //是否跨域
+					    "secure" : false, // 设置支持https协议的代理
+					    "pathRewrite" : {
+					        "^/wxPay" : ""
+					    }
+					}
                 }
             },
             "router" : {

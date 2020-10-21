@@ -175,9 +175,6 @@ Page({
 
   //隐藏
   plusXing: function (str, frontLen, endLen) {
-    console.log(str)
-    console.log(frontLen)
-    console.log(endLen)
     var len = str.length - frontLen - endLen;
     var xing = '';
     for (var i = 0; i < len; i++) {

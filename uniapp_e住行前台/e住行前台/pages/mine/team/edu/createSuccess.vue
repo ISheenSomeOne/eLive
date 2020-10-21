@@ -11,22 +11,26 @@
 export default {
 	data() {
 		return {
-			unifiedPaymentLink: ''
+			unifiedPaymentLink: '',
+			showLink: false
 		};
 	},
-	onLoad(option) {
-		let that = this
+	onLoad(options) {
+		let that = this;
 		//初始化成功页面
-		if (option.examId != '') {
-			that.examId = option.examId
-			that.unifiedPaymentLink = 'http://localhost:8080/pages/mine/team/edu/unifiedPayment?examId=' + that.examId
+		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+			that.examId = options.examId;
+			if (options.payWay != 2) {
+				that.showLink = true;
+				that.unifiedPaymentLink = 'http://localhost:8080/pages/mine/team/edu/unifiedPayment?examId=' + that.examId;
+			}
 			that.$store.commit('req_getExamLinkGroup', that.examId);
 		}
 	},
-	computed:{
+	computed: {
 		qr() {
 			return this.$store.state.edu.qr;
-		},
+		}
 	},
 	methods: {}
 };

@@ -100,7 +100,7 @@ export default {
 			let that = this;
 			if (that.canAdd) {
 				uni.navigateTo({
-					url: 'eduAddUser?examId='+that.examId+'&addType=' + that.addType
+					url: 'eduAddUser?examId='+that.examId+'&addType=' + that.addType+'&carId=' + that.carId+'&roomId=' + that.roomId+'&startingId=' + that.startingId+'&examSiteId=' + that.examSiteId
 				});
 			} else {
 				uni.showToast({

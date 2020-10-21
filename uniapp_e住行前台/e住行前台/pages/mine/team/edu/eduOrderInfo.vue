@@ -41,14 +41,20 @@
 			<view class="line">
 				<view class="lineLeft">状态</view>
 				<view class="lineRight">
-					<view class="bgYellow">{{ eduOrderInfo.state }}</view>
+					<view :class="eduOrderInfo.stateClass">{{ eduOrderInfo.state }}</view>
+				</view>
+			</view>
+			<view class="line">
+				<view class="lineLeft">备注</view>
+				<view class="lineRight">
+					<textarea class="input" :value="eduOrderInfo.remarks" disabled/>
 				</view>
 			</view>
 			<!-- 出发点信息 -->
 			<uni-section class="titleClass" title="出发点信息" type="line"></uni-section>
 			<block v-for="(item, index) in eduOrderInfo.startingList" :key="index">
 				<view class="line">
-					<view class="lineLeft">出发点{{ index }}</view>
+					<view class="lineLeft">出发点{{ index+1 }}</view>
 					<view class="lineRight">{{ item.name }}</view>
 				</view>
 				<view class="line">
@@ -67,11 +73,11 @@
 			<uni-section class="titleClass" title="考点信息" type="line"></uni-section>
 			<block v-for="(item, index) in eduOrderInfo.examSiteList" :key="index">
 				<view class="line">
-					<view class="lineLeft">考点{{ index }}</view>
+					<view class="lineLeft">考点{{ index+1 }}</view>
 					<view class="lineRight">{{ item.name }}</view>
 				</view>
 				<view class="line">
-					<view class="lineLeft">{{ item.examName }}</view>
+					<view class="lineLeft">考点位置</view>
 					<view class="lineRight">
 						{{ item.longitude }} , {{ item.latitude }}
 						<view class="tips">查看</view>
@@ -80,13 +86,19 @@
 			</block>
 			<uni-section class="titleClass" title="酒店信息" type="line"></uni-section>
 			<view class="line" v-for="(item, index) in eduOrderInfo.hotelList" :key="index">
-				<view class="lineLeft">酒店{{ index }}</view>
+				<view class="lineLeft">酒店{{ index+1 }}</view>
 				<view class="lineRight">
 					{{ item.name }}
 					<view class="tips">{{ item.num }}</view>
 				</view>
 			</view>
 			<uni-section class="titleClass" title="财务信息" type="line"></uni-section>
+			<view class="line">
+				<view class="lineLeft">支付方式</view>
+				<view class="lineRight" v-show="eduOrderInfo.payWay == 1">统一支付</view>
+				<view class="lineRight" v-show="eduOrderInfo.payWay == 2">学生支付</view>
+				<view class="lineRight" v-show="eduOrderInfo.payWay == 3">已支付</view>
+			</view>
 			<view class="line">
 				<view class="lineLeft">房费</view>
 				<view class="lineRight">￥{{ eduOrderInfo.roomFee }}</view>
@@ -95,9 +107,13 @@
 				<view class="lineLeft">其他费用</view>
 				<view class="lineRight">￥{{ eduOrderInfo.otherFee }}</view>
 			</view>
-			<view class="line">
+			<view class="line" v-if="eduOrderInfo.payWay != 2">
 				<view class="lineLeft">总费用</view>
 				<view class="lineRight">￥{{ eduOrderInfo.allFee }}</view>
+			</view>
+			<view class="line">
+				<view class="lineLeft">订单号</view>
+				<view class="lineRight">{{ eduOrderInfo.num }}</view>
 			</view>
 		</view>
 		<view class="bottomMenu"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
@@ -224,9 +240,9 @@ export default {
 			color: #333;
 		}
 		.input {
-			padding-right: 20rpx;
 			height: 100%;
-			width: 70%;
+			width: 100%;
+			overflow: auto;
 			text-align: left;
 			font-size: 14px;
 			color: #545151;

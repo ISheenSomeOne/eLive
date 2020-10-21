@@ -258,8 +258,6 @@ Page({
     } else {
       that.submitsRequst()
     }
-
-
   }, 3000),
 
   submitsRequst: function() {

@@ -11,15 +11,17 @@ const state = {
 	eduCarInfo: '', //教育车辆信息
 	eduHotelInfo: '', //教育酒店信息
 	navigateBack: false, //返回上一级
-	eduHotelRoom: '',//教育酒店房间信息
-	eduDistributionMax: '',//获取用户列表的最大值
-	eduDistributionItem: '',//获取用户列表
-	needRefresh: false,//页面需要刷新
-	eduUserInfo: '',//教育用户信息
-	unassignedList: '',//未分配用户列表
-	remindContent: '',//提醒的内容
-	travel: '',//考试行程
-	needFeedback: false,//是否需要反馈
+	eduHotelRoom: '', //教育酒店房间信息
+	eduDistributionMax: '', //获取用户列表的最大值
+	eduDistributionItem: '', //获取用户列表
+	needRefresh: false, //页面需要刷新
+	eduUserInfo: '', //教育用户信息
+	unassignedList: '', //未分配用户列表
+	remindContent: '', //提醒的内容
+	travel: '', //考试行程
+	needFeedback: false, //是否需要反馈
+	unifiedPaymentPaid: false, //订单已支付
+	eduListHaveMore: true, //教育订单列表能否获取
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -61,7 +63,7 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					uni.navigateTo({
-						url: 'createSuccess?examId=' + res.data.data
+						url: 'createSuccess?examId=' + res.data.data + '&payWay=' + val.payWay
 					});
 				} else {
 					uni.showModal({
@@ -85,7 +87,7 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					state.qr = res.data.data.qr
+					state.qr = 'https://zxkj.webinn.online/zxkj/' + res.data.data.qr
 					// uni.navigateTo({
 					// 	url: 'createSuccess?examId='+res.data.data
 					// });
@@ -99,6 +101,38 @@ const mutations = {
 			},
 		})
 	},
+
+	//判断这个订单是否需要付款
+	req_howMuchDoesThisOrderCost(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/howMuchDoesThisOrderCost',
+			data: {
+				'examId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					state.unifiedPaymentPaid = false
+				} else if (res.data.code == 202) {
+					state.unifiedPaymentPaid = true
+					uni.showModal({
+						title: '提示',
+						content: '订单已支付',
+						showCancel: false
+					})
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+
 	//获取统一支付信息页面
 	req_getUnifiedPaymentInfo(state, val) {
 		common_request({
@@ -120,7 +154,7 @@ const mutations = {
 					state.paymentInfo = res.data.data
 					// state.qr = res.data.data.qr
 					// uni.navigateTo({
-					// 	url: 'createSuccess?examId='+res.data.data
+					// url: 'createSuccess?examId='+res.data.data
 					// });
 				} else {
 					uni.showModal({
@@ -132,41 +166,107 @@ const mutations = {
 			},
 		})
 	},
-	// unifiedPaymentPay(state){
-	// 	if (typeof WeixinJSBridge == "undefined"){
-	// 	   if( document.addEventListener ){
-	// 	       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-	// 	   }else if (document.attachEvent){
-	// 	       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-	// 	       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-	// 	   }
-	// 	}else{
-	// 	   onBridgeReady();
-	// 	}
-	// },
-	// req_unifiedPaymentPay(state){
-	// 	WeixinJSBridge.invoke(
-	// 	      'getBrandWCPayRequest', {
-	// 	         "appId":"wxa2b9b0e8f700f867",     //公众号名称，由商户传入     
-	// 	         "timeStamp": new Date().getTime(), //时间戳，自1970年以来的秒数     
-	// 	         "nonceStr":state.paymentInfo.num, //随机串     
-	// 	         "package":"prepay_id=u802345jgfjsdfgsdg888",     
-	// 	         "signType":"MD5",         //微信签名方式：     
-	// 	         "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
-	// 	      },
-	// 	      function(res){
-	// 	      if(res.err_msg == "get_brand_wcpay_request:ok" ){
-	// 	      // 使用以上方式判断前端返回,微信团队郑重提示：
-	// 	            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-	// 	      } 
-	// 	   }); 
-	// },
+
+	//统一支付-微信支付
+	unifiedPaymentPay(state, val) {
+		//获取openId
+		alert('获取openid开始')
+		common_request({
+			url: '/wxPay/connect/oauth2/authorize',
+			data: {
+				appid: 'wx68064214de16779e',
+				redirect_uri: 'https://group.webinn.online/phone',
+				// redirect_uri: 'https%3a%2f%2fzxkj.webinn.online%2fzxkj',
+				response_type: 'code',
+				scope: 'snsapi_base',
+				state: 'STATE#wechat_redirect'
+			},
+			method: 'GET',
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				alert(res)
+				//上线测试
+				// if (res.data.code == 200) {
+
+				// } else {
+				// 	uni.showModal({
+				// 		title: '提示',
+				// 		content: '服务器错误',
+				// 		showCancel: false
+				// 	})
+				// }
+			},
+		})
+	},
+
+	//申请订单
+	req_examOrderPay(state, val) {
+		common_request({
+			url: '/api/zxkj/exam/examOrderPay',
+			data: {
+				'examId': val,
+				'openId': ''
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					// WeixinJSBridge.invoke(
+					// 	'getBrandWCPayRequest', {
+					// 		"appId": 'wx68064214de16779e', //公众号名称，由商户传入
+					// 		"timeStamp": res.data.data.timeStamp, //时间戳     
+					// 		"nonceStr": res.data.data.nonceStr, //随机串     
+					// 		"package": res.data.data.package,
+					// 		"signType": res.data.data.signType, //微信签名方式：     
+					// 		"paySign": res.data.data.paySign //微信签名 
+					// 	},
+					// 	function(ress) {
+					// 		if (ress.err_msg == "get_brand_wcpay_request:ok") {
+					// 			uni.showToast({
+					// 				icon: 'success',
+					// 				title: '支付成功'
+					// 			})
+					// 			setTimeout(() => {
+					// 				uni.navigateBack({
+					// 					delta: 2
+					// 				})
+					// 			}, 500);
+					// 		} else if (ress.err_msg == "get_brand_wcpay_request:cancel") {
+					// 			uni.showToast({
+					// 				icon: "none",
+					// 				title: "'已取消支付"
+					// 			})
+					// 		} else {
+					// 			uni.showToast({
+					// 				icon: "none",
+					// 				title: "支付失败"
+					// 			})
+					// 		}
+					// 	}
+					// );
+					uni.navigateTo({
+						url: 'createSuccess?examId=' + val
+					});
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
 
 	//重置列表页码
 	resetEduList(state) {
-		state.eduList = ''
+		state.eduList = []
 		state.eduListPage = 1
-		state.eduListCanReq = true
+		state.eduListHaveMore = true
 	},
 
 	//获取教育订单列表
@@ -182,15 +282,28 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
-					data.examStartDate = formatDate(true, data.examStartDate)
-					state.eduList = data
-					state.eduListPage++
+					if (state.eduListHaveMore) {
+						for (let i = 0; i < data.length; i++) {
+							data[i].examStartDate = formatDate(true, data[i].examStartDate)
+							state.eduList.push(data[i])
+						}
+						if (data.length < 20) {
+							state.eduListHaveMore = false
+							uni.showToast({
+								title: '没有更多了',
+								duration: 2000,
+								icon: 'none'
+							});
+						}
+						// state.eduList = data
+						state.eduListPage++
+					}
 				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
+					uni.showToast({
+						title: '没有更多了',
+						duration: 2000,
+						icon: 'none'
+					});
 				}
 			},
 		})
@@ -209,11 +322,21 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
+					console.log(data)
+					data.examSiteList = JSON.parse(data.examSiteList)
+					data.startingList = JSON.parse(data.startingList)
 					data.examStartDate = formatDate(true, data.examStartDate)
 					data.examEndDate = formatDate(true, data.examEndDate)
 					data.checkinDate = formatDate(true, data.checkinDate)
 					data.checkoutDate = formatDate(true, data.checkoutDate)
 					data.deadline = formatDate(true, data.deadline) + ' 23:59:59'
+					if (data.state == '交易取消') {
+						data.stateClass = 'bgRed'
+					} else if (data.state == '入住中' || data.state == '已完成') {
+						data.stateClass = 'bgGreen'
+					} else {
+						data.stateClass = 'bgYellow'
+					}
 					state.eduOrderInfo = data
 				} else {
 					uni.showModal({
@@ -412,7 +535,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//添加教育订单酒店信息
 	req_makeAddHotelLink(state, val) {
 		common_request({
@@ -429,10 +552,10 @@ const mutations = {
 				if (res.data.code == 200) {
 					let data = res.data.data
 					state.navigateBack = true
-					
-					setTimeout(()=>{
+
+					setTimeout(() => {
 						state.navigateBack = false
-					},1000)
+					}, 1000)
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -443,7 +566,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取需要添加的酒店房型房间信息
 	req_getEduHotelRoom(state, val) {
 		common_request({
@@ -470,7 +593,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//添加的酒店房型房间信息
 	req_addEduHotelRoom(state, val) {
 		common_request({
@@ -485,7 +608,7 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					
+
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -496,7 +619,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取分类下的用户列表
 	req_getEduUserList(state, val) {
 		common_request({
@@ -525,7 +648,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//删除用户列表中的一个
 	req_delEduUserListItem(state, val) {
 		common_request({
@@ -559,12 +682,12 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//改变页面更新状态
 	changeNeedRefresh(state) {
 		state.needRefresh = !state.needRefresh
 	},
-	
+
 	//获取教育用户信息
 	req_getEduUserInfo(state, val) {
 		common_request({
@@ -589,7 +712,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取教育用户信息
 	req_getUnassignedList(state, val) {
 		common_request({
@@ -614,14 +737,18 @@ const mutations = {
 			},
 		})
 	},
-	
-	//获取教育用户信息
+
+	//添加教育用户信息
 	req_addDistribution(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getUnassignedList',
+			url: '/api/zxkj/exam/addDistribution',
 			data: {
 				'examId': val.examId,
 				'type': val.type,
+				'carId': val.carId,
+				'roomId': val.roomId,
+				'startingId': val.startingId,
+				'examSiteId': val.examSiteId,
 				'userList': val.userList
 			},
 			header: {
@@ -641,7 +768,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//发送提醒
 	req_sendRemind(state, val) {
 		common_request({
@@ -674,7 +801,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//打开查看提醒
 	req_getRemind(state, val) {
 		common_request({
@@ -701,11 +828,11 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//教育收到提醒确认反馈
 	req_examConfirmRemind(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getRemind',
+			url: '/api/zxkj/exam/subFeedback',
 			data: {
 				'examRemindId': val
 			},

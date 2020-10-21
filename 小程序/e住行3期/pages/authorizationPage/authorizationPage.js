@@ -16,16 +16,22 @@ Page({
     config: {
       tipsshow1: true,
       tipsshow2: false
-    }
+    },
+    navigateBack: false
   },
 
   /**
    * 生命周期函数
    */
   onLoad: function (options) {
-    var that = this;
+    let that = this;
+    if(options.navigateBack){
+      that.setData({
+        navigateBack: options.navigateBack
+      })
+    }
     that.setData({
-      signboard: options.signboard
+      signboard: options.signboard,
     })
   },
 
@@ -188,9 +194,16 @@ Page({
   }, 2000),
 
   back: function () {
-    wx.switchTab({
-      url: '/pages/start/start',
-    })
+    if(this.data.navigateBack){
+      wx.navigateBack({
+        delta:1
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/start/start',
+      })
+    }
+    
   }
 
   /**

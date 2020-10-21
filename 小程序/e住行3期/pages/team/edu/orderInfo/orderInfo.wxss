@@ -55,6 +55,10 @@
   color: #07c160;
 }
 
+.colorRed {
+  color: #d32f2f;
+}
+
 .stateTip {
   width: 100%;
   text-align: center;
@@ -101,4 +105,10 @@
 .pay:active {
   background-color: #c25700;
   box-shadow: #999 0 2rpx 8rpx;
+}
+
+.confirm{
+  position: fixed;
+  bottom: 20rpx;
+  width: 650rpx
 }

@@ -3,6 +3,7 @@
 		<view v-if="travel != ''" class="cont">{{travel}}</view>
 		<view v-if="remindContent != ''" class="cont">{{remindContent}}</view>
 		<view v-show="needFeedback" class="buttonBoxAdd" @click="confirm">确 认</view>
+		<view v-show="!needFeedback" class="buttonBoxAdd" style="background-color: #999999;">已反馈</view>
 	</view>
 </template>
 

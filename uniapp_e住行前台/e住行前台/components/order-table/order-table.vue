@@ -24,11 +24,10 @@
 		<!-- teamList -->
 		<block v-if="listType == 'eduList'" v-for="(item, index) in tableList" :key="index">
 			<view class="table-list-item1" @click="toEduOrderInfo(item.id)">
-				<view class="table-cont-item2 long">{{ item.name }}</view>
-				<view class="table-cont-item short">{{ item.principal }}</view>
-				<view class="table-cont-item">{{ item.contact }}</view>
-				<view class="table-cont-item">{{ item.time }}</view>
-				<view class="table-cont-item short">{{ item.state }}</view>
+				<view class="table-cont-item2 long">{{ item.examName }}</view>
+				<view class="table-cont-item">{{ item.principal }}</view>
+				<view class="table-cont-item">{{ item.examStartDate }}</view>
+				<view class="table-cont-item">{{ item.state }}</view>
 			</view>
 		</block>
 		<!-- eduOrderDistributionCar -->
@@ -104,9 +103,9 @@ export default {
 				url: '/pages/order/orderInfo?orderId=' + orderId
 			});
 		},
-		toEduOrderInfo(orderId) {
+		toEduOrderInfo(examId) {
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/eduOrderInfo?orderId=' + orderId
+				url: '/pages/mine/team/edu/eduOrderInfo?examId=' + examId
 			});
 		},
 		toCarInfo(carId) {

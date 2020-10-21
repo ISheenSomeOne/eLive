@@ -13,6 +13,10 @@ export default {
 		return {
 			examId: '',
 			addType: '',
+			carId: '',
+			roomId: '',
+			startingId: '',
+			examSiteId: '',
 			reqData: '', //用于上传的数据
 			titleList: [
 				{ cont: '选择', width: 'short' },
@@ -60,6 +64,18 @@ export default {
 
 			if (options.addType != '' && options.addType != undefined && options.addType != null) {
 				that.addType = options.addType;
+			}
+			if (options.carId != '' && options.carId != undefined && options.carId != null) {
+				that.carId = options.carId;
+			}
+			if (options.roomId != '' && options.roomId != undefined && options.roomId != null) {
+				that.roomId = options.roomId;
+			}
+			if (options.startingId != '' && options.startingId != undefined && options.startingId != null) {
+				that.startingId = options.startingId;
+			}
+			if (options.examSiteId != '' && options.examSiteId != undefined && options.examSiteId != null) {
+				that.examSiteId = options.examSiteId;
 			}
 			let val = { examId: that.examId, addType: that.addType };
 			that.$store.commit('req_getUnassignedList', val);

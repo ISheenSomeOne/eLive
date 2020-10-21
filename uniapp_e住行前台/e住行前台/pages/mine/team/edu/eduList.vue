@@ -2,7 +2,7 @@
 	<view class="eduList">
 		<view class="swiper-item">
 			<order-table :listType="'eduList'" :titleList="titleList" :tableList="eduList"></order-table>
-			<button v-show="true" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button>
+			<button v-show="eduListHaveMore" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button>
 		</view>
 		<navigator url="createExam">
 		<button class="addType" hover-class="addTypeHover">创建订单</button>
@@ -16,16 +16,18 @@ export default {
 		return {
 			titleList:[
 				{'cont':'名 称','width': 'long' },
-				{'cont':'负责人','width': 'short' },
-				{'cont':'电 话','width': 'normal' },
+				{'cont':'负责人','width': 'normal' },
 				{'cont':'考试时间','width': 'normal' },
-				{'cont':'状态','width': 'short' },
+				{'cont':'状态','width': 'normal' },
 			]
 		};
 	},
 	computed:{
 		eduList() {
 			return this.$store.state.edu.eduList;
+		},
+		eduListHaveMore() {
+			return this.$store.state.edu.eduListHaveMore;
 		},
 	},
 	onLoad() {
