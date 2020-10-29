@@ -46,15 +46,13 @@
 			</view>
 			<view class="line">
 				<view class="lineLeft">备注</view>
-				<view class="lineRight">
-					<textarea class="input" :value="eduOrderInfo.remarks" disabled/>
-				</view>
+				<view class="lineRight"><textarea class="input" :value="eduOrderInfo.remarks" disabled /></view>
 			</view>
 			<!-- 出发点信息 -->
 			<uni-section class="titleClass" title="出发点信息" type="line"></uni-section>
 			<block v-for="(item, index) in eduOrderInfo.startingList" :key="index">
 				<view class="line">
-					<view class="lineLeft">出发点{{ index+1 }}</view>
+					<view class="lineLeft">出发点{{ index + 1 }}</view>
 					<view class="lineRight">{{ item.name }}</view>
 				</view>
 				<view class="line">
@@ -65,7 +63,7 @@
 					<view class="lineLeft">出发位置</view>
 					<view class="lineRight">
 						{{ item.longitude }} , {{ item.latitude }}
-						<view class="tips">查看</view>
+						<view class="tips" @click="look">查看</view>
 					</view>
 				</view>
 			</block>
@@ -73,23 +71,23 @@
 			<uni-section class="titleClass" title="考点信息" type="line"></uni-section>
 			<block v-for="(item, index) in eduOrderInfo.examSiteList" :key="index">
 				<view class="line">
-					<view class="lineLeft">考点{{ index+1 }}</view>
+					<view class="lineLeft">考点{{ index + 1 }}</view>
 					<view class="lineRight">{{ item.name }}</view>
 				</view>
 				<view class="line">
 					<view class="lineLeft">考点位置</view>
 					<view class="lineRight">
 						{{ item.longitude }} , {{ item.latitude }}
-						<view class="tips">查看</view>
+						<view class="tips" @click="look">查看</view>
 					</view>
 				</view>
 			</block>
 			<uni-section class="titleClass" title="酒店信息" type="line"></uni-section>
 			<view class="line" v-for="(item, index) in eduOrderInfo.hotelList" :key="index">
-				<view class="lineLeft">酒店{{ index+1 }}</view>
+				<view class="lineLeft">酒店{{ index + 1 }}</view>
 				<view class="lineRight">
 					{{ item.name }}
-					<view class="tips">{{ item.num }}</view>
+					<view class="tips">{{ item.num }}人</view>
 				</view>
 			</view>
 			<uni-section class="titleClass" title="财务信息" type="line"></uni-section>
@@ -116,7 +114,7 @@
 				<view class="lineRight">{{ eduOrderInfo.num }}</view>
 			</view>
 		</view>
-		<view class="bottomMenu"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
+		<view class="bottomMenu"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @click="cancel" @buttonClick="buttonClick" /></view>
 	</view>
 </template>
 
@@ -151,26 +149,45 @@ export default {
 		}
 	},
 	onLoad(options) {
-		let that = this
+		let that = this;
 		if (options.examId != '') {
 			that.examId = options.examId;
 			that.$store.commit('req_getEduOrderInfo', that.examId);
 		}
 	},
 	methods: {
+		cancel(e) {
+			uni.showToast({
+				title: '功能开发中',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
 		buttonClick(e) {
 			//修改
 			if (e.index == 0) {
+				uni.showToast({
+					title: '功能开发中',
+					duration: 2000,
+					icon: 'none'
+				});
 				// uni.navigateTo({
 				// 	url: '/pages/mine/team/edu/orderDistribution'
 				// });
-			//分配
-			} else if (e.index == 1)  {
+				//分配
+			} else if (e.index == 1) {
 				uni.navigateTo({
-					url: '/pages/mine/team/edu/orderDistribution?examId='+this.examId
+					url: '/pages/mine/team/edu/orderDistribution?examId=' + this.examId
 				});
 			}
-		}
+		},
+		look(e) {
+			uni.showToast({
+				title: '功能开发中',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
 	}
 };
 </script>

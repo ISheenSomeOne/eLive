@@ -21,7 +21,7 @@
 							<view class="leftInfo">已分配 {{ eduDistributionInfo.allocated }}</view>
 							<view class="rightInfo">未分配 {{ eduDistributionInfo.unassigned }}</view>
 						</view>
-						<order-table :listType="'orderDistributionList'" :titleList="titleList" :tableList="eduDistributionInfo.carList"></order-table>
+						<order-table :listType="'orderDistributionList'" :titleList="titleList" :tableList="eduDistributionInfo.carList" :examId="examId"></order-table>
 						<view class="buttonBox" @click="addCar">添加车辆</view>
 					</view>
 				</swiper-item>
@@ -33,7 +33,7 @@
 						</view>
 						<view class="container999">
 							<block v-for="(hotelInfo, index) in eduDistributionInfo.hotelList" :key="index">
-								<uni-section class="titleClass" @click="hotelInfo(hotelInfo.hotelId)" :title="hotelInfo.hotelName" type="line"></uni-section>
+								<view @click="toHotelInfo(hotelInfo.hotelId)"><uni-section class="titleClass" :title="hotelInfo.hotelName" type="line"></uni-section></view>
 								<block v-for="(roomInfo, index) in hotelInfo.roomList" :key="index">
 									<view class="line">
 										<view class="lineLeft">{{ roomInfo.roomName }}</view>
@@ -41,7 +41,7 @@
 									</view>
 								</block>
 							</block>
-							<view class="buttonBox" @click="hotelInfo()">添加酒店房间</view>
+							<view class="buttonBox" @click="toHotelInfo()">添加酒店房间</view>
 						</view>
 					</view>
 				</swiper-item>
@@ -52,7 +52,7 @@
 							<view class="rightInfo">未分配 {{ eduDistributionInfo.unassigned }}</view>
 						</view>
 						<block v-for="(startingList, index) in eduDistributionInfo.startingList" :key="index">
-							<view class="addItem" @click="toUserList(startingList.startingId)">{{ startingList.startingName }}</view>
+							<view class="addItem" @click="toUserList(index)">{{ startingList.name }}</view>
 						</block>
 					</view>
 				</swiper-item>
@@ -63,7 +63,7 @@
 							<view class="rightInfo">未分配 {{ eduDistributionInfo.unassigned }}</view>
 						</view>
 						<block v-for="(examSiteList, index) in eduDistributionInfo.examSiteList" :key="index">
-							<view class="addItem" @click="toUserList(examSiteList.examSiteId)">{{ examSiteList.examSiteName }}</view>
+							<view class="addItem" @click="toUserList(index)">{{ examSiteList.name }}</view>
 						</block>
 					</view>
 				</swiper-item>
@@ -139,15 +139,15 @@ export default {
 			payWay: ['选择方式', '已支付', '到店支付'],
 			nowOrigin: 0,
 			nowPayWay: 0,
-			swiperHeight: 300,
+			swiperHeight: '',
 			customItem: '全部', //地址picker的全部功能
 			form: {},
 			showMenu1: true
 		};
 	},
 	computed: {
-		needResetHeight() {
-			return this.$store.state.order.needResetHeight;
+		needResetEduDistributionHeight() {
+			return this.$store.state.edu.needResetEduDistributionHeight;
 		},
 		eduDistributionInfo() {
 			return this.$store.state.edu.eduDistributionInfo;
@@ -160,40 +160,44 @@ export default {
 				that.nowOrigin = 0;
 				that.nowPayWay = 0;
 				that.form = {};
-			}
 			this.$store.commit('setNeedRefresh');
+			}
 		},
-		needResetHeight(newData, oldData) {
+		needResetEduDistributionHeight(newData, oldData) {
 			let that = this;
 			if (newData) {
 				that.setSwiperHeight();
-				this.$store.commit('resetHeightFalse');
+				this.$store.commit('resetEduDistributionHeightFalse');
 			}
 		},
 		swiperHeight(newData, oldData) {
 			let that = this;
 			if (newData) {
-				console.log(newData);
+				// console.log(newData);
 			}
 		}
 	},
-	onLoad(option) {
+	onLoad(options) {
 		let that = this;
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
-			that.examId = option.examId;
-			let val = { examId: that.examId, type: 1 };
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
+			that.examId = options.examId;
+			let val = { examId: that.examId, type: 0 };
 			that.$store.commit('req_getEduDistribution', val);
-			that.$store.commit('resetHeightFalse');
 		}
+	},
+	onShow() {
+		let that = this;
+		let val = { examId: that.examId, type: that.tabIndex };
+		that.$store.commit('req_getEduDistribution', val);
 	},
 	methods: {
 		//下方按钮事件
 		buttonClick(e) {
 			//点击自动分配
-			if (e.index == 1) {
-				this.$store.commit('req_autoDistribution',this.examId);
+			if (e.index == 0) {
+				this.$store.commit('req_autoDistribution', this.examId);
 			}
-			
+
 			//点击发送提醒
 			if (e.index == 1) {
 				this.openChooseSend();
@@ -201,17 +205,18 @@ export default {
 		},
 		//打开选择群组界面
 		openChooseSend() {
-			let that = this
+			let that = this;
 			//延后开发选择群组开发
 			uni.navigateTo({
 				url: '/pages/mine/team/edu/editSend?examId=' + that.examId
 			});
-			
-			uni.navigateTo({
-				url: '/pages/mine/team/edu/chooseSend'
-			});
+
+			// uni.navigateTo({
+			// 	url: '/pages/mine/team/edu/chooseSend'
+			// });
 		},
-		hotelInfo(hotelId) {
+		toHotelInfo(hotelId) {
+			console.log(123);
 			uni.navigateTo({
 				url: 'eduHotel?eduHotelId=' + hotelId + '&examId=' + this.examId
 			});
@@ -222,13 +227,25 @@ export default {
 			});
 		},
 		addCar() {
+			// console.log(this.examId);
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/carInfo?examId='+this.examId
+				url: '/pages/mine/team/edu/carInfo?examId=' + this.examId
 			});
 		},
 		toUserList(id) {
+			let that = this;
+			let roomId = '';
+			let startingId = '';
+			let examSiteId = '';
+			if (that.tabIndex == 1) {
+				roomId = id;
+			} else if (that.tabIndex == 2) {
+				startingId = id;
+			} else if (that.tabIndex == 3) {
+				examSiteId = id;
+			}
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/eduUserList?id=' + id
+				url: '/pages/mine/team/edu/eduUserList?roomId=' + roomId + '&startingId=' + startingId + '&examSiteId=' + examSiteId + '&examId=' + that.examId
 			});
 		},
 		toggleTab(index) {
@@ -236,10 +253,10 @@ export default {
 		},
 		//滑动切换swiper
 		tabChange(e) {
-			console.log(this.tabIndex)
+			// console.log(e.detail.current);
 			const tabIndex = e.detail.current;
 			this.tabChangeFunc(tabIndex);
-			
+
 			let val = { examId: this.examId, type: this.tabIndex };
 			this.$store.commit('req_getEduDistribution', val);
 		},
@@ -257,12 +274,14 @@ export default {
 			let that = this;
 			let height = '';
 			let setHeight = setInterval(() => {
-				let info = uni.createSelectorQuery().select('.swiper-item');
-				info.boundingClientRect(function(data) {
-					//data - 各种参数
-					height = data.height;
-				}).exec();
-				if (height != '') {
+				// let info = uni.createSelectorQuery().in(that).select('.swiper-item');
+				// info.boundingClientRect(function(data) {
+				// 	//data - 各种参数
+				// 	height = data.height;
+				// }).exec();
+				height = document.getElementsByClassName('swiper-item')[that.tabIndex].offsetHeight;
+				if (height != '' && height != 'undefind') {
+					// console.log(height);
 					that.swiperHeight = height;
 					clearInterval(setHeight);
 				}
@@ -276,7 +295,7 @@ export default {
 			this.$refs.calendar.open();
 		},
 		dateChange(e) {
-			console.log(e);
+			// console.log(e);
 		},
 		dateConfirm(e) {
 			this.$store.commit('createOrderDateChange', e);
@@ -299,7 +318,7 @@ export default {
 		formChange(e) {
 			let name = e.currentTarget.dataset.name;
 			let tempVal = e.target.value || e.detail.value;
-			if (this.form[name] === undefined) {
+			if (this.form[name] === 'undefined') {
 				// console.log('首次添加属性名')
 				this.$set(this.form, name, tempVal);
 			} else {
@@ -327,7 +346,7 @@ export default {
 		// 提交
 		submit: util.throttle(function(e) {
 			let that = this;
-			console.log('提交');
+			// console.log('提交');
 			let tempList = [
 				{
 					paramName: 'name', //data-name和form中的参数名
@@ -363,15 +382,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.popupBox {
-	width: 100% !important;
-	min-height: 30vh !important;
-	max-height: 60vh !important;
-	overflow: scroll;
-	border-top-left-radius: 12px;
-	border-top-right-radius: 12px;
-	padding-bottom: 10px !important;
-}
+// .popupBox {
+// 	width: 100% !important;
+// 	min-height: 30vh !important;
+// 	max-height: 60vh !important;
+// 	overflow: scroll;
+// 	border-top-left-radius: 12px;
+// 	border-top-right-radius: 12px;
+// 	padding-bottom: 10px !important;
+// }
 .addItem {
 	height: 40px;
 	line-height: 40px;
@@ -393,7 +412,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	background-color: #4cd964;
-	font-size: 18px;
+	font-size: 16px;
 }
 .buttonBoxAdd {
 	width: 91%;
@@ -436,6 +455,7 @@ export default {
 	font-weight: bold;
 }
 .swiper-item {
+	min-height: 80vh;
 	margin-top: 10px;
 	padding-bottom: 70px;
 }
@@ -537,7 +557,7 @@ export default {
 	}
 	width: 90%;
 	font-size: 14px;
-	min-height: 75vh;
+	// min-height: 75vh;
 	color: #6b8082;
 	position: relative;
 	margin: 0 auto;

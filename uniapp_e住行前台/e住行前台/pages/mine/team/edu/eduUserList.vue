@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-notice-bar style="margin: 0;" :single="true" text="长按某一行即可删除" />
-		<view style="margin-bottom: 60px;"><order-table :listType="'eduDistributionItem'" :examId="examId" :addType="addType" :titleList="titleList" :tableList="eduDistributionItem"></order-table></view>
+		<view style="margin-bottom: 60px;"><order-table :listType="'eduDistributionItem'" :examId="examId" :addType="addType" :reqId="reqId" :titleList="titleList" :tableList="eduDistributionItem"></order-table></view>
 		<view class="buttonBoxAdd" @click="toAddUser">添加人员</view>
 	</view>
 </template>
@@ -17,6 +17,7 @@ export default {
 			examSiteId: '',
 			canAdd: false,
 			addType: '',
+			reqId: '',//上传用的id（可能是4种之一）
 			titleList: [
 				{ cont: '姓名', width: 'short' },
 				{ cont: '性别', width: 'short' },
@@ -60,45 +61,44 @@ export default {
 	},
 	onLoad(options) {
 		let that = this;
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
 
-			if (options.carId != '' && options.carId != undefined && options.carId != null) {
+			if (options.carId != '' && options.carId != 'undefined' && options.carId != null) {
 				that.carId = options.carId;
 				that.addType = 1;
+				that.reqId = options.carId
 			}
-			if (options.roomId != '' && options.roomId != undefined && options.roomId != null) {
+			if (options.roomId != '' && options.roomId != 'undefined' && options.roomId != null) {
 				that.roomId = options.roomId;
 				that.addType = 2;
+				that.reqId = options.roomId
 			}
-			if (options.startingId != '' && options.startingId != undefined && options.startingId != null) {
+			if (options.startingId != '' && options.startingId != 'undefined' && options.startingId != null) {
 				that.startingId = options.startingId;
 				that.addType = 3;
+				that.reqId = options.startingId
 			}
-			if (options.examSiteId != '' && options.examSiteId != undefined && options.examSiteId != null) {
+			if (options.examSiteId != '' && options.examSiteId != 'undefined' && options.examSiteId != null) {
 				that.examSiteId = options.examSiteId;
 				that.addType = 4;
+				that.reqId = options.examSiteId
 			}
-			this.init()
+			that.init()
 		}
+	},
+	onShow() {
+		this.init()
 	},
 	methods: {
 		init(){
+			let that = this
 			let val = { examId: that.examId, carId: that.carId, roomId: that.roomId, startingId: that.startingId, examSiteId: that.examSiteId };
 			that.$store.commit('req_getEduUserList', val);
-			
-			//是否可以再添加人员
-			if (that.$store.state.edu.eduDistributionMax > that.$store.state.edu.eduDistributionItem.length) {
-				that.canAdd = true;
-			} else if (that.$store.state.edu.eduDistributionMax < 0) {
-				that.canAdd = true;
-			} else {
-				that.canAdd = false;
-			}
 		},
 		toAddUser() {
 			let that = this;
-			if (that.canAdd) {
+			if (that.$store.state.edu.eduCarCanAdd) {
 				uni.navigateTo({
 					url: 'eduAddUser?examId='+that.examId+'&addType=' + that.addType+'&carId=' + that.carId+'&roomId=' + that.roomId+'&startingId=' + that.startingId+'&examSiteId=' + that.examSiteId
 				});

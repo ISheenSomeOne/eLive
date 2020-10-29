@@ -13,13 +13,11 @@
 			<view class="line">
 				<view class="lineLeft">房间数量</view>
 				<view v-if="hasHotel" class="lineRight">{{ eduHotelInfo.nowRoomCount }}</view>
-				<view v-else class="lineRight">
-					<input class="input" type="number" v-model="roomCount" placeholder-class="plaClass" placeholder="请输入房间数量" />
-				</view>
+				<view v-else class="lineRight"><input class="input" type="number" v-model="roomCount" placeholder-class="plaClass" placeholder="请输入房间数量" /></view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">链接</view>
-				<view v-if="hasHotel" class="lineRight" style="overflow: auto;text-align: left;">
+				<view v-show="hasHotel" class="lineRight" style="overflow: auto;text-align: left;">
 					{{ 'http://localhost:8080/pages/mine/team/edu/hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId }}
 				</view>
 			</view>
@@ -42,6 +40,7 @@ export default {
 		return {
 			examId: '',
 			eduHotelId: '',
+			hotelId: '', //选择的酒店id
 			roomCount: '',
 			hasHotel: false,
 			hotelList: [],
@@ -66,54 +65,109 @@ export default {
 		eduHotelInfo() {
 			return this.$store.state.edu.eduHotelInfo;
 		},
+		resSuccess() {
+			return this.$store.state.edu.resSuccess;
+		},
 		navigateBack() {
 			return this.$store.state.edu.navigateBack;
 		}
 	},
-	watch:{
-		navigateBack(newData, oldData) {
+	watch: {
+		resSuccess(newData, oldData) {
+			let that = this;
 			if (newData) {
-				uni.navigateBack({
-					delta:1
-				})
+				that.hasHotel = true;
+				that.eduHotelId = that.hotelId;
+				console.log(that.hasHotel);
+				that.$store.commit('changeResSuccess');
 			}
 		},
+		navigateBack(newData, oldData) {
+			let that = this;
+			if (newData) {
+				uni.navigateBack({
+					delta: 1
+				});
+			that.$store.commit('setNeedNavigateBack');
+			}
+		}
 	},
 	onLoad(options) {
 		//是否有考试id
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			this.examId = options.examId;
 		}
 		//是否有酒店id
-		if (options.eduHotelId != '' && options.eduHotelId != undefined && options.eduHotelId != null) {
+		if (options.eduHotelId != '' && options.eduHotelId != 'undefined' && options.eduHotelId != null) {
 			this.eduHotelId = options.eduHotelId;
 			this.hasHotel = true;
 		} else {
-			console.log(1);
 			this.hasHotel = false;
 		}
 		let val = { examId: this.examId, eduHotelId: this.eduHotelId };
 		this.$store.commit('req_getEduHotel', val); //获取酒店信息
 
-		//初始化hotelList
-		this.hotelList = this.$store.state.edu.eduHotelInfo.hotelList;
-		if (this.hotelList) {
-			this.hotelNameList.push('选择酒店');
-			this.hotelList.forEach(item => {
-				this.hotelNameList.push(item.hotelName);
-			});
-		}
+		setTimeout(() => {
+			//初始化hotelList
+			this.hotelList = this.$store.state.edu.eduHotelInfo.hotelList;
+			if (this.hotelList) {
+				this.hotelNameList.push('选择酒店');
+				this.hotelList.forEach(item => {
+					this.hotelNameList.push(item.hotelName);
+				});
+			}
+		}, 50);
 	},
 	methods: {
+		//下方按钮事件
+		buttonClick: function(e) {
+			let that = this;
+			if (e.index == 0) {
+				uni.showModal({
+					title: '提示',
+					content: '确定删除吗？',
+					confirmColor: '#dd524d',
+					success: function(res) {
+						if (res.confirm) {
+							let val = { examId: that.examId, hotelId: that.eduHotelId };
+							that.$store.commit('req_delEduHotel', val);
+						} else if (res.cancel) {
+						}
+					}
+				});
+			}
+
+			if (e.index == 1) {
+				uni.showToast({
+					icon: 'none',
+					title: '请手动复制链接'
+				});
+			}
+		},
 		hotelChange: function(e) {
-			this.nowHotel = e.target.value;
+			let that = this;
+			that.nowHotel = e.target.value;
+
+			if (that.nowHotel > 0) {
+				that.hotelId = that.hotelList[that.nowHotel - 1].hotelId;
+			}
 		},
 		submit: function() {
-			let val = {examId: this.examId, hotelId: this.eduHotelId, roomCount: this.roomCount}
-			this.$store.commit('req_makeAddHotelLink', val);
-			// uni.navigateTo({
-			// 	url: 'hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId
-			// });
+			let that = this;
+			if (that.nowHotel == 0) {
+				uni.showToast({
+					icon: 'none',
+					title: '请选择酒店'
+				});
+			} else if (that.roomCount == '') {
+				uni.showToast({
+					icon: 'none',
+					title: '请输入房间数量'
+				});
+			} else {
+				let val = { examId: that.examId, hotelId: that.hotelId, roomCount: that.roomCount };
+				that.$store.commit('req_makeAddHotelLink', val);
+			}
 		}
 	}
 };

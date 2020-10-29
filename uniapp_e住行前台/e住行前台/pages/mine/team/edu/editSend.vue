@@ -34,13 +34,14 @@ export default {
 				uni.navigateBack({
 					delta:1
 				})
+			this.$store.commit('setNeedNavigateBack');
 			}
 		},
 	},
 	onLoad(options) {
 		let that = this;
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
-			that.examId = option.examId;
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
+			that.examId = options.examId;
 		}
 	},
 	methods: {

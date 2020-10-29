@@ -58,7 +58,7 @@ export default {
 	},
 	onLoad(options) {
 		let that = this;
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
 			//判断这个订单是否需要付款
 			that.$store.commit('req_howMuchDoesThisOrderCost', that.examId);
@@ -88,7 +88,6 @@ export default {
 	methods: {
 		submit: function() {
 			let that = this;
-			that.$store.commit('unifiedPaymentPay', that.examId);
 			if (that.isWX) {
 				//开始微信支付
 				that.$store.commit('unifiedPaymentPay', that.examId);

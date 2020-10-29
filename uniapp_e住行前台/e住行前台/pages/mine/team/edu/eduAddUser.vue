@@ -1,8 +1,6 @@
 <template>
 	<view>
-		<view style="margin-bottom: 60px;" @getNewList="getNewList">
-			<order-table :listType="'eduAddUserList'" :titleList="titleList" :tableList="unassignedList"></order-table>
-		</view>
+		<view style="margin-bottom: 60px;"><order-table :listType="'eduAddUserList'" :titleList="titleList" :tableList="unassignedList" @getNewList="getNewList"></order-table></view>
 		<view class="buttonBoxAdd" @click="comfirm">确定</view>
 	</view>
 </template>
@@ -48,34 +46,41 @@ export default {
 			return this.$store.state.edu.navigateBack;
 		}
 	},
-	watch:{
+	watch: {
 		navigateBack(newData, oldData) {
 			if (newData) {
 				uni.navigateBack({
-					delta:1
-				})
+					delta: 1
+				});
+			this.$store.commit('setNeedNavigateBack');
 			}
-		},
+		}
 	},
 	onLoad(options) {
 		let that = this;
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
+			that.addType = options.addType;
 
-			if (options.addType != '' && options.addType != undefined && options.addType != null) {
-				that.addType = options.addType;
-			}
-			if (options.carId != '' && options.carId != undefined && options.carId != null) {
+			if (options.carId != '' && options.carId != 'undefined' && options.carId != null) {
 				that.carId = options.carId;
+			} else {
+				that.carId = ''
 			}
-			if (options.roomId != '' && options.roomId != undefined && options.roomId != null) {
+			if (options.roomId != '' && options.roomId != 'undefined' && options.roomId != null) {
 				that.roomId = options.roomId;
+			} else {
+				that.roomId = ''
 			}
-			if (options.startingId != '' && options.startingId != undefined && options.startingId != null) {
+			if (options.startingId != '' && options.startingId != 'undefined' && options.startingId != null) {
 				that.startingId = options.startingId;
+			} else {
+				that.startingId = ''
 			}
-			if (options.examSiteId != '' && options.examSiteId != undefined && options.examSiteId != null) {
+			if (options.examSiteId != '' && options.examSiteId != 'undefined' && options.examSiteId != null) {
 				that.examSiteId = options.examSiteId;
+			} else {
+				that.examSiteId = ''
 			}
 			let val = { examId: that.examId, addType: that.addType };
 			that.$store.commit('req_getUnassignedList', val);
@@ -84,7 +89,6 @@ export default {
 	methods: {
 		//获取子组件传值
 		getNewList(e) {
-			console.log(e);
 			this.reqData = e;
 		},
 		comfirm() {
@@ -96,7 +100,7 @@ export default {
 						data.push(that.reqData[i].memberId);
 					}
 				}
-				let val = { examId: that.examId, type: that.addType, userList: data };
+				let val = { examId: that.examId, type: that.addType, carId: that.carId, roomId: that.roomId, startingId: that.startingId, examSiteId: that.examSiteId, userList: data };
 				that.$store.commit('req_addDistribution', val);
 			} else {
 				uni.showToast({

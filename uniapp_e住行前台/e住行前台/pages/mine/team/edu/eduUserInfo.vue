@@ -3,11 +3,11 @@
 		<view class="container999">
 			<view class="line">
 				<view class="lineLeft">姓名</view>
-				<view class="lineRight">{{eduUserInfo.userName}}</view>
+				<view class="lineRight">{{eduUserInfo.memberName}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">性别</view>
-				<view class="lineRight">{{eduUserInfo.sex}}</view>
+				<view class="lineRight">{{eduUserInfo.sex ? '男' : '女'}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">电话</view>
@@ -19,7 +19,10 @@
 			</view>
 			<view class="line">
 				<view class="lineLeft">住宿方式</view>
-				<view class="lineRight">{{eduUserInfo.liveWay}}</view>
+				<view class="lineRight" v-if="eduUserInfo.liveWay == 1">系统分配</view>
+				<view class="lineRight" v-if="eduUserInfo.liveWay == 2">邀请他人</view>
+				<view class="lineRight" v-if="eduUserInfo.liveWay == 3">加入他人</view>
+				<view class="lineRight" v-if="eduUserInfo.liveWay == 4">一人独住</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">车辆</view>
@@ -31,7 +34,7 @@
 			</view>
 			<view class="line">
 				<view class="lineLeft">酒店房间</view>
-				<view class="lineRight">{{eduUserInfo.hotel + '-' + eduUserInfo.room}}</view>
+				<view class="lineRight">{{(eduUserInfo.hotel ? eduUserInfo.hotel : '--') + '-' + (eduUserInfo.room ? eduUserInfo.room : '--')}}</view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">考点</view>
@@ -39,7 +42,8 @@
 			</view>
 			<view class="line">
 				<view class="lineLeft">支付费用</view>
-				<view class="lineRight">￥{{eduUserInfo.allFee}}</view>
+				<view class="lineRight" v-if="eduUserInfo.payWay == 2">{{eduUserInfo.allFee ? '￥'+eduUserInfo.allFee : '￥0'}}</view>
+				<view class="lineRight" v-else>统一支付</view>
 			</view>
 		</view>
 	</view>
@@ -60,9 +64,9 @@ export default {
 	},
 	onLoad(options) {
 		let that = this;
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
-			if (options.memberId != '' && options.memberId != undefined && options.memberId != null) {
+			if (options.memberId != '' && options.memberId != 'undefined' && options.memberId != null) {
 				that.memberId = options.memberId;
 				let val = { examId: that.examId, memberId: that.memberId };
 				that.$store.commit('req_getEduUserInfo', val);

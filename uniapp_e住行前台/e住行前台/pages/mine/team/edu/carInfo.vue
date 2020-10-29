@@ -9,21 +9,15 @@
 			</view>
 			<view class="line">
 				<view class="lineLeft">车牌号</view>
-				<view class="lineRight">
-					<input class="input" v-model="form.carNumber" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车牌号" />
-				</view>
+				<view class="lineRight"><input class="input" v-model="form.carNumber" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入车牌号" /></view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">司机</view>
-				<view class="lineRight">
-					<input class="input" v-model="form.driver" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入司机姓名" />
-				</view>
+				<view class="lineRight"><input class="input" v-model="form.driver" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入司机姓名" /></view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">联系方式</view>
-				<view class="lineRight">
-					<input class="input" v-model="form.contact" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入联系方式" />
-				</view>
+				<view class="lineRight"><input class="input" v-model="form.contact" data-name="examSiteLatitude" placeholder-class="plaClass" placeholder="请输入联系方式" /></view>
 			</view>
 			<view class="line">
 				<view class="lineLeft">核载人数</view>
@@ -32,7 +26,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="buttonBox" v-show="showAdd" @click="addCarInfo">创建订单</view>
+		<view class="buttonBox" v-show="showAdd" @click="addCarInfo">确 定</view>
 		<view class="bottomMenu" v-show="!showAdd"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
 	</view>
 </template>
@@ -66,28 +60,59 @@ export default {
 			]
 		};
 	},
-	computed:{
-		// eduCarInfo() {
-		// 	return this.$store.state.edu.eduCarInfo;
-		// },
+	computed: {
+		navigateBack() {
+			return this.$store.state.edu.navigateBack;
+		},
+		eduCarInfo() {
+			return this.$store.state.edu.eduCarInfo;
+		},
+	},
+	watch: {
+		navigateBack(newData, oldData) {
+			let that = this;
+			if (newData) {
+				uni.navigateBack({
+					delta: 1
+				});
+			this.$store.commit('setNeedNavigateBack');
+			}
+		},
+		eduCarInfo(newData, oldData) {
+			let that = this;
+			that.form = that.$store.state.edu.eduCarInfo;
+		}
 	},
 	onLoad(options) {
-		if(options.examId != '' && options.examId != undefined && options.examId != null){
-			this.examId = options.examId
+		let that = this;
+		if(options.examId != '' && options.examId != 'undefined' && options.examId != null){
+			that.examId = options.examId
 		}
-		if(options.carId != '' && options.carId != undefined && options.carId != null){
-			this.carId = options.cardId
-			this.showAdd = false
-			this.$store.commit('req_getCarInfo', this.carId);
-			this.form = this.$store.state.edu.eduCarInfo
+		console.log(options.carId);
+		if (options.carId != '' && options.carId != 'undefined' && options.carId != null) {
+			that.carId = options.carId;
+			that.showAdd = false;
+			that.$store.commit('req_getCarInfo', that.carId);
 		}
 	},
-	methods:{
+	methods: {
 		//下方按钮事件
 		buttonClick(e) {
+			let that = this;
 			//点击删除车辆
 			if (e.index == 0) {
-				this.$store.commit('req_delEduCar', this.carId);
+				uni.showModal({
+					title: '提示',
+					content: '确定删除吗？',
+					confirmColor: '#dd524d',
+					success: function(res) {
+						if (res.confirm) {
+							that.$store.commit('req_delEduCar', that.carId);
+						} else if (res.cancel) {
+							
+						}
+					}
+				});
 			}
 			//点击确定修改
 			if (e.index == 1) {
@@ -96,9 +121,44 @@ export default {
 		},
 		//添加车辆
 		addCarInfo() {
-			let val = {examId: this.examId, form: this.form}
+			let val = { examId: this.examId, form: this.form };
 			this.$store.commit('req_addCarInfo', val);
 		},
+		//验证
+		verification() {
+			let that = this;
+			if (that.form.numbering == '') {
+				uni.showToast({
+					title: '请填写编号',
+					duration: 2000,
+					icon: 'none'
+				});
+			} else if (that.form.carNumber == '') {
+				uni.showToast({
+					title: '请填写车牌号',
+					duration: 2000,
+					icon: 'none'
+				});
+			} else if (that.form.driver == '') {
+				uni.showToast({
+					title: '请填写司机',
+					duration: 2000,
+					icon: 'none'
+				});
+			} else if (that.form.contact == '') {
+				uni.showToast({
+					title: '请填写联系方式',
+					duration: 2000,
+					icon: 'none'
+				});
+			} else if (that.form.peopleNum == '') {
+				uni.showToast({
+					title: '请填写核载人数',
+					duration: 2000,
+					icon: 'none'
+				});
+			}
+		}
 	}
 };
 </script>

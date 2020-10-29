@@ -22,6 +22,10 @@ const state = {
 	needFeedback: false, //是否需要反馈
 	unifiedPaymentPaid: false, //订单已支付
 	eduListHaveMore: true, //教育订单列表能否获取
+	resSuccess: false, //返回值200
+	needResetEduDistributionHeight: false, //重置高度
+	needTravel: false, //需要显示行程
+	eduCarCanAdd: false, //教育车辆可以加人
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -32,6 +36,15 @@ const mutations = {
 	//请求-创建考试
 	req_createExam(state, value) {
 		let val = value
+		if(val.payWay == 1 || val.payWay == 3){
+			if(val.serviceType == 3){
+				val.checkinDate = ''
+				val.checkoutDate = ''
+			} else if(val.serviceType == 2){
+				val.startingList = ''
+				val.examSiteList = ''
+			}
+		}
 		val.examSiteList = JSON.stringify(val.examSiteList)
 		val.startingList = JSON.stringify(val.startingList)
 		common_request({
@@ -170,7 +183,6 @@ const mutations = {
 	//统一支付-微信支付
 	unifiedPaymentPay(state, val) {
 		//获取openId
-		alert('获取openid开始')
 		common_request({
 			url: '/wxPay/connect/oauth2/authorize',
 			data: {
@@ -352,7 +364,7 @@ const mutations = {
 	//获取教育订单分配信息
 	req_getEduDistribution(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getEduDistribution',
+			url: '/api/zxkj/examOrder/getEduDistribution',
 			data: {
 				'examId': val.examId,
 				'type': val.type
@@ -363,7 +375,17 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
+					if (val.type == 2) {
+						data.startingList = JSON.parse(data.startingList)
+					}
+					if (val.type == 3) {
+						data.examSiteList = JSON.parse(data.examSiteList)
+					}
 					state.eduDistributionInfo = data
+					//等待浏览器渲染
+					setTimeout(() => {
+						state.needResetEduDistributionHeight = true
+					}, 20)
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -402,7 +424,7 @@ const mutations = {
 	//获取车辆信息
 	req_getCarInfo(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getCarInfo',
+			url: '/api/zxkj/examBus/getCarInfo',
 			data: {
 				'carId': val
 			},
@@ -426,9 +448,9 @@ const mutations = {
 
 	//添加车辆信息
 	req_addCarInfo(state, val) {
-		let form = JSON.stringify(val.form)
+		let form = val.form
 		common_request({
-			url: '/api/zxkj/exam/addCarInfo',
+			url: '/api/zxkj/examBus/addCarInfo',
 			data: {
 				'examId': val.examId,
 				'numbering': form.numbering,
@@ -443,6 +465,7 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
+					state.navigateBack = true
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -456,25 +479,25 @@ const mutations = {
 
 	//修改车辆信息
 	req_updateCarInfo(state, val) {
-		let carId = JSON.stringify(val.carId)
-		let carInfo = JSON.stringify(val.carInfo)
+		// let carId = JSON.stringify(val.carId)
+		// let carInfo = val.carInfo
 
 		common_request({
-			url: '/api/zxkj/exam/updateCarInfo',
+			url: '/api/zxkj/examBus/updateCarInfo',
 			data: {
-				'carId': val.carId,
-				'numbering': carInfo.numbering,
-				'carNumber': carInfo.carNumber,
-				'driver': carInfo.driver,
-				'contact': carInfo.contact,
-				'peopleNum': carInfo.peopleNum
+				'carId': val.busId,
+				'numbering': val.numbering,
+				'carNumber': val.carNumber,
+				'driver': val.driver,
+				'contact': val.contact,
+				'peopleNum': val.peopleNum
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					let data = res.data.data
+					state.navigateBack = true
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -489,7 +512,7 @@ const mutations = {
 	//删除车辆信息
 	req_delEduCar(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/delEduCarInfo',
+			url: '/api/zxkj/examBus/delEduCarInfo',
 			data: {
 				'carId': val
 			},
@@ -499,6 +522,7 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
+					state.navigateBack = true
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -513,7 +537,7 @@ const mutations = {
 	//获取教育订单酒店房间信息
 	req_getEduHotel(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getEduHotel',
+			url: '/api/zxkj/examHotel/getEduHotel',
 			data: {
 				'examId': val.examId,
 				'hotelId': val.eduHotelId
@@ -539,10 +563,10 @@ const mutations = {
 	//添加教育订单酒店信息
 	req_makeAddHotelLink(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/makeAddHotelLink',
+			url: '/api/zxkj/examHotel/makeAddHotelLink',
 			data: {
 				'examId': val.examId,
-				'hotelId': val.eduHotelId,
+				'hotelId': val.hotelId,
 				'roomCount': val.roomCount
 			},
 			header: {
@@ -551,11 +575,7 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
-					state.navigateBack = true
-
-					setTimeout(() => {
-						state.navigateBack = false
-					}, 1000)
+					state.resSuccess = true
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -567,10 +587,41 @@ const mutations = {
 		})
 	},
 
+	//添加教育订单酒店信息
+	req_delEduHotel(state, val) {
+		common_request({
+			url: '/api/zxkj/examHotel/delEduHotel',
+			data: {
+				'examId': val.examId,
+				'hotelId': val.hotelId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.navigateBack = true
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+
+	//改变状态
+	changeResSuccess(state) {
+		state.resSuccess = false
+	},
+
 	//获取需要添加的酒店房型房间信息
 	req_getEduHotelRoom(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getEduHotelRoom',
+			url: '/api/zxkj/examHotel/getEduHotelRoom',
 			data: {
 				'examId': val.examId,
 				'hotelId': val.eduHotelId,
@@ -596,34 +647,50 @@ const mutations = {
 
 	//添加的酒店房型房间信息
 	req_addEduHotelRoom(state, val) {
-		common_request({
-			url: '/api/zxkj/exam/getEduHotelRoom',
-			data: {
-				'examId': val.examId,
-				'hotelId': val.eduHotelId,
-				'roomList': val.roomList
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				if (res.data.code == 200) {
+		if (state.eduHotelRoom.needRoom < val.roomList.length) {
+			uni.showModal({
+				title: '提示',
+				content: '房间选多了',
+				showCancel: false
+			})
+		} else {
+			common_request({
+				url: '/api/zxkj/examRoom/addEduHotelRoom',
+				data: {
+					'examId': val.examId,
+					'hotelId': val.eduHotelId,
+					'roomList': val.roomList
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: (res) => {
+					if (res.data.code == 200) {
+						uni.showToast({
+							title: '添加成功',
+							duration: 2000,
+							icon: 'success'
+						});
+						setTimeout(()=>{
+							state.needRefresh = true
+						},1500)
+					} else {
+						uni.showModal({
+							title: '提示',
+							content: '服务器错误',
+							showCancel: false
+						})
+					}
+				},
+			})
+		}
 
-				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
-				}
-			},
-		})
 	},
 
 	//获取分类下的用户列表
 	req_getEduUserList(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getEduUserList',
+			url: '/api/zxkj/examOrder/getEduUserList',
 			data: {
 				'examId': val.examId,
 				'carId': val.carId,
@@ -638,6 +705,13 @@ const mutations = {
 				if (res.data.code == 200) {
 					state.eduDistributionMax = res.data.data.max
 					state.eduDistributionItem = res.data.data.userList
+					if (state.eduDistributionMax > state.eduDistributionItem.length) {
+						state.eduCarCanAdd = true
+					} else if (state.eduDistributionMax < 0) {
+						state.eduCarCanAdd = true
+					} else {
+						state.eduCarCanAdd = false
+					}
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -651,14 +725,27 @@ const mutations = {
 
 	//删除用户列表中的一个
 	req_delEduUserListItem(state, val) {
+		let carId = ''
+		let roomId = ''
+		let startingId = ''
+		let examSiteId = ''
+		if (val.addType == 1) {
+			carId = val.reqId
+		} else if (val.addType == 2) {
+			roomId = val.reqId
+		} else if (val.addType == 3) {
+			startingId = val.reqId
+		} else if (val.addType == 4) {
+			examSiteId = val.reqId
+		}
 		common_request({
-			url: '/api/zxkj/exam/getEduUserList',
+			url: '/api/zxkj/examOrder/delEduUserListItem',
 			data: {
 				'examId': val.examId,
-				'carId': val.carId,
-				'roomId': val.roomId,
-				'startingId': val.startingId,
-				'examSiteId': val.examSiteId,
+				'carId': carId,
+				'roomId': roomId,
+				'startingId': startingId,
+				'examSiteId': examSiteId,
 				'memberId': val.memberId
 			},
 			header: {
@@ -691,7 +778,7 @@ const mutations = {
 	//获取教育用户信息
 	req_getEduUserInfo(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getEduUserInfo',
+			url: '/api/zxkj/examOrder/getEduUserInfo',
 			data: {
 				'examId': val.examId,
 				'memberId': val.memberId
@@ -716,17 +803,21 @@ const mutations = {
 	//获取教育用户信息
 	req_getUnassignedList(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getUnassignedList',
+			url: '/api/zxkj/examOrder/getUnassignedList',
 			data: {
 				'examId': val.examId,
-				'type': val.type
+				'type': val.addType
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					state.unassignedList = res.data.data
+					let data = res.data.data
+					data.forEach((item) => {
+						item.checked = false
+					})
+					state.unassignedList = data
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -741,7 +832,7 @@ const mutations = {
 	//添加教育用户信息
 	req_addDistribution(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/addDistribution',
+			url: '/api/zxkj/examOrder/addDistribution',
 			data: {
 				'examId': val.examId,
 				'type': val.type,
@@ -772,7 +863,7 @@ const mutations = {
 	//发送提醒
 	req_sendRemind(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/sendRemind',
+			url: '/api/zxkj/examRemind/sendRemind',
 			data: {
 				'examId': val.examId,
 				'type': val.type,
@@ -785,12 +876,20 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					state.navigateBack = true
 					uni.showToast({
 						title: '发送成功',
 						duration: 2000,
 						icon: 'none'
 					});
+					// setTimeout(()=>{
+					// 		state.navigateBack = true
+					// },2000)
+				} else if (res.data.code == -1) {
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false
+					})
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -805,9 +904,9 @@ const mutations = {
 	//打开查看提醒
 	req_getRemind(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/getRemind',
+			url: '/api/zxkj/examRemind/getRemind',
 			data: {
-				'examRemindId': val.examRemindId
+				'examRemindId': val
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
@@ -818,6 +917,7 @@ const mutations = {
 					state.remindContent = data.remindContent
 					state.travel = data.travel
 					state.needFeedback = data.needFeedback
+					state.needTravel = data.needTravel
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -857,321 +957,19 @@ const mutations = {
 		})
 	},
 
-	//创建订单的支付方式改变
-	payWayChange(state, val) {
-		if (val == '选择方式') {
-			state.createPayWay = ''
-		} else {
-			state.createPayWay = val
-		}
+	//关闭重置
+	resetEduDistributionHeightFalse(state) {
+		state.needResetEduDistributionHeight = false
 	},
-	//创建订单选择的房型变化
-	roomTypeChange(state, val) {
-		state.nowRoomType = val
-		state.nowRoomCount = 0
-	},
-	//创建订单房间数变化
-	roomCountChange(state, val) {
-		state.nowRoomCount = val
-	},
-	//验证创建订单表单数据
-	isFormOK(state) {
-		let that = this
-		if (state.createOrderDate == '') {
-			uni.showModal({
-				title: '错误',
-				content: '请选择入离日期',
-				showCancel: false
-			})
-		} else if (state.createSource == '') {
-			uni.showModal({
-				title: '错误',
-				content: '请选择订单来源',
-				showCancel: false
-			})
-		} else if (state.nowRoomType == 0) {
-			uni.showModal({
-				title: '错误',
-				content: '请选择订单房型',
-				showCancel: false
-			})
-		} else {
-			uni.showModal({
-				title: '提示',
-				content: '确定创建订单吗？',
-				success: function(res) {
-					if (res.confirm) {
-						that.commit("req_createOrder");
-					} else if (res.cancel) {
 
-					}
-				}
-			});
-		}
-
-	},
-	//请求创建订单
-	req_createOrder(state) {
-		let that = this
-		state.createFormData.phone == undefined ? state.createFormData.phone = '' : ''
-		state.createFormData.remarks == undefined ? state.createFormData.remarks = '' : '',
-			common_request({
-				url: '/api/zxkj/order/createOTAOrder',
-				data: {
-					'startTime': state.createOrderDate.before,
-					'endTime': state.createOrderDate.after,
-					'source': state.createSource,
-					'roomType': state.createRoomType[state.nowRoomType].roomTypeId,
-					'roomCount': state.createRoomCount[state.nowRoomType][state.nowRoomCount],
-					'price': state.createFormData.price,
-					'phone': state.createFormData.phone,
-					'owner': state.createFormData.name,
-					'remarks': state.createFormData.remarks
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: (res) => {
-					if (res.data.code == 200) {
-						state.needRefresh = true
-						that.commit('req_initCreateInfo')
-						uni.showToast({
-							title: '创建成功',
-							duration: 2000,
-						});
-					} else {
-						uni.showModal({
-							title: '提示',
-							content: '服务器错误',
-							showCancel: false
-						})
-					}
-				},
-			})
-	},
 	//设置为false
 	setNeedRefresh(state) {
 		state.needRefresh = false
 	},
-	//请求订单列表
-	req_initOrderListInfo(state, val) {
-		state.orderPageNum++
-		let roomId = ''
-		if (home.state.nowRoom.id != undefined) {
-			// console.log(home.state.nowRoom.id != undefined)
-			roomId = home.state.nowRoom.id
-		}
-		common_request({
-			url: '/api/zxkj/order/mobileVersionGetsOrderListData',
-			data: {
-				'pageNum': state.orderPageNum,
-				'pageSize': 30,
-				'roomId': roomId,
-				'index': val
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				if (res.data.code == 200) {
-					if (res.data.data != false) {
-						res.data.data.forEach((item) => {
-							if (item.source == '美团') {
-								item.originClass = 'meituan'
-							} else if (item.source == '携程') {
-								item.originClass = 'xiecheng'
-							} else if (item.source == '微信') {
-								item.originClass = 'weixin'
-							} else {
-								item.originClass = ''
-							}
-							item.checkin = formatDate(false, item.checkin)
-							item.checkout = formatDate(false, item.checkout)
-							state.orderList.push(item)
-						})
-						//等待浏览器渲染
-						setTimeout(() => {
-							state.needResetHeight = true
-						}, 5)
-					} else {
-						uni.showToast({
-							title: '没有更多了',
-							duration: 2000,
-							icon: 'none'
-						});
-						state.orderPageCanReq = false
-					}
-				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
-				}
-			},
-		})
-	},
-	//关闭重置
-	resetHeightFalse(state) {
-		state.needResetHeight = false
-	},
-	//重置pageNum
-	resetOrderPageNum(state, val) {
-		state.orderPageNum = 0
-		state.orderList = []
-		state.orderPageCanReq = true
-		if (val) {
-			home.state.nowRoom = {}
-		}
-	},
-	//请求初始化订单详情页面
-	req_initOrderDetailInfo(state, val) {
-		if (val == '') {} else {
-			state.orderId = val
-		}
-		common_request({
-			url: '/api/zxkj/order/mobileVersionGetOrderDetail',
-			data: {
-				'orderId': state.orderId
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				if (res.data.code == 200) {
-					let data = res.data.data
-					//格式化创建时间
-					data.createTime = data.createTime.replace(/T/, ' ')
-					//state赋值
-					if (data.state == 51) {
-						data.stateName = '待付款'
-						data.stateClass = 'bgYellow'
-					} else if (data.state == 52) {
-						data.stateName = '待入住'
-						data.stateClass = 'bgYellow'
-					} else if (data.state == 112) {
-						data.stateName = '入住中'
-						data.stateClass = 'bgGreen'
-					} else if (data.state == 62) {
-						data.stateName = '待退款'
-						data.stateClass = 'bgRed'
-					} else if (data.state == 63) {
-						data.stateName = '订单完成'
-						data.stateClass = 'bgGreen'
-					} else if (data.state == 54) {
-						data.stateName = '交易取消'
-						data.stateClass = 'name'
-					}
 
-					for (let i = 0; i < data.roomTypeList.length; i++) {
-						data.roomTypeList[i].checkin = formatDate(false, data.roomTypeList[i].checkin)
-						data.roomTypeList[i].checkout = formatDate(false, data.roomTypeList[i].checkout)
-					}
-					state.orderDetailInfo = data
-					console.log(state.orderDetailInfo)
-				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
-				}
-			},
-		})
-	},
-	//请求退押金
-	req_refund(state, val) {
-		let that = this
-		common_request({
-			url: '/api/zxkj/refundApplication/confirmRefund',
-			data: {
-				'id': val.id,
-				'refundPrice': val.refundPrice
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				if (res.data.code == 200) {
-					uni.showToast({
-						title: '退款成功',
-						duration: 2000
-					});
-					that.commit('req_initOrderDetailInfo', '')
-				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
-				}
-			},
-		})
-	},
-	//续房天数改变
-	continueDays(state, val) {
-		state.addedDays = val
-		this.commit('req_continueDays')
-	},
-	//请求根据续房天数是否可以续房
-	req_continueDays(state) {
-		common_request({
-			url: '/api/zxkj/room/mayRenewTheRoom',
-			data: {
-				'roomId': home.state.nowRoom.id,
-				'addedDays': state.addedDays
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				if (res.data.code == 200) {} else if (res.data.code == -1) {
-					uni.showModal({
-						title: '提示',
-						content: res.data.msg,
-						showCancel: false
-					})
-				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
-				}
-			},
-		})
-	},
-	//续房金额改变
-	setContinuePrice(state, val) {
-		state.continuePrice = val
-	},
-	//请求续房
-	req_confirmContinue(state) {
-		common_request({
-			url: '/api/zxkj/room/continuedHousingOperation',
-			data: {
-				'roomId': home.state.nowRoom.id,
-				'addedDays': state.addedDays,
-				'additionalRoomRates': state.continuePrice
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				if (res.data.code == 200) {
-					uni.showToast({
-						title: '续房成功',
-						duration: 2000
-					});
-				} else {
-					uni.showModal({
-						title: '提示',
-						content: '服务器错误',
-						showCancel: false
-					})
-				}
-			},
-		})
+	//设置为false
+	setNeedNavigateBack(state) {
+		state.setNeedNavigateBack = false
 	},
 }
 const actions = {

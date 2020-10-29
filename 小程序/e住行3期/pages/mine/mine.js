@@ -42,7 +42,7 @@ Page({
     wx.navigateTo({
       url: '/pages/myEvaluation/myEvaluation',
     })
-  }, 3000),
+  }, 1000),
 
   /**
    * 我的个人信息按钮,点击头像
@@ -52,18 +52,27 @@ Page({
     wx.navigateTo({
       url: '/pages/myInfo/myInfo',
     })
-  }, 3000),
+  }, 1000),
 
   /**
    *查看我的酒店订单 
    */
   lookOrder: util.throttle(function(e) {
-
     wx.navigateTo({
       url: '/pages/myOrder/myOrder',
     })
 
-  }, 3000),
+  }, 1000),
+
+   /**
+   *查看我的行程
+   */
+  team: util.throttle(function(e) {
+    wx.navigateTo({
+      url: '/pages/team/edu/orderList/orderList',
+    })
+
+  }, 1000),
 
   /**
    * 帮助页面

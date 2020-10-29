@@ -52,7 +52,7 @@ Page({
     }
     that.setData({
       // examId: examId,
-      examId: 27
+      examId: 29
     })
     // this.checkUserInfo()
   },

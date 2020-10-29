@@ -6,7 +6,7 @@
   <view class="infoBox">
     <view class="infoItem">
       <view class="itemLeft">房间费用</view>
-      <view class="itemRight">￥{{examPayInfo.roomFee}} <text>￥200</text></view>
+      <view class="itemRight">￥{{examPayInfo.roomFee}} <text wx:if="{{examPayInfo.roomFee != examPayInfo.originFee}}">￥{{examPayInfo.originFee}}</text></view>
     </view>
     <view class="infoItem">
       <view class="itemLeft">其他费用</view>

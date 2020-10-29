@@ -18,7 +18,7 @@ export default {
 	onLoad(options) {
 		let that = this;
 		//初始化成功页面
-		if (options.examId != '' && options.examId != undefined && options.examId != null) {
+		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
 			if (options.payWay != 2) {
 				that.showLink = true;

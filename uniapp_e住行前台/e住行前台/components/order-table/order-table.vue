@@ -36,17 +36,17 @@
 				<view class="table-cont-item">{{ item.numbering }}</view>
 				<view class="table-cont-item">{{ item.carNumber }}</view>
 				<view class="table-cont-item">{{ item.driver }}</view>
-				<view @click.stop="toUserList(item.carId)" class="linkClass table-cont-item">{{ item.peopleNum + '/' + item.carCapacity }}</view>
+				<view @click.stop="toUserList(examId,item.carId)" class="linkClass table-cont-item">{{ item.peopleNum + '/' + item.carCapacity }}</view>
 			</view>
 		</block>
 		<!-- eduDistributionItem -->
 		<block v-if="listType == 'eduDistributionItem'" v-for="(item, index) in tableList" :key="index">
 			<view class="table-list-item1" @longpress="del(item.memberId)" @click="toUserInfo(item.memberId)">
 				<view class="table-cont-item short">{{ item.memberName }}</view>
-				<view class="table-cont-item short">{{ item.sex }}</view>
-				<view class="table-cont-item short">{{ item.car }}</view>
+				<view class="table-cont-item short">{{ item.sex ? '男' : '女' }}</view>
+				<view class="table-cont-item short">{{ item.car ? item.car : '--' }}</view>
 				<view class="table-cont-item">{{ item.startingName }}</view>
-				<view class="table-cont-item long">{{ item.hotelName + '-' + item.roomName }}</view>
+				<view class="table-cont-item long">{{ (item.hotelName ? item.hotelName : '--') + '-' + (item.roomName ? item.roomName : '--') }}</view>
 				<view class="table-cont-item">{{ item.examSite }}</view>
 			</view>
 		</block>
@@ -55,11 +55,11 @@
 			<block v-if="listType == 'eduAddUserList'" v-for="(item, index) in tableList" :key="index">
 				<view class="table-list-item1">
 					<view class="table-cont-item short"><checkbox name="chooseUser" :value="item.memberId" :checked="item.checked" /></view>
-					<view class="table-cont-item short">{{ item.name }}</view>
-					<view class="table-cont-item short">{{ item.sex }}</view>
-					<view class="table-cont-item short">{{ item.carNumbering }}</view>
+					<view class="table-cont-item short" style="overflow: visible;">{{ item.name }}</view>
+					<view class="table-cont-item short">{{ item.sex ? '男' : '女' }}</view>
+					<view class="table-cont-item short">{{ item.carNumbering ? item.carNumbering : '--' }}</view>
 					<view class="table-cont-item">{{ item.starting }}</view>
-					<view class="table-cont-item long">{{ item.hotel + '-' + item.room }}</view>
+					<view class="table-cont-item long">{{ (item.hotel ? item.hotel : '--') + '-' + (item.room ? item.room : '--') }}</view>
 					<view class="table-cont-item">{{ item.examSite }}</view>
 				</view>
 			</block>
@@ -70,7 +70,7 @@
 <script>
 export default {
 	name: 'OrderTable',
-	props: ['tableList', 'titleList', 'listType', 'examId', 'addType'],
+	props: ['tableList', 'titleList', 'listType', 'examId', 'addType','reqId'],
 	data() {
 		return {
 			// orderList: [{
@@ -113,14 +113,15 @@ export default {
 				url: '/pages/mine/team/edu/carInfo?carId=' + carId
 			});
 		},
-		toUserList(id) {
+		toUserList(examId,carId) {
+			console.log(examId)
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/eduUserList?id=' + id
+				url: '/pages/mine/team/edu/eduUserList?examId='+ examId +'&carId=' + carId
 			});
 		},
 		toUserInfo(memberId) {
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/eduUserInfo?examId=' + this.examId + 'memberId=' + memberId
+				url: '/pages/mine/team/edu/eduUserInfo?examId=' + this.examId + '&memberId=' + memberId
 			});
 		},
 		del(memberId) {
@@ -131,7 +132,7 @@ export default {
 				confirmColor: '#dd524d',
 				success: function(res) {
 					if (res.confirm) {
-						let val = { examId: that.examId, addType: that.addType, memberId: memberId };
+						let val = { examId: that.examId, addType: that.addType, reqId: that.reqId, memberId: memberId };
 						that.$store.commit('req_delEduUserListItem', val);
 					} else if (res.cancel) {
 					}
@@ -139,17 +140,18 @@ export default {
 			});
 		},
 		eduAddUserListCheckboxChange(e) {
-			let tableList = this.tableList,
+			let that = this
+			let tableList = that.tableList,
 				values = e.detail.value;
 			for (let i = 0, lenI = tableList.length; i < lenI; ++i) {
 				const item = tableList[i];
-				if (values.includes(item.value)) {
-					this.$set(item, 'checked', true);
+				if (values.includes(item.memberId)) {
+					that.$set(item, 'checked', true);
 				} else {
-					this.$set(item, 'checked', false);
+					that.$set(item, 'checked', false);
 				}
 			}
-			this.$emit('getNewList',this.tableList)
+			this.$emit('getNewList',that.tableList)
 		}
 	}
 };
