@@ -81,6 +81,7 @@ Page({
 
   //点击支付
   pay: util.throttle(function(){
+    let that = this
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -92,7 +93,7 @@ Page({
         examId: that.data.examId,
         examOrderId: that.data.examOrderId
       },
-      method: 'POST',
+      method: 'POST', 
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },

@@ -16,6 +16,13 @@ Page({
     height: app.globalData.height * 2 + 20,
     listInfo: '',//数据
   },
+  
+  //查看订单详情
+  lookOrder:function(e){
+    wx.navigateTo({
+      url: '/pages/team/edu/orderInfo/orderInfo?examId=' + e.currentTarget.dataset.id
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -68,12 +75,6 @@ Page({
     })
   },
 
-  //查看订单详情
-  lookOrder:function(examId){
-    wx.navigateTo({
-      url: '/pages/team/edu/orderInfo/orderInfo?examId=' + examId
-    })
-  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

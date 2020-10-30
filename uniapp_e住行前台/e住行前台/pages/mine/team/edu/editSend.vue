@@ -64,7 +64,7 @@ export default {
 		},
 		needTravelChange: function(e) {
 			this.needTravel = e.target.value;
-			console.log(this.needFeedback);
+			// console.log(this.needFeedback);
 		},
 		needFeedbackChange: function(e) {
 			this.needFeedback = e.target.value;

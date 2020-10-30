@@ -97,11 +97,11 @@
 				<view class="lineRight" v-show="eduOrderInfo.payWay == 2">学生支付</view>
 				<view class="lineRight" v-show="eduOrderInfo.payWay == 3">已支付</view>
 			</view>
-			<view class="line">
+			<view class="line" v-if="eduOrderInfo.roomFee">
 				<view class="lineLeft">房费</view>
 				<view class="lineRight">￥{{ eduOrderInfo.roomFee }}</view>
 			</view>
-			<view class="line">
+			<view class="line" v-if="eduOrderInfo.otherFee">
 				<view class="lineLeft">其他费用</view>
 				<view class="lineRight">￥{{ eduOrderInfo.otherFee }}</view>
 			</view>

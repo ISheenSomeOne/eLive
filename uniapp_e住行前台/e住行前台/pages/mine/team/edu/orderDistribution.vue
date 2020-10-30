@@ -216,7 +216,7 @@ export default {
 			// });
 		},
 		toHotelInfo(hotelId) {
-			console.log(123);
+			// console.log(123);
 			uni.navigateTo({
 				url: 'eduHotel?eduHotelId=' + hotelId + '&examId=' + this.examId
 			});

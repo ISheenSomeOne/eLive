@@ -104,7 +104,7 @@ export default {
 				item.check = false;
 				that.roomList.push(item);
 			});
-			console.log(that.roomList);
+			// console.log(that.roomList);
 			//显示已选择的房间列表
 			for (let i = 0; i < data.nowRoomList.length; i++) {
 				for (let j = 0; j < that.roomList.length; j++) {

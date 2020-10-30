@@ -27,6 +27,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       examId: options.examId
     })
@@ -73,9 +74,9 @@ Page({
           orderInfo.checkinDate = util.formatDate(new Date(orderInfo.checkinDate))
           orderInfo.checkoutDate = util.formatDate(new Date(orderInfo.checkoutDate))
 
-          let formatStartingDate = new Date(orderInfo.startingDate)
-          orderInfo.startingDate = util.formatDate(formatStartingDate)
-          orderInfo.startingTime = formatStartingDate.getHours() + ':' + formatStartingDate.getMinutes()
+          // let formatStartingDate = new Date(orderInfo.startingDate)
+          // orderInfo.startingDate = util.formatDate(formatStartingDate)
+          // orderInfo.startingTime = formatStartingDate.getHours() + ':' + formatStartingDate.getMinutes()
 
           that.setData({
             orderInfo: orderInfo,

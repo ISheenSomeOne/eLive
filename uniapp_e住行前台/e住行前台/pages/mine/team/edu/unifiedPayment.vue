@@ -69,10 +69,10 @@ export default {
 		var ua = navigator.userAgent.toLowerCase();
 		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
 			that.isWX = true;
-			console.log('微信浏览器');
+			// console.log('微信浏览器');
 		} else {
 			that.isWX = false;
-			console.log('其他浏览器');
+			// console.log('其他浏览器');
 			uni.showModal({
 				title: '提示',
 				content: '请在微信打开',

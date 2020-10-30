@@ -41,10 +41,10 @@ page {
   font-weight: normal;
 }
 .bgYellow{
-  background-color: #f06c00;
+  background-color: #f06c00!important;
 }
 .bgGray{
-  background-color: #999;
+  background-color: #999!important;
 }
 
 .infoItem {

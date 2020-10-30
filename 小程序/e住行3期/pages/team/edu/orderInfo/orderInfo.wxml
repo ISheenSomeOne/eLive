@@ -2,27 +2,27 @@
 <navbar navbar-data='{{nvabarData}}'></navbar>
 
 <view style='margin-top: {{height}}px;padding-top: 1px;'>
-  <!-- 订单状态 -->
-  <view class="infoBox" style="margin-bottom:120rpx">
-    <view wx:if="{{orderInfo.payState == 5 && !isTimeOut}}" class="state">
-      待支付
-    </view>
-    <view wx:if="{{orderInfo.payState == 6}}" class="state colorGreen">
-      报名成功
-    </view>
-    <view wx:if="{{orderInfo.payState == 7 || isTimeOut}}" class="state colorRed">
-      订单取消
-    </view>
-    <view wx:if="{{orderInfo.payState == 5}}" class="stateTip">
-      请在 {{timeOut}} 前支付，超时订单将自动取消
-    </view>
-    <view class="remainingTime" wx:if="{{orderInfo.payState == 5 && !isTimeOut}}">
-      <view class="remainingTimeItem">{{remainingTimeMinu}}</view> :
-      <view class="remainingTimeItem">{{remainingTimeSec}}</view>
-    </view>
-    <view wx:if="{{orderInfo.payState == 5 && !isTimeOut}}" class="pay" bindtap="pay">立即支付</view>
+	<!-- 订单状态 -->
+	<view class="infoBox" style="margin-bottom:120rpx">
+		<view wx:if="{{orderInfo.payState == 5 && !isTimeOut}}" class="state">
+			待支付
+		</view>
+		<view wx:if="{{orderInfo.payState == 6}}" class="state colorGreen">
+			报名成功
+		</view>
+		<view wx:if="{{orderInfo.payState == 7 || (orderInfo.payState == 5 && !isTimeOut)}}" class="state colorRed">
+			订单取消
+		</view>
+		<view wx:if="{{orderInfo.payState == 5}}" class="stateTip">
+			请在 {{timeOut}} 前支付，超时订单将自动取消
+		</view>
+		<view class="remainingTime" wx:if="{{orderInfo.payState == 5 && !isTimeOut}}">
+			<view class="remainingTimeItem">{{remainingTimeMinu}}</view> :
+			<view class="remainingTimeItem">{{remainingTimeSec}}</view>
+		</view>
+		<view wx:if="{{orderInfo.payState == 5 && !isTimeOut}}" class="pay" bindtap="pay">立即支付</view>
 
-    <!-- 考试信息 -->
+		<!-- 考试信息 -->
 		<text class="infoTitle">考试信息</text>
 		<view class="infoItem">
 			<view class="itemLeft">考试名称</view>
@@ -32,36 +32,42 @@
 			<view class="itemLeft">考试时间</view>
 			<view class="itemRight">{{orderInfo.examStartDate}} 至 {{orderInfo.examEndDate}}</view>
 		</view>
-		<view class="infoItem">
-			<view class="itemLeft">考点信息</view>
-			<view class="itemRight">{{orderInfo.examSite}}</view>
-		</view>
-		<view class="infoItem">
-			<view class="itemLeft">出发信息</view>
-			<view class="itemRight">{{orderInfo.starting.name}} <view>时间： {{orderInfo.starting.startingDate}} {{orderInfo.starting.startingTime}}</view></view>
-    </view>
-    
-    <!-- 住宿信息 -->
-		<text class="infoTitle">住宿信息</text>
-		<view class="infoItem" wx:if="{{orderInfo.invitationCode}}">
-			<view class="itemLeft">邀请码</view>
-			<view class="itemRight">{{orderInfo.invitationCode}}</view>
-		</view>
-		<view class="infoItem">
-			<view class="itemLeft">酒店房间</view>
-			<view class="itemRight" wx:if="{{orderInfo.roomNum}}">{{orderInfo.hotelName}} - {{orderInfo.roomNum}}</view>
-			<view class="itemRight" wx:else>暂未分配</view>
-		</view>
-		<view class="infoItem">
-			<view class="itemLeft">入离时间</view>
-			<view class="itemRight">{{orderInfo.checkinDate}} 至 {{orderInfo.checkoutDate}}</view>
-		</view>
-		<view class="infoItem" wx:for="{{orderInfo.liveTime}}" wx:key="index">
-			<view class="itemLeft">入住人{{index + 1}}</view>
-			<view class="itemRight">{{item.name}} {{item.tel}} <text>拨号</text></view>
-		</view>
-    
-    <!-- 订单信息 -->
+		<block wx:if="{{orderInfo.needCar}}">
+			<view class="infoItem">
+				<view class="itemLeft">考点信息</view>
+				<view class="itemRight">{{orderInfo.examSite}}</view>
+			</view>
+			<view class="infoItem">
+				<view class="itemLeft">出发信息</view>
+				<view class="itemRight">{{orderInfo.starting}} <view>时间： {{orderInfo.startingDate}}
+						{{orderInfo.startingTime}}</view>
+				</view>
+			</view>
+		</block>
+
+		<!-- 住宿信息 -->
+		<block wx:if="{{orderInfo.needHotel}}">
+			<text class="infoTitle">住宿信息</text>
+			<view class="infoItem" wx:if="{{orderInfo.invitationCode}}">
+				<view class="itemLeft">邀请码</view>
+				<view class="itemRight" style="font-weight:bold">{{orderInfo.invitationCode}}</view>
+			</view>
+			<view class="infoItem">
+				<view class="itemLeft">酒店房间</view>
+				<view class="itemRight" wx:if="{{orderInfo.roomNum}}">{{orderInfo.hotelName}} - {{orderInfo.roomNum}}</view>
+				<view class="itemRight" wx:else>暂未分配</view>
+			</view>
+			<view class="infoItem">
+				<view class="itemLeft">入离时间</view>
+				<view class="itemRight">{{orderInfo.checkinDate}} 至 {{orderInfo.checkoutDate}}</view>
+			</view>
+			<view class="infoItem" wx:for="{{orderInfo.liveTime}}" wx:key="index">
+				<view class="itemLeft">入住人{{index + 1}}</view>
+				<view class="itemRight">{{item.name}} {{item.tel}} <text>拨号</text></view>
+			</view>
+		</block>
+
+		<!-- 订单信息 -->
 		<text class="infoTitle">订单信息</text>
 		<view class="infoItem" wx:if="{{orderInfo.serviceType != 3 && orderInfo.payWay == 2}}">
 			<view class="itemLeft">房间费用</view>
@@ -84,5 +90,5 @@
 			<view class="itemRight">{{orderInfo.examOrderNum}}</view>
 		</view>
 		<button class="confirm" type="primary" bindtap="done">完成</button>
-  </view>
+	</view>
 </view>

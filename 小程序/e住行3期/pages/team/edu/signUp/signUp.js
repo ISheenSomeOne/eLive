@@ -51,8 +51,8 @@ Page({
       })
     }
     that.setData({
-      // examId: examId,
-      examId: 29
+      examId: examId,
+      // examId: 40
     })
     // this.checkUserInfo()
   },
@@ -96,20 +96,23 @@ Page({
           let data = res.data.data
           let examSiteList = ['点击选择考点']
           let startingList = ['点击选择出发点']
-
+          
           data.examSiteList = JSON.parse(data.examSiteList)
           data.startingList = JSON.parse(data.startingList)
           data.examStartDate = util.formatDate(new Date(data.examStartDate))
           data.examEndDate = util.formatDate(new Date(data.examEndDate))
           data.deadline = util.formatDate(new Date(data.deadline))
 
-          data.examSiteList.forEach((item) => {
-            examSiteList.push(item.name)
-          })
-          data.startingList.forEach((item) => {
-            startingList.push(item.name)
-          })
-          console.log(startingList)
+          //统一支付的仅酒店服务——什么也不做
+          if(data.payWay != 2 && data.serviceType == 2){
+          } else {
+            data.examSiteList.forEach((item) => {
+              examSiteList.push(item.name)
+            })
+            data.startingList.forEach((item) => {
+              startingList.push(item.name)
+            })
+          }
 
           that.setData({
             examInfo: data,
@@ -117,6 +120,12 @@ Page({
             startingList: startingList
           })
           that.getUserInfo()
+        } else if(res.data.code == -1){
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none',
+            duration: 2000
+          })
         } else if (res.data.code == 202) {
           //已支付，跳转到订单
           wx.navigateTo({
@@ -244,6 +253,15 @@ Page({
   //提交报名信息
   subSignInfo:function(){
     let that = this
+    let examSiteIndex = that.data.examSiteIndex
+    let startingIndex = that.data.startingIndex
+    if(that.data.examSiteIndex == '' || that.data.startingIndex == ''){
+
+    } else {
+      examSiteIndex = examSiteIndex-1
+      startingIndex = startingIndex-1
+    }
+
     wx.showLoading({
       title: '正在提交',
       mask: true
@@ -253,8 +271,8 @@ Page({
       data: {
         openId: wx.getStorageSync('openid'),
         examId: that.data.examId,
-        examSite: that.data.examSiteIndex-1,
-        departurePoint: that.data.startingIndex-1,
+        examSite: examSiteIndex,
+        departurePoint: startingIndex,
         needCar: that.data.needCar,
         liveMode: that.data.liveWay,
         invitationCode: that.data.invitationCode,
@@ -311,7 +329,9 @@ Page({
     //仅住宿
     if (that.data.examInfo.serviceType == 2) {
       that.setData({
-        needCar: false
+        needCar: false,
+        examSiteIndex: '',
+        startingIndex: '',
       })
     }
     //仅用车

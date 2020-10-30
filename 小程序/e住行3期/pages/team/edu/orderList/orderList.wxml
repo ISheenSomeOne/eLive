@@ -3,7 +3,7 @@
 
 <view style='margin-top: {{height}}px;padding-top: 1px;'>
   <block wx:for="{{listInfo}}" wx:key="index">
-    <view class="infoBox" bindtap="lookOrder({{item.examId}})">
+    <view class="infoBox" data-id="{{item.examId}}" bindtap="lookOrder">
       <view class="infoTitle">{{item.examName}} <view wx:if="{{item.examOrderState == 5}}" class="bgYellow">待支付</view>
         <view wx:if="{{item.examOrderState == 6}}">报名成功</view>
         <view wx:if="{{item.examOrderState == 7}}" class="bgGray">已取消</view>

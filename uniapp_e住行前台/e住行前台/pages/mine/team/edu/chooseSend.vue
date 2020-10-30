@@ -74,7 +74,7 @@ export default {
 			} else {
 				this.allChecked = false;
 			}
-			console.log(this.checkedArr)
+			// console.log(this.checkedArr)
 		},
 		// 全选事件
 		allChoose(e) {

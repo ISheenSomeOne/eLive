@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<uni-section class="titleClass" title="统一支付链接" type="line"></uni-section>
-		<input class="input" @input="formChange" :value="unifiedPaymentLink" />
+		<uni-section v-show="showLink" class="titleClass" title="统一支付链接" type="line"></uni-section>
+		<input v-show="showLink" class="input" @input="formChange" :value="unifiedPaymentLink" />
 		<uni-section class="titleClass" title="学生报名二维码" type="line"></uni-section>
 		<image class="qr" :src="qr" mode="aspectFit"></image>
 	</view>
@@ -20,10 +20,11 @@ export default {
 		//初始化成功页面
 		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
-			if (options.payWay != 2) {
+			if (options.payWay == 1) {
 				that.showLink = true;
 				that.unifiedPaymentLink = 'http://localhost:8080/pages/mine/team/edu/unifiedPayment?examId=' + that.examId;
 			}
+			// console.log(that.unifiedPaymentLink)
 			that.$store.commit('req_getExamLinkGroup', that.examId);
 		}
 	},

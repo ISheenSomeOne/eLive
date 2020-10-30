@@ -78,7 +78,7 @@ export default {
 			if (newData) {
 				that.hasHotel = true;
 				that.eduHotelId = that.hotelId;
-				console.log(that.hasHotel);
+				// console.log(that.hasHotel);
 				that.$store.commit('changeResSuccess');
 			}
 		},
@@ -90,7 +90,18 @@ export default {
 				});
 			that.$store.commit('setNeedNavigateBack');
 			}
-		}
+		},
+		eduHotelInfo(newData, oldData) {
+			let that = this;
+			//初始化hotelList
+			this.hotelList = this.$store.state.edu.eduHotelInfo.hotelList;
+			if (this.hotelList) {
+				this.hotelNameList.push('选择酒店');
+				this.hotelList.forEach(item => {
+					this.hotelNameList.push(item.hotelName);
+				});
+			}
+		},
 	},
 	onLoad(options) {
 		//是否有考试id
@@ -107,16 +118,6 @@ export default {
 		let val = { examId: this.examId, eduHotelId: this.eduHotelId };
 		this.$store.commit('req_getEduHotel', val); //获取酒店信息
 
-		setTimeout(() => {
-			//初始化hotelList
-			this.hotelList = this.$store.state.edu.eduHotelInfo.hotelList;
-			if (this.hotelList) {
-				this.hotelNameList.push('选择酒店');
-				this.hotelList.forEach(item => {
-					this.hotelNameList.push(item.hotelName);
-				});
-			}
-		}, 50);
 	},
 	methods: {
 		//下方按钮事件

@@ -59,7 +59,7 @@
 	</view>
 
 	<!-- 住宿信息 -->
-	<view class="infoBox bgBlue" wx:if="{{examInfo.serviceType != 3}}">
+	<view class="infoBox bgBlue" wx:if="{{ examInfo.payWay == 2 }}">
 		<view class="infoItem">
 			<view class="itemLeft">需要住宿</view>
 			<view class="itemRight">
@@ -96,7 +96,7 @@
 	</view>
 
 	<!-- 入住方式 -->
-	<view class="infoBox">
+	<view class="infoBox" wx:if="{{ (examInfo.payWay == 2 && needHotel) || (examInfo.payWay != 2 && examInfo.serviceType != 3)}}">
 		<text class="infoTitle">选择住宿方式</text>
 		<view class="infoItem" style="margin-top:10rpx">
 			<radio-group style="width:100%" bindchange="liveWayChange">
@@ -123,6 +123,6 @@
 			<view class="itemLeft">邀请码</view>
 			<view class="itemRight"><input type="text" name="invitationCode" bindinput="invitationCode" class="itemInput" placeholder="请输入邀请码"></input></view>
 		</view>
-		<button class="confirm" type="primary" bindtap="confirm">提交</button>
 	</view>
+		<button class="confirm" type="primary" bindtap="confirm">提交</button>
 </view>

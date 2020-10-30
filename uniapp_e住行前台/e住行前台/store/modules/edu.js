@@ -44,6 +44,8 @@ const mutations = {
 				val.startingList = ''
 				val.examSiteList = ''
 			}
+		} else {
+			val.serviceType = ''
 		}
 		val.examSiteList = JSON.stringify(val.examSiteList)
 		val.startingList = JSON.stringify(val.startingList)
@@ -100,7 +102,7 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					state.qr = 'https://zxkj.webinn.online/zxkj/' + res.data.data.qr
+					state.qr = 'https://zxkj.webinn.online/zxkj' + res.data.data.qr
 					// uni.navigateTo({
 					// 	url: 'createSuccess?examId='+res.data.data
 					// });
