@@ -18,7 +18,7 @@
 			<view class="line">
 				<view class="lineLeft">链接</view>
 				<view v-show="hasHotel" class="lineRight" style="overflow: auto;text-align: left;">
-					{{ 'http://localhost:8080/pages/mine/team/edu/hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId }}
+					{{ 'https://group.webinn.online/phone/#/pages/mine/team/edu/hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId }}
 				</view>
 			</view>
 		</view>

@@ -23,9 +23,10 @@
 				<view class="lineLeft">支付费用</view>
 				<view class="lineRight" style="font-size: 20px;font-weight: bold;color: #dd524d;">￥{{ paymentInfo.allFee }}</view>
 			</view>
+			<view style="margin-top: 20rpx;"><uni-notice-bar :single="true" text="注意:  请在微信长按下方二维码进行支付" /></view>
+			<image style="width: 100%;" :src="eduUnifiedPaymentQR" mode="aspectFit"></image>
 			<!-- <view class="buttonBox" @click="submit">支 付</view> -->
-			<view v-if="!unifiedPaymentPaid" class="buttonBox" @click="submit">支 付</view>
-			<view v-else class="buttonBox">已支付</view>
+			<view v-if="unifiedPaymentPaid" class="buttonBox">已支付</view>
 		</view>
 	</view>
 </template>
@@ -44,24 +45,31 @@ export default {
 		},
 		unifiedPaymentPaid() {
 			return this.$store.state.edu.unifiedPaymentPaid;
+		},
+		eduUnifiedPaymentQR() {
+			return this.$store.state.edu.eduUnifiedPaymentQR;
 		}
 	},
-	watch:{
+	watch: {
 		unifiedPaymentPaid(newData, oldData) {
-			let that = this
+			let that = this;
 			if (newData) {
-				uni.navigateTo({
-					url: 'createSuccess?examId='+that.examId
+				uni.showToast({
+					icon: 'success',
+					title: '订单已支付'
 				});
+				setTimeout(()=>{
+					uni.navigateTo({
+						url: 'createSuccess?examId=' + that.examId
+					});
+				},1000)
 			}
-		},
+		}
 	},
 	onLoad(options) {
 		let that = this;
 		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
-			//判断这个订单是否需要付款
-			that.$store.commit('req_howMuchDoesThisOrderCost', that.examId);
 			//初始化页面
 			that.$store.commit('req_getUnifiedPaymentInfo', that.examId);
 		}
@@ -82,24 +90,30 @@ export default {
 			});
 		}
 	},
-	mounted() {
+	onShow() {
+		let that = this
+		//删除左上角返回
 		document.querySelector('.uni-page-head-hd').style.display = 'none';
+		
+		//判断这个订单是否需要付款
+		that.$store.commit('req_howMuchDoesThisOrderCost', that.examId);
 	},
 	methods: {
 		submit: function() {
 			let that = this;
-			if (that.isWX) {
-				//开始微信支付
-				that.$store.commit('unifiedPaymentPay', that.examId);
-			} else {
-				uni.showModal({
-					title: '提示',
-					content: '请在微信打开',
-					showCancel: false,
-					confirmText: '好的',
-					success: function(res) {}
-				});
-			}
+			that.$store.commit('unifiedPaymentPay', that.examId);
+			// if (that.isWX) {
+			// 	//开始微信支付
+			// 	that.$store.commit('unifiedPaymentPay', that.examId);
+			// } else {
+			// 	uni.showModal({
+			// 		title: '提示',
+			// 		content: '请在微信打开',
+			// 		showCancel: false,
+			// 		confirmText: '好的',
+			// 		success: function(res) {}
+			// 	});
+			// }
 		}
 	}
 };

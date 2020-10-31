@@ -26,6 +26,7 @@ const state = {
 	needResetEduDistributionHeight: false, //重置高度
 	needTravel: false, //需要显示行程
 	eduCarCanAdd: false, //教育车辆可以加人
+	eduUnifiedPaymentQR: '', //教育统一支付二维码
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -132,11 +133,41 @@ const mutations = {
 					state.unifiedPaymentPaid = false
 				} else if (res.data.code == 202) {
 					state.unifiedPaymentPaid = true
+					this.commit('req_paymentCompletesTheCallback',val)
+				} else {
 					uni.showModal({
 						title: '提示',
-						content: '订单已支付',
+						content: '服务器错误',
 						showCancel: false
 					})
+				}
+			},
+		})
+	},
+	
+	//支付成功回调
+	req_paymentCompletesTheCallback(state,val) {
+		common_request({
+			url: '/api/zxkj/exam/paymentCompletesTheCallback',
+			data: {
+				'examId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					data.examStartDate = formatDate1(true, data.examStartDate)
+					data.examEndDate = formatDate1(true, data.examEndDate)
+					data.checkinDate = formatDate1(true, data.checkinDate)
+					data.checkoutDate = formatDate1(true, data.checkoutDate)
+					state.paymentInfo = res.data.data
+					this.commit('req_examOrderPay',val)
+					// state.qr = res.data.data.qr
+					// uni.navigateTo({
+					// url: 'createSuccess?examId='+res.data.data
+					// });
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -167,10 +198,13 @@ const mutations = {
 					data.checkinDate = formatDate1(true, data.checkinDate)
 					data.checkoutDate = formatDate1(true, data.checkoutDate)
 					state.paymentInfo = res.data.data
+					this.commit('req_examOrderPay',val)
 					// state.qr = res.data.data.qr
 					// uni.navigateTo({
 					// url: 'createSuccess?examId='+res.data.data
 					// });
+				} else if (res.data.code == 202){
+					
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -184,87 +218,52 @@ const mutations = {
 
 	//统一支付-微信支付
 	unifiedPaymentPay(state, val) {
+		this.commit('req_examOrderPay',val)
 		//获取openId
-		common_request({
-			url: '/wxPay/connect/oauth2/authorize',
-			data: {
-				appid: 'wx68064214de16779e',
-				redirect_uri: 'https://group.webinn.online/phone',
-				// redirect_uri: 'https%3a%2f%2fzxkj.webinn.online%2fzxkj',
-				response_type: 'code',
-				scope: 'snsapi_base',
-				state: 'STATE#wechat_redirect'
-			},
-			method: 'GET',
-			header: {
-				'content-type': 'application/x-www-form-urlencoded'
-			},
-			success: (res) => {
-				alert(res)
-				//上线测试
-				// if (res.data.code == 200) {
+		// common_request({
+		// 	url: '/wxPay/connect/oauth2/authorize',
+		// 	data: {
+		// 		appid: 'wx68064214de16779e',
+		// 		redirect_uri: 'https://group.webinn.online/phone',
+		// 		// redirect_uri: 'https%3a%2f%2fzxkj.webinn.online%2fzxkj',
+		// 		response_type: 'code',
+		// 		scope: 'snsapi_base',
+		// 		state: 'STATE#wechat_redirect'
+		// 	},
+		// 	method: 'GET',
+		// 	header: {
+		// 		'content-type': 'application/x-www-form-urlencoded'
+		// 	},
+		// 	success: (res) => {
+		// 		state.res = res
+		// 		alert(res)
+		// 		//上线测试
+		// 		// if (res.data.code == 200) {
 
-				// } else {
-				// 	uni.showModal({
-				// 		title: '提示',
-				// 		content: '服务器错误',
-				// 		showCancel: false
-				// 	})
-				// }
-			},
-		})
+		// 		// } else {
+		// 		// 	uni.showModal({
+		// 		// 		title: '提示',
+		// 		// 		content: '服务器错误',
+		// 		// 		showCancel: false
+		// 		// 	})
+		// 		// }
+		// 	},
+		// })
 	},
 
 	//申请订单
 	req_examOrderPay(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/examOrderPay',
+			url: '/api/zxkj/exam/examPay',
 			data: {
-				'examId': val,
-				'openId': ''
+				'examId': val
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					let data = res.data.data
-					// WeixinJSBridge.invoke(
-					// 	'getBrandWCPayRequest', {
-					// 		"appId": 'wx68064214de16779e', //公众号名称，由商户传入
-					// 		"timeStamp": res.data.data.timeStamp, //时间戳     
-					// 		"nonceStr": res.data.data.nonceStr, //随机串     
-					// 		"package": res.data.data.package,
-					// 		"signType": res.data.data.signType, //微信签名方式：     
-					// 		"paySign": res.data.data.paySign //微信签名 
-					// 	},
-					// 	function(ress) {
-					// 		if (ress.err_msg == "get_brand_wcpay_request:ok") {
-					// 			uni.showToast({
-					// 				icon: 'success',
-					// 				title: '支付成功'
-					// 			})
-					// 			setTimeout(() => {
-					// 				uni.navigateBack({
-					// 					delta: 2
-					// 				})
-					// 			}, 500);
-					// 		} else if (ress.err_msg == "get_brand_wcpay_request:cancel") {
-					// 			uni.showToast({
-					// 				icon: "none",
-					// 				title: "'已取消支付"
-					// 			})
-					// 		} else {
-					// 			uni.showToast({
-					// 				icon: "none",
-					// 				title: "支付失败"
-					// 			})
-					// 		}
-					// 	}
-					// );
-					uni.navigateTo({
-						url: 'createSuccess?examId=' + val
-					});
+					state.eduUnifiedPaymentQR = 'https://zxkj.webinn.online/zxkj/wx/code?codeUrl='+res.data.data.codeUrl
 				} else {
 					uni.showModal({
 						title: '提示',

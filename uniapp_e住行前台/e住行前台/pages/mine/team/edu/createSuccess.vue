@@ -3,7 +3,7 @@
 		<uni-section v-show="showLink" class="titleClass" title="统一支付链接" type="line"></uni-section>
 		<input v-show="showLink" class="input" @input="formChange" :value="unifiedPaymentLink" />
 		<uni-section class="titleClass" title="学生报名二维码" type="line"></uni-section>
-		<image class="qr" :src="qr" mode="aspectFit"></image>
+		<image class="qr" :src="qr" mode="widthFix"></image>
 	</view>
 </template>
 
@@ -22,7 +22,7 @@ export default {
 			that.examId = options.examId;
 			if (options.payWay == 1) {
 				that.showLink = true;
-				that.unifiedPaymentLink = 'http://localhost:8080/pages/mine/team/edu/unifiedPayment?examId=' + that.examId;
+				that.unifiedPaymentLink = 'https://group.webinn.online/phone/#/pages/mine/team/edu/unifiedPayment?examId=' + that.examId;
 			}
 			// console.log(that.unifiedPaymentLink)
 			that.$store.commit('req_getExamLinkGroup', that.examId);
@@ -59,7 +59,6 @@ export default {
 }
 .qr {
 	margin-top: 30px;
-	width: 500rpx;
-	max-width: 400px;
+	width: 600rpx;
 }
 </style>
