@@ -38,11 +38,11 @@ const mutations = {
 	//请求-创建考试
 	req_createExam(state, value) {
 		let val = value
-		if(val.payWay == 1 || val.payWay == 3){
-			if(val.serviceType == 3){
+		if (val.payWay == 1 || val.payWay == 3) {
+			if (val.serviceType == 3) {
 				val.checkinDate = ''
 				val.checkoutDate = ''
-			} else if(val.serviceType == 2){
+			} else if (val.serviceType == 2) {
 				val.startingList = ''
 				val.examSiteList = ''
 			}
@@ -135,7 +135,7 @@ const mutations = {
 					state.unifiedPaymentPaid = false
 				} else if (res.data.code == 202) {
 					state.unifiedPaymentPaid = true
-					this.commit('req_paymentCompletesTheCallback',val)
+					this.commit('req_paymentCompletesTheCallback', val)
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -146,9 +146,9 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//支付成功回调
-	req_paymentCompletesTheCallback(state,val) {
+	req_paymentCompletesTheCallback(state, val) {
 		common_request({
 			url: '/api/zxkj/exam/paymentCompletesTheCallback',
 			data: {
@@ -165,7 +165,7 @@ const mutations = {
 					data.checkinDate = formatDate1(true, data.checkinDate)
 					data.checkoutDate = formatDate1(true, data.checkoutDate)
 					state.paymentInfo = res.data.data
-					this.commit('req_examOrderPay',val)
+					this.commit('req_examOrderPay', val)
 					// state.qr = res.data.data.qr
 					// uni.navigateTo({
 					// url: 'createSuccess?examId='+res.data.data
@@ -200,13 +200,13 @@ const mutations = {
 					data.checkinDate = formatDate1(true, data.checkinDate)
 					data.checkoutDate = formatDate1(true, data.checkoutDate)
 					state.paymentInfo = res.data.data
-					this.commit('req_examOrderPay',val)
+					this.commit('req_examOrderPay', val)
 					// state.qr = res.data.data.qr
 					// uni.navigateTo({
 					// url: 'createSuccess?examId='+res.data.data
 					// });
-				} else if (res.data.code == 202){
-					
+				} else if (res.data.code == 202) {
+
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -220,7 +220,7 @@ const mutations = {
 
 	//统一支付-微信支付
 	unifiedPaymentPay(state, val) {
-		this.commit('req_examOrderPay',val)
+		this.commit('req_examOrderPay', val)
 		//获取openId
 		// common_request({
 		// 	url: '/wxPay/connect/oauth2/authorize',
@@ -265,7 +265,7 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					state.eduUnifiedPaymentQR = 'https://zxkj.webinn.online/zxkj/wx/code?codeUrl='+res.data.data.codeUrl
+					state.eduUnifiedPaymentQR = 'https://zxkj.webinn.online/zxkj/wx/code?codeUrl=' + res.data.data.codeUrl
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -679,9 +679,9 @@ const mutations = {
 							duration: 2000,
 							icon: 'success'
 						});
-						setTimeout(()=>{
+						setTimeout(() => {
 							state.needRefresh = true
-						},1500)
+						}, 1500)
 					} else {
 						uni.showModal({
 							title: '提示',
@@ -954,6 +954,9 @@ const mutations = {
 						duration: 2000,
 						icon: 'none'
 					});
+					setTimeout(() => {
+						this.commit('req_getRemind', val);
+					}, 2000)
 				} else {
 					uni.showModal({
 						title: '提示',
