@@ -1,6 +1,6 @@
-// pages/team/orderList/orderList.js
-let app = getApp()
+// pages/team/edu/signUpQR/signUpQR.js
 var util = require('../../../../utils/util.js')
+let app = getApp()
 Page({
 
   /**
@@ -10,29 +10,30 @@ Page({
     // 组件所需的参数
     nvabarData: {
       showCapsule: 1, //是否显示左上角图标   1表示显示    0表示不显示
-      title: 'e住行', //导航栏 中间的标题
+      title: '学生报名二维码', //导航栏 中间的标题
       goHome: 1
     },
     // 此页面 页面内容距最顶部的距离
     height: app.globalData.height * 2 + 20,
-    listInfo: '',//数据
-  },
-  
-  //查看订单详情
-  lookOrder:function(e){
-    wx.navigateTo({
-      url: '/pages/team/edu/orderInfo/orderInfo?examId=' + e.currentTarget.dataset.id
-    })
+    qr: '/pages/image/act4.jpg',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(options.examId){
+      this.setData({
+        examId: options.examId
+      })
+    }
     this.init()
   },
 
-  //初始化教育列表界面
+  onShow: function (e) {
+  },
+
+  // 页面初始化数据
   init: function () {
     let that = this
     wx.showLoading({
@@ -40,9 +41,9 @@ Page({
       mask: true
     })
     wx.request({
-      url: app.globalData.rootApi + '/zxkj/examOrder/getExamOrderList',
+      url: app.globalData.rootApi + '/zxkj/exam/getExamLinkGroup',
       data: {
-        openId: wx.getStorageSync('openid')
+        examId: that.data.examId,
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -52,42 +53,35 @@ Page({
       Type: 'json',
       success: function (res) {
         wx.hideLoading()
-        console.log('---', res.data)
         if (res.data.code == 200) {
-          let listInfo = res.data.data
-
-          listInfo.examStartDate = util.formatDate(new Date(listInfo.examStartDate))
-          listInfo.examEndDate = util.formatDate(new Date(listInfo.examEndDate))
-
+          let qr = 'https://zxkj.webinn.online/zxkj/' + res.data.data.qr
           that.setData({
-            listInfo: listInfo
+            qr: qr
+          })
+        } else if(res.data.code == -1){
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none',
+            duration: 2000
           })
         } else {
           wx.showToast({
             title: '服务器错误',
-            duration: 2000,
-            icon: "none"
+            icon: 'none',
+            duration: 2000
           })
         }
       },
       fail: function (res) {
-        console.log(res)
+        wx.hideLoading()
       }
     })
   },
-
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
 
   },
 

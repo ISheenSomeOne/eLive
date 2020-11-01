@@ -1,0 +1,7 @@
+<!--pages/errorPage/errorPage.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding-top:1rpx'>
+<view class="cont">{{errorCont}}</view>
+<view class="toHome" bindtap="toHome">去首页看看</view>
+</view>

@@ -1,0 +1,27 @@
+/* pages/errorPage/errorPage.wxss */
+.cont{
+  width: 600rpx;
+  padding: 80rpx 20rpx;
+  background-color: rgb(252, 252, 252);
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 50rpx;
+  border: 10rpx #eee solid;
+  color: #333;
+  margin: 150rpx auto 0 auto;
+}
+
+.toHome{
+  position: fixed;
+  bottom: 50rpx;
+  left: 75rpx;
+  height: 80rpx;
+  width: 600rpx;
+  line-height: 80rpx;
+  border-radius: 50rpx;
+  background: linear-gradient(to right, rgb(240, 109, 0), rgb(250, 139, 0));
+  color: #fff;
+  text-align: center;
+  letter-spacing: 2rpx;
+  font-size: 32rpx;
+}

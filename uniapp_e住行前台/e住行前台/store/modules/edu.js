@@ -3,6 +3,7 @@ const state = {
 	createExamData: '', //创建考试表单
 	unifiedPaymentLink: '', //【统一支付】页面链接
 	qr: '', //学生报名二维码图片
+	payQR: '', //统一支付二维码
 	paymentInfo: '', //统一支付页面信息
 	eduList: '', //教育列表
 	eduListPage: 1, //教育列表下次请求页码
@@ -103,7 +104,8 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					state.qr = 'https://zxkj.webinn.online/zxkj' + res.data.data.qr
+					state.qr = 'https://zxkj.webinn.online/zxkj/' + res.data.data.qr
+					state.payQR = 'https://zxkj.webinn.online/zxkj/' + res.data.data.payQR
 					// uni.navigateTo({
 					// 	url: 'createSuccess?examId='+res.data.data
 					// });
@@ -401,7 +403,7 @@ const mutations = {
 	//自动分配
 	req_autoDistribution(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/autoDistribution',
+			url: '/api/zxkj/examOrder/autoDistribution',
 			data: {
 				'examId': val
 			},
@@ -410,7 +412,12 @@ const mutations = {
 			},
 			success: (res) => {
 				if (res.data.code == 200) {
-					let data = res.data.data
+					// let data = res.data.data
+					uni.showModal({
+						title: '提示',
+						content: '自动分配成功',
+						showCancel: false
+					})
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -970,7 +977,7 @@ const mutations = {
 
 	//设置为false
 	setNeedNavigateBack(state) {
-		state.setNeedNavigateBack = false
+		state.navigateBack = false
 	},
 }
 const actions = {

@@ -1,0 +1,5 @@
+<!--pages/team/edu/signUpQR/signUpQR.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+<view style='margin-top: {{height}}px;padding-top:1rpx;'>
+<image class="qr" src="{{qr}}" mode="widthFix" show-menu-by-longpress="true"></image>
+</view>
