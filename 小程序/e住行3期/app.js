@@ -216,8 +216,8 @@
         iv: '',
         encryptedData: '',
         // rootApi: 'http://192.168.2.135:9955',//彭兴华测试环境
-        rootApi: 'http://zxkj.ngrok2.xiaomiqiu.cn',//测试环境
-        // rootApi:'https://zxkj.webinn.online',//正式环境
+        // rootApi: 'http://zxkj.ngrok2.xiaomiqiu.cn',//测试环境
+        rootApi:'https://zxkj.webinn.online',//正式环境
         imgApi: 'https://zxkj.webinn.online/zxkj/imgs/' //'http://webinn.online:9955/zxkj/img/'
       }
 });
