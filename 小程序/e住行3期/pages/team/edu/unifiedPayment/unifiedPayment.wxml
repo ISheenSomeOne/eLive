@@ -1,0 +1,52 @@
+<!--pages/team/edu/unifiedPayment/unifiedPayment.wxml-->
+<navbar navbar-data='{{nvabarData}}'></navbar>
+
+<view style='margin-top: {{height}}px;padding-top: 1px;margin-bottom: 120rpx'>
+	<!-- 考试信息 -->
+	<view class="infoBox">
+		<text class="infoTitle">考试信息</text>
+		<view class="infoItem">
+			<view class="itemLeft">名称</view>
+			<view class="itemRight">{{examInfo.examName}}</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">时间</view>
+			<view class="itemRight">{{examInfo.examStartDate}} 至 {{examInfo.examEndDate}}</view>
+		</view>
+		<view class="infoItem" wx:if="{{examInfo.peopleNum}}">
+			<view class="itemLeft">人数</view>
+			<view class="itemRight">{{examInfo.peopleNum}}</view>
+		</view>
+	</view>
+
+	<!-- 行程信息 -->
+	<view class="infoBox">
+		<text class="infoTitle">行程信息</text>
+		<view class="infoItem">
+			<view class="itemLeft">入住时间</view>
+			<view class="itemRight">{{examInfo.checkinDate}}</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">离店时间</view>
+			<view class="itemRight">{{examInfo.checkoutDate}}</view>
+		</view>
+		<view class="infoItem" wx:if="{{examInfo.remarks}}">
+			<view class="itemLeft">备注</view>
+			<view class="itemRight">{{examInfo.remarks}}</view>
+		</view>
+	</view>
+
+	<!-- 支付信息 -->
+	<view class="infoBox">
+		<text class="infoTitle">支付信息</text>
+		<view class="infoItem">
+			<view class="itemLeft">订单号</view>
+			<view class="itemRight">{{examInfo.num}}</view>
+		</view>
+		<view class="infoItem" style="line-height: 100rpx;">
+			<view class="itemLeft">总金额</view>
+			<view class="itemRight fee">￥{{examInfo.allFee}}</view>
+		</view>
+	</view>
+		<button class="confirm" type="primary" bindtap="pay">支付</button>
+</view>

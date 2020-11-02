@@ -1,5 +1,4 @@
 // pages/doneOrder/doneOrder.js
-// pages/staying/staying.js
 let app = getApp();
 var util = require('../../utils/util.js')
 Page({

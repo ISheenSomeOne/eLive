@@ -1,0 +1,55 @@
+/* pages/team/edu/unifiedPayment/unifiedPayment.wxss */
+.infoBox {
+  width: 650rpx;
+  margin: 20rpx auto;
+  font-size: 28rpx;
+  padding: 10rpx;
+}
+
+.infoTitle{
+  background-color: #1485ee;
+  color: #fff;
+  font-weight: bold;
+  padding: 4rpx 10rpx;
+  border-radius: 4rpx;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-bottom: 1rpx solid rgb(248, 248, 248);
+}
+
+.itemLeft {
+  font-weight: bold;
+  height: 100%;
+  width: 140rpx;
+}
+
+.itemRight {
+  width: 500rpx;
+}
+.bgBlue{
+  background-color: #f5f5f5;
+  color: #333;
+  border-radius: 6rpx;
+  line-height: 80rpx !important;
+}
+.itemInput{
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.confirm{
+  z-index: 100;
+  position: fixed;
+  bottom: 20rpx;
+  left: 50rpx;
+  width: 650rpx;
+}
+.fee{
+  font-size: 44rpx;
+  color: #f06c00;
+  font-weight: bold;
+}

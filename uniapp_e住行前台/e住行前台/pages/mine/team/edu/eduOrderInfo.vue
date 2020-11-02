@@ -125,8 +125,8 @@ export default {
 			examId: '',
 			options: [
 				{
-					icon: 'trash',
-					text: '取消'
+					icon: 'weixin',
+					text: '链接'
 				}
 			],
 			buttonGroup: [
@@ -157,11 +157,15 @@ export default {
 	},
 	methods: {
 		cancel(e) {
-			uni.showToast({
-				title: '功能开发中',
-				duration: 2000,
-				icon: 'none'
-			});
+			let that = this
+				uni.navigateTo({
+					url: '/pages/mine/team/edu/createSuccess?examId='+that.examId+ '&payWay='+that.$store.state.edu.eduOrderInfo.payWay
+				});
+			// uni.showToast({
+			// 	title: '功能开发中',
+			// 	duration: 2000,
+			// 	icon: 'none'
+			// });
 		},
 		buttonClick(e) {
 			//修改

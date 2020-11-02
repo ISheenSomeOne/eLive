@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/start/start",
+    "pages/team/edu/unifiedPayment/unifiedPayment",
+    "pages/errorPage/errorPage",
     "pages/team/edu/signUp/signUp",
     "pages/team/edu/orderList/orderList",
     "pages/team/edu/orderInfo/orderInfo",
@@ -58,7 +60,8 @@
     "pages/exchange/exchange",
     "pages/help/help",
     "pages/myHotel/myHotel",
-    "pages/setting/setting"
+    "pages/setting/setting",
+    "pages/team/edu/signUpQR/signUpQR"
   ],
   "tabBar": {
     "selectedColor": "#f06c00",

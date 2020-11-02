@@ -9,8 +9,9 @@ Page({
   data: {
     // 组件所需的参数
     nvabarData: {
-      showCapsule: 0, //是否显示左上角图标   1表示显示    0表示不显示
+      showCapsule: 1, //是否显示左上角图标   1表示显示    0表示不显示
       title: 'e住行', //导航栏 中间的标题
+      goHome: 1
     },
     // 此页面 页面内容距最顶部的距离
     height: app.globalData.height * 2 + 20,
@@ -121,11 +122,9 @@ Page({
           })
           that.getUserInfo()
         } else if(res.data.code == -1){
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none',
-            duration: 2000
-          })
+            wx.navigateTo({
+              url: '/pages/errorPage/errorPage?errorCont='+ res.data.msg,
+            })
         } else if (res.data.code == 202) {
           //已支付，跳转到订单
           wx.navigateTo({
