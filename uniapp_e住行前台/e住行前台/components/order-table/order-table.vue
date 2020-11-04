@@ -36,7 +36,7 @@
 				<view class="table-cont-item">{{ item.numbering }}</view>
 				<view class="table-cont-item">{{ item.carNumber }}</view>
 				<view class="table-cont-item">{{ item.driver }}</view>
-				<view @click.stop="toUserList(examId,item.carId)" class="linkClass table-cont-item">{{ item.peopleNum + '/' + item.carCapacity }}</view>
+				<view @click.stop="toUserList(examId, item.carId)" class="linkClass table-cont-item">{{ item.peopleNum + '/' + item.carCapacity }}</view>
 			</view>
 		</block>
 		<!-- eduDistributionItem -->
@@ -64,13 +64,24 @@
 				</view>
 			</block>
 		</checkbox-group>
+		<!-- 反馈列表的用户列表 -->
+		<block v-if="listType == 'eduFeedbackList'" v-for="(item, index) in tableList" :key="index">
+			<view class="table-list-item1" @click="toUserInfo(item.memberId)">
+				<view class="table-cont-item short">{{ item.memberName }}</view>
+				<view class="table-cont-item short">{{ item.sex ? '男' : '女' }}</view>
+				<view class="table-cont-item short">{{ item.car ? item.car : '--' }}</view>
+				<view class="table-cont-item">{{ item.startingName }}</view>
+				<view class="table-cont-item long">{{ (item.hotelName ? item.hotelName : '--') + '-' + (item.roomName ? item.roomName : '--') }}</view>
+				<view class="table-cont-item">{{ item.examSite }}</view>
+			</view>
+		</block>
 	</view>
 </template>
 
 <script>
 export default {
 	name: 'OrderTable',
-	props: ['tableList', 'titleList', 'listType', 'examId', 'addType','reqId'],
+	props: ['tableList', 'titleList', 'listType', 'examId', 'addType', 'reqId'],
 	data() {
 		return {
 			// orderList: [{
@@ -113,10 +124,10 @@ export default {
 				url: '/pages/mine/team/edu/carInfo?carId=' + carId
 			});
 		},
-		toUserList(examId,carId) {
-			console.log(examId)
+		toUserList(examId, carId) {
+			console.log(examId);
 			uni.navigateTo({
-				url: '/pages/mine/team/edu/eduUserList?examId='+ examId +'&carId=' + carId
+				url: '/pages/mine/team/edu/eduUserList?examId=' + examId + '&carId=' + carId
 			});
 		},
 		toUserInfo(memberId) {
@@ -140,7 +151,7 @@ export default {
 			});
 		},
 		eduAddUserListCheckboxChange(e) {
-			let that = this
+			let that = this;
 			let tableList = that.tableList,
 				values = e.detail.value;
 			for (let i = 0, lenI = tableList.length; i < lenI; ++i) {
@@ -151,7 +162,7 @@ export default {
 					that.$set(item, 'checked', false);
 				}
 			}
-			this.$emit('getNewList',that.tableList)
+			this.$emit('getNewList', that.tableList);
 		}
 	}
 };

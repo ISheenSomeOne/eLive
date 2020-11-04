@@ -69,7 +69,9 @@
 				</swiper-item>
 			</swiper>
 			<view class="buttonBoxAdd" v-show="!showMenu1" @click="openChooseSend">发送提醒</view>
-			<view class="bottomMenu" v-show="showMenu1"><uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @buttonClick="buttonClick" /></view>
+			<view class="bottomMenu" v-show="showMenu1">
+				<uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @click="feedback" @buttonClick="buttonClick" />
+			</view>
 		</view>
 	</view>
 </template>
@@ -93,7 +95,12 @@ export default {
 					color: '#fff'
 				}
 			],
-			options: [],
+			options: [
+				{
+					icon: 'loop',
+					text: '反馈'
+				}
+			],
 			tabIndex: 0, //选中标签栏的序列
 			contentList: ['待入住', '入住中', '全部', '创建订单'],
 			titleList: [{ cont: '编号', width: 'normal' }, { cont: '车牌号', width: 'normal' }, { cont: '司机', width: 'normal' }, { cont: '人数/容量', width: 'normal' }],
@@ -151,16 +158,18 @@ export default {
 		},
 		eduDistributionInfo() {
 			return this.$store.state.edu.eduDistributionInfo;
+		},
+		needRefresh() {
+			return this.$store.state.edu.needRefresh;
 		}
 	},
 	watch: {
 		needRefresh(newData, oldData) {
 			let that = this;
 			if (newData) {
-				that.nowOrigin = 0;
-				that.nowPayWay = 0;
-				that.form = {};
-			this.$store.commit('setNeedRefresh');
+				let val = { examId: that.examId, type: that.tabIndex };
+				that.$store.commit('req_getEduDistribution', val);
+				this.$store.commit('setNeedRefresh');
 			}
 		},
 		needResetEduDistributionHeight(newData, oldData) {
@@ -202,6 +211,20 @@ export default {
 			if (e.index == 1) {
 				this.openChooseSend();
 			}
+		},
+		//点击反馈
+		feedback(e) {
+			let that = this;
+			uni.navigateTo({
+			    url:'eduRemindList?examId=' + that.examId,
+			    success: res => {},fail: () => {},complete: (res) => {console.log(res)}
+			})
+			// uni.navigateTo({
+			// 	url: 'eduRemindList?examId=' + that.examId,
+			// 	success: res => {},
+			// 	fail: (res) => {},
+			// 	complete: (res) => {console.log(res)}
+			// });
 		},
 		//打开选择群组界面
 		openChooseSend() {

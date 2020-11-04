@@ -129,12 +129,17 @@
 		"style": {
 			"navigationBarTitleText": "选择发送群组"
 		}
+	}, {
+		"path": "pages/mine/team/edu/editSend",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/checkRemind",
+		"style": {}
+	}, {
+		"path": "pages/mine/team/edu/eduRemindList",
+		"style": {}
 	}    ,{
-            "path" : "pages/mine/team/edu/editSend",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/mine/team/edu/checkRemind",
+            "path" : "pages/mine/team/edu/eduFeedbackList",
             "style" : {}
         }
     ],

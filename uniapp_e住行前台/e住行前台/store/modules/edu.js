@@ -28,6 +28,10 @@ const state = {
 	needTravel: false, //需要显示行程
 	eduCarCanAdd: false, //教育车辆可以加人
 	eduUnifiedPaymentQR: '', //教育统一支付二维码
+	eduNeedFeedbackRemindList: '', //需要反馈的提醒列表
+	eduDontNeedFeedbackRemindList: '', //不需要反馈的提醒列表
+	eduReceiveFeedbackRemindMemberList: '', //已反馈的人员名单
+	eduDontReceiveFeedbackRemindMemberList: '', //未反馈的人员名单
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -342,8 +346,10 @@ const mutations = {
 					data.startingList = JSON.parse(data.startingList)
 					data.examStartDate = formatDate(true, data.examStartDate)
 					data.examEndDate = formatDate(true, data.examEndDate)
-					data.checkinDate = formatDate(true, data.checkinDate)
-					data.checkoutDate = formatDate(true, data.checkoutDate)
+					if (data.checkinDate != '') {
+						data.checkinDate = formatDate(true, data.checkinDate)
+						data.checkoutDate = formatDate(true, data.checkoutDate)
+					}
 					data.deadline = formatDate(true, data.deadline) + ' 23:59:59'
 					if (data.state == '交易取消') {
 						data.stateClass = 'bgRed'
@@ -413,6 +419,7 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					// let data = res.data.data
+					state.needRefresh = true
 					uni.showModal({
 						title: '提示',
 						content: '自动分配成功',
@@ -940,7 +947,7 @@ const mutations = {
 	//教育收到提醒确认反馈
 	req_examConfirmRemind(state, val) {
 		common_request({
-			url: '/api/zxkj/exam/subFeedback',
+			url: '/api/zxkj/examRemind/examConfirmRemind',
 			data: {
 				'examRemindId': val
 			},
@@ -957,6 +964,78 @@ const mutations = {
 					setTimeout(() => {
 						this.commit('req_getRemind', val);
 					}, 2000)
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+
+	//查询提醒列表
+	req_getEduRemindList(state, val) {
+		common_request({
+			url: '/api/zxkj/examRemind/getEduRemindList',
+			data: {
+				'examId': val
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					if (data.eduNeedFeedbackRemindList.length > 0) {
+						for (let i = 0; i < data.eduNeedFeedbackRemindList.length; i++) {
+							if(data.eduNeedFeedbackRemindList[i].remindContent.length >40){
+								data.eduNeedFeedbackRemindList[i].remindContent = data.eduNeedFeedbackRemindList[i].remindContent.substring(0,40) + '...'
+							}
+							data.eduNeedFeedbackRemindList[i].createTime = formatDate2(data.eduNeedFeedbackRemindList[i].createTime)
+						}
+						state.eduNeedFeedbackRemindList = data.eduNeedFeedbackRemindList
+					}
+					if (data.eduDontNeedFeedbackRemindList.length > 0) {
+						for (let i = 0; i < data.eduDontNeedFeedbackRemindList.length; i++) {
+							if(data.eduDontNeedFeedbackRemindList[i].remindContent.length >40){
+								data.eduDontNeedFeedbackRemindList[i].remindContent = data.eduDontNeedFeedbackRemindList[i].remindContent.substring(0,40) + '...'
+							}
+							data.eduDontNeedFeedbackRemindList[i].createTime = formatDate2(data.eduDontNeedFeedbackRemindList[i].createTime)
+						}
+						state.eduDontNeedFeedbackRemindList = data.eduDontNeedFeedbackRemindList
+					}
+
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+
+	//查询“需反馈的提醒”的反馈情况
+	req_getEduRemindMemberList(state, val) {
+		common_request({
+			url: '/api/zxkj/examRemind/getEduRemindMemberList',
+			data: {
+				'examId': val.examId,
+				'remindIndex': val.remindIndex
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					console.log(data)
+					state.eduReceiveFeedbackRemindMemberList = data.eduReceiveFeedbackRemindMemberList
+					state.eduDontReceiveFeedbackRemindMemberList = data.eduDontReceiveFeedbackRemindMemberList
+
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -1156,4 +1235,22 @@ function formatDate1(needYear, date) {
 		return year + '年' + month + '月' + day + '日'
 	}
 	return month + '月' + day + '日'
+}
+
+//格式化时间为yyyy-MM-dd hh:mm
+function formatDate2(date) {
+	var d = new Date(date)
+	var month = '' + (d.getMonth() + 1)
+	var day = '' + d.getDate()
+	var year = d.getFullYear()
+	var hour = '' + d.getHours()
+	var min = d.getMinutes()
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+	if (hour.length < 2) hour = '0' + hour;
+	if (min.length < 2) min = '0' + min;
+
+	return [year, month, day].join('-') + ' ' + hour + ':' + min;
+
 }

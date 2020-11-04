@@ -6,7 +6,7 @@
 				<view class="lineLeft">考试名称</view>
 				<view class="lineRight">{{ eduOrderInfo.examName }}</view>
 			</view>
-			<view class="line">
+			<view class="line" v-if="eduOrderInfo.checkinDate">
 				<view class="lineLeft">入离时间</view>
 				<view class="lineRight">{{ eduOrderInfo.checkinDate }} 至 {{ eduOrderInfo.checkoutDate }}</view>
 			</view>

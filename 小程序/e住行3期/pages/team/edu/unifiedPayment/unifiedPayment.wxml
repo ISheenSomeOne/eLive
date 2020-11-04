@@ -10,17 +10,25 @@
 			<view class="itemRight">{{examInfo.examName}}</view>
 		</view>
 		<view class="infoItem">
-			<view class="itemLeft">时间</view>
+			<view class="itemLeft">考试时间</view>
 			<view class="itemRight">{{examInfo.examStartDate}} 至 {{examInfo.examEndDate}}</view>
+		</view>
+		<view class="infoItem">
+			<view class="itemLeft">报名截止</view>
+			<view class="itemRight">{{examInfo.deadline}} 24:00</view>
 		</view>
 		<view class="infoItem" wx:if="{{examInfo.peopleNum}}">
 			<view class="itemLeft">人数</view>
 			<view class="itemRight">{{examInfo.peopleNum}}</view>
 		</view>
+		<view class="infoItem" wx:if="{{examInfo.remarks}}">
+			<view class="itemLeft">备注</view>
+			<view class="itemRight">{{examInfo.remarks}}</view>
+		</view>
 	</view>
 
 	<!-- 行程信息 -->
-	<view class="infoBox">
+	<view class="infoBox" wx:if="{{examInfo.checkinDate}}">
 		<text class="infoTitle">行程信息</text>
 		<view class="infoItem">
 			<view class="itemLeft">入住时间</view>
@@ -29,10 +37,6 @@
 		<view class="infoItem">
 			<view class="itemLeft">离店时间</view>
 			<view class="itemRight">{{examInfo.checkoutDate}}</view>
-		</view>
-		<view class="infoItem" wx:if="{{examInfo.remarks}}">
-			<view class="itemLeft">备注</view>
-			<view class="itemRight">{{examInfo.remarks}}</view>
 		</view>
 	</view>
 

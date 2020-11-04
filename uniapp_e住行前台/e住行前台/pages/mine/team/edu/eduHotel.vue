@@ -15,10 +15,10 @@
 				<view v-if="hasHotel" class="lineRight">{{ eduHotelInfo.nowRoomCount }}</view>
 				<view v-else class="lineRight"><input class="input" type="number" v-model="roomCount" placeholder-class="plaClass" placeholder="请输入房间数量" /></view>
 			</view>
-			<view class="line">
+			<view class="line" style="height: 220rpx;">
 				<view class="lineLeft">链接</view>
 				<view v-show="hasHotel" class="lineRight" style="overflow: auto;text-align: left;">
-					{{ 'https://group.webinn.online/phone/#/pages/mine/team/edu/hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId }}
+					<textarea style="width: 100%;height: 100%;line-height: 50rpx;" disabled type="text" :value="'https://group.webinn.online/phone/#/pages/mine/team/edu/hotelAddRoom?examId=' + examId + '&eduHotelId=' + eduHotelId" />
 				</view>
 			</view>
 		</view>
@@ -169,7 +169,7 @@ export default {
 				let val = { examId: that.examId, hotelId: that.hotelId, roomCount: that.roomCount };
 				that.$store.commit('req_makeAddHotelLink', val);
 			}
-		}
+		},
 	}
 };
 </script>

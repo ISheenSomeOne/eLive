@@ -94,11 +94,16 @@ Page({
         wx.hideLoading()
         if (res.data.code == 200) {
           let data = res.data.data
-          
+
           data.examStartDate = util.formatDate(new Date(data.examStartDate))
           data.examEndDate = util.formatDate(new Date(data.examEndDate))
-          data.checkinDate = util.formatDate(new Date(data.checkinDate))
-          data.checkoutDate = util.formatDate(new Date(data.checkoutDate))
+          data.deadline = util.formatDate(new Date(data.deadline))
+          
+          if(data.checkinDate){
+            data.checkinDate = util.formatDate(new Date(data.checkinDate))
+            data.checkoutDate = util.formatDate(new Date(data.checkoutDate))
+          }
+
           that.setData({
             examInfo: data
           })

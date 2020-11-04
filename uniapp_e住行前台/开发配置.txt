@@ -53,8 +53,9 @@
                 "proxy" : {
                     "/api" : {
                         // "target" : "https://zxkj.webinn.online", //目标接口域名
-                        "target" : "http://zxkj.ngrok2.xiaomiqiu.cn", //目标接口域名
+                        // "target" : "http://zxkj.ngrok2.xiaomiqiu.cn", //目标接口域名
                         // "target" : "http://zxkj.free.vipnps.vip", //目标接口域名
+						"target" : "http://192.168.2.170:9955",
                         "changeOrigin" : true, //是否跨域
                         "secure" : false, // 设置支持https协议的代理
                         "pathRewrite" : {

@@ -55,7 +55,7 @@ export default {
 		needRefresh(newData, oldData) {
 			if (newData) {
 				this.init()
-				this.$store.commit('changeNeedRefresh', val);
+				this.$store.commit('setNeedRefresh');
 			}
 		},
 	},
