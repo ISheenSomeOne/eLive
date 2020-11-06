@@ -1,6 +1,6 @@
 <template>
 	<view class="unifiedPayment">
-		<uni-title type="h1" :title="paymentInfo.examName" align="center"></uni-title>
+		<!-- <uni-title type="h1" :title="paymentInfo.examName" align="center"></uni-title>
 		<uni-title type="h4" :title="paymentInfo.examStartDate + ' —— ' + paymentInfo.examEndDate" align="center"></uni-title>
 		<view class="container999">
 			<view class="line" v-if="paymentInfo.peopleNum">
@@ -25,18 +25,43 @@
 			</view>
 			<view style="margin-top: 20rpx;"><uni-notice-bar :single="true" text="注意:  请在微信长按下方二维码进行支付" /></view>
 			<image style="width: 100%;" :src="eduUnifiedPaymentQR" mode="aspectFit"></image>
-			<!-- <view class="buttonBox" @click="submit">支 付</view> -->
+			<view class="buttonBox" @click="submit">支 付</view>
 			<view v-if="unifiedPaymentPaid" class="buttonBox">已支付</view>
-		</view>
+		</view> -->
+		<button type="default" @click="geta">获取位置</button>
+		<map @tap="goto" style="width: 100%; height: 300px;" scale="16" :markers="covers" :latitude="latitude" :longitude="longitude"></map>
 	</view>
 </template>
 
 <script>
+	import Map from '../../../../js_sdk/ms-openMap/openMap.js'
 export default {
 	data() {
 		return {
-			examId: '',
-			isWX: false //是否微信打开
+			// examId: '',
+			// isWX: false //是否微信打开
+			//102.79002
+			//24.966476
+			longitude: 102.793706,
+			latitude: 24.964393,
+			covers: [
+				{
+					longitude: 102.793706,
+					latitude: 24.964393,
+					iconPath: '../../../../static/icon/dingwei.png',
+					width: 20,
+					height: 20,
+					callout: {
+						//自定义标记点上方的气泡窗口 点击有效
+						content: '车辆地点', //文本
+						color: '#ffffff', //文字颜色
+						fontSize: 14, //文本大小
+						borderRadius: 2, //边框圆角
+						bgColor: '#777', //背景颜色
+						display: 'ALWAYS' //常显
+					}
+				}
+			]
 		};
 	},
 	computed: {
@@ -58,45 +83,45 @@ export default {
 					icon: 'success',
 					title: '订单已支付'
 				});
-				setTimeout(()=>{
+				setTimeout(() => {
 					uni.navigateTo({
 						url: 'createSuccess?examId=' + that.examId
 					});
-				},1000)
+				}, 1000);
 			}
 		}
 	},
 	onLoad(options) {
-		let that = this;
-		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
-			that.examId = options.examId;
-			//初始化页面
-			that.$store.commit('req_getUnifiedPaymentInfo', that.examId);
-		}
-		//判断是否微信扫码打开
-		var ua = navigator.userAgent.toLowerCase();
-		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-			that.isWX = true;
-			// console.log('微信浏览器');
-		} else {
-			that.isWX = false;
-			// console.log('其他浏览器');
-			uni.showModal({
-				title: '提示',
-				content: '请在微信打开',
-				showCancel: false,
-				confirmText: '知道了',
-				success: function(res) {}
-			});
-		}
+		// let that = this;
+		// if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
+		// 	that.examId = options.examId;
+		// 	//初始化页面
+		// 	that.$store.commit('req_getUnifiedPaymentInfo', that.examId);
+		// }
+		// //判断是否微信扫码打开
+		// var ua = navigator.userAgent.toLowerCase();
+		// if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+		// 	that.isWX = true;
+		// 	// console.log('微信浏览器');
+		// } else {
+		// 	that.isWX = false;
+		// 	// console.log('其他浏览器');
+		// 	uni.showModal({
+		// 		title: '提示',
+		// 		content: '请在微信打开',
+		// 		showCancel: false,
+		// 		confirmText: '知道了',
+		// 		success: function(res) {}
+		// 	});
+		// }
 	},
 	onShow() {
-		let that = this
+		let that = this;
 		//删除左上角返回
-		document.querySelector('.uni-page-head-hd').style.display = 'none';
-		
+		// document.querySelector('.uni-page-head-hd').style.display = 'none';
+
 		//判断这个订单是否需要付款
-		that.$store.commit('req_howMuchDoesThisOrderCost', that.examId);
+		// that.$store.commit('req_howMuchDoesThisOrderCost', that.examId);
 	},
 	methods: {
 		submit: function() {
@@ -114,6 +139,31 @@ export default {
 			// 		success: function(res) {}
 			// 	});
 			// }
+		},
+		geta: function() {
+			let that = this;
+
+			uni.getLocation({
+				type: 'wgs84',
+				success: function(res) {
+					if (res.latitude) {
+						that.longitude = res.longitude;
+						that.latitude = res.latitude;
+						that.covers[0].longitude = res.longitude;
+						that.covers[0].latitude = res.latitude;
+					}
+				},
+				complete: function(res) {
+					alert('当前位置的经度：' + res.longitude+'当前位置的纬度：' + res.latitude);
+					console.log(res);
+				}
+			});
+		},
+		goto:function() {
+			let that = this
+			// alert(that.longitude+ ','+that.latitude)
+			console.log(123)
+			Map.openMap(that.latitude, that.longitude, '车辆地点', 'gcj02')
 		}
 	}
 };

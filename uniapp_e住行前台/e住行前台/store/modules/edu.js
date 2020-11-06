@@ -341,12 +341,12 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
-					console.log(data)
+					// console.log(data)
 					data.examSiteList = JSON.parse(data.examSiteList)
 					data.startingList = JSON.parse(data.startingList)
 					data.examStartDate = formatDate(true, data.examStartDate)
 					data.examEndDate = formatDate(true, data.examEndDate)
-					if (data.checkinDate != '') {
+					if (data.checkinDate) {
 						data.checkinDate = formatDate(true, data.checkinDate)
 						data.checkoutDate = formatDate(true, data.checkoutDate)
 					}

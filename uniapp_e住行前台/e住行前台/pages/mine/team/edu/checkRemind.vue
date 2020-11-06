@@ -77,6 +77,17 @@ export default {
 		if (options.examRemindId != '' && options.examRemindId != 'undefined' && options.examRemindId != null) {
 			that.examRemindId = options.examRemindId;
 			that.$store.commit('req_getRemind', that.examRemindId);
+			// uni.getLocation({
+			//     type: 'wgs84',
+			//     success: function (res) {
+			// 		alert('当前位置的经度：' + res.longitude)
+					
+			// 		alert('当前位置的纬度：' + res.latitude)
+			//     },
+			// 	complete: function(res){
+			//         // alert(res);
+			// 	}
+			// });
 		}
 	},
 	mounted() {

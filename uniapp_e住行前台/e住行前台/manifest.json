@@ -52,10 +52,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-                    // "target" : "https://zxkj.webinn.online", //目标接口域名
-                    // "target" : "http://zxkj.ngrok2.xiaomiqiu.cn", //目标接口域名
-                    // "target" : "http://zxkj.free.vipnps.vip", //目标接口域名
-                    "target" : "http://192.168.2.170:9955",
+                    "target" : "https://zxkj.webinn.online", //目标接口域名
                     "changeOrigin" : true, //是否跨域
                     "secure" : false, // 设置支持https协议的代理
                     "pathRewrite" : {
@@ -71,18 +68,27 @@
                         "^/wxPay" : ""
                     }
                 }
-            }
+            },
+            "publicPath" : "./",
+            "https" : true
         },
         "router" : {
-            "mode" : "history"
+            "mode" : "hash",
+            "base" : "./"
         },
         "optimization" : {
             "treeShaking" : {
                 "enable" : true
             }
         },
+        "title" : "e住行后台管理系统",
+        "domain" : "zxkj.webinn.online",
         "sdkConfigs" : {
-            "maps" : {}
+            "maps" : {
+                "qqmap" : {
+                    "key" : "HBHBZ-72K3I-D5PG5-56EZ3-NVEW6-3VB5W"
+                }
+            }
         }
     }
 }
