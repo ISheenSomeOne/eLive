@@ -30,11 +30,13 @@
 		</view> -->
 		<button type="default" @click="geta">获取位置</button>
 		<map @tap="goto" style="width: 100%; height: 300px;" scale="16" :markers="covers" :latitude="latitude" :longitude="longitude"></map>
+		<button type="default" @click="chooseImg">选图片</button>
 	</view>
 </template>
 
 <script>
-	import Map from '../../../../js_sdk/ms-openMap/openMap.js'
+import Map from '../../../../js_sdk/ms-openMap/openMap.js';
+import OpenMap from '@/js_sdk/fx-openMap/openMap.js';
 export default {
 	data() {
 		return {
@@ -144,7 +146,7 @@ export default {
 			let that = this;
 
 			uni.getLocation({
-				type: 'wgs84',
+				type: 'gcj02',
 				success: function(res) {
 					if (res.latitude) {
 						that.longitude = res.longitude;
@@ -154,16 +156,54 @@ export default {
 					}
 				},
 				complete: function(res) {
-					alert('当前位置的经度：' + res.longitude+'当前位置的纬度：' + res.latitude);
+					alert('当前位置的经度：' + res.longitude + '当前位置的纬度：' + res.latitude);
 					console.log(res);
 				}
 			});
 		},
-		goto:function() {
-			let that = this
+		goto: function() {
+			let that = this;
 			// alert(that.longitude+ ','+that.latitude)
-			console.log(123)
-			Map.openMap(that.latitude, that.longitude, '车辆地点', 'gcj02')
+			console.log(123);
+			// Map.openMap(that.latitude, that.longitude, '车辆地点', 'gcj02')
+
+			//打开地图app
+			var options = {
+				origin: {
+					//导航起点坐标和名称,如果不传则起点为当前位置
+					latitude: that.latitude + 0.01,
+					longitude: that.longitude + 0.01,
+					name: '起点名称'
+				},
+				destination: {
+					//导航终点点坐标和名称
+					latitude: that.latitude,
+					longitude: that.longitude,
+					name: '终点名称'
+				},
+				mode: 'drive' //导航方式 公交：bus驾车：drive（默认）,步行：walk,骑行：bike
+			};
+			//只有有终点(起点默认为当前位置)
+			var options = {
+				destination: {
+					//导航终点点坐标和名称
+					latitude: that.latitude,
+					longitude: that.longitude,
+					name: '终点名称'
+				},
+				mode: 'drive' //导航方式 公交：bus驾车：drive（默认）,步行：walk,骑行：bike
+			};
+			OpenMap.openMap(options, 'gcj02');
+		},
+		chooseImg: function() {
+			uni.chooseImage({
+			    count: 6, //默认9
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    sourceType: ['album'], //从相册选择
+			    success: function (res) {
+			        console.log(JSON.stringify(res.tempFilePaths));
+			    }
+			});
 		}
 	}
 };

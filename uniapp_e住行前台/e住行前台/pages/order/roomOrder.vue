@@ -1,6 +1,6 @@
 <template>
 	<view class="roomOrder">
-		<order-table :orderList="orderList"></order-table>
+		<order-table :listType="'order'" :titleList="titleList" :tableList="orderList"></order-table>
 		<button v-show="orderPageCanReq" class="more-btn" @click="getMore" size="mini" type="default">查看更多···</button>
 	</view>
 </template>
@@ -10,7 +10,14 @@
 	export default {
 		data() {
 			return {
-				
+				titleList: [
+					{ cont: '来源', width: 'short' },
+					{ cont: '姓名', width: 'normal' },
+					{ cont: '房间信息', width: 'long' },
+					{ cont: '入住', width: 'short' },
+					{ cont: '离店', width: 'short' },
+					{ cont: '房价', width: 'short' }
+				],
 			};
 		},
 		onLoad() {

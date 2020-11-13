@@ -1,5 +1,6 @@
 <template>
 	<view style="height: 100%;">
+		<button class="signIn" @click="signIn" type="primary">签到</button>
 		<view class="uni-tab-bar">
 			<scroll-view scroll-x="true" class="uni-swiper-tab">
 				<view class="swiper-list-box">
@@ -103,7 +104,7 @@ export default {
 			],
 			tabIndex: 0, //选中标签栏的序列
 			contentList: ['待入住', '入住中', '全部', '创建订单'],
-			titleList: [{ cont: '编号', width: 'normal' }, { cont: '车牌号', width: 'normal' }, { cont: '司机', width: 'normal' }, { cont: '人数/容量', width: 'normal' }],
+			titleList: [{ cont: '编号', width: 'normal' }, { cont: '车牌号', width: 'normal' }, { cont: '司机', width: 'normal' }, { cont: '实载/核载', width: 'normal' }],
 			orderDistributionList: [
 				{
 					numbering: '1号车',
@@ -200,6 +201,13 @@ export default {
 		that.$store.commit('req_getEduDistribution', val);
 	},
 	methods: {
+		signIn(){
+			let that = this
+			uni.navigateTo({
+			    url:'eduSignInList?examId=' + that.examId
+			})
+			// console.log(123)
+		},
 		//下方按钮事件
 		buttonClick(e) {
 			//点击自动分配
@@ -414,6 +422,18 @@ export default {
 // 	border-top-right-radius: 12px;
 // 	padding-bottom: 10px !important;
 // }
+.signIn{
+	z-index: 9999;
+	position: fixed;
+	border-radius: 50%;
+	height: 70px;
+	line-height: 70px;
+	width: 70px;
+	bottom: 70px;
+	left: 20px;
+	// border: #fff solid 2px;
+	box-shadow: #6b6b6b 0px 1px 4px;
+}
 .addItem {
 	height: 40px;
 	line-height: 40px;

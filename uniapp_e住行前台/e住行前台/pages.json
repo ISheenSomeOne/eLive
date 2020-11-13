@@ -142,6 +142,30 @@
             "path" : "pages/mine/team/edu/eduFeedbackList",
             "style" : {}
         }
+        ,{
+            "path" : "pages/mine/team/edu/driverPosition",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/eduSignIn",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/eduSignInList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/eduSignInCreate",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/eduSignInCarInfo",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/mine/team/edu/eduSignInInfo",
+            "style" : {}
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",

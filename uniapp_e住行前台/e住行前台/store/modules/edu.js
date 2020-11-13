@@ -32,6 +32,11 @@ const state = {
 	eduDontNeedFeedbackRemindList: '', //不需要反馈的提醒列表
 	eduReceiveFeedbackRemindMemberList: '', //已反馈的人员名单
 	eduDontReceiveFeedbackRemindMemberList: '', //未反馈的人员名单
+	signInList: '',//签到列表
+	membersWhoHaveSignedIn: '', //签到人员名单
+	unsignedMembers: '', //未签到的会员
+	driverSeeInfo: '', //司机查看信息
+	driverInfo: '', //司机信息
 }
 const mutations = {
 	//创建考试表单数据改变
@@ -990,8 +995,9 @@ const mutations = {
 					let data = res.data.data
 					if (data.eduNeedFeedbackRemindList.length > 0) {
 						for (let i = 0; i < data.eduNeedFeedbackRemindList.length; i++) {
-							if(data.eduNeedFeedbackRemindList[i].remindContent.length >40){
-								data.eduNeedFeedbackRemindList[i].remindContent = data.eduNeedFeedbackRemindList[i].remindContent.substring(0,40) + '...'
+							if (data.eduNeedFeedbackRemindList[i].remindContent.length > 40) {
+								data.eduNeedFeedbackRemindList[i].remindContent = data.eduNeedFeedbackRemindList[i].remindContent.substring(
+									0, 40) + '...'
 							}
 							data.eduNeedFeedbackRemindList[i].createTime = formatDate2(data.eduNeedFeedbackRemindList[i].createTime)
 						}
@@ -999,8 +1005,9 @@ const mutations = {
 					}
 					if (data.eduDontNeedFeedbackRemindList.length > 0) {
 						for (let i = 0; i < data.eduDontNeedFeedbackRemindList.length; i++) {
-							if(data.eduDontNeedFeedbackRemindList[i].remindContent.length >40){
-								data.eduDontNeedFeedbackRemindList[i].remindContent = data.eduDontNeedFeedbackRemindList[i].remindContent.substring(0,40) + '...'
+							if (data.eduDontNeedFeedbackRemindList[i].remindContent.length > 40) {
+								data.eduDontNeedFeedbackRemindList[i].remindContent = data.eduDontNeedFeedbackRemindList[i].remindContent.substring(
+									0, 40) + '...'
 							}
 							data.eduDontNeedFeedbackRemindList[i].createTime = formatDate2(data.eduDontNeedFeedbackRemindList[i].createTime)
 						}
@@ -1036,6 +1043,191 @@ const mutations = {
 					state.eduReceiveFeedbackRemindMemberList = data.eduReceiveFeedbackRemindMemberList
 					state.eduDontReceiveFeedbackRemindMemberList = data.eduDontReceiveFeedbackRemindMemberList
 
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+
+	// =====================================================================================================================签到
+	//创建签到
+	req_addNewCheckin(state, val) {
+		common_request({
+			url: '/api/zxkj/examCheckin/addNewCheckin',
+			data: {
+				'examId': val.examId,
+				'targetLocation': val.targetLocation,
+				'startingPoint': val.startingPoint
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					state.navigateBack = true
+
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取教育签到列表
+	req_getExamCheckinList(state, val) {
+		common_request({
+			url: '/api/zxkj/examCheckin/getExamCheckinList',
+			data: {
+				'examId': val.examId
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					for(let i = 0; i < data.length; i++){
+						data[i].careateTime = formatDate2(data[i].careateTime)
+					}
+					state.signInList = data
+					
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取教育签到车辆信息
+	req_getExamCheckinCarInfo(state, val) {
+		common_request({
+			url: '/api/zxkj/examCheckin/getExamCheckinCarInfo',
+			data: {
+				'examId': val.examId,
+				'checkinNumber': val.checkinNumber
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.signInCarList = data
+					
+				} else if(res.data.code == -1){
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false
+					})
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取车辆路径的会员签到信息
+	req_getExamCheckinMemberInfo(state, val) {
+		common_request({
+			url: '/api/zxkj/examCheckin/getExamCheckinMemberInfo',
+			data: {
+				'examPathId': val,
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					let data = res.data.data
+					state.membersWhoHaveSignedIn = data.membersWhoHaveSignedIn
+					state.unsignedMembers = data.unsignedMembers
+					
+				} else if(res.data.code == -1){
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false
+					})
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//获取司机查看信息
+	req_getDriverSeeInfo(state, val) {
+		common_request({
+			url: '/api/zxkj/examCheckin/getDriverSeeInfo',
+			data: {
+				'examPathId': val,
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {	
+					let data = res.data.data
+					state.driverSeeInfo = data
+				} else if(res.data.code == -1){
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false
+					})
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+	
+	//学生查看司机位置信息
+	req_studentGetsDriverInfo(state, val) {
+		common_request({
+			url: '/api/zxkj/examCheckin/studentGetsDriverLocationInformation',
+			data: {
+				'examCheckinId': val,
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {	
+					let data = res.data.data
+					state.driverInfo = data
+				} else if(res.data.code == -1){
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false
+					})
 				} else {
 					uni.showModal({
 						title: '提示',

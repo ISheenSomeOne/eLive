@@ -143,7 +143,7 @@ export default {
 		// console.log(this.$store.state.home.roomList)
 	},
 	onShow() {
-		this.$store.dispatch('initRoomStatus')
+		this.$store.dispatch('initRoomStatus');
 	},
 	computed: {
 		roomList() {
@@ -195,7 +195,7 @@ export default {
 		},
 		current() {
 			return this.$store.state.home.current;
-		},
+		}
 	},
 	watch: {
 		changeFlag(newData, oldData) {
@@ -205,7 +205,7 @@ export default {
 				that.$refs['showLeft'].open();
 			}
 			this.$store.commit('setChangeFlag');
-		},
+		}
 	},
 	methods: {
 		createOrder: function() {
@@ -246,7 +246,7 @@ export default {
 		},
 		openContinue: function() {
 			let state = this.$store.state.home.nowRoom.state;
-			let sanke = this.$store.state.home.nowRoom.haveYouBeenAssignedARoom
+			let sanke = this.$store.state.home.nowRoom.haveYouBeenAssignedARoom;
 			//只有在住可以续房
 			if (state == 'zaizhu' || (state == 'kongxian' && sanke == false)) {
 				this.closeRoomMenu('showLeft');
@@ -268,7 +268,7 @@ export default {
 		},
 		openChange: function() {
 			let state = this.$store.state.home.nowRoom.state;
-			let sanke = this.$store.state.home.nowRoom.haveYouBeenAssignedARoom
+			let sanke = this.$store.state.home.nowRoom.haveYouBeenAssignedARoom;
 			//只有在住可以换房
 			if (state == 'zaizhu' || (state == 'kongxian' && sanke == false)) {
 				this.closeRoomMenu('showLeft');
@@ -304,7 +304,7 @@ export default {
 			}
 		},
 		openRoom: function() {
-			let that = this
+			let that = this;
 			uni.showModal({
 				title: '提示',
 				content: '确定开门吗？',
@@ -328,7 +328,17 @@ export default {
 		},
 		//点击退房
 		checkout: function() {
-			this.$store.dispatch('checkout');
+			let that = this;
+			uni.showModal({
+				title: '提示',
+				content: '确定退房吗',
+				success: function(res) {
+					if (res.confirm) {
+						that.$store.dispatch('checkout');
+					} else if (res.cancel) {
+					}
+				}
+			});
 		}
 	},
 	onNavigationBarButtonTap(e) {
@@ -441,9 +451,9 @@ export default {
 	margin-top: 20px;
 }
 
-.tongYi{
+.tongYi {
 	transition: all 0.1s;
-	background: linear-gradient(to right, #999 , #555);
+	background: linear-gradient(to right, #999, #555);
 	color: #fff;
 }
 
