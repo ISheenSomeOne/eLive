@@ -32,7 +32,7 @@ const state = {
 	eduDontNeedFeedbackRemindList: '', //不需要反馈的提醒列表
 	eduReceiveFeedbackRemindMemberList: '', //已反馈的人员名单
 	eduDontReceiveFeedbackRemindMemberList: '', //未反馈的人员名单
-	signInList: '',//签到列表
+	signInList: '', //签到列表
 	membersWhoHaveSignedIn: '', //签到人员名单
 	unsignedMembers: '', //未签到的会员
 	driverSeeInfo: '', //司机查看信息
@@ -1081,13 +1081,13 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取教育签到列表
 	req_getExamCheckinList(state, val) {
 		common_request({
 			url: '/api/zxkj/examCheckin/getExamCheckinList',
 			data: {
-				'examId': val.examId
+				'examId': val
 			},
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
@@ -1095,11 +1095,12 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
-					for(let i = 0; i < data.length; i++){
-						data[i].careateTime = formatDate2(data[i].careateTime)
+					for (let i = 0; i < data.length; i++) {
+						data[i].createTime = formatDate2(data[i].createTime)
 					}
 					state.signInList = data
-					
+					console.log(data)
+
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -1110,11 +1111,11 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取教育签到车辆信息
 	req_getExamCheckinCarInfo(state, val) {
 		common_request({
-			url: '/api/zxkj/examCheckin/getExamCheckinCarInfo',
+			url: '/api/zxkj/examPath/getExamCheckinCarInfo',
 			data: {
 				'examId': val.examId,
 				'checkinNumber': val.checkinNumber
@@ -1125,9 +1126,10 @@ const mutations = {
 			success: (res) => {
 				if (res.data.code == 200) {
 					let data = res.data.data
+
 					state.signInCarList = data
-					
-				} else if(res.data.code == -1){
+
+				} else if (res.data.code == -1) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,
@@ -1143,7 +1145,7 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取车辆路径的会员签到信息
 	req_getExamCheckinMemberInfo(state, val) {
 		common_request({
@@ -1159,8 +1161,8 @@ const mutations = {
 					let data = res.data.data
 					state.membersWhoHaveSignedIn = data.membersWhoHaveSignedIn
 					state.unsignedMembers = data.unsignedMembers
-					
-				} else if(res.data.code == -1){
+
+				} else if (res.data.code == -1) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,
@@ -1176,11 +1178,11 @@ const mutations = {
 			},
 		})
 	},
-	
+
 	//获取司机查看信息
 	req_getDriverSeeInfo(state, val) {
 		common_request({
-			url: '/api/zxkj/examCheckin/getDriverSeeInfo',
+			url: '/api/zxkj/examPath/getDriverSeeInfo',
 			data: {
 				'examPathId': val,
 			},
@@ -1188,10 +1190,25 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				if (res.data.code == 200) {	
+				if (res.data.code == 200) {
 					let data = res.data.data
+					data.targetLocationInformation = JSON.parse(data.targetLocationInformation)
+					data.startingPointInformation = JSON.parse(data.startingPointInformation)
+					for (let i = 0; i < data.targetLocationInformation.length; i++) {
+						data.targetLocationInformation[i] = JSON.parse(data.targetLocationInformation[i])
+						if(undefined == data.targetLocationInformation[i].isArrived){
+							data.targetLocationInformation[i].isArrived = false
+						}
+					}
+					for (let i = 0; i < data.startingPointInformation.length; i++) {
+						data.startingPointInformation[i] = JSON.parse(data.startingPointInformation[i])
+						if(undefined == data.startingPointInformation[i].isArrived){
+							data.startingPointInformation[i].isArrived = false
+						}
+					}
+					console.log(data)
 					state.driverSeeInfo = data
-				} else if(res.data.code == -1){
+				} else if (res.data.code == -1) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,
@@ -1207,7 +1224,120 @@ const mutations = {
 			},
 		})
 	},
-	
+
+	//司机上传定位和图片等信息
+	req_driverPositioning(state, val) {
+		if (val.uploadList.length > 0) {
+			uni.showLoading({
+				mask: true,
+				title: "图片上传中..."
+			});
+			let imgList = []
+			for (let i = 0; i < val.uploadList.length; i++) {
+				uni.uploadFile({
+					url: '/api/zxkj/examPath/imageUpload',
+					fileType: 'image',
+					filePath: val.uploadList[i],
+					name: 'file',
+					success: uploadFileRes => {
+						let res = JSON.parse(uploadFileRes.data)
+						console.log(res)
+						if (res.code == 200) {
+							imgList.push(res.data)
+							console.log(i + '----' + val.uploadList.length)
+							if (imgList.length == val.uploadList.length) {
+								common_request({
+									url: '/api/zxkj/examPath/driverPositioning',
+									data: {
+										'examPathId': val.examPathId,
+										'name': val.name,
+										'longitude': val.longitude,
+										'latitude': val.latitude,
+										'referencePictures': imgList
+									},
+									header: {
+										'content-type': 'application/x-www-form-urlencoded'
+									},
+									success: (res) => {
+										if (res.data.code == 200) {
+											uni.showToast({
+												title: '通知成功',
+												duration: 2000,
+												icon: 'success'
+											});
+											setTimeout(() => {
+												state.needRefresh = true
+											}, 2000)
+
+										} else if (res.data.code == -1) {
+											uni.showModal({
+												title: '提示',
+												content: res.data.msg,
+												showCancel: false
+											})
+										} else {
+											uni.showModal({
+												title: '提示',
+												content: '服务器错误',
+												showCancel: false
+											})
+										}
+									},
+								})
+							}
+						} else {
+							uni.showModal({
+								title: '提示',
+								content: '服务器错误',
+								showCancel: false
+							})
+						}
+					}
+				});
+			}
+			uni.hideLoading()
+		} else {
+			common_request({
+				url: '/api/zxkj/examPath/driverPositioning',
+				data: {
+					'examPathId': val.examPathId,
+					'name': val.name,
+					'longitude': val.longitude,
+					'latitude': val.latitude,
+					'referencePictures': ''
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: (res) => {
+					if (res.data.code == 200) {
+						uni.showToast({
+							title: '通知成功',
+							duration: 2000,
+							icon: 'success'
+						});
+						setTimeout(() => {
+							state.needRefresh = true
+						}, 2000)
+					} else if (res.data.code == -1) {
+						uni.showModal({
+							title: '提示',
+							content: res.data.msg,
+							showCancel: false
+						})
+					} else {
+						uni.showModal({
+							title: '提示',
+							content: '服务器错误',
+							showCancel: false
+						})
+					}
+				},
+			})
+		}
+
+	},
+
 	//学生查看司机位置信息
 	req_studentGetsDriverInfo(state, val) {
 		common_request({
@@ -1219,10 +1349,59 @@ const mutations = {
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			success: (res) => {
-				if (res.data.code == 200) {	
+				if (res.data.code == 200) {
 					let data = res.data.data
+					console.log(data.driverLocationInformation)
+					if(data.driverLocationInformation != ''){
+						data.driverLocationInformation = JSON.parse(data.driverLocationInformation)
+					}
+					if(data.referencePictures != ''){
+						data.referencePictures = data.referencePictures.split(',')
+						for(let i=0;i<data.referencePictures.length;i++){
+							data.referencePictures[i] = 'https://zxkj.webinn.online/zxkj/imgs/' + data.referencePictures[i]
+						}
+					}
 					state.driverInfo = data
-				} else if(res.data.code == -1){
+				} else if (res.data.code == -1) {
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false
+					})
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '服务器错误',
+						showCancel: false
+					})
+				}
+			},
+		})
+	},
+
+	//学生签到
+	req_studentsCheckin(state, val) {
+		common_request({
+			url: '/api/zxkj/examCheckin/studentsCheckin',
+			data: {
+				'examCheckinId': val.examCheckinId,
+				'longitude': val.longitude,
+				'latitude': val.latitude,
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				if (res.data.code == 200) {
+					uni.showToast({
+						title: '签到成功',
+						duration: 2000,
+						icon: 'success'
+					});
+					setTimeout(()=>{
+							state.needRefresh = true
+					},2000)
+				} else if (res.data.code == -1) {
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,

@@ -8,13 +8,13 @@
 			</view>
 			<block v-for="(item, index) in signInList" :key="index">
 				<view class="signInItem" @click="toSignInCarInfo(item.checkinNumber)">
-					<view class="itemInfo">{{item.careateTime}}</view>
-					<view class="itemInfo">{{item.pathType}}</view>
-					<view class="itemInfo short fontBlue">{{item.numberArrivedLocationPeople}}/{{item.headcount}}</view>
+					<view class="itemInfo">{{ item.createTime }}</view>
+					<view class="itemInfo">{{ item.pathType }}</view>
+					<view class="itemInfo short fontBlue">{{ item.numberArrivedLocationPeople }}/{{ item.headcount }}</view>
 				</view>
 			</block>
 		</view>
-		<view class="buttonBox" @click="submit">新建签到</view>
+		<view class="buttonBox" @click="create">新建签到</view>
 	</view>
 </template>
 
@@ -22,7 +22,8 @@
 export default {
 	data() {
 		return {
-			examId: ''
+			examId: '',
+			serviceType: ''
 		};
 	},
 	computed: {
@@ -34,15 +35,29 @@ export default {
 		let that = this;
 		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
-			that.$store.commit('req_getExamCheckinList', that.examId);
+			if (options.serviceType != '' && options.serviceType != 'undefined' && options.serviceType != null) {
+				that.serviceType = options.serviceType;
+				that.$store.commit('req_getExamCheckinList', that.examId);
+			}
 		}
 	},
-	methods:{
-		toSignInCarInfo(checkinNumber){
-			let that = this
+	onShow() {
+		let that = this
+		that.$store.commit('req_getExamCheckinList', that.examId);
+	},
+	methods: {
+		toSignInCarInfo(checkinNumber) {
+			let that = this;
 			uni.navigateTo({
-			    url:'eduSignInCarInfo?examId=' + that.examId+'&checkinNumber='+checkinNumber
-			})
+				url: 'eduSignInCarInfo?examId=' + that.examId + '&checkinNumber=' + checkinNumber
+			});
+		},
+		//新建签到
+		create() {
+			let that = this;
+			uni.navigateTo({
+				url: 'eduSignInCreate?examId=' + that.examId + '&serviceType=' + that.serviceType
+			});
 		}
 	}
 };

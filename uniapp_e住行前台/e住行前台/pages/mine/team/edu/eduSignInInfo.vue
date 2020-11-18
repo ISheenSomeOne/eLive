@@ -16,6 +16,7 @@ export default {
 	data() {
 		return {
 			examId: '',
+			examPathId: '',
 			remindIndex: '',
 			titleList: [
 				{ cont: '姓名', width: 'short' },
@@ -39,6 +40,7 @@ export default {
 		let that = this;
 		if (options.examPathId != '' && options.examPathId != 'undefined' && options.examPathId != null) {
 			that.examPathId = options.examPathId;
+			that.examId = options.examId
 			that.$store.commit('req_getExamCheckinMemberInfo', that.examPathId);
 		}
 	}

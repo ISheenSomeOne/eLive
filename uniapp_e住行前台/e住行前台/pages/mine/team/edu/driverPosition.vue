@@ -3,17 +3,23 @@
 		<uni-section class="titleClass" title="上车点" type="line"></uni-section>
 		<block v-for="(startingPointInformation, index1) in driverSeeInfo.startingPointInformation" :key="index1">
 			<view class="line">
-				<view class="lineLeft">上车点{{ index + 1 }}</view>
+				<view class="lineLeft">上车点{{ index1 + 1 }}</view>
 				<view class="lineRight">
 					{{ startingPointInformation.name }}
-					<view class="tips" @click="look(startingPointInformation.name, startingPointInformation.longitude, startingPointInformation.latitude)">导航</view>
+					<view
+						:class="startingPointInformation.isArrived ? 'tips fontGreen' : 'tips'"
+						@click="look(startingPointInformation.name, startingPointInformation.longitude, startingPointInformation.latitude)"
+					>
+						导航
+						<text v-show="startingPointInformation.isArrived">（已到达）</text>
+					</view>
 				</view>
 			</view>
 		</block>
 		<uni-section class="titleClass" title="下车点" type="line"></uni-section>
-		<block v-for="(targetLocationInformation, index1) in driverSeeInfo.targetLocationInformation" :key="index1">
+		<block v-for="(targetLocationInformation, index2) in driverSeeInfo.targetLocationInformation" :key="index2">
 			<view class="line">
-				<view class="lineLeft">下车点{{ index + 1 }}</view>
+				<view class="lineLeft">下车点{{ index2 + 1 }}</view>
 				<view class="lineRight">
 					{{ targetLocationInformation.name }}
 					<view class="tips" @click="look(startingPointInformation.name, targetLocationInformation.longitude, targetLocationInformation.latitude)">导航</view>
@@ -32,13 +38,19 @@
 		</view>
 		<view class="buttonBox" @click="showDrawer('showLeft')">通知乘客我已到达</view>
 		<uni-drawer ref="showLeft" mode="left" :width="320">
+			<view class="showDrawerTitle">选择到达的地点</view>
 			<uni-list>
-				<uni-list-item title="云路裕庭" />
-				<uni-list-item title="昆明学院" />
+				<block v-for="(startingPointInformation, index1) in driverSeeInfo.startingPointInformation" :key="index1">
+					<uni-list-item
+						class="itemClass"
+						@click="submit(startingPointInformation.name)"
+						:title="startingPointInformation.isArrived ? startingPointInformation.name + '（已到达）' : startingPointInformation.name"
+					/>
+				</block>
 			</uni-list>
 			<view class="close">
 				<view class="word-btn" hover-class="word-btn--hover" :hover-start-time="20" :hover-stay-time="70" @click="closeDrawer('showLeft')">
-					<button class="closeDrawer" type="warn">返 回</button>
+					<button class="closeDrawer" size="mini" type="warn">返 回</button>
 				</view>
 			</view>
 		</uni-drawer>
@@ -78,6 +90,19 @@ export default {
 	computed: {
 		driverSeeInfo() {
 			return this.$store.state.edu.driverSeeInfo;
+		},
+		needRefresh() {
+			return this.$store.state.edu.needRefresh;
+		}
+	},
+	watch: {
+		needRefresh(newData, oldData) {
+			let that = this;
+			if (newData) {
+				that.$store.commit('req_getDriverSeeInfo', that.examPathId);
+				that.imgList = [];
+				that.$store.commit('setNeedRefresh');
+			}
 		}
 	},
 	onLoad(options) {
@@ -192,31 +217,46 @@ export default {
 				}
 			});
 		},
-		submit() {
+		submit(name) {
 			let that = this;
-			let uploadList = [];
-			for (let i = 0; i < that.imgList.length; i++) {
-				let item = { url: that.imgList[i] };
-				uploadList.push(item);
-			}
-			uni.uploadFile({
-				url: '/api/zxkj/examPath/driverPositioning', //仅为示例，非真实的接口地址
-				files: uploadList,
-				formData: {
+			if (that.longitude != '') {
+				let uploadList = [];
+				for (let i = 0; i < that.imgList.length; i++) {
+					let item = that.imgList[i];
+					uploadList.push(item);
+				}
+				let val = {
+					uploadList: uploadList,
 					longitude: that.longitude,
 					latitude: that.latitude,
-					examPathId: that.examPathId
-				},
-				success: uploadFileRes => {
-					console.log(uploadFileRes.data);
-				}
-			});
+					examPathId: that.examPathId,
+					name: name
+				};
+				that.$store.commit('req_driverPositioning', val);
+				that.closeDrawer('showLeft');
+			} else {
+				uni.showToast({
+					title: '您还没有定位哦',
+					duration: 2000,
+					icon: 'none'
+				});
+			}
 		}
 	}
 };
 </script>
 
 <style lang="scss">
+.showDrawerTitle {
+	height: 44px;
+	line-height: 44px;
+	font-size: 18px;
+	font-weight: bold;
+	background-color: $uni-color-primary;
+	color: #fff;
+	text-align: center;
+	margin-bottom: 10px;
+}
 .closeDrawer {
 	width: 70%;
 	margin-top: 60rpx;
@@ -324,13 +364,13 @@ export default {
 	margin: 30rpx auto;
 }
 .fontRed {
-	color: $uni-color-error;
+	color: $uni-color-error !important;
 }
 .fontGreen {
-	color: $uni-color-success;
+	color: $uni-color-success !important;
 }
 .fontBlue {
-	color: $uni-color-primary;
+	color: $uni-color-primary !important;
 }
 .imgBox {
 	width: 100%;

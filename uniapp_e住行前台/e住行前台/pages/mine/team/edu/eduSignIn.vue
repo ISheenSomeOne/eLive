@@ -6,7 +6,7 @@
 			<view class="lineRight">
 				{{ driverInfo.numbering }}
 				<view
-					v-if="driverInfo.driverLocationInformation.name == driverInfo.startingName"
+					v-if="driverInfo.driverLocationInformation != null && driverInfo.driverLocationInformation.name == driverInfo.startingName"
 					class="tips bgGreen"
 					@click="look(driverInfo.driverLocationInformation.name, driverInfo.driverLocationInformation.longitude, driverInfo.driverLocationInformation.latitude)"
 				>
@@ -20,14 +20,14 @@
 			<view class="lineRight">{{ driverInfo.carNumber }}</view>
 		</view>
 		<uni-section class="titleClass" title="位置照片" type="line"></uni-section>
-		<view v-show="imgList.length > 0" class="imgBox clearfix">
+		<view v-show="driverInfo.referencePictures.length > 0" class="imgBox clearfix">
 			<block v-for="(item, index) in driverInfo.referencePictures" :key="index">
 				<image @click="previewImage(index)" class="imgClass" :src="item" mode="aspectFill"></image>
 			</block>
 		</view>
-		<view v-show="imgList.length <= 0" class="line errorTip">未提供图片信息</view>
-		<view class="subSignIn"></view>
-		<view class="buttonBox" @click="submit">点击签到</view>
+		<view v-show="driverInfo.referencePictures.length <= 0" class="line errorTip">未提供图片信息</view>
+		<view v-show="!driverInfo.checkin" class="buttonBox" @click="submit">点击签到</view>
+		<view v-show="driverInfo.checkin" class="buttonBox bgBlue">已签到</view>
 	</view>
 </template>
 
@@ -36,12 +36,27 @@ import OpenMap from '@/js_sdk/fx-openMap/openMap.js';
 export default {
 	data() {
 		return {
-			imgList: []
+			imgList: [],
+			longitude: '',
+			latitude: '',
+			examCheckinId: ''
 		};
 	},
 	computed: {
 		driverInfo() {
 			return this.$store.state.edu.driverInfo;
+		},
+		needRefresh() {
+			return this.$store.state.edu.needRefresh;
+		}
+	},
+	watch: {
+		needRefresh(newData, oldData) {
+			let that = this;
+			if (newData) {
+				that.$store.commit('req_studentGetsDriverInfo', that.examCheckinId);
+				this.$store.commit('setNeedRefresh');
+			}
 		}
 	},
 	onLoad(options) {
@@ -57,7 +72,7 @@ export default {
 	methods: {
 		previewImage(index) {
 			uni.previewImage({
-				urls: this.imgList,
+				urls: this.$store.state.edu.driverInfo.referencePictures,
 				loop: true,
 				current: index
 			});
@@ -76,8 +91,47 @@ export default {
 			};
 			OpenMap.openMap(options, 'gcj02');
 		},
-		submit(){
-			
+		//获取定位，提交签到
+		submit() {
+			let that = this;
+			uni.showLoading({
+				mask: true,
+				title: '定位中...'
+			});
+			uni.getLocation({
+				type: 'gcj02',
+				success: function(res) {
+					if (res.latitude) {
+						that.longitude = res.longitude;
+						that.latitude = res.latitude;
+
+						let val = {
+							examCheckinId: that.examCheckinId,
+							longitude: that.longitude,
+							latitude: that.latitude
+						};
+						that.$store.commit('req_studentsCheckin', val);
+					}
+				},
+				fail: function() {
+					uni.showModal({
+						title: '提示',
+						content: '请先打开手机定位',
+						showCancel: false,
+						confirmText: '好的',
+						success: function(res) {
+							if (res.confirm) {
+							} else if (res.cancel) {
+							}
+						}
+					});
+				},
+				complete: function(res) {
+					// alert('当前位置的经度：' + res.longitude + '当前位置的纬度：' + res.latitude);
+					console.log(res);
+					uni.hideLoading();
+				}
+			});
 		}
 	}
 };
@@ -95,6 +149,10 @@ export default {
 }
 .bgGreen {
 	background-color: $uni-color-success !important;
+	color: #fff !important;
+}
+.bgBlue {
+	background-color: $uni-color-primary !important;
 	color: #fff !important;
 }
 .fontBlue {

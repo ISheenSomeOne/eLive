@@ -1,6 +1,6 @@
 <template>
 	<view style="height: 100%;">
-		<button class="signIn" @click="signIn" type="primary">签到</button>
+		<button v-if="eduDistributionInfo.serviceType != 2" class="signIn" @click="signIn" type="primary">签到</button>
 		<view class="uni-tab-bar">
 			<scroll-view scroll-x="true" class="uni-swiper-tab">
 				<view class="swiper-list-box">
@@ -201,11 +201,12 @@ export default {
 		that.$store.commit('req_getEduDistribution', val);
 	},
 	methods: {
-		signIn(){
-			let that = this
+		signIn() {
+			let that = this;
+			let serviceType = that.$store.state.edu.eduDistributionInfo.serviceType;
 			uni.navigateTo({
-			    url:'eduSignInList?examId=' + that.examId
-			})
+				url: 'eduSignInList?examId=' + that.examId + '&serviceType=' + serviceType
+			});
 			// console.log(123)
 		},
 		//下方按钮事件
@@ -224,9 +225,13 @@ export default {
 		feedback(e) {
 			let that = this;
 			uni.navigateTo({
-			    url:'eduRemindList?examId=' + that.examId,
-			    success: res => {},fail: () => {},complete: (res) => {console.log(res)}
-			})
+				url: 'eduRemindList?examId=' + that.examId,
+				success: res => {},
+				fail: () => {},
+				complete: res => {
+					console.log(res);
+				}
+			});
 			// uni.navigateTo({
 			// 	url: 'eduRemindList?examId=' + that.examId,
 			// 	success: res => {},
@@ -422,7 +427,7 @@ export default {
 // 	border-top-right-radius: 12px;
 // 	padding-bottom: 10px !important;
 // }
-.signIn{
+.signIn {
 	z-index: 9999;
 	position: fixed;
 	border-radius: 50%;

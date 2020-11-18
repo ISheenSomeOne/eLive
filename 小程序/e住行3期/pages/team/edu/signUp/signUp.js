@@ -320,7 +320,7 @@ Page({
   //提交验证
   verification: function () {
     let that = this
-    var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+    var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
     var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
     let now = new Date()
     let deadline = new Date(that.data.examInfo.deadline)

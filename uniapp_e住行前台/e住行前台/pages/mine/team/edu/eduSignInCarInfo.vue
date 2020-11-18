@@ -43,7 +43,7 @@ export default {
 		look(examPathId){
 			let that = this
 			uni.navigateTo({
-			    url:'eduSignInInfo?examPathId=' + that.examPathId
+			    url:'eduSignInInfo?examPathId=' + examPathId + '&examId='+that.examId
 			})
 		}
 	}

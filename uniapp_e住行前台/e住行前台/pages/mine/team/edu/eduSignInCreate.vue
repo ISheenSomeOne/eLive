@@ -6,7 +6,7 @@
 				<radio value="1" checked="true" />
 				出发点
 			</label>
-			<label class="radio">
+			<label v-if="serviceType != 2" class="radio">
 				<radio value="2" />
 				酒店
 			</label>
@@ -21,7 +21,7 @@
 				<radio value="1" checked="true" />
 				出发点
 			</label>
-			<label class="radio">
+			<label v-if="serviceType != 2" class="radio">
 				<radio value="2" />
 				酒店
 			</label>
@@ -39,6 +39,7 @@ export default {
 	data() {
 		return {
 			examId: '',
+			serviceType: '',
 			startingPoint: 1, //出发点
 			targetLocation: 1 //目的地
 		};
@@ -63,6 +64,7 @@ export default {
 		let that = this;
 		if (options.examId != '' && options.examId != 'undefined' && options.examId != null) {
 			that.examId = options.examId;
+			that.serviceType = options.serviceType
 		}
 	},
 	methods: {
